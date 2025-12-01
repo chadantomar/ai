@@ -461,43 +461,7 @@
 
         // Show instructions if videos can't be fetched automatically
         function showInstructions() {
-            document.getElementById('loadingState').innerHTML = `
-                <div style="max-width: 800px; margin: 0 auto; padding: 40px; background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-                    <h2 style="color: #ff0000; margin-bottom: 20px;">
-                        <i class="fab fa-youtube"></i> How to Get Channel Videos
-                    </h2>
-                    <p style="margin-bottom: 20px; font-size: 16px; line-height: 1.8;">
-                        To display videos from the YouTube channel, you have two options:
-                    </p>
-                    
-                    <div style="background: #f5f5f5; padding: 20px; border-radius: 10px; margin: 20px 0;">
-                        <h3 style="margin-bottom: 15px;">Option 1: Get Channel ID (Recommended)</h3>
-                        <ol style="line-height: 2; padding-left: 20px;">
-                            <li>Visit <a href="${CHANNEL_URL}" target="_blank">${CHANNEL_URL}</a></li>
-                            <li>Right-click and "View Page Source"</li>
-                            <li>Search for "channelId" (Ctrl+F)</li>
-                            <li>Copy the channel ID (starts with "UC")</li>
-                            <li>Replace CHANNEL_ID in the code with your channel ID</li>
-                        </ol>
-                    </div>
-                    
-                    <div style="background: #f5f5f5; padding: 20px; border-radius: 10px; margin: 20px 0;">
-                        <h3 style="margin-bottom: 15px;">Option 2: Use YouTube Data API</h3>
-                        <ol style="line-height: 2; padding-left: 20px;">
-                            <li>Go to <a href="https://console.cloud.google.com/" target="_blank">Google Cloud Console</a></li>
-                            <li>Create a new project</li>
-                            <li>Enable "YouTube Data API v3"</li>
-                            <li>Create credentials (API Key)</li>
-                            <li>Add your API key to the code</li>
-                        </ol>
-                    </div>
-                    
-                    <p style="margin-top: 30px; color: #666; font-size: 14px;">
-                        <strong>Note:</strong> The page structure is ready. Once you add the channel ID or API key, 
-                        videos will automatically load and display with thumbnails.
-                    </p>
-                </div>
-            `;
+           
         }
 
         // Function to fetch videos (main entry point)
