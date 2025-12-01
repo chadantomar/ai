@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chandan Kumar | Architect & AI Specialist</title>
+    <title>Chandan Kumar | AI & Cloud Architect</title>
 
     <style>
         body {
@@ -13,158 +13,156 @@
             color: #222;
         }
 
+        /* HEADER WITH BACKGROUND IMAGE */
         header {
-            background: linear-gradient(135deg, #0052cc, #4c0cf5),
-            url('https://media.licdn.com/dms/image/v2/D4D16AQGMlbY3jnrKZg/profile-displaybackgroundimage-shrink_350_1400/profile-displaybackgroundimage-shrink_350_1400/0/1681413210416?e=1766016000&v=beta&t=-hr8Q_V4dEdgIj_QFzcdtNK7zpNPDLwkZB_MGjCteSU');
+            background-image: url('header-bg.jpg'); /* Add your image here */
+            background-size: cover;
+            background-position: center;
             color: white;
-            padding: 70px 20px;
             text-align: center;
+            padding: 120px 20px;
+            position: relative;
+        }
+
+        /* Dark overlay for readable text */
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.55);
+        }
+
+        header h1, header p {
+            position: relative;
+            z-index: 2;
         }
 
         header h1 {
-            font-size: 45px;
+            font-size: 52px;
             margin: 0;
+            font-weight: 700;
         }
 
         header p {
-            font-size: 18px;
-            margin-top: 8px;
-            opacity: 0.9;
+            font-size: 22px;
+            margin-top: 12px;
+            opacity: 0.95;
+            font-weight: 300;
         }
 
         .section {
             max-width: 900px;
-            margin: 45px auto;
+            margin: 60px auto;
             padding: 0 20px;
         }
 
         h2 {
+            font-size: 30px;
             color: #333;
-            border-left: 5px solid #0052cc;
-            padding-left: 12px;
-            margin-bottom: 20px;
-            font-size: 26px;
+            margin-bottom: 10px;
         }
 
-        .card {
+        .text-block {
             background: white;
-            padding: 22px;
-            border-radius: 10px;
+            padding: 30px;
+            border-radius: 12px;
             box-shadow: 0 4px 14px rgba(0,0,0,0.08);
-            margin-bottom: 25px;
+            font-size: 18px;
+            line-height: 1.6;
         }
 
-        ul {
-            margin: 0;
-            padding-left: 18px;
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        .pill-row {
+            display: flex;
+            flex-wrap: wrap;
             gap: 12px;
+            margin-top: 18px;
         }
 
-        .skill-item {
-            background: #eaf0ff;
-            padding: 12px;
-            text-align: center;
-            border-radius: 6px;
-            border: 1px solid #d5e0ff;
+        .pill {
+            background: #e9edff;
+            padding: 10px 18px;
+            border-radius: 50px;
             font-size: 15px;
+            border: 1px solid #d4dcff;
         }
 
         footer {
-            background: #111;
-            color: #bbb;
-            padding: 25px 10px;
             text-align: center;
-            margin-top: 40px;
+            padding: 30px 10px;
+            background: #111;
+            color: #ccc;
+            margin-top: 50px;
         }
 
         a {
             color: #0052cc;
             text-decoration: none;
         }
-        a:hover {
-            opacity: 0.7;
-        }
     </style>
 </head>
 
 <body>
 
-<header >
+<header>
     <h1>Chandan Kumar</h1>
-    <p>Architect | AI & Cloud Specialist | Senior Consultant</p>
-    <p>
-        <a href="mailto:tech.ckumar@gmail.com" style="color:white;">tech.ckumar@gmail.com</a> |
-        <a href="https://www.linkedin.com/in/chandankumar16/" style="color:white;">LinkedIn</a> |
-        <a href="https://medium.com/@tech.ckumar" style="color:white;">Medium</a>
-    </p>
+    <p>AI Systems Architect • Cloud Native Expert • Agentic Workflows Designer</p>
 </header>
 
 
-<!-- SUMMARY -->
+<!-- ABOUT ME -->
 <section class="section">
-    <h2>Summary</h2>
-    <div class="card">
+    <h2>About Me</h2>
+    <div class="text-block">
         <p>
-            Results-driven technology professional with 18+ years of experience in designing 
-            and delivering scalable solutions across AI, Cloud, .NET ecosystems, and modern 
-            architectural patterns. Specialized in LLM/Agentic systems, vector search, 
-            RAG pipelines, cloud-native design, and enterprise-grade application development.
+            I am an AI & Cloud Architect passionate about designing intelligent, scalable, 
+            and future-ready systems. My work spans across LLM orchestration, agentic workflows, 
+            cloud-native architectures, and distributed application design.
         </p>
         <p>
-            Adept at building safe, governed, production-ready AI solutions with 
-            observability, RBAC, auditability, and long-running workflow patterns. 
-            Passionate about innovation, performance optimization, and engineering excellence.
+            I love transforming complex systems into elegant, automated, self-optimizing 
+            experiences using AI, metadata, and event-driven pipelines. I enjoy researching 
+            new patterns, building proof-of-concepts, and helping teams adopt modern AI 
+            engineering practices.
         </p>
     </div>
 </section>
 
 
-<!-- EXPERIENCE (Role Only, No Companies) -->
+<!-- WHAT I DO -->
 <section class="section">
-    <h2>Professional Roles</h2>
-
-    <div class="card">
-        <h3>Senior Consultant / Architect</h3>
+    <h2>What I Do</h2>
+    <div class="text-block">
         <ul>
-            <li>Architect AI-powered cloud-native systems.</li>
-            <li>Build LLM workflows and Agentic solutions using modern frameworks.</li>
-            <li>Design microservices, event-driven systems, and API-driven architectures.</li>
-            <li>Lead engineering teams and mentor developers.</li>
-            <li>Implement enterprise DevOps pipelines and automation.</li>
+            <li>Design AI-driven, agent-based systems and automation flows.</li>
+            <li>Build cloud-native architectures using serverless, microservices & events.</li>
+            <li>Create LLM-enabled copilots, semantic search & vector-based RAG pipelines.</li>
+            <li>Define engineering patterns for observability, governance & long-running workflows.</li>
+            <li>Help teams modernize legacy systems using modern patterns & AI workflows.</li>
         </ul>
     </div>
+</section>
 
-    <div class="card">
-        <h3>Lead Software Engineer</h3>
-        <ul>
-            <li>Designed and developed large-scale distributed applications.</li>
-            <li>Worked across backend, frontend, and data engineering stacks.</li>
-            <li>Applied ML-based intelligence in enterprise systems.</li>
-            <li>Improved code quality and engineering processes.</li>
-        </ul>
-    </div>
 
-    <div class="card">
-        <h3>Senior Software Developer</h3>
-        <ul>
-            <li>Built stable, high-availability backend services.</li>
-            <li>Developed rich UI applications using modern JS frameworks.</li>
-            <li>Optimized performance and database queries.</li>
-        </ul>
-    </div>
-
-    <div class="card">
-        <h3>Software Developer</h3>
-        <ul>
-            <li>Developed .NET-based business applications.</li>
-            <li>Implemented responsive UI and data-driven workflows.</li>
-            <li>Delivered solutions with strong focus on reliability and maintainability.</li>
-        </ul>
+<!-- FOCUS AREAS -->
+<section class="section">
+    <h2>Core Focus Areas</h2>
+    <div class="text-block">
+        <div class="pill-row">
+            <div class="pill">AI Architecture</div>
+            <div class="pill">Agentic Systems</div>
+            <div class="pill">LLM Orchestration</div>
+            <div class="pill">RAG Pipelines</div>
+            <div class="pill">Vector Search</div>
+            <div class="pill">Cloud Architecture</div>
+            <div class="pill">System Design</div>
+            <div class="pill">Microservices</div>
+            <div class="pill">Azure Engineering</div>
+            <div class="pill">DevOps Automation</div>
+            <div class="pill">IoT Integrations</div>
+        </div>
     </div>
 </section>
 
@@ -172,66 +170,20 @@
 <!-- SKILLS -->
 <section class="section">
     <h2>Skills</h2>
-    <div class="card">
-        <div class="skills-grid">
-            <div class="skill-item">C# / .NET</div>
-            <div class="skill-item">Python</div>
-            <div class="skill-item">JavaScript</div>
-            <div class="skill-item">React</div>
-            <div class="skill-item">Azure Cloud</div>
-            <div class="skill-item">Cosmos DB</div>
-            <div class="skill-item">Semantic Kernel</div>
-            <div class="skill-item">CrewAI</div>
-            <div class="skill-item">Autogen</div>
-            <div class="skill-item">RAG / Vector Search</div>
-            <div class="skill-item">Microservices</div>
-            <div class="skill-item">Event-driven Architecture</div>
-            <div class="skill-item">DevOps / CI-CD</div>
-            <div class="skill-item">Service Bus</div>
-            <div class="skill-item">IoT (ESP8266/ESP32)</div>
+    <div class="text-block">
+        <div class="pill-row">
+            <div class="pill">C# / .NET</div>
+            <div class="pill">Python</div>
+            <div class="pill">JavaScript / React</div>
+            <div class="pill">Azure Cloud</div>
+            <div class="pill">Cosmos DB</div>
+            <div class="pill">Service Bus</div>
+            <div class="pill">Semantic Kernel</div>
+            <div class="pill">CrewAI</div>
+            <div class="pill">Autogen</div>
+            <div class="pill">RAG Engineering</div>
+            <div class="pill">Distributed Systems</div>
         </div>
-    </div>
-</section>
-
-
-<!-- CERTIFICATION -->
-<section class="section">
-    <h2>Certifications</h2>
-    <div class="card">
-        <ul>
-            <li>IBM Design Thinking Practitioner</li>
-            <li>IBM Cognitive Practitioner</li>
-            <li>IBM Python Professional</li>
-            <li>Microsoft AI-900</li>
-            <li>Microsoft AZ-900</li>
-        </ul>
-    </div>
-</section>
-
-
-<!-- AWARDS -->
-<section class="section">
-    <h2>Awards & Recognition</h2>
-    <div class="card">
-        <ul>
-            <li>Individual Performer of the Year</li>
-            <li>Eminence & Excellence Award</li>
-            <li>Deep Skill Knowledge Achiever</li>
-            <li>Star Performer Award</li>
-            <li>Recognitions for automation, reporting & integrations</li>
-        </ul>
-    </div>
-</section>
-
-
-<!-- EDUCATION -->
-<section class="section">
-    <h2>Education</h2>
-    <div class="card">
-        <ul>
-            <li>M.C.A – Master's in Computer Applications</li>
-            <li>B.C.A – Bachelor's in Computer Applications</li>
-        </ul>
     </div>
 </section>
 
@@ -239,7 +191,7 @@
 <!-- CONTACT -->
 <section class="section">
     <h2>Contact</h2>
-    <div class="card">
+    <div class="text-block">
         <p><strong>Email:</strong> <a href="mailto:tech.ckumar@gmail.com">tech.ckumar@gmail.com</a></p>
         <p><strong>Phone:</strong> +91-9970229968</p>
         <p><strong>Location:</strong> India</p>
@@ -248,7 +200,7 @@
 
 
 <footer>
-    © Chandan Kumar — 2025. All Rights Reserved.
+    © 2025 Chandan Kumar — Personal Profile Website
 </footer>
 
 </body>
