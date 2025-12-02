@@ -47,7 +47,7 @@
             z-index: -1;
             background: var(--darker-blue);
             /* Background image - replace 'background-image.jpg' with your actual image path */
-            background-image: url('mysitebg.png');
+            background-image: url('background-image.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -373,6 +373,8 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            display: block;
+            color: inherit;
         }
 
         .card::before {
@@ -391,6 +393,15 @@
             transform: translateY(-10px);
             box-shadow: 0 20px 60px rgba(0, 212, 255, 0.3);
             border-color: rgba(0, 212, 255, 0.5);
+        }
+        
+        a.card {
+            text-decoration: none;
+        }
+        
+        a.card h3,
+        a.card p {
+            color: inherit;
         }
 
         .card:hover::before {
@@ -743,9 +754,7 @@
     <!-- Navigation -->
     <nav id="navbar">
         <div class="nav-container">
-            <div class="logo">Chandan Kumar<br/>
-            
-            </div>
+            <div class="logo">Chandan Kumar</div>
             <ul class="nav-links">
                 <li><a href="#about">About</a></li>
                 <li><a href="#expertise">Expertise</a></li>
@@ -759,7 +768,9 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-          
+            <h1>Chandan Kumar</h1>
+            <p class="subtitle">AI Systems Architect • Cloud Native Expert</p>
+            <p class="tagline">Transforming complex systems into intelligent, self-optimizing experiences</p>
             <div class="cta-buttons">
                 <a href="#contact" class="btn btn-primary">
                     <i class="fas fa-envelope"></i> Get In Touch
@@ -796,59 +807,59 @@
     <section id="expertise" class="section">
         <h2 class="section-title fade-in">What I Do</h2>
         <div class="card-grid">
-            <div class="card fade-in">
+            <a href="ai-driven-systems.html" class="card fade-in" style="text-decoration: none; cursor: pointer;">
                 <div class="card-icon">
                     <i class="fas fa-robot"></i>
                 </div>
                 <h3>AI-Driven Systems</h3>
                 <p>Design and build agent-based systems and automation flows that leverage LLMs and 
                 intelligent agents to solve complex business problems.</p>
-            </div>
+            </a>
 
-            <div class="card fade-in">
+            <a href="cloud-architecture.html" class="card fade-in" style="text-decoration: none; cursor: pointer;">
                 <div class="card-icon">
                     <i class="fas fa-cloud"></i>
                 </div>
                 <h3>Cloud Architecture</h3>
                 <p>Build cloud-native architectures using serverless, microservices, and event-driven 
                 patterns for scalable, resilient systems.</p>
-            </div>
+            </a>
 
-            <div class="card fade-in">
+            <a href="rag-vector-search.html" class="card fade-in" style="text-decoration: none; cursor: pointer;">
                 <div class="card-icon">
                     <i class="fas fa-search"></i>
                 </div>
                 <h3>RAG & Vector Search</h3>
                 <p>Create LLM-enabled copilots, semantic search, and vector-based RAG pipelines for 
                 intelligent information retrieval and generation.</p>
-            </div>
+            </a>
 
-            <div class="card fade-in">
+            <a href="engineering-patterns.html" class="card fade-in" style="text-decoration: none; cursor: pointer;">
                 <div class="card-icon">
                     <i class="fas fa-cogs"></i>
                 </div>
                 <h3>Engineering Patterns</h3>
                 <p>Define patterns for observability, governance, and long-running workflows that 
                 ensure system reliability and maintainability.</p>
-            </div>
+            </a>
 
-            <div class="card fade-in">
+            <a href="legacy-modernization.html" class="card fade-in" style="text-decoration: none; cursor: pointer;">
                 <div class="card-icon">
                     <i class="fas fa-sync-alt"></i>
                 </div>
                 <h3>Legacy Modernization</h3>
                 <p>Help teams modernize legacy systems using modern patterns and AI workflows, 
                 ensuring smooth transitions and improved capabilities.</p>
-            </div>
+            </a>
 
-            <div class="card fade-in">
+            <a href="research-innovation.html" class="card fade-in" style="text-decoration: none; cursor: pointer;">
                 <div class="card-icon">
                     <i class="fas fa-lightbulb"></i>
                 </div>
                 <h3>Research & Innovation</h3>
                 <p>Research new AI patterns, build proof-of-concepts, and contribute to the 
                 advancement of AI engineering practices.</p>
-            </div>
+            </a>
         </div>
     </section>
 
@@ -932,50 +943,50 @@
             </div>
         </div>
         <div class="card-grid">
-            <div class="card fade-in">
+            <a href="python.html" class="card fade-in" style="text-decoration: none; cursor: pointer;">
                 <h3><i class="fab fa-python"></i> Python</h3>
                 <p>Advanced Python development for AI/ML applications, data processing, and automation.</p>
-            </div>
-            <div class="card fade-in">
+            </a>
+            <a href="csharp-dotnet.html" class="card fade-in" style="text-decoration: none; cursor: pointer;">
                 <h3><i class="fab fa-microsoft"></i> C# / .NET</h3>
                 <p>Enterprise-grade applications using .NET framework and modern C# features.</p>
-            </div>
-            <div class="card fade-in">
+            </a>
+            <a href="javascript-react.html" class="card fade-in" style="text-decoration: none; cursor: pointer;">
                 <h3><i class="fab fa-js"></i> JavaScript / React</h3>
                 <p>Modern web applications with React, Node.js, and full-stack JavaScript development.</p>
-            </div>
-            <div class="card fade-in">
+            </a>
+            <a href="azure-cloud.html" class="card fade-in" style="text-decoration: none; cursor: pointer;">
                 <h3><i class="fab fa-microsoft"></i> Azure Cloud</h3>
                 <p>Comprehensive Azure services including Functions, App Services, and cloud infrastructure.</p>
-            </div>
-            <div class="card fade-in">
+            </a>
+            <a href="cosmos-db.html" class="card fade-in" style="text-decoration: none; cursor: pointer;">
                 <h3><i class="fas fa-database"></i> Cosmos DB</h3>
                 <p>NoSQL database design and implementation for scalable, distributed applications.</p>
-            </div>
-            <div class="card fade-in">
+            </a>
+            <a href="service-bus.html" class="card fade-in" style="text-decoration: none; cursor: pointer;">
                 <h3><i class="fas fa-exchange-alt"></i> Service Bus</h3>
                 <p>Message queuing and event-driven architectures using Azure Service Bus.</p>
-            </div>
-            <div class="card fade-in">
+            </a>
+            <a href="semantic-kernel.html" class="card fade-in" style="text-decoration: none; cursor: pointer;">
                 <h3><i class="fas fa-magic"></i> Semantic Kernel</h3>
                 <p>LLM orchestration and AI agent development using Microsoft Semantic Kernel.</p>
-            </div>
-            <div class="card fade-in">
+            </a>
+            <a href="crewai.html" class="card fade-in" style="text-decoration: none; cursor: pointer;">
                 <h3><i class="fas fa-users"></i> CrewAI</h3>
                 <p>Multi-agent systems and collaborative AI workflows using CrewAI framework.</p>
-            </div>
-            <div class="card fade-in">
+            </a>
+            <a href="autogen.html" class="card fade-in" style="text-decoration: none; cursor: pointer;">
                 <h3><i class="fas fa-sync"></i> Autogen</h3>
                 <p>Autonomous agent development and multi-agent conversations using AutoGen.</p>
-            </div>
-            <div class="card fade-in">
+            </a>
+            <a href="rag-engineering.html" class="card fade-in" style="text-decoration: none; cursor: pointer;">
                 <h3><i class="fas fa-book"></i> RAG Engineering</h3>
                 <p>Retrieval-Augmented Generation pipelines for enhanced LLM capabilities.</p>
-            </div>
-            <div class="card fade-in">
+            </a>
+            <a href="distributed-systems.html" class="card fade-in" style="text-decoration: none; cursor: pointer;">
                 <h3><i class="fas fa-project-diagram"></i> Distributed Systems</h3>
                 <p>Design and implementation of scalable, fault-tolerant distributed architectures.</p>
-            </div>
+            </a>
         </div>
     </section>
 
@@ -983,30 +994,30 @@
     <section id="projects" class="section">
         <h2 class="section-title fade-in">Featured Projects</h2>
         <div class="card-grid">
-            <div class="card fade-in">
+            <a href="ai-chatbot-system.html" class="card fade-in" style="text-decoration: none; cursor: pointer;">
                 <div class="card-icon">
                     <i class="fas fa-comments"></i>
                 </div>
                 <h3>AI-Powered Chatbot System</h3>
                 <p>Built an intelligent chatbot using LLM orchestration with RAG capabilities, 
                 enabling context-aware conversations and knowledge retrieval.</p>
-            </div>
-            <div class="card fade-in">
+            </a>
+            <a href="multi-agent-platform.html" class="card fade-in" style="text-decoration: none; cursor: pointer;">
                 <div class="card-icon">
                     <i class="fas fa-users-cog"></i>
                 </div>
                 <h3>Multi-Agent Workflow Platform</h3>
                 <p>Designed and implemented a multi-agent system using CrewAI and AutoGen for 
                 complex task automation and collaborative problem-solving.</p>
-            </div>
-            <div class="card fade-in">
+            </a>
+            <a href="cloud-microservices.html" class="card fade-in" style="text-decoration: none; cursor: pointer;">
                 <div class="card-icon">
                     <i class="fas fa-cloud-upload-alt"></i>
                 </div>
                 <h3>Cloud-Native Microservices</h3>
                 <p>Architected scalable microservices on Azure with event-driven patterns, 
                 ensuring high availability and performance.</p>
-            </div>
+            </a>
         </div>
     </section>
 
