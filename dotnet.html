@@ -304,6 +304,7 @@
     </nav>
 
     <div class="container">
+        
         <div class="page-header">
             <div class="page-icon"><i class="fas fa-code"></i></div>
             <h1 class="page-title">C# .NET / .NET Core</h1>
@@ -1021,4 +1022,428 @@ public class OrdersController : ControllerBase
             number: 10,
             title: "How do you host background jobs using IHostedService / BackgroundService in .NET Core?",
             description:
-                "Background services run alongside your web application within the
+                "Background services run alongside your web application within the same process, " +
+                "using IHostedService or BackgroundService. They are great for polling, scheduled work, or " +
+                "long-running processes that don't directly handle HTTP.",
+            why:
+                "Many systems need background tasks (sending emails, syncing data, running sagas). " +
+                "Hosting them incorrectly can lead to resource leaks or unreliable execution.",
+            what:
+                "IHostedService defines StartAsync and StopAsync. BackgroundService gives a base class with ExecuteAsync loop. " +
+                "They are hosted by the generic host (HostBuilder / WebApplication).",
+            how:
+                "Implement BackgroundService, inject required dependencies, and register via AddHostedService<T>(). " +
+                "Respect cancellation tokens and avoid blocking calls.",
+            pros: [
+                "Simple hosting model tied to app lifecycle",
+                "No external scheduler needed for simple tasks",
+                "Full access to DI container and configuration"
+            ],
+            cons: [
+                "Sharing web app resources may cause contention",
+                "If the web app restarts, background jobs restart too",
+                "Not ideal for heavy or mission-critical long-running jobs (consider separate worker service)"
+            ],
+            diagram: `flowchart TD
+    A[Web Host] --> B[ASP.NET Core Pipeline]
+    A --> C[BackgroundService 1]
+    A --> D[BackgroundService 2]
+    C --> E[Periodic Work]
+    D --> F[Queue Listener]`,
+            implementation: `public class EmailBackgroundService : BackgroundService
+{
+    private readonly ILogger<EmailBackgroundService> _logger;
+    private readonly IEmailQueue _queue;
+
+    public EmailBackgroundService(ILogger<EmailBackgroundService> logger,
+                                  IEmailQueue queue)
+    {
+        _logger = logger;
+        _queue = queue;
+    }
+
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    {
+        _logger.LogInformation("Email background service started");
+        while (!stoppingToken.IsCancellationRequested)
+        {
+            var email = await _queue.DequeueAsync(stoppingToken);
+            if (email is null)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
+                continue;
+            }
+
+            try
+            {
+                await SendEmailAsync(email, stoppingToken);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error sending email");
+            }
+        }
+    }
+}
+
+// Registration
+builder.Services.AddHostedService<EmailBackgroundService>();`,
+            approaches: [
+                "Use BackgroundService for lightweight periodic tasks or queue listeners.",
+                "For heavy workloads, host separate worker services or containerized jobs.",
+                "Always respect CancellationToken and handle graceful shutdown.",
+                "Use health checks / readiness probes if background tasks affect availability.",
+                "Combine with queues (Service Bus, RabbitMQ, etc.) for resilient processing."
+            ]
+        });
+
+        questions.push({
+            number: 11,
+            title: "Explain health checks in ASP.NET Core and how you’d design them for microservices.",
+            description:
+                "Health checks provide liveness/readiness endpoints that reflect the state of the application " +
+                "and its dependencies (DB, caches, message brokers, etc.). They integrate with Kubernetes, " +
+                "load balancers, and monitoring.",
+            why:
+                "Correct health checks prevent sending traffic to unhealthy instances and improve reliability " +
+                "and self-healing behavior in orchestrated environments.",
+            what:
+                "ASP.NET Core offers Microsoft.Extensions.Diagnostics.HealthChecks. " +
+                "You register checks and expose an endpoint (e.g., /health/live, /health/ready).",
+            how:
+                "Use services.AddHealthChecks().AddSqlServer(...).AddRedis(...); " +
+                "Map endpoints with app.MapHealthChecks(\"/health/ready\", options => ...).",
+            pros: [
+                "Simple integration with Kubernetes and reverse proxies",
+                "Pluggable checks for common dependencies",
+                "Custom checks for domain-specific conditions"
+            ],
+            cons: [
+                "If checks are too heavy, they can add load or timeouts",
+                "Poorly designed checks may cause cascading failures",
+                "Requires coordination with DevOps for thresholds and probes"
+            ],
+            diagram: `flowchart TD
+    A[Service Instance] --> B[/health/live]
+    A --> C[/health/ready]
+    B --> D[Kubernetes Liveness Probe]
+    C --> E[Load Balancer / Readiness Probe]`,
+            implementation: `// Program.cs
+builder.Services.AddHealthChecks()
+    .AddSqlServer(builder.Configuration.GetConnectionString("Default"))
+    .AddRedis("localhost:6379", name: "redis");
+
+// Basic endpoints
+var app = builder.Build();
+app.MapHealthChecks("/health/live");
+app.MapHealthChecks("/health/ready", new HealthCheckOptions
+{
+    Predicate = check => check.Tags.Contains("ready"),
+    ResponseWriter = async (ctx, report) =>
+    {
+        ctx.Response.ContentType = "application/json";
+        var result = JsonSerializer.Serialize(new
+        {
+            status = report.Status.ToString(),
+            checks = report.Entries.Select(e => new
+            {
+                name = e.Key,
+                status = e.Value.Status.ToString(),
+                error = e.Value.Exception?.Message
+            })
+        });
+        await ctx.Response.WriteAsync(result);
+    }
+});`,
+            approaches: [
+                "Separate liveness (is process running) from readiness (can serve traffic).",
+                "Mark expensive external checks as readiness only.",
+                "Use tags to filter checks per endpoint.",
+                "Align intervals and timeouts with platform (Kubernetes, App Service, etc.).",
+                "Include simple domain health signals (e.g., backlog size, feature flags) where relevant."
+            ]
+        });
+
+        questions.push({
+            number: 12,
+            title: "How do you implement API versioning and deprecation strategies in ASP.NET Core?",
+            description:
+                "API versioning allows you to evolve contracts without breaking existing clients. " +
+                "ASP.NET Core can support URL versioning, header versioning, or query string versioning, " +
+                "often with the Microsoft.AspNetCore.Mvc.Versioning package.",
+            why:
+                "Large systems cannot break clients suddenly. You need clear strategies for introducing new versions, " +
+                "maintaining older ones, and eventually deprecating them.",
+            what:
+                "You define versions (v1, v2, etc.) and map controllers or endpoints to them. " +
+                "Versioning metadata appears in Swagger/OpenAPI and may be communicated via headers or paths.",
+            how:
+                "Use AddApiVersioning, decorate controllers with [ApiVersion], and route via [Route(\"api/v{version:apiVersion}/[controller]\")]. " +
+                "Expose deprecation via headers and documentation.",
+            pros: [
+                "Controlled evolution of API surface",
+                "Backward compatibility for existing consumers",
+                "Ability to sunset old versions with clear timelines"
+            ],
+            cons: [
+                "More endpoints to maintain and test",
+                "Risk of version explosion if not governed",
+                "Need strong communication with consumers"
+            ],
+            diagram: `flowchart TD
+    A[Client v1] --> B[/api/v1/orders]
+    A --> C[/api/v1/customers]
+    D[Client v2] --> E[/api/v2/orders]
+    E --> F[New Contract / Behavior]`,
+            implementation: `// Program.cs
+builder.Services.AddApiVersioning(options =>
+{
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.ReportApiVersions = true;
+});
+
+// Controller v1
+[ApiController]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
+public class OrdersController : ControllerBase
+{
+    [HttpGet("{id}")]
+    public IActionResult GetV1(int id) => Ok(new { Version = "v1", Id = id });
+}
+
+// Controller v2
+[ApiController]
+[ApiVersion("2.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
+public class OrdersV2Controller : ControllerBase
+{
+    [HttpGet("{id}")]
+    public IActionResult GetV2(int id) => Ok(new { Version = "v2", Id = id, Extra = "..." });
+}`,
+            approaches: [
+                "Prefer URL versioning for public REST APIs (easy to cache and route).",
+                "Keep versions minimal – only when breaking changes are required.",
+                "Communicate deprecation via headers and documentation.",
+                "Automate tests across all active API versions.",
+                "Maintain ADRs describing why and how you versioned APIs."
+            ]
+        });
+
+        // --- Helper to auto-generate question 13–50 in a compact way ---
+
+        const advancedTopics = [
+            "CQRS and MediatR-based architecture in .NET",
+            "Domain-driven design layers in a .NET Core solution",
+            "Outbox pattern for reliable messaging with EF Core",
+            "Saga/Process Manager orchestration using background workers",
+            "Resilience with Polly (retries, circuit breakers, timeouts)",
+            "Caching strategies (in-memory, distributed, response caching)",
+            "Security: JWT authentication and role-based authorization",
+            "Using Span<T> and Memory<T> for high-performance APIs",
+            "Records vs classes for immutable DTOs and domain objects",
+            "ValueTask vs Task and when to use them",
+            "Source generators and compile-time optimizations",
+            "LINQ pitfalls and performance considerations",
+            "Custom model binding and validation attributes",
+            "File upload/download streaming in ASP.NET Core",
+            "gRPC vs REST in .NET",
+            "SignalR real-time communication in .NET",
+            "Configuration for multi-tenant applications",
+            "Localization and globalization strategy",
+            "Logging correlation across microservices",
+            "OpenTelemetry tracing with .NET",
+            "Structuring large solutions (modular monolith vs microservices)",
+            "Using feature flags and toggles in .NET applications",
+            "Hosting .NET in containers and Kubernetes",
+            "Performance profiling and dotnet-trace/dotnet-counters",
+            "Memory leaks and diagnosing with dotnet-gcdump",
+            "Async streams (IAsyncEnumerable) in APIs",
+            "Pipeline behaviors in MediatR (cross-cutting concerns)",
+            "Dynamic loading and plugins with AssemblyLoadContext",
+            "Implementing clean architecture in .NET",
+            "Zero-downtime deployments for .NET APIs",
+            "Rate limiting middleware in .NET 7+",
+            "Using Keyed services and advanced DI patterns",
+            "Multi-environment configuration and secrets management",
+            "BFF (Backend for Frontend) pattern in .NET",
+            "GraphQL endpoints with Hot Chocolate",
+            "Testing strategy (unit, integration, contract tests)",
+            "Using test containers (Docker) for integration tests",
+            "Data protection APIs and cookie encryption",
+            "Custom authentication handlers and schemes"
+        ];
+
+        function generateGenericQuestion(index, topic) {
+            return {
+                number: index,
+                title: `How would you implement and reason about ${topic} in a real-world .NET Core system?`,
+                description:
+                    `${topic} is a common advanced requirement in enterprise .NET applications. ` +
+                    `It affects how you design boundaries, handle reliability, and meet non-functional requirements ` +
+                    `like performance, security, and maintainability.`,
+                why:
+                    `Architects and senior engineers must understand ${topic} to make trade-offs between complexity, ` +
+                    `operational cost, and long-term flexibility. Poor design here often surfaces as production issues ` +
+                    `under load or during failures.`,
+                what:
+                    `${topic} typically involves combining core .NET runtime features (async/await, DI, configuration, logging) ` +
+                    `with architectural patterns (clean architecture, DDD, microservices, or modular monoliths). ` +
+                    `The goal is to keep domain code clean while handling cross-cutting concerns in the infrastructure layer.`,
+                how:
+                    `In practice, you would design an abstraction in the application/domain layer and provide ` +
+                    `one or more infrastructure implementations. You would register them via DI with appropriate lifetimes, ` +
+                    `configure them via options, and validate their behavior via integration tests. ` +
+                    `Observability (logs, metrics, traces) is added via middleware, filters, or pipeline behaviors.`,
+                pros: [
+                    "Improved separation of concerns and testability",
+                    "Better resilience and fault tolerance in production",
+                    "Easier evolution of the system as requirements change",
+                    "Clearer boundaries between domain and infrastructure"
+                ],
+                cons: [
+                    "Higher initial complexity and learning curve",
+                    "More moving parts to monitor and operate",
+                    "Requires strong team discipline and documentation",
+                    "Over-engineering risk for small/simple systems"
+                ],
+                diagram: `flowchart TD
+    A[API Layer / Endpoints] --> B[Application Layer]
+    B --> C[Domain Layer]
+    B --> D[Infrastructure (${topic})]
+    D --> E[External Systems / Resources]`,
+                implementation: `// Skeleton pattern showing separation
+
+// Domain layer
+public interface I${index}Service
+{
+    Task HandleAsync(CancellationToken cancellationToken = default);
+}
+
+// Application layer implementation
+public class ${index}Service : I${index}Service
+{
+    private readonly ILogger<${index}Service> _logger;
+
+    public ${index}Service(ILogger<${index}Service> logger)
+    {
+        _logger = logger;
+    }
+
+    public async Task HandleAsync(CancellationToken cancellationToken = default)
+    {
+        _logger.LogInformation("Handling advanced concern: ${topic}");
+        // Apply pattern-specific logic here (CQRS, Polly, caching, etc.)
+        await Task.CompletedTask;
+    }
+}
+
+// Registration
+builder.Services.AddScoped<I${index}Service, ${index}Service>();`,
+                approaches: [
+                    "Start from domain use-cases and derive where this pattern fits.",
+                    "Implement a vertical slice (end-to-end) before generalizing.",
+                    "Add observability from day one (logs, metrics, traces).",
+                    "Document the decision in an ADR (Architecture Decision Record).",
+                    "Continuously review and simplify patterns that are not pulling their weight."
+                ]
+            };
+        }
+
+        // Generate questions 13–50 using generic pattern
+        let currentNumber = questions.length + 1;
+        for (let i = 0; currentNumber <= 50; i++, currentNumber++) {
+            const topic = advancedTopics[i % advancedTopics.length];
+            questions.push(generateGenericQuestion(currentNumber, topic));
+        }
+
+        // --- Build TOC and Question Cards ---
+
+        const tocList = document.getElementById('tocList');
+        const container = document.getElementById('questionsContainer');
+
+        questions.sort((a, b) => a.number - b.number);
+
+        questions.forEach(q => {
+            const link = document.createElement('a');
+            link.href = `#question-${q.number}`;
+            link.textContent = `Q${q.number}: ${q.title.substring(0, 40)}...`;
+            link.onclick = (e) => {
+                e.preventDefault();
+                document.getElementById(`question-${q.number}`)
+                    .scrollIntoView({ behavior: 'smooth', block: 'start' });
+            };
+            tocList.appendChild(link);
+
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.id = `question-${q.number}`;
+
+            card.innerHTML = `
+                <div class="question-number">Question ${q.number} of 50</div>
+                <h2 class="question-title">${q.title}</h2>
+
+                <div class="question-section">
+                    <h3>1. Detailed Description</h3>
+                    <p>${q.description}</p>
+                </div>
+
+                <div class="question-section">
+                    <h3>2. Why / What / How</h3>
+                    <p><strong>Why:</strong> ${q.why}</p>
+                    <p><strong>What:</strong> ${q.what}</p>
+                    <p><strong>How:</strong> ${q.how}</p>
+                </div>
+
+                <div class="question-section">
+                    <h3>3. Pros and Cons</h3>
+                    <div class="pros-cons">
+                        <div class="pros-box">
+                            <h4>Pros</h4>
+                            <ul>
+                                ${q.pros.map(p => `<li>${p}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div class="cons-box">
+                            <h4>Cons</h4>
+                            <ul>
+                                ${q.cons.map(c => `<li>${c}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-section">
+                    <h3>4. Design Diagram</h3>
+                    <div class="diagram-container">
+                        <div class="diagram-title">Architecture Diagram</div>
+                        <div class="mermaid">${q.diagram}</div>
+                    </div>
+                </div>
+
+                <div class="question-section">
+                    <h3>5. Implementation (C#)</h3>
+                    <div class="code-block">
+                        <pre><code>${q.implementation}</code></pre>
+                    </div>
+                </div>
+
+                <div class="question-section">
+                    <h3>6. Approaches</h3>
+                    <ul>
+                        ${q.approaches.map(a => `<li>${a}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+
+            container.appendChild(card);
+        });
+
+        // Reinitialize Mermaid after dynamic content
+        setTimeout(() => {
+            mermaid.init(undefined, '.mermaid');
+        }, 100);
+    </script>
+</body>
+</html>
