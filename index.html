@@ -13,27 +13,31 @@
         }
 
         :root {
-            --primary-color: #667eea;
-            --secondary-color: #764ba2;
-            --accent-color: #f093fb;
+            --primary-color: #00d4ff;
+            --secondary-color: #0099cc;
+            --accent-color: #00ffff;
+            --neon-blue: #00d4ff;
+            --dark-blue: #0a1929;
+            --darker-blue: #051422;
             --text-dark: #222;
             --text-light: #666;
             --bg-light: #f4f6fa;
             --white: #ffffff;
-            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-1: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            --gradient-2: linear-gradient(135deg, #00ffff 0%, #00d4ff 100%);
             --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
         }
 
         body {
             font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Arial, sans-serif;
-            background: var(--bg-light);
+            background: var(--darker-blue);
             color: var(--text-dark);
             line-height: 1.6;
             overflow-x: hidden;
+            position: relative;
         }
 
-        /* Animated Background */
+        /* Animated Background with Neon Blue Theme */
         .animated-bg {
             position: fixed;
             top: 0;
@@ -41,9 +45,51 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #4facfe);
-            background-size: 400% 400%;
-            animation: gradientShift 15s ease infinite;
+            background: var(--darker-blue);
+            /* Background image - replace 'background-image.jpg' with your actual image path */
+            background-image: url('mysitebg.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            /* Fallback if image not available - creates similar effect with CSS */
+            background-color: var(--darker-blue);
+        }
+
+        /* World map overlay effect */
+        .animated-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(0, 153, 204, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(0, 255, 255, 0.05) 0%, transparent 70%);
+            background-size: 100% 100%;
+            opacity: 0.6;
+            animation: pulseGlow 4s ease-in-out infinite;
+        }
+
+        /* Grid overlay for world map effect */
+        .animated-bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.4;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 0.8; }
         }
 
         @keyframes gradientShift {
@@ -57,9 +103,10 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(10, 25, 41, 0.85);
             backdrop-filter: blur(10px);
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 20px rgba(0, 212, 255, 0.2);
+            border-bottom: 1px solid rgba(0, 212, 255, 0.2);
             z-index: 1000;
             padding: 15px 0;
             transition: all 0.3s ease;
@@ -95,10 +142,10 @@
         }
 
         .nav-links a {
-            color: var(--text-dark);
+            color: rgba(255, 255, 255, 0.9);
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
             position: relative;
         }
 
@@ -114,7 +161,8 @@
         }
 
         .nav-links a:hover {
-            color: var(--primary-color);
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
         }
 
         .nav-links a:hover::after {
@@ -131,8 +179,28 @@
             color: white;
             position: relative;
             padding: 120px 20px 80px;
-            background: var(--gradient-1);
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(0, 153, 204, 0.1) 100%);
             overflow: hidden;
+        }
+
+        /* Neon glow effect for hero */
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: pulse 3s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.5; }
         }
 
         .hero::before {
@@ -168,8 +236,9 @@
             font-size: 64px;
             font-weight: 800;
             margin-bottom: 20px;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.8), 0 0 40px rgba(0, 212, 255, 0.5), 2px 2px 10px rgba(0,0,0,0.5);
             line-height: 1.2;
+            color: #00d4ff;
         }
 
         .hero .subtitle {
@@ -256,6 +325,11 @@
             margin: 0 auto;
             padding: 100px 30px;
             position: relative;
+            background: rgba(10, 25, 41, 0.6);
+            backdrop-filter: blur(5px);
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 212, 255, 0.1);
         }
 
         .section-title {
@@ -291,10 +365,11 @@
         }
 
         .card {
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
             padding: 40px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 40px rgba(0, 212, 255, 0.15);
+            border: 1px solid rgba(0, 212, 255, 0.2);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -314,7 +389,8 @@
 
         .card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            box-shadow: 0 20px 60px rgba(0, 212, 255, 0.3);
+            border-color: rgba(0, 212, 255, 0.5);
         }
 
         .card:hover::before {
@@ -674,9 +750,6 @@
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#contact">Contact</a></li>
-                <li><a href="channel.html" target="new">Videos</a></li>
-                <li><a href="https://medium.com/@tech.ckumar" target="new">Medium</a></li>
-                <li><a href="https://www.linkedin.com/in/chandankumar16/" target="new">Linkedin</a></li>
             </ul>
         </div>
     </nav>
@@ -688,17 +761,12 @@
             <p class="subtitle">AI Systems Architect • Cloud Native Expert</p>
             <p class="tagline">Transforming complex systems into intelligent, self-optimizing experiences</p>
             <div class="cta-buttons">
-                
                 <a href="#contact" class="btn btn-primary">
                     <i class="fas fa-envelope"></i> Get In Touch
-                </a>
-                <a href="channel.html" class="btn btn-secondary">
-                    <i class="fas fa-code"></i> Videos
                 </a>
                 <a href="#projects" class="btn btn-secondary">
                     <i class="fas fa-code"></i> View Projects
                 </a>
-               
             </div>
         </div>
         <div class="scroll-indicator">
@@ -839,9 +907,9 @@
                 <p>CI/CD pipelines</p>
             </div>
             <div class="skill-item fade-in">
-               <a href="https://www.youtube.com/watch?v=IgEHqznBVm0"> <i class="fas fa-wifi"></i>
+                <i class="fas fa-wifi"></i>
                 <h4>IoT Integrations</h4>
-                <p>Internet of Things</p></a>
+                <p>Internet of Things</p>
             </div>
         </div>
     </section>
