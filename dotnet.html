@@ -307,7 +307,7 @@
         <div class="page-header">
             <div class="page-icon"><i class="fas fa-code"></i></div>
             <h1 class="page-title">C# .NET / .NET Core</h1>
-            <p class="page-subtitle">50 Advanced Interview Questions & Answers</p>
+            <p class="page-subtitle">50 Advanced Interview Questions &amp; Answers</p>
         </div>
 
         <!-- Table of Contents -->
@@ -321,57 +321,32 @@
     </div>
 
     <script>
-        mermaid.initialize({
-            startOnLoad: false,
-            theme: 'dark',
-            themeVariables: {
-                primaryColor: '#00d4ff',
-                primaryTextColor: '#e0e0e0',
-                primaryBorderColor: '#0099cc',
-                lineColor: '#00d4ff',
-                secondaryColor: '#051422',
-                tertiaryColor: '#0a1929'
-            }
-        });
-        document.addEventListener("DOMContentLoaded", () => {
-            // Wait for all dynamic content to load
-            setTimeout(() => {
-                const mermaidElements = document.querySelectorAll(".mermaid");
-                mermaid.run({
-                    querySelector: ".mermaid"
-                });
-            }, 200);
-        });
         const questions = [];
 
-        // --- 1–12: Fully detailed C# / .NET Core questions ---
-
+        // Q1
         questions.push({
             number: 1,
-            title: "Explain the evolution from .NET Framework to .NET Core to .NET 5+ and why it matters for architects.",
+            title: "Explain the evolution from .NET Framework to .NET Core to modern .NET and why it matters for architects.",
             description:
-                "Originally, .NET Framework targeted Windows-only, tightly coupled to IIS and the Windows ecosystem. " +
+                "Originally, .NET Framework targeted Windows-only and was tightly coupled to IIS and the Windows ecosystem. " +
                 ".NET Core introduced cross-platform support, modular deployment, and a high-performance runtime. " +
-                ".NET 5+ unified .NET Core and .NET Framework into a single product line (simply called \".NET\"), " +
-                "with a common BCL, SDK-style projects, and a yearly release cadence.",
+                "Modern .NET (5 and later) unified .NET Core and .NET Framework into a single product line, with a common BCL, SDK-style projects, and a yearly release cadence.",
             why:
-                "Architects must understand runtime evolution to make decisions about migration, " +
-                "performance, cross-platform hosting, containerization, and long-term support (LTS). " +
+                "Architects must understand runtime evolution to make decisions about migration, performance, cross-platform hosting, containerization, and long-term support. " +
                 "Choosing the wrong runtime version directly impacts deployment options and maintenance.",
             what:
                 ".NET Framework is Windows-only and effectively in maintenance mode. " +
-                ".NET Core and .NET (5/6/7/8+) are cross-platform, open source, and optimized for cloud-native apps. " +
-                "They support self-contained deployment, container friendliness, and unified APIs across workloads.",
+                "Modern .NET is cross-platform, open-source, and optimized for cloud-native apps. " +
+                "It supports self-contained deployment, containers, Kubernetes, and unified APIs across workloads.",
             how:
-                "For new greenfield apps, target the latest LTS (.NET 8, etc.). " +
-                "For brownfield apps, incrementally move libraries to .NET Standard / .NET, " +
-                "split monoliths into services, and modernize hosting (Kestrel, containers, Kubernetes).",
+                "For new greenfield apps, target the latest LTS (for example, .NET 8). " +
+                "For brownfield apps, incrementally move libraries to .NET Standard / .NET, split monoliths into services, and modernize hosting with Kestrel and containers.",
             pros: [
                 "Cross-platform (Windows, Linux, macOS, containers)",
                 "Higher performance and lower memory footprint",
                 "Unified SDK-style project system",
                 "Regular release cadence and active improvements",
-                "Better tooling (CLI, templates, analyzers)",
+                "Better tooling and CLI support",
                 "First-class container and cloud support"
             ],
             cons: [
@@ -382,10 +357,10 @@
                 "Some legacy tech (WebForms, WCF server) not directly supported"
             ],
             diagram: `flowchart TD
-    A[.NET Framework<br/>Windows + IIS] --> B[.NET Core<br/>Cross-platform + Kestrel]
-    B --> C[.NET 5+ (Unified .NET)]
-    C --> D[Cloud-native Apps<br/>Containers, Kubernetes]`,
-            implementation: `// Example: SDK-style .NET 8 console / web project
+    A[.NET Framework - Windows and IIS] --> B[.NET Core - Cross-platform and Kestrel]
+    B --> C[Modern .NET - Unified Platform]
+    C --> D[Cloud-native Apps - Containers and Kubernetes]`,
+            implementation: `// Example: SDK-style modern .NET web project
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -411,53 +386,51 @@ if (app.Environment.IsDevelopment())
 app.MapControllers();
 app.Run();`,
             approaches: [
-                "New projects: start directly on latest LTS (.NET 8+).",
-                "For legacy apps: strangler-fig pattern to carve out services.",
+                "New projects: start on latest LTS (.NET 8 or later).",
+                "For legacy apps: use the strangler-fig pattern to carve out services.",
                 "Use .NET Upgrade Assistant for guided migrations.",
-                "Standardize solution templates across the org.",
+                "Standardize solution templates across the organization.",
                 "Align runtime versions with container base images and DevOps pipelines."
             ]
         });
 
+        // Q2
         questions.push({
             number: 2,
             title: "How does the ASP.NET Core middleware pipeline work and how do you design custom middleware?",
             description:
                 "ASP.NET Core uses a request-delegate pipeline composed of middleware components. " +
-                "Each middleware can inspect, short-circuit, or modify the HTTP request/response, " +
-                "then call the next delegate. Order of registration is critical.",
+                "Each middleware can inspect, short-circuit, or modify the HTTP request and response, then call the next delegate. Ordering is critical.",
             why:
-                "Understanding middleware is crucial to cross-cutting concerns like logging, metrics, " +
-                "correlation IDs, authentication/authorization, caching, and error handling.",
+                "Understanding middleware is crucial for cross-cutting concerns like logging, metrics, correlation IDs, authentication, authorization, caching, and error handling.",
             what:
                 "Middleware is a function or class that receives HttpContext and a 'next' delegate. " +
-                "You register middleware in Program.cs using UseXXX/UseWhen/Map. " +
-                "It is conceptually similar to OWIN but unified into the ASP.NET Core hosting model.",
+                "You register middleware in Program.cs using methods like Use, UseWhen, and Map.",
             how:
-                "Implement a class with a constructor accepting RequestDelegate and an Invoke/InvokeAsync method. " +
-                "Manipulate HttpContext before and/or after calling await _next(context). " +
+                "Implement a class with a constructor accepting RequestDelegate and an Invoke or InvokeAsync method. " +
+                "Manipulate HttpContext before and after calling await _next(context). " +
                 "Register it with app.UseMiddleware<T>().",
             pros: [
                 "Clear separation of cross-cutting concerns",
                 "Composable and testable pipeline",
-                "Fine-grained control over request/response processing",
+                "Fine-grained control over request and response processing",
                 "Good performance with minimal overhead",
-                "Supports branching (Map/MapWhen) for custom routes"
+                "Supports branching for custom routes"
             ],
             cons: [
                 "Order-dependent and easy to misconfigure",
-                "Highly coupled to HTTP abstractions",
+                "Coupled to HTTP abstractions",
                 "Complex pipelines can be hard to debug",
                 "Risk of swallowing exceptions if handled incorrectly"
             ],
             diagram: `flowchart LR
-    A[Incoming Request] --> B[Exception Handling MW]
-    B --> C[Routing MW]
-    C --> D[Auth / AuthZ MW]
-    D --> E[Custom Business MW]
+    A[Incoming Request] --> B[Exception Handling Middleware]
+    B --> C[Routing Middleware]
+    C --> D[Auth and AuthZ Middleware]
+    D --> E[Custom Business Middleware]
     E --> F[Endpoint Handler]
-    F -->|Response| E --> D --> C --> B --> A[Outgoing Response]`,
-            implementation: `// Custom middleware
+    F --> G[Outgoing Response]`,
+            implementation: `// Custom middleware example
 public class RequestTimingMiddleware
 {
     private readonly RequestDelegate _next;
@@ -495,50 +468,50 @@ app.UseAuthorization();
 app.MapControllers();
 app.Run();`,
             approaches: [
-                "Put global exception handling & logging as the first middleware.",
-                "Auth / AuthZ should run before business logic.",
-                "Use MapWhen/UseWhen to branch pipeline for specific paths.",
-                "Keep middleware small and focused; avoid complex domain logic inside it.",
-                "Write unit tests using TestServer and HttpClient."
+                "Put global exception handling and logging as the first middleware.",
+                "Auth and authorization should run before business logic.",
+                "Use MapWhen or UseWhen to branch the pipeline for specific paths.",
+                "Keep middleware small and focused; avoid heavy domain logic inside it.",
+                "Write integration tests using TestServer and HttpClient."
             ]
         });
 
+        // Q3
         questions.push({
             number: 3,
             title: "Explain dependency injection in .NET Core and how service lifetimes affect architecture.",
             description:
-                ".NET Core has built-in dependency injection (DI) with three main lifetimes: Singleton, Scoped, and Transient. " +
-                "Services are registered in the container and injected into controllers, middleware, background services, etc.",
+                ".NET Core has built-in dependency injection with three main lifetimes: Singleton, Scoped, and Transient. " +
+                "Services are registered in the container and injected into controllers, middleware, background services, and more.",
             why:
                 "Proper DI usage reduces coupling, improves testability, and clarifies ownership of resources. " +
                 "Incorrect lifetimes can cause memory leaks, concurrency bugs, and unexpected state sharing.",
             what:
-                "Singleton: one instance for the whole application. " +
-                "Scoped: one instance per request (per scope). " +
-                "Transient: new instance every time it is requested. " +
-                "The default container is simple but can be extended or replaced.",
+                "Singleton: one instance for the entire application lifetime. " +
+                "Scoped: one instance per request or logical scope. " +
+                "Transient: new instance every time it is requested.",
             how:
-                "Register services in builder.Services. " +
-                "Inject them via constructor injection where needed. " +
-                "Avoid using ServiceLocator and make lifetimes explicit.",
+                "Register services in builder.Services. Inject them via constructor injection where needed. " +
+                "Avoid the Service Locator pattern and make lifetimes explicit.",
             pros: [
                 "Built-in and consistent DI story",
-                "Supports constructor injection everywhere (controllers, pages, handlers, middleware)",
+                "Supports constructor injection everywhere",
                 "Clear lifetimes and ownership semantics",
                 "Integration with configuration, logging, and options pattern"
             ],
             cons: [
-                "Default container lacks some advanced features (e.g., interception) out of the box",
+                "Default container lacks some advanced features (interception, decorators) without extra code",
                 "Misusing lifetimes can cause subtle bugs",
                 "Circular dependencies can appear if design is not clean"
             ],
             diagram: `flowchart TD
-    A[Service Collection] -->|Singleton| B[Shared Instance]
-    A -->|Scoped| C[Request Scope]
-    A -->|Transient| D[New Instance Every Resolve]
-    C --> E[Controller / Handler]
+    A[Service Collection] --> B[Singleton Services]
+    A --> C[Scoped Services]
+    A --> D[Transient Services]
+    B --> E[Controllers and Handlers]
+    C --> E
     D --> E`,
-            implementation: `// Program.cs - registrations
+            implementation: `// Program.cs - service registrations
 builder.Services.AddSingleton<ICacheProvider, MemoryCacheProvider>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddTransient<IEmailSender, SmtpEmailSender>();
@@ -564,48 +537,49 @@ public class OrdersController : ControllerBase
     }
 }`,
             approaches: [
-                "Use Scoped for domain/application services tied to a web request.",
-                "Use Singleton only for stateless services or caches (thread-safe).",
-                "Use Transient for lightweight services without expensive resources.",
+                "Use Scoped for domain and application services tied to a web request.",
+                "Use Singleton only for stateless services or caches that are thread-safe.",
+                "Use Transient for lightweight, short-lived services.",
                 "Avoid capturing scoped services in singletons.",
-                "Consider external DI containers only if you really need advanced features."
+                "Consider external DI containers only if advanced features are truly needed."
             ]
         });
 
+        // Q4
         questions.push({
             number: 4,
             title: "How does the configuration and options pattern work in .NET Core?",
             description:
                 "Configuration in .NET Core is hierarchical and provider-based (JSON, environment variables, Key Vault, etc.). " +
-                "The options pattern binds configuration sections to strongly-typed POCO classes using IOptions / IOptionsSnapshot / IOptionsMonitor.",
+                "The options pattern binds configuration sections to strongly-typed POCO classes using IOptions, IOptionsSnapshot, or IOptionsMonitor.",
             why:
                 "Strongly-typed configuration improves safety, discoverability, and testability. " +
-                "It also supports per-environment overrides and live reload for certain scenarios.",
+                "It also supports per-environment overrides and live reload in some scenarios.",
             what:
-                "IOptions<T> – singleton snapshot at startup. " +
-                "IOptionsSnapshot<T> – scoped per request, supports reload. " +
-                "IOptionsMonitor<T> – can observe changes via OnChange callbacks.",
+                "IOptions<T> provides a singleton snapshot at startup. " +
+                "IOptionsSnapshot<T> provides per-request snapshots, useful in web apps. " +
+                "IOptionsMonitor<T> supports change notifications.",
             how:
-                "Bind a configuration section to a POCO using services.Configure<T>(configuration.GetSection(\"SectionName\")); " +
+                "Bind a configuration section to a POCO using services.Configure<T>(configuration.GetSection(\"SectionName\")). " +
                 "Inject IOptions<T> or IOptionsSnapshot<T> into services and controllers.",
             pros: [
                 "Strongly typed, IntelliSense-friendly configuration",
-                "Supports multiple providers and environments",
+                "Supports multiple configuration providers and environments",
                 "Centralized configuration binding and validation",
                 "Supports reload and change notifications"
             ],
             cons: [
-                "Misuse of IOptions vs IOptionsSnapshot can be confusing",
-                "Complex configuration hierarchies can become hard to manage",
-                "Requires discipline to keep config keys consistent across environments"
+                "Misuse of IOptions variants can be confusing",
+                "Complex configuration hierarchies can be hard to manage",
+                "Requires discipline to keep configuration keys consistent"
             ],
             diagram: `flowchart TD
     A[appsettings.json] --> B[Configuration Builder]
     C[Environment Variables] --> B
-    D[User Secrets / Key Vault] --> B
+    D[Key Vault or User Secrets] --> B
     B --> E[IConfiguration]
-    E --> F[Options Binding<br/>IOptions<T>]
-    F --> G[Injected into Services / Controllers]`,
+    E --> F[Options Binding]
+    F --> G[Injected Services and Controllers]`,
             implementation: `// appsettings.json
 {
   "Smtp": {
@@ -641,54 +615,55 @@ public class SmtpEmailSender : IEmailSender
 
     public Task SendAsync(string to, string subject, string body)
     {
-        // Use _options.Host, _options.Port...
+        // Use _options.Host, _options.Port etc.
         return Task.CompletedTask;
     }
 }`,
             approaches: [
                 "Centralize configuration keys and bind via the options pattern.",
-                "Validate options using services.AddOptions<T>().Bind(...).ValidateDataAnnotations().",
+                "Validate options using AddOptions and data annotations.",
                 "Use environment variables for secrets in containers.",
-                "Use Key Vault / Secret Manager for sensitive values.",
+                "Use Secret Manager or Key Vault for sensitive values.",
                 "Prefer IOptionsSnapshot in web apps where per-request updates may be needed."
             ]
         });
 
+        // Q5
         questions.push({
             number: 5,
-            title: "Describe async/await in C# and common pitfalls in ASP.NET Core.",
+            title: "Describe async and await in C# and common pitfalls in ASP.NET Core.",
             description:
-                "async/await is the primary model for asynchronous programming in C#. " +
-                "In ASP.NET Core, it’s crucial for non-blocking I/O and scalability. " +
-                "However, improper use can cause deadlocks, thread-pool starvation, and performance issues.",
+                "async and await is the primary model for asynchronous programming in C#. " +
+                "In ASP.NET Core, it is crucial for non-blocking I/O and scalability. " +
+                "However, improper use can cause thread pool starvation and performance issues.",
             why:
-                "High-throughput APIs rely on async I/O to scale. Blocking calls (Task.Result, .Wait()) " +
-                "can reduce concurrency and cause timeouts under load.",
+                "High-throughput APIs rely on async I/O to scale. " +
+                "Blocking calls using Task.Result or .Wait() can reduce concurrency and cause timeouts under load.",
             what:
-                "An async method returns Task/Task<T>. 'await' suspends the method until the awaited task completes, " +
-                "freeing the thread to serve other requests. ASP.NET Core doesn’t have the ASP.NET classic SynchronizationContext, " +
-                "so deadlock patterns are reduced, but bad blocking code still harms throughput.",
+                "An async method returns Task or Task<T>. The await keyword suspends the method until the awaited task completes, " +
+                "freeing the thread to serve other requests. ASP.NET Core does not use the legacy SynchronizationContext, reducing deadlock issues.",
             how:
-                "Mark controller actions async. Use asynchronous I/O APIs (e.g., EF Core async methods, HttpClient async APIs). " +
-                "Avoid blocking on tasks. Use ConfigureAwait(false) in libraries where appropriate.",
+                "Mark controller actions async and use asynchronous I/O APIs (EF Core async methods, HttpClient async APIs, etc.). " +
+                "Avoid blocking on tasks and use ConfigureAwait(false) appropriately in libraries.",
             pros: [
                 "Improved scalability via non-blocking I/O",
-                "Simpler code compared to raw callbacks / Tasks",
+                "Simpler code compared to callbacks or manual tasks",
                 "Better CPU utilization under load"
             ],
             cons: [
                 "Learning curve for async flow and error handling",
                 "Potential for fire-and-forget bugs",
-                "Unobserved exceptions if not awaited properly",
+                "Unobserved exceptions if tasks are not awaited",
                 "Can complicate debugging stack traces"
             ],
             diagram: `flowchart TD
     A[Incoming HTTP Request] --> B[Controller Action (async)]
-    B --> C[Database Call async]
-    C -->|I/O Pending| D[Thread Returns to Pool]
-    D --> E[Other Requests]
+    B --> C[Database Async Call]
+    C -->|I/O Pending| D[Thread Returned to Pool]
+    D --> E[Serves Other Requests]
     C -->|Completed| F[Continuation]
-    F --> G[Build Response] --> H[Send Response]`,
+    F --> G[Build Response]
+    G --> H[Send Response]`,
             implementation: `// Good: fully async controller
 [ApiController]
 [Route("api/[controller]")]
@@ -718,16 +693,17 @@ public IActionResult GetSync()
 }`,
             approaches: [
                 "Make the entire call chain async all the way down.",
-                "Never block on async code (.Result, .Wait()) in web apps.",
+                "Never block on async code in web apps.",
                 "Use async APIs for DB, HTTP, IO, and messaging.",
                 "Log and handle Task cancellations gracefully.",
                 "Apply ConfigureAwait(false) in class libraries where resume on context is not required."
             ]
         });
 
+        // Q6
         questions.push({
             number: 6,
-            title: "How does Entity Framework Core tracking vs. AsNoTracking impact performance and behavior?",
+            title: "How does Entity Framework Core tracking versus AsNoTracking impact performance and behavior?",
             description:
                 "EF Core change tracking keeps an in-memory graph of entities to detect modifications on SaveChanges. " +
                 "AsNoTracking queries skip this to reduce overhead. The choice affects performance, memory, and behavior.",
@@ -735,12 +711,11 @@ public IActionResult GetSync()
                 "In read-heavy APIs, unnecessary tracking can severely impact performance. " +
                 "In write scenarios, tracking is useful for automatic change detection and concurrency control.",
             what:
-                "Tracked query: DbContext keeps entity instances in its ChangeTracker. " +
-                "AsNoTracking: EF materializes objects but doesn’t track them; ideal for read-only queries / projections.",
+                "Tracked queries keep entity instances in the DbContext ChangeTracker. " +
+                "AsNoTracking queries materialize objects but do not track them, making them ideal for read-only queries and projections.",
             how:
-                "Use AsNoTracking() on read-only queries. " +
-                "Keep DbContext scope short (per request). " +
-                "Use explicit Attach/Update for detached entities.",
+                "Use AsNoTracking on read-only queries. Keep DbContext scope short (per request). " +
+                "Use explicit Attach or Update for detached entities when needed.",
             pros: [
                 "Tracking: automatic change detection and concurrency features",
                 "AsNoTracking: reduced memory and CPU usage",
@@ -753,9 +728,9 @@ public IActionResult GetSync()
             ],
             diagram: `flowchart TD
     A[DbContext] --> B[Tracked Query]
-    B --> C[ChangeTracker<br/>Entity Entries]
+    B --> C[Change Tracker]
     A --> D[AsNoTracking Query]
-    D --> E[No Tracking<br/>Lightweight Objects]`,
+    D --> E[Objects Without Tracking]`,
             implementation: `// Tracked: default
 var customer = await _db.Customers.FirstAsync(c => c.Id == id);
 customer.Name = "Updated Name";
@@ -767,7 +742,7 @@ var customers = await _db.Customers
     .Where(c => c.IsActive)
     .ToListAsync();
 
-// Global convention (e.g., for queries)
+// Global convention
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(connString);
@@ -775,47 +750,47 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });`,
             approaches: [
                 "Use AsNoTracking for all read-only endpoints by default.",
-                "Limit DbContext lifetime to a single request (Scoped).",
+                "Limit DbContext lifetime to a single request.",
                 "Avoid long-lived DbContexts with many tracked entities.",
                 "For updates from detached DTOs, map to entity and attach with correct state.",
-                "Profile queries and tracking behavior using logging / Application Insights."
+                "Profile queries and tracking behavior using logging and metrics."
             ]
         });
 
+        // Q7
         questions.push({
             number: 7,
             title: "How do you implement global exception handling and ProblemDetails in ASP.NET Core APIs?",
             description:
                 "Global exception handling centralizes error handling and ensures consistent response formats. " +
-                "ProblemDetails (RFC 7807) is the recommended standard for HTTP errors in JSON APIs.",
+                "ProblemDetails (RFC 7807) is the recommended standard for HTTP error responses in JSON APIs.",
             why:
-                "Without a central error handler, exceptions leak stack traces, produce inconsistent responses, " +
+                "Without a central error handler, exceptions can leak stack traces, produce inconsistent responses, " +
                 "and make observability harder. ProblemDetails simplifies client handling and documentation.",
             what:
-                "A top-level middleware (or UseExceptionHandler) that catches all unhandled exceptions, logs them, " +
+                "A top-level middleware (or UseExceptionHandler) catches all unhandled exceptions, logs them, " +
                 "and returns a ProblemDetails JSON payload with traceId, status, title, and detail.",
             how:
-                "Create a custom middleware or use app.UseExceptionHandler. " +
-                "Map exceptions to HTTP status codes. " +
-                "Return TypedResults.Problem / ProblemDetails in minimal APIs.",
+                "Create a custom middleware or use app.UseExceptionHandler. Map exceptions to HTTP status codes. " +
+                "Return TypedResults.Problem or ProblemDetails objects from minimal APIs when appropriate.",
             pros: [
                 "Consistent error schema across endpoints",
                 "Centralized logging and correlation",
                 "Easier client-side error handling",
-                "Better security (no raw stack traces)"
+                "Better security by avoiding raw stack traces"
             ],
             cons: [
                 "Need to maintain mapping of domain exceptions to HTTP codes",
                 "Complex business errors may require custom extensions",
-                "Requires discipline so controllers don’t override global behavior"
+                "Requires discipline so controllers do not override global behavior"
             ],
             diagram: `flowchart TD
-    A[Request] --> B[Global Exception Middleware]
-    B --> C[Controller / Endpoint]
+    A[Incoming Request] --> B[Global Exception Middleware]
+    B --> C[Controller or Endpoint]
     C -->|Throws Exception| B
-    B --> D[Log + Map to ProblemDetails]
+    B --> D[Log and Map to ProblemDetails]
     D --> E[JSON Error Response]`,
-            implementation: `// Middleware example
+            implementation: `// Global exception middleware example
 public class GlobalExceptionMiddleware
 {
     private readonly RequestDelegate _next;
@@ -871,41 +846,42 @@ var app = builder.Build();
 app.UseMiddleware<GlobalExceptionMiddleware>();`,
             approaches: [
                 "Use a single global middleware for exception handling.",
-                "Map domain-level exceptions to 4xx codes, technical ones to 5xx.",
-                "Always include traceId / correlationId for troubleshooting.",
-                "Align response schema with OpenAPI / Swagger documentation.",
-                "Use filters or middleware, but avoid duplicating error logic in controllers."
+                "Map domain-level exceptions to 4xx codes and technical ones to 5xx.",
+                "Always include traceId or correlationId for troubleshooting.",
+                "Align response schema with OpenAPI or Swagger documentation.",
+                "Avoid duplicating error logic inside controllers."
             ]
         });
 
+        // Q8
         questions.push({
             number: 8,
             title: "What is HttpClientFactory and how does it solve common HttpClient issues?",
             description:
                 "HttpClientFactory centralizes creation and lifetime management of HttpClient instances. " +
-                "It avoids socket exhaustion, allows named/typed clients, and integrates with Polly for resilience.",
+                "It avoids socket exhaustion, allows named and typed clients, and integrates with resilience libraries like Polly.",
             why:
-                "Incorrect use of HttpClient (new per request or single static without policies) " +
-                "causes socket exhaustion or missing resilience (retries, circuit breakers).",
+                "Incorrect use of HttpClient (creating a new instance per request or using a single static without proper policies) " +
+                "can cause socket exhaustion or missing resilience features.",
             what:
                 "IHttpClientFactory creates HttpClient instances with managed handlers. " +
-                "You can configure named clients, typed clients, and add delegating handlers (logging, retries, etc.).",
+                "You can configure named clients, typed clients, and delegating handlers for logging and retries.",
             how:
-                "Register services.AddHttpClient(). Inject HttpClient via typed client or factory. " +
+                "Register services.AddHttpClient(), then inject HttpClient via typed client or factory. " +
                 "Configure base addresses, default headers, and policies during registration.",
             pros: [
                 "Prevents socket exhaustion",
                 "Centralized configuration for outbound calls",
-                "Supports Polly policies and delegating handlers",
+                "Supports resilience policies and delegating handlers",
                 "Improves testability via typed clients"
             ],
             cons: [
                 "Extra abstraction to learn",
                 "Misconfigured handlers can still cause issues",
-                "Must carefully design retries to avoid overload"
+                "Retry policies must be carefully designed to avoid overload"
             ],
             diagram: `flowchart TD
-    A[Service Collection] --> B[AddHttpClient()]
+    A[Service Collection] --> B[AddHttpClient]
     B --> C[IHttpClientFactory]
     C --> D[Named Client]
     C --> E[Typed Client]
@@ -948,37 +924,34 @@ public class MyService
 }`,
             approaches: [
                 "Prefer typed clients for domain-specific outbound integrations.",
-                "Use named clients when you need different configs for same host.",
-                "Attach logging / metrics handlers for observability.",
+                "Use named clients when you need different configurations for the same host.",
+                "Attach logging and metrics handlers for observability.",
                 "Integrate Polly for retries, circuit breakers, and timeouts.",
-                "Avoid static HttpClient instances you manage yourself in ASP.NET Core."
+                "Avoid manually managing static HttpClient instances in ASP.NET Core."
             ]
         });
 
+        // Q9
         questions.push({
             number: 9,
             title: "Minimal APIs vs traditional controllers: when and why would you choose one over the other?",
             description:
                 "Minimal APIs provide a lightweight way to define HTTP endpoints using top-level statements. " +
-                "They are great for small services, prototypes, and highly focused APIs. " +
-                "Controllers provide more structure, discoverability, filters, and conventions.",
+                "They are great for small services, prototypes, and focused APIs. Controllers provide more structure, discoverability, filters, and conventions.",
             why:
-                "Architecture decisions here affect maintainability, testability, and how large teams collaborate. " +
-                "Mixing both is possible but should be deliberate.",
+                "Architecture decisions here affect maintainability, testability, and how large teams collaborate. Using both styles without guidance can confuse the team.",
             what:
-                "Minimal APIs: app.MapGet/MapPost etc., function-style endpoints. " +
-                "Controllers: classes inheriting from ControllerBase, decorated with attributes and using routing conventions.",
+                "Minimal APIs use MapGet and MapPost style endpoints. Controllers are classes inheriting from ControllerBase, using routing attributes and conventions.",
             how:
-                "For simple CRUD or gateway endpoints, use minimal APIs. " +
-                "For complex domains with filters, versioning, and attributes, controllers are often more expressive.",
+                "For simple CRUD or gateway endpoints, use minimal APIs. For complex domains with filters, versioning, and attributes, controllers are often more expressive.",
             pros: [
-                "Minimal APIs: less ceremony, fewer files, very fast to spin up",
-                "Good for microservices or internal tools",
+                "Minimal APIs: less ceremony and fewer files",
+                "Fast to spin up for microservices or internal tools",
                 "Controllers: rich attribute model, filters, versioning, and conventions",
                 "Better separation for large teams and big domains"
             ],
             cons: [
-                "Minimal APIs: can become messy for large domains if not structured well",
+                "Minimal APIs: can become messy for large domains if not structured",
                 "Controllers: more boilerplate for simple endpoints",
                 "Mixing styles without guidelines can confuse the team"
             ],
@@ -1018,38 +991,38 @@ public class OrdersController : ControllerBase
 }`,
             approaches: [
                 "Use minimal APIs for small services or edge gateways.",
-                "Use controllers for complex domains and heavy use of filters/versioning.",
-                "Impose folder/namespace conventions for minimal APIs to avoid god Program.cs.",
-                "Share application/domain layer between both styles.",
-                "Document the chosen approach in your architecture decision records (ADRs)."
+                "Use controllers for complex domains and heavy use of filters and versioning.",
+                "Impose folder and namespace conventions for minimal APIs to avoid a huge Program.cs.",
+                "Share application and domain layers between both styles.",
+                "Document the chosen approach in architecture decision records."
             ]
         });
 
+        // Q10
         questions.push({
             number: 10,
-            title: "How do you host background jobs using IHostedService / BackgroundService in .NET Core?",
+            title: "How do you host background jobs using IHostedService or BackgroundService in .NET Core?",
             description:
-                "Background services run alongside your web application within the same process, " +
-                "using IHostedService or BackgroundService. They are great for polling, scheduled work, or " +
-                "long-running processes that don't directly handle HTTP.",
+                "Background services run alongside your web application within the same process, using IHostedService or BackgroundService. " +
+                "They are useful for polling, scheduled work, or long-running processes that do not directly handle HTTP.",
             why:
-                "Many systems need background tasks (sending emails, syncing data, running sagas). " +
+                "Many systems need background tasks such as sending emails, syncing data, or running sagas. " +
                 "Hosting them incorrectly can lead to resource leaks or unreliable execution.",
             what:
-                "IHostedService defines StartAsync and StopAsync. BackgroundService gives a base class with ExecuteAsync loop. " +
-                "They are hosted by the generic host (HostBuilder / WebApplication).",
+                "IHostedService defines StartAsync and StopAsync. BackgroundService provides a base class with an ExecuteAsync loop. " +
+                "They are hosted by the generic host.",
             how:
-                "Implement BackgroundService, inject required dependencies, and register via AddHostedService<T>(). " +
+                "Implement BackgroundService, inject dependencies, and register via AddHostedService<T>(). " +
                 "Respect cancellation tokens and avoid blocking calls.",
             pros: [
-                "Simple hosting model tied to app lifecycle",
+                "Simple hosting model tied to application lifecycle",
                 "No external scheduler needed for simple tasks",
                 "Full access to DI container and configuration"
             ],
             cons: [
-                "Sharing web app resources may cause contention",
+                "Sharing resources with the web app may cause contention",
                 "If the web app restarts, background jobs restart too",
-                "Not ideal for heavy or mission-critical long-running jobs (consider separate worker service)"
+                "Not ideal for heavy or mission-critical long-running jobs"
             ],
             diagram: `flowchart TD
     A[Web Host] --> B[ASP.NET Core Pipeline]
@@ -1099,27 +1072,24 @@ builder.Services.AddHostedService<EmailBackgroundService>();`,
                 "Use BackgroundService for lightweight periodic tasks or queue listeners.",
                 "For heavy workloads, host separate worker services or containerized jobs.",
                 "Always respect CancellationToken and handle graceful shutdown.",
-                "Use health checks / readiness probes if background tasks affect availability.",
-                "Combine with queues (Service Bus, RabbitMQ, etc.) for resilient processing."
+                "Use health checks and readiness probes if background tasks affect availability.",
+                "Combine with queues for resilient processing."
             ]
         });
 
+        // Q11
         questions.push({
             number: 11,
-            title: "Explain health checks in ASP.NET Core and how you’d design them for microservices.",
+            title: "Explain health checks in ASP.NET Core and how you design them for microservices.",
             description:
-                "Health checks provide liveness/readiness endpoints that reflect the state of the application " +
-                "and its dependencies (DB, caches, message brokers, etc.). They integrate with Kubernetes, " +
-                "load balancers, and monitoring.",
+                "Health checks provide liveness and readiness endpoints that reflect the state of the application and its dependencies " +
+                "(databases, caches, message brokers, etc.). They integrate well with Kubernetes, load balancers, and monitoring systems.",
             why:
-                "Correct health checks prevent sending traffic to unhealthy instances and improve reliability " +
-                "and self-healing behavior in orchestrated environments.",
+                "Correct health checks prevent sending traffic to unhealthy instances and improve reliability and self-healing in orchestrated environments.",
             what:
-                "ASP.NET Core offers Microsoft.Extensions.Diagnostics.HealthChecks. " +
-                "You register checks and expose an endpoint (e.g., /health/live, /health/ready).",
+                "ASP.NET Core offers health check libraries. You register checks and expose endpoints such as /health/live and /health/ready.",
             how:
-                "Use services.AddHealthChecks().AddSqlServer(...).AddRedis(...); " +
-                "Map endpoints with app.MapHealthChecks(\"/health/ready\", options => ...).",
+                "Use services.AddHealthChecks().AddSqlServer(...).AddRedis(...); and map endpoints with app.MapHealthChecks.",
             pros: [
                 "Simple integration with Kubernetes and reverse proxies",
                 "Pluggable checks for common dependencies",
@@ -1134,7 +1104,7 @@ builder.Services.AddHostedService<EmailBackgroundService>();`,
     A[Service Instance] --> B[/health/live]
     A --> C[/health/ready]
     B --> D[Kubernetes Liveness Probe]
-    C --> E[Load Balancer / Readiness Probe]`,
+    C --> E[Load Balancer Readiness Probe]`,
             implementation: `// Program.cs
 builder.Services.AddHealthChecks()
     .AddSqlServer(builder.Configuration.GetConnectionString("Default"))
@@ -1143,50 +1113,29 @@ builder.Services.AddHealthChecks()
 // Basic endpoints
 var app = builder.Build();
 app.MapHealthChecks("/health/live");
-app.MapHealthChecks("/health/ready", new HealthCheckOptions
-{
-    Predicate = check => check.Tags.Contains("ready"),
-    ResponseWriter = async (ctx, report) =>
-    {
-        ctx.Response.ContentType = "application/json";
-        var result = JsonSerializer.Serialize(new
-        {
-            status = report.Status.ToString(),
-            checks = report.Entries.Select(e => new
-            {
-                name = e.Key,
-                status = e.Value.Status.ToString(),
-                error = e.Value.Exception?.Message
-            })
-        });
-        await ctx.Response.WriteAsync(result);
-    }
-});`,
+app.MapHealthChecks("/health/ready");`,
             approaches: [
                 "Separate liveness (is process running) from readiness (can serve traffic).",
                 "Mark expensive external checks as readiness only.",
-                "Use tags to filter checks per endpoint.",
-                "Align intervals and timeouts with platform (Kubernetes, App Service, etc.).",
-                "Include simple domain health signals (e.g., backlog size, feature flags) where relevant."
+                "Use tags to filter checks per endpoint when needed.",
+                "Align intervals and timeouts with the hosting platform.",
+                "Include simple domain health signals where relevant."
             ]
         });
 
+        // Q12
         questions.push({
             number: 12,
             title: "How do you implement API versioning and deprecation strategies in ASP.NET Core?",
             description:
                 "API versioning allows you to evolve contracts without breaking existing clients. " +
-                "ASP.NET Core can support URL versioning, header versioning, or query string versioning, " +
-                "often with the Microsoft.AspNetCore.Mvc.Versioning package.",
+                "ASP.NET Core can support URL, header, or query string versioning, often using the official versioning package.",
             why:
-                "Large systems cannot break clients suddenly. You need clear strategies for introducing new versions, " +
-                "maintaining older ones, and eventually deprecating them.",
+                "Large systems cannot break clients suddenly. You need clear strategies for introducing new versions, maintaining older ones, and eventually deprecating them.",
             what:
-                "You define versions (v1, v2, etc.) and map controllers or endpoints to them. " +
-                "Versioning metadata appears in Swagger/OpenAPI and may be communicated via headers or paths.",
+                "You define versions (v1, v2, etc.) and map controllers or endpoints to them. Versioning metadata appears in Swagger and may be communicated via headers or paths.",
             how:
-                "Use AddApiVersioning, decorate controllers with [ApiVersion], and route via [Route(\"api/v{version:apiVersion}/[controller]\")]. " +
-                "Expose deprecation via headers and documentation.",
+                "Use AddApiVersioning, decorate controllers with ApiVersion, and route via api/v{version:apiVersion}/[controller]. Expose deprecation via headers and documentation.",
             pros: [
                 "Controlled evolution of API surface",
                 "Backward compatibility for existing consumers",
@@ -1201,7 +1150,7 @@ app.MapHealthChecks("/health/ready", new HealthCheckOptions
     A[Client v1] --> B[/api/v1/orders]
     A --> C[/api/v1/customers]
     D[Client v2] --> E[/api/v2/orders]
-    E --> F[New Contract / Behavior]`,
+    E --> F[New Contract or Behavior]`,
             implementation: `// Program.cs
 builder.Services.AddApiVersioning(options =>
 {
@@ -1230,32 +1179,31 @@ public class OrdersV2Controller : ControllerBase
     public IActionResult GetV2(int id) => Ok(new { Version = "v2", Id = id, Extra = "..." });
 }`,
             approaches: [
-                "Prefer URL versioning for public REST APIs (easy to cache and route).",
-                "Keep versions minimal – only when breaking changes are required.",
+                "Prefer URL versioning for public REST APIs.",
+                "Keep versions minimal and only when breaking changes are required.",
                 "Communicate deprecation via headers and documentation.",
                 "Automate tests across all active API versions.",
-                "Maintain ADRs describing why and how you versioned APIs."
+                "Maintain architecture decision records describing versioning strategy."
             ]
         });
 
-        // --- Helper to auto-generate question 13–50 in a compact way ---
-
+        // Generic topics for Q13–Q50
         const advancedTopics = [
             "CQRS and MediatR-based architecture in .NET",
             "Domain-driven design layers in a .NET Core solution",
             "Outbox pattern for reliable messaging with EF Core",
-            "Saga/Process Manager orchestration using background workers",
-            "Resilience with Polly (retries, circuit breakers, timeouts)",
+            "Saga or process manager orchestration using background workers",
+            "Resilience with Polly for retries, circuit breakers, and timeouts",
             "Caching strategies (in-memory, distributed, response caching)",
-            "Security: JWT authentication and role-based authorization",
+            "Security with JWT authentication and role-based authorization",
             "Using Span<T> and Memory<T> for high-performance APIs",
-            "Records vs classes for immutable DTOs and domain objects",
-            "ValueTask vs Task and when to use them",
+            "Records versus classes for immutable DTOs and domain objects",
+            "ValueTask versus Task and when to use them",
             "Source generators and compile-time optimizations",
             "LINQ pitfalls and performance considerations",
             "Custom model binding and validation attributes",
-            "File upload/download streaming in ASP.NET Core",
-            "gRPC vs REST in .NET",
+            "File upload and download streaming in ASP.NET Core",
+            "gRPC versus REST in modern .NET",
             "SignalR real-time communication in .NET",
             "Configuration for multi-tenant applications",
             "Localization and globalization strategy",
@@ -1264,17 +1212,17 @@ public class OrdersV2Controller : ControllerBase
             "Structuring large solutions (modular monolith vs microservices)",
             "Using feature flags and toggles in .NET applications",
             "Hosting .NET in containers and Kubernetes",
-            "Performance profiling and dotnet-trace/dotnet-counters",
-            "Memory leaks and diagnosing with dotnet-gcdump",
+            "Performance profiling and dotnet-trace or dotnet-counters",
+            "Memory leak diagnosis with dotnet-gcdump",
             "Async streams (IAsyncEnumerable) in APIs",
-            "Pipeline behaviors in MediatR (cross-cutting concerns)",
+            "Pipeline behaviors in MediatR for cross-cutting concerns",
             "Dynamic loading and plugins with AssemblyLoadContext",
             "Implementing clean architecture in .NET",
             "Zero-downtime deployments for .NET APIs",
-            "Rate limiting middleware in .NET 7+",
-            "Using Keyed services and advanced DI patterns",
+            "Rate limiting middleware in modern .NET",
+            "Using keyed services and advanced DI patterns",
             "Multi-environment configuration and secrets management",
-            "BFF (Backend for Frontend) pattern in .NET",
+            "Backend for Frontend (BFF) pattern in .NET",
             "GraphQL endpoints with Hot Chocolate",
             "Testing strategy (unit, integration, contract tests)",
             "Using test containers (Docker) for integration tests",
@@ -1289,20 +1237,20 @@ public class OrdersV2Controller : ControllerBase
                 description:
                     `${topic} is a common advanced requirement in enterprise .NET applications. ` +
                     `It affects how you design boundaries, handle reliability, and meet non-functional requirements ` +
-                    `like performance, security, and maintainability.`,
+                    `such as performance, security, and maintainability.`,
                 why:
                     `Architects and senior engineers must understand ${topic} to make trade-offs between complexity, ` +
                     `operational cost, and long-term flexibility. Poor design here often surfaces as production issues ` +
                     `under load or during failures.`,
                 what:
-                    `${topic} typically involves combining core .NET runtime features (async/await, DI, configuration, logging) ` +
-                    `with architectural patterns (clean architecture, DDD, microservices, or modular monoliths). ` +
+                    `${topic} typically involves combining core .NET features (async and await, dependency injection, configuration, logging) ` +
+                    `with architectural patterns such as clean architecture, domain-driven design, microservices, or modular monoliths. ` +
                     `The goal is to keep domain code clean while handling cross-cutting concerns in the infrastructure layer.`,
                 how:
-                    `In practice, you would design an abstraction in the application/domain layer and provide ` +
-                    `one or more infrastructure implementations. You would register them via DI with appropriate lifetimes, ` +
-                    `configure them via options, and validate their behavior via integration tests. ` +
-                    `Observability (logs, metrics, traces) is added via middleware, filters, or pipeline behaviors.`,
+                    `In practice, you would design an abstraction in the application or domain layer and provide ` +
+                    `one or more infrastructure implementations. You would register them via dependency injection with appropriate lifetimes, ` +
+                    `configure them via options, and validate their behavior via integration tests. Observability ` +
+                    `is added via middleware, filters, or pipeline behaviors.`,
                 pros: [
                     "Improved separation of concerns and testability",
                     "Better resilience and fault tolerance in production",
@@ -1312,28 +1260,28 @@ public class OrdersV2Controller : ControllerBase
                 cons: [
                     "Higher initial complexity and learning curve",
                     "More moving parts to monitor and operate",
-                    "Requires strong team discipline and documentation",
-                    "Over-engineering risk for small/simple systems"
+                    "Risk of over-engineering for small systems",
+                    "Requires strong team discipline and documentation"
                 ],
                 diagram: `flowchart TD
-    A[API Layer / Endpoints] --> B[Application Layer]
+    A[API Layer or Endpoints] --> B[Application Layer]
     B --> C[Domain Layer]
-    B --> D[Infrastructure (${topic})]
-    D --> E[External Systems / Resources]`,
+    B --> D[Infrastructure - ${topic}]
+    D --> E[External Systems or Resources]`,
                 implementation: `// Skeleton pattern showing separation
 
 // Domain layer
-public interface I${index}Service
+public interface IAdvancedTopic${index}Service
 {
     Task HandleAsync(CancellationToken cancellationToken = default);
 }
 
 // Application layer implementation
-public class ${index}Service : I${index}Service
+public class AdvancedTopic${index}Service : IAdvancedTopic${index}Service
 {
-    private readonly ILogger<${index}Service> _logger;
+    private readonly ILogger<AdvancedTopic${index}Service> _logger;
 
-    public ${index}Service(ILogger<${index}Service> logger)
+    public AdvancedTopic${index}Service(ILogger<AdvancedTopic${index}Service> logger)
     {
         _logger = logger;
     }
@@ -1341,31 +1289,28 @@ public class ${index}Service : I${index}Service
     public async Task HandleAsync(CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("Handling advanced concern: ${topic}");
-        // Apply pattern-specific logic here (CQRS, Polly, caching, etc.)
+        // Apply pattern-specific logic here
         await Task.CompletedTask;
     }
 }
 
 // Registration
-builder.Services.AddScoped<I${index}Service, ${index}Service>();`,
+builder.Services.AddScoped<IAdvancedTopic${index}Service, AdvancedTopic${index}Service>();`,
                 approaches: [
                     "Start from domain use-cases and derive where this pattern fits.",
-                    "Implement a vertical slice (end-to-end) before generalizing.",
-                    "Add observability from day one (logs, metrics, traces).",
-                    "Document the decision in an ADR (Architecture Decision Record).",
+                    "Implement a vertical slice end to end before generalizing.",
+                    "Add observability from day one using logs, metrics, and traces.",
+                    "Document the decision in an architecture decision record.",
                     "Continuously review and simplify patterns that are not pulling their weight."
                 ]
             };
         }
 
-        // Generate questions 13–50 using generic pattern
         let currentNumber = questions.length + 1;
         for (let i = 0; currentNumber <= 50; i++, currentNumber++) {
             const topic = advancedTopics[i % advancedTopics.length];
             questions.push(generateGenericQuestion(currentNumber, topic));
         }
-
-        // --- Build TOC and Question Cards ---
 
         const tocList = document.getElementById('tocList');
         const container = document.getElementById('questionsContainer');
@@ -1375,7 +1320,8 @@ builder.Services.AddScoped<I${index}Service, ${index}Service>();`,
         questions.forEach(q => {
             const link = document.createElement('a');
             link.href = `#question-${q.number}`;
-            link.textContent = `Q${q.number}: ${q.title.substring(0, 40)}...`;
+            const shortTitle = q.title.length > 40 ? q.title.substring(0, 40) + "..." : q.title;
+            link.textContent = `Q${q.number}: ${shortTitle}`;
             link.onclick = (e) => {
                 e.preventDefault();
                 document.getElementById(`question-${q.number}`)
@@ -1447,10 +1393,15 @@ builder.Services.AddScoped<I${index}Service, ${index}Service>();`,
             container.appendChild(card);
         });
 
-        // Reinitialize Mermaid after dynamic content
+        // Initialize Mermaid after dynamic content is added
+        mermaid.initialize({
+            startOnLoad: false,
+            theme: "dark"
+        });
+
         setTimeout(() => {
-            mermaid.init(undefined, '.mermaid');
-        }, 100);
+            mermaid.run({ querySelector: ".mermaid" });
+        }, 200);
     </script>
 </body>
 </html>
