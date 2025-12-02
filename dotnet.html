@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C# .NET / .NET Core - 50 Advanced Interview Questions | Chandan Kumar</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary-color: #00d4ff;
+            --secondary-color: #0099cc;
+            --neon-blue: #00d4ff;
+            --dark-blue: #0a1929;
+            --darker-blue: #051422;
+        }
+        body {
+            font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+            background: var(--darker-blue);
+            color: #e0e0e0;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+        .animated-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            background: var(--darker-blue);
+            background-image: url('background-image.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: var(--darker-blue);
+        }
+        .animated-bg::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(0, 153, 204, 0.1) 0%, transparent 50%);
+            opacity: 0.6;
+        }
+        .animated-bg::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image:
+                linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.4;
+        }
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 25, 41, 0.85);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 212, 255, 0.2);
+            border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+            z-index: 1000;
+            padding: 15px 0;
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .back-btn {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover {
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 120px 30px 60px;
+        }
+        .page-header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px 0;
+        }
+        .page-icon {
+            font-size: 80px;
+            margin-bottom: 30px;
+            color: var(--neon-blue);
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.8);
+        }
+        .page-title {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--neon-blue);
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.8);
+        }
+        .page-subtitle {
+            font-size: 20px;
+            opacity: 0.9;
+            color: #e0e0e0;
+        }
+        .question-card {
+            background: rgba(10, 25, 41, 0.6);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 32px rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+        .question-number {
+            color: var(--neon-blue);
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(0, 212, 255, 0.3);
+        }
+        .question-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--neon-blue);
+            margin-bottom: 25px;
+        }
+        .question-section {
+            margin-bottom: 30px;
+        }
+        .question-section h3 {
+            font-size: 22px;
+            color: var(--neon-blue);
+            margin-bottom: 15px;
+            border-bottom: 2px solid rgba(0, 212, 255, 0.3);
+            padding-bottom: 10px;
+        }
+        .question-section p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #e0e0e0;
+            margin-bottom: 15px;
+        }
+        .question-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .question-section li {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+            color: #e0e0e0;
+        }
+        .question-section li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--neon-blue);
+            font-weight: bold;
+        }
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .pros-box, .cons-box {
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .pros-box {
+            background: rgba(0, 255, 0, 0.1);
+            border: 2px solid rgba(0, 255, 0, 0.3);
+        }
+        .cons-box {
+            background: rgba(255, 0, 0, 0.1);
+            border: 2px solid rgba(255, 0, 0, 0.3);
+        }
+        .pros-box h4 {
+            color: #00ff00;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .cons-box h4 {
+            color: #ff4444;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .diagram-container {
+            background: rgba(5, 20, 34, 0.8);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 25px 0;
+            border: 2px solid rgba(0, 212, 255, 0.3);
+        }
+        .diagram-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--neon-blue);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .mermaid {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .code-block {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid var(--neon-blue);
+            overflow-x: auto;
+        }
+        .code-block pre {
+            color: #e0e0e0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+        .code-block code {
+            color: #e0e0e0;
+        }
+        .highlight-box {
+            background: rgba(0, 212, 255, 0.1);
+            border-left: 4px solid var(--neon-blue);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .toc {
+            background: rgba(10, 25, 41, 0.6);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+        .toc h2 {
+            color: var(--neon-blue);
+            margin-bottom: 20px;
+        }
+        .toc-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 10px;
+        }
+        .toc-list a {
+            color: #e0e0e0;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            display: block;
+            font-size: 14px;
+        }
+        .toc-list a:hover {
+            background: rgba(0, 212, 255, 0.2);
+            color: var(--neon-blue);
+        }
+        @media (max-width: 768px) {
+            .page-title { font-size: 32px; }
+            .question-card { padding: 25px 20px; }
+            .pros-cons { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">Chandan Kumar</div>
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <div class="page-icon"><i class="fas fa-code"></i></div>
+            <h1 class="page-title">C# .NET / .NET Core</h1>
+            <p class="page-subtitle">50 Advanced Interview Questions & Answers</p>
+        </div>
+
+        <!-- Table of Contents -->
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <div class="toc-list" id="tocList"></div>
+        </div>
+
+        <!-- Questions Container -->
+        <div id="questionsContainer"></div>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark',
+            themeVariables: {
+                primaryColor: '#00d4ff',
+                primaryTextColor: '#e0e0e0',
+                primaryBorderColor: '#0099cc',
+                lineColor: '#00d4ff',
+                secondaryColor: '#051422',
+                tertiaryColor: '#0a1929'
+            }
+        });
+
+        const questions = [];
+
+        // --- 1–12: Fully detailed C# / .NET Core questions ---
+
+        questions.push({
+            number: 1,
+            title: "Explain the evolution from .NET Framework to .NET Core to .NET 5+ and why it matters for architects.",
+            description:
+                "Originally, .NET Framework targeted Windows-only, tightly coupled to IIS and the Windows ecosystem. " +
+                ".NET Core introduced cross-platform support, modular deployment, and a high-performance runtime. " +
+                ".NET 5+ unified .NET Core and .NET Framework into a single product line (simply called \".NET\"), " +
+                "with a common BCL, SDK-style projects, and a yearly release cadence.",
+            why:
+                "Architects must understand runtime evolution to make decisions about migration, " +
+                "performance, cross-platform hosting, containerization, and long-term support (LTS). " +
+                "Choosing the wrong runtime version directly impacts deployment options and maintenance.",
+            what:
+                ".NET Framework is Windows-only and effectively in maintenance mode. " +
+                ".NET Core and .NET (5/6/7/8+) are cross-platform, open source, and optimized for cloud-native apps. " +
+                "They support self-contained deployment, container friendliness, and unified APIs across workloads.",
+            how:
+                "For new greenfield apps, target the latest LTS (.NET 8, etc.). " +
+                "For brownfield apps, incrementally move libraries to .NET Standard / .NET, " +
+                "split monoliths into services, and modernize hosting (Kestrel, containers, Kubernetes).",
+            pros: [
+                "Cross-platform (Windows, Linux, macOS, containers)",
+                "Higher performance and lower memory footprint",
+                "Unified SDK-style project system",
+                "Regular release cadence and active improvements",
+                "Better tooling (CLI, templates, analyzers)",
+                "First-class container and cloud support"
+            ],
+            cons: [
+                "Migration effort from legacy .NET Framework",
+                "API gaps for very old or niche libraries",
+                "Need to upgrade build and deployment pipelines",
+                "New hosting concepts (Kestrel, generic host) to learn",
+                "Some legacy tech (WebForms, WCF server) not directly supported"
+            ],
+            diagram: `flowchart TD
+    A[.NET Framework<br/>Windows + IIS] --> B[.NET Core<br/>Cross-platform + Kestrel]
+    B --> C[.NET 5+ (Unified .NET)]
+    C --> D[Cloud-native Apps<br/>Containers, Kubernetes]`,
+            implementation: `// Example: SDK-style .NET 8 console / web project
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+</Project>
+
+// Program.cs (minimal hosting)
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+var app = builder.Build();
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.MapControllers();
+app.Run();`,
+            approaches: [
+                "New projects: start directly on latest LTS (.NET 8+).",
+                "For legacy apps: strangler-fig pattern to carve out services.",
+                "Use .NET Upgrade Assistant for guided migrations.",
+                "Standardize solution templates across the org.",
+                "Align runtime versions with container base images and DevOps pipelines."
+            ]
+        });
+
+        questions.push({
+            number: 2,
+            title: "How does the ASP.NET Core middleware pipeline work and how do you design custom middleware?",
+            description:
+                "ASP.NET Core uses a request-delegate pipeline composed of middleware components. " +
+                "Each middleware can inspect, short-circuit, or modify the HTTP request/response, " +
+                "then call the next delegate. Order of registration is critical.",
+            why:
+                "Understanding middleware is crucial to cross-cutting concerns like logging, metrics, " +
+                "correlation IDs, authentication/authorization, caching, and error handling.",
+            what:
+                "Middleware is a function or class that receives HttpContext and a 'next' delegate. " +
+                "You register middleware in Program.cs using UseXXX/UseWhen/Map. " +
+                "It is conceptually similar to OWIN but unified into the ASP.NET Core hosting model.",
+            how:
+                "Implement a class with a constructor accepting RequestDelegate and an Invoke/InvokeAsync method. " +
+                "Manipulate HttpContext before and/or after calling await _next(context). " +
+                "Register it with app.UseMiddleware<T>().",
+            pros: [
+                "Clear separation of cross-cutting concerns",
+                "Composable and testable pipeline",
+                "Fine-grained control over request/response processing",
+                "Good performance with minimal overhead",
+                "Supports branching (Map/MapWhen) for custom routes"
+            ],
+            cons: [
+                "Order-dependent and easy to misconfigure",
+                "Highly coupled to HTTP abstractions",
+                "Complex pipelines can be hard to debug",
+                "Risk of swallowing exceptions if handled incorrectly"
+            ],
+            diagram: `flowchart LR
+    A[Incoming Request] --> B[Exception Handling MW]
+    B --> C[Routing MW]
+    C --> D[Auth / AuthZ MW]
+    D --> E[Custom Business MW]
+    E --> F[Endpoint Handler]
+    F -->|Response| E --> D --> C --> B --> A[Outgoing Response]`,
+            implementation: `// Custom middleware
+public class RequestTimingMiddleware
+{
+    private readonly RequestDelegate _next;
+    private readonly ILogger<RequestTimingMiddleware> _logger;
+
+    public RequestTimingMiddleware(RequestDelegate next,
+                                   ILogger<RequestTimingMiddleware> logger)
+    {
+        _next = next;
+        _logger = logger;
+    }
+
+    public async Task InvokeAsync(HttpContext context)
+    {
+        var sw = Stopwatch.StartNew();
+        try
+        {
+            await _next(context);
+        }
+        finally
+        {
+            sw.Stop();
+            _logger.LogInformation("Request {Path} took {Elapsed} ms",
+                context.Request.Path, sw.ElapsedMilliseconds);
+        }
+    }
+}
+
+// Registration in Program.cs
+var app = builder.Build();
+
+app.UseMiddleware<RequestTimingMiddleware>();
+app.UseAuthentication();
+app.UseAuthorization();
+app.MapControllers();
+app.Run();`,
+            approaches: [
+                "Put global exception handling & logging as the first middleware.",
+                "Auth / AuthZ should run before business logic.",
+                "Use MapWhen/UseWhen to branch pipeline for specific paths.",
+                "Keep middleware small and focused; avoid complex domain logic inside it.",
+                "Write unit tests using TestServer and HttpClient."
+            ]
+        });
+
+        questions.push({
+            number: 3,
+            title: "Explain dependency injection in .NET Core and how service lifetimes affect architecture.",
+            description:
+                ".NET Core has built-in dependency injection (DI) with three main lifetimes: Singleton, Scoped, and Transient. " +
+                "Services are registered in the container and injected into controllers, middleware, background services, etc.",
+            why:
+                "Proper DI usage reduces coupling, improves testability, and clarifies ownership of resources. " +
+                "Incorrect lifetimes can cause memory leaks, concurrency bugs, and unexpected state sharing.",
+            what:
+                "Singleton: one instance for the whole application. " +
+                "Scoped: one instance per request (per scope). " +
+                "Transient: new instance every time it is requested. " +
+                "The default container is simple but can be extended or replaced.",
+            how:
+                "Register services in builder.Services. " +
+                "Inject them via constructor injection where needed. " +
+                "Avoid using ServiceLocator and make lifetimes explicit.",
+            pros: [
+                "Built-in and consistent DI story",
+                "Supports constructor injection everywhere (controllers, pages, handlers, middleware)",
+                "Clear lifetimes and ownership semantics",
+                "Integration with configuration, logging, and options pattern"
+            ],
+            cons: [
+                "Default container lacks some advanced features (e.g., interception) out of the box",
+                "Misusing lifetimes can cause subtle bugs",
+                "Circular dependencies can appear if design is not clean"
+            ],
+            diagram: `flowchart TD
+    A[Service Collection] -->|Singleton| B[Shared Instance]
+    A -->|Scoped| C[Request Scope]
+    A -->|Transient| D[New Instance Every Resolve]
+    C --> E[Controller / Handler]
+    D --> E`,
+            implementation: `// Program.cs - registrations
+builder.Services.AddSingleton<ICacheProvider, MemoryCacheProvider>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddTransient<IEmailSender, SmtpEmailSender>();
+
+// Example usage
+public class OrdersController : ControllerBase
+{
+    private readonly IOrderService _orderService;
+    private readonly IEmailSender _emailSender;
+
+    public OrdersController(IOrderService orderService, IEmailSender emailSender)
+    {
+        _orderService = orderService;
+        _emailSender = emailSender;
+    }
+
+    [HttpPost("orders")]
+    public async Task<IActionResult> CreateOrder(CreateOrderDto dto)
+    {
+        var order = await _orderService.CreateOrderAsync(dto);
+        await _emailSender.SendAsync(order.CustomerEmail, "Order created", "...");
+        return Ok(order);
+    }
+}`,
+            approaches: [
+                "Use Scoped for domain/application services tied to a web request.",
+                "Use Singleton only for stateless services or caches (thread-safe).",
+                "Use Transient for lightweight services without expensive resources.",
+                "Avoid capturing scoped services in singletons.",
+                "Consider external DI containers only if you really need advanced features."
+            ]
+        });
+
+        questions.push({
+            number: 4,
+            title: "How does the configuration and options pattern work in .NET Core?",
+            description:
+                "Configuration in .NET Core is hierarchical and provider-based (JSON, environment variables, Key Vault, etc.). " +
+                "The options pattern binds configuration sections to strongly-typed POCO classes using IOptions / IOptionsSnapshot / IOptionsMonitor.",
+            why:
+                "Strongly-typed configuration improves safety, discoverability, and testability. " +
+                "It also supports per-environment overrides and live reload for certain scenarios.",
+            what:
+                "IOptions<T> – singleton snapshot at startup. " +
+                "IOptionsSnapshot<T> – scoped per request, supports reload. " +
+                "IOptionsMonitor<T> – can observe changes via OnChange callbacks.",
+            how:
+                "Bind a configuration section to a POCO using services.Configure<T>(configuration.GetSection(\"SectionName\")); " +
+                "Inject IOptions<T> or IOptionsSnapshot<T> into services and controllers.",
+            pros: [
+                "Strongly typed, IntelliSense-friendly configuration",
+                "Supports multiple providers and environments",
+                "Centralized configuration binding and validation",
+                "Supports reload and change notifications"
+            ],
+            cons: [
+                "Misuse of IOptions vs IOptionsSnapshot can be confusing",
+                "Complex configuration hierarchies can become hard to manage",
+                "Requires discipline to keep config keys consistent across environments"
+            ],
+            diagram: `flowchart TD
+    A[appsettings.json] --> B[Configuration Builder]
+    C[Environment Variables] --> B
+    D[User Secrets / Key Vault] --> B
+    B --> E[IConfiguration]
+    E --> F[Options Binding<br/>IOptions<T>]
+    F --> G[Injected into Services / Controllers]`,
+            implementation: `// appsettings.json
+{
+  "Smtp": {
+    "Host": "smtp.example.com",
+    "Port": 587,
+    "User": "user",
+    "Password": "secret"
+  }
+}
+
+// Options class
+public class SmtpOptions
+{
+    public string Host { get; set; } = "";
+    public int Port { get; set; }
+    public string User { get; set; } = "";
+    public string Password { get; set; } = "";
+}
+
+// Program.cs
+builder.Services.Configure<SmtpOptions>(
+    builder.Configuration.GetSection("Smtp"));
+
+// Usage
+public class SmtpEmailSender : IEmailSender
+{
+    private readonly SmtpOptions _options;
+
+    public SmtpEmailSender(IOptions<SmtpOptions> options)
+    {
+        _options = options.Value;
+    }
+
+    public Task SendAsync(string to, string subject, string body)
+    {
+        // Use _options.Host, _options.Port...
+        return Task.CompletedTask;
+    }
+}`,
+            approaches: [
+                "Centralize configuration keys and bind via the options pattern.",
+                "Validate options using services.AddOptions<T>().Bind(...).ValidateDataAnnotations().",
+                "Use environment variables for secrets in containers.",
+                "Use Key Vault / Secret Manager for sensitive values.",
+                "Prefer IOptionsSnapshot in web apps where per-request updates may be needed."
+            ]
+        });
+
+        questions.push({
+            number: 5,
+            title: "Describe async/await in C# and common pitfalls in ASP.NET Core.",
+            description:
+                "async/await is the primary model for asynchronous programming in C#. " +
+                "In ASP.NET Core, it’s crucial for non-blocking I/O and scalability. " +
+                "However, improper use can cause deadlocks, thread-pool starvation, and performance issues.",
+            why:
+                "High-throughput APIs rely on async I/O to scale. Blocking calls (Task.Result, .Wait()) " +
+                "can reduce concurrency and cause timeouts under load.",
+            what:
+                "An async method returns Task/Task<T>. 'await' suspends the method until the awaited task completes, " +
+                "freeing the thread to serve other requests. ASP.NET Core doesn’t have the ASP.NET classic SynchronizationContext, " +
+                "so deadlock patterns are reduced, but bad blocking code still harms throughput.",
+            how:
+                "Mark controller actions async. Use asynchronous I/O APIs (e.g., EF Core async methods, HttpClient async APIs). " +
+                "Avoid blocking on tasks. Use ConfigureAwait(false) in libraries where appropriate.",
+            pros: [
+                "Improved scalability via non-blocking I/O",
+                "Simpler code compared to raw callbacks / Tasks",
+                "Better CPU utilization under load"
+            ],
+            cons: [
+                "Learning curve for async flow and error handling",
+                "Potential for fire-and-forget bugs",
+                "Unobserved exceptions if not awaited properly",
+                "Can complicate debugging stack traces"
+            ],
+            diagram: `flowchart TD
+    A[Incoming HTTP Request] --> B[Controller Action (async)]
+    B --> C[Database Call async]
+    C -->|I/O Pending| D[Thread Returns to Pool]
+    D --> E[Other Requests]
+    C -->|Completed| F[Continuation]
+    F --> G[Build Response] --> H[Send Response]`,
+            implementation: `// Good: fully async controller
+[ApiController]
+[Route("api/[controller]")]
+public class ProductsController : ControllerBase
+{
+    private readonly AppDbContext _db;
+
+    public ProductsController(AppDbContext db) => _db = db;
+
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<Product>>> Get()
+    {
+        var products = await _db.Products
+            .AsNoTracking()
+            .ToListAsync();
+
+        return Ok(products);
+    }
+}
+
+// Bad: blocking on async
+public IActionResult GetSync()
+{
+    // This can cause thread-pool starvation
+    var products = _db.Products.ToListAsync().Result;
+    return Ok(products);
+}`,
+            approaches: [
+                "Make the entire call chain async all the way down.",
+                "Never block on async code (.Result, .Wait()) in web apps.",
+                "Use async APIs for DB, HTTP, IO, and messaging.",
+                "Log and handle Task cancellations gracefully.",
+                "Apply ConfigureAwait(false) in class libraries where resume on context is not required."
+            ]
+        });
+
+        questions.push({
+            number: 6,
+            title: "How does Entity Framework Core tracking vs. AsNoTracking impact performance and behavior?",
+            description:
+                "EF Core change tracking keeps an in-memory graph of entities to detect modifications on SaveChanges. " +
+                "AsNoTracking queries skip this to reduce overhead. The choice affects performance, memory, and behavior.",
+            why:
+                "In read-heavy APIs, unnecessary tracking can severely impact performance. " +
+                "In write scenarios, tracking is useful for automatic change detection and concurrency control.",
+            what:
+                "Tracked query: DbContext keeps entity instances in its ChangeTracker. " +
+                "AsNoTracking: EF materializes objects but doesn’t track them; ideal for read-only queries / projections.",
+            how:
+                "Use AsNoTracking() on read-only queries. " +
+                "Keep DbContext scope short (per request). " +
+                "Use explicit Attach/Update for detached entities.",
+            pros: [
+                "Tracking: automatic change detection and concurrency features",
+                "AsNoTracking: reduced memory and CPU usage",
+                "Better scalability for read-only endpoints"
+            ],
+            cons: [
+                "Tracking: overhead in high-volume read queries",
+                "AsNoTracking: manual merge logic for updates",
+                "Misuse can cause unexpected overwrites or missing updates"
+            ],
+            diagram: `flowchart TD
+    A[DbContext] --> B[Tracked Query]
+    B --> C[ChangeTracker<br/>Entity Entries]
+    A --> D[AsNoTracking Query]
+    D --> E[No Tracking<br/>Lightweight Objects]`,
+            implementation: `// Tracked: default
+var customer = await _db.Customers.FirstAsync(c => c.Id == id);
+customer.Name = "Updated Name";
+await _db.SaveChangesAsync(); // EF detects changes
+
+// Read-only: use AsNoTracking
+var customers = await _db.Customers
+    .AsNoTracking()
+    .Where(c => c.IsActive)
+    .ToListAsync();
+
+// Global convention (e.g., for queries)
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    options.UseSqlServer(connString);
+    options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+});`,
+            approaches: [
+                "Use AsNoTracking for all read-only endpoints by default.",
+                "Limit DbContext lifetime to a single request (Scoped).",
+                "Avoid long-lived DbContexts with many tracked entities.",
+                "For updates from detached DTOs, map to entity and attach with correct state.",
+                "Profile queries and tracking behavior using logging / Application Insights."
+            ]
+        });
+
+        questions.push({
+            number: 7,
+            title: "How do you implement global exception handling and ProblemDetails in ASP.NET Core APIs?",
+            description:
+                "Global exception handling centralizes error handling and ensures consistent response formats. " +
+                "ProblemDetails (RFC 7807) is the recommended standard for HTTP errors in JSON APIs.",
+            why:
+                "Without a central error handler, exceptions leak stack traces, produce inconsistent responses, " +
+                "and make observability harder. ProblemDetails simplifies client handling and documentation.",
+            what:
+                "A top-level middleware (or UseExceptionHandler) that catches all unhandled exceptions, logs them, " +
+                "and returns a ProblemDetails JSON payload with traceId, status, title, and detail.",
+            how:
+                "Create a custom middleware or use app.UseExceptionHandler. " +
+                "Map exceptions to HTTP status codes. " +
+                "Return TypedResults.Problem / ProblemDetails in minimal APIs.",
+            pros: [
+                "Consistent error schema across endpoints",
+                "Centralized logging and correlation",
+                "Easier client-side error handling",
+                "Better security (no raw stack traces)"
+            ],
+            cons: [
+                "Need to maintain mapping of domain exceptions to HTTP codes",
+                "Complex business errors may require custom extensions",
+                "Requires discipline so controllers don’t override global behavior"
+            ],
+            diagram: `flowchart TD
+    A[Request] --> B[Global Exception Middleware]
+    B --> C[Controller / Endpoint]
+    C -->|Throws Exception| B
+    B --> D[Log + Map to ProblemDetails]
+    D --> E[JSON Error Response]`,
+            implementation: `// Middleware example
+public class GlobalExceptionMiddleware
+{
+    private readonly RequestDelegate _next;
+    private readonly ILogger<GlobalExceptionMiddleware> _logger;
+
+    public GlobalExceptionMiddleware(RequestDelegate next,
+                                     ILogger<GlobalExceptionMiddleware> logger)
+    {
+        _next = next;
+        _logger = logger;
+    }
+
+    public async Task InvokeAsync(HttpContext context)
+    {
+        try
+        {
+            await _next(context);
+        }
+        catch (DomainException dex)
+        {
+            _logger.LogWarning(dex, "Domain error");
+            await WriteProblem(context, StatusCodes.Status400BadRequest, dex.Message);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Unhandled error");
+            await WriteProblem(context, StatusCodes.Status500InternalServerError,
+                "An unexpected error occurred.");
+        }
+    }
+
+    private static async Task WriteProblem(HttpContext ctx, int status, string detail)
+    {
+        ctx.Response.StatusCode = status;
+        ctx.Response.ContentType = "application/problem+json";
+
+        var problem = new ProblemDetails
+        {
+            Status = status,
+            Title = ReasonPhrases.GetReasonPhrase(status),
+            Detail = detail,
+            Instance = ctx.Request.Path
+        };
+
+        problem.Extensions["traceId"] = ctx.TraceIdentifier;
+
+        await ctx.Response.WriteAsJsonAsync(problem);
+    }
+}
+
+// Registration
+var app = builder.Build();
+app.UseMiddleware<GlobalExceptionMiddleware>();`,
+            approaches: [
+                "Use a single global middleware for exception handling.",
+                "Map domain-level exceptions to 4xx codes, technical ones to 5xx.",
+                "Always include traceId / correlationId for troubleshooting.",
+                "Align response schema with OpenAPI / Swagger documentation.",
+                "Use filters or middleware, but avoid duplicating error logic in controllers."
+            ]
+        });
+
+        questions.push({
+            number: 8,
+            title: "What is HttpClientFactory and how does it solve common HttpClient issues?",
+            description:
+                "HttpClientFactory centralizes creation and lifetime management of HttpClient instances. " +
+                "It avoids socket exhaustion, allows named/typed clients, and integrates with Polly for resilience.",
+            why:
+                "Incorrect use of HttpClient (new per request or single static without policies) " +
+                "causes socket exhaustion or missing resilience (retries, circuit breakers).",
+            what:
+                "IHttpClientFactory creates HttpClient instances with managed handlers. " +
+                "You can configure named clients, typed clients, and add delegating handlers (logging, retries, etc.).",
+            how:
+                "Register services.AddHttpClient(). Inject HttpClient via typed client or factory. " +
+                "Configure base addresses, default headers, and policies during registration.",
+            pros: [
+                "Prevents socket exhaustion",
+                "Centralized configuration for outbound calls",
+                "Supports Polly policies and delegating handlers",
+                "Improves testability via typed clients"
+            ],
+            cons: [
+                "Extra abstraction to learn",
+                "Misconfigured handlers can still cause issues",
+                "Must carefully design retries to avoid overload"
+            ],
+            diagram: `flowchart TD
+    A[Service Collection] --> B[AddHttpClient()]
+    B --> C[IHttpClientFactory]
+    C --> D[Named Client]
+    C --> E[Typed Client]
+    D --> F[External API]
+    E --> F`,
+            implementation: `// Program.cs
+builder.Services.AddHttpClient("GitHub", client =>
+{
+    client.BaseAddress = new Uri("https://api.github.com/");
+    client.DefaultRequestHeaders.UserAgent.ParseAdd("MyApp");
+});
+
+// Typed client
+public class GitHubClient
+{
+    private readonly HttpClient _http;
+
+    public GitHubClient(HttpClient http)
+    {
+        _http = http;
+    }
+
+    public Task<string> GetUserAsync(string user)
+        => _http.GetStringAsync($"/users/{user}");
+}
+
+builder.Services.AddHttpClient<GitHubClient>(client =>
+{
+    client.BaseAddress = new Uri("https://api.github.com/");
+});
+
+// Usage
+public class MyService
+{
+    private readonly GitHubClient _client;
+
+    public MyService(GitHubClient client) => _client = client;
+
+    public Task<string> GetUser(string user) => _client.GetUserAsync(user);
+}`,
+            approaches: [
+                "Prefer typed clients for domain-specific outbound integrations.",
+                "Use named clients when you need different configs for same host.",
+                "Attach logging / metrics handlers for observability.",
+                "Integrate Polly for retries, circuit breakers, and timeouts.",
+                "Avoid static HttpClient instances you manage yourself in ASP.NET Core."
+            ]
+        });
+
+        questions.push({
+            number: 9,
+            title: "Minimal APIs vs traditional controllers: when and why would you choose one over the other?",
+            description:
+                "Minimal APIs provide a lightweight way to define HTTP endpoints using top-level statements. " +
+                "They are great for small services, prototypes, and highly focused APIs. " +
+                "Controllers provide more structure, discoverability, filters, and conventions.",
+            why:
+                "Architecture decisions here affect maintainability, testability, and how large teams collaborate. " +
+                "Mixing both is possible but should be deliberate.",
+            what:
+                "Minimal APIs: app.MapGet/MapPost etc., function-style endpoints. " +
+                "Controllers: classes inheriting from ControllerBase, decorated with attributes and using routing conventions.",
+            how:
+                "For simple CRUD or gateway endpoints, use minimal APIs. " +
+                "For complex domains with filters, versioning, and attributes, controllers are often more expressive.",
+            pros: [
+                "Minimal APIs: less ceremony, fewer files, very fast to spin up",
+                "Good for microservices or internal tools",
+                "Controllers: rich attribute model, filters, versioning, and conventions",
+                "Better separation for large teams and big domains"
+            ],
+            cons: [
+                "Minimal APIs: can become messy for large domains if not structured well",
+                "Controllers: more boilerplate for simple endpoints",
+                "Mixing styles without guidelines can confuse the team"
+            ],
+            diagram: `flowchart TD
+    A[Program.cs] --> B[Minimal API Endpoint]
+    A --> C[Controller Route]
+    B --> D[Handler Function]
+    C --> E[Controller Action]`,
+            implementation: `// Minimal API
+var app = builder.Build();
+
+app.MapGet("/health", () => Results.Ok(new { status = "Healthy" }));
+
+app.MapPost("/orders", async (CreateOrderDto dto, IOrderService service) =>
+{
+    var result = await service.CreateAsync(dto);
+    return Results.Created($"/orders/{result.Id}", result);
+});
+
+// Traditional controller
+[ApiController]
+[Route("api/[controller]")]
+public class OrdersController : ControllerBase
+{
+    private readonly IOrderService _service;
+    public OrdersController(IOrderService service) => _service = service;
+
+    [HttpPost]
+    public async Task<IActionResult> Create(CreateOrderDto dto)
+    {
+        var result = await _service.CreateAsync(dto);
+        return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
+    }
+
+    [HttpGet("{id}")]
+    public Task<OrderDto> GetById(Guid id) => _service.GetByIdAsync(id);
+}`,
+            approaches: [
+                "Use minimal APIs for small services or edge gateways.",
+                "Use controllers for complex domains and heavy use of filters/versioning.",
+                "Impose folder/namespace conventions for minimal APIs to avoid god Program.cs.",
+                "Share application/domain layer between both styles.",
+                "Document the chosen approach in your architecture decision records (ADRs)."
+            ]
+        });
+
+        questions.push({
+            number: 10,
+            title: "How do you host background jobs using IHostedService / BackgroundService in .NET Core?",
+            description:
+                "Background services run alongside your web application within the
