@@ -322,7 +322,7 @@
 
     <script>
         mermaid.initialize({
-            startOnLoad: true,
+            startOnLoad: false,
             theme: 'dark',
             themeVariables: {
                 primaryColor: '#00d4ff',
@@ -333,7 +333,15 @@
                 tertiaryColor: '#0a1929'
             }
         });
-
+        document.addEventListener("DOMContentLoaded", () => {
+            // Wait for all dynamic content to load
+            setTimeout(() => {
+                const mermaidElements = document.querySelectorAll(".mermaid");
+                mermaid.run({
+                    querySelector: ".mermaid"
+                });
+            }, 200);
+        });
         const questions = [];
 
         // --- 1–12: Fully detailed C# / .NET Core questions ---
