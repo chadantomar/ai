@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microservices Architecture - Clean Architecture & Onion Pattern | Chandan Kumar</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --primary-color: #00d4ff; --secondary-color: #0099cc; --neon-blue: #00d4ff; --dark-blue: #0a1929; --darker-blue: #051422; }
+        body { font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Arial, sans-serif; background: var(--darker-blue); color: #e0e0e0; line-height: 1.6; overflow-x: hidden; position: relative; }
+        .animated-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: var(--darker-blue); background-image: url('background-image.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; background-color: var(--darker-blue); }
+        .animated-bg::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(circle at 20% 30%, rgba(0, 212, 255, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(0, 153, 204, 0.1) 0%, transparent 50%); opacity: 0.6; }
+        .animated-bg::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px); background-size: 50px 50px; opacity: 0.4; }
+        nav { position: fixed; top: 0; width: 100%; background: rgba(10, 25, 41, 0.85); backdrop-filter: blur(10px); box-shadow: 0 2px 20px rgba(0, 212, 255, 0.2); border-bottom: 1px solid rgba(0, 212, 255, 0.2); z-index: 1000; padding: 15px 0; }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 30px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 24px; font-weight: 700; background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .back-btn { color: rgba(255, 255, 255, 0.9); text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 8px; transition: all 0.3s ease; }
+        .back-btn:hover { color: var(--neon-blue); text-shadow: 0 0 10px rgba(0, 212, 255, 0.8); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 120px 30px 60px; }
+        .page-header { text-align: center; margin-bottom: 60px; padding: 40px 0; }
+        .page-icon { font-size: 80px; margin-bottom: 30px; color: var(--neon-blue); text-shadow: 0 0 30px rgba(0, 212, 255, 0.8); }
+        .page-title { font-size: 48px; font-weight: 800; margin-bottom: 20px; color: var(--neon-blue); text-shadow: 0 0 20px rgba(0, 212, 255, 0.8); }
+        .page-subtitle { font-size: 20px; opacity: 0.9; color: #e0e0e0; }
+        .content-section { background: rgba(10, 25, 41, 0.6); backdrop-filter: blur(5px); border-radius: 20px; padding: 50px; margin-bottom: 30px; box-shadow: 0 8px 32px rgba(0, 212, 255, 0.1); border: 1px solid rgba(0, 212, 255, 0.2); }
+        .content-section h2 { font-size: 32px; margin-bottom: 20px; color: var(--neon-blue); }
+        .content-section h3 { font-size: 24px; margin-bottom: 15px; margin-top: 30px; color: var(--neon-blue); }
+        .content-section p { font-size: 18px; line-height: 1.8; margin-bottom: 20px; color: #e0e0e0; }
+        .content-section ul { list-style: none; padding-left: 0; }
+        .content-section li { font-size: 18px; line-height: 1.8; margin-bottom: 15px; padding-left: 30px; position: relative; color: #e0e0e0; }
+        .content-section li::before { content: '▸'; position: absolute; left: 0; color: var(--neon-blue); font-weight: bold; }
+        .diagram-container { background: rgba(5, 20, 34, 0.8); border-radius: 15px; padding: 30px; margin: 30px 0; border: 2px solid rgba(0, 212, 255, 0.3); }
+        .diagram-title { font-size: 20px; font-weight: 700; color: var(--neon-blue); margin-bottom: 20px; text-align: center; }
+        .code-block { background: rgba(0, 0, 0, 0.5); border-radius: 10px; padding: 20px; margin: 20px 0; border-left: 4px solid var(--neon-blue); overflow-x: auto; }
+        .code-block pre { color: #e0e0e0; font-family: 'Courier New', monospace; font-size: 14px; line-height: 1.6; }
+        .highlight-box { background: rgba(0, 212, 255, 0.1); border-left: 4px solid var(--neon-blue); padding: 20px; margin: 20px 0; border-radius: 5px; }
+        .reference-link { color: var(--neon-blue); text-decoration: none; border-bottom: 1px dashed var(--neon-blue); }
+        .reference-link:hover { color: #00ffff; border-bottom-color: #00ffff; }
+        .layer-box { background: rgba(0, 212, 255, 0.05); border: 2px solid rgba(0, 212, 255, 0.3); border-radius: 10px; padding: 20px; margin: 15px 0; }
+        .layer-box h4 { color: var(--neon-blue); margin-bottom: 10px; font-size: 20px; }
+        @media (max-width: 768px) { .page-title { font-size: 32px; } .content-section { padding: 30px 20px; } }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">Chandan Kumar</div>
+            <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Home</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <div class="page-icon"><i class="fas fa-sitemap"></i></div>
+            <h1 class="page-title">Microservices Architecture</h1>
+            <p class="page-subtitle">Clean Architecture & Onion Pattern - A Practical Guide</p>
+        </div>
+
+        <!-- Introduction -->
+        <div class="content-section">
+            <h2>Introduction</h2>
+            <p>
+                Clean Architecture and Onion Pattern are architectural approaches that help build maintainable, 
+                testable, and scalable microservices. These patterns separate concerns and create clear boundaries 
+                between different layers of an application, making it easier to evolve and maintain over time.
+            </p>
+            <p>
+                This guide explains both patterns with practical examples and diagrams, drawing from real-world 
+                implementations and best practices.
+            </p>
+        </div>
+
+        <!-- Clean Architecture -->
+        <div class="content-section">
+            <h2>Clean Architecture</h2>
+            <p>
+                Clean Architecture, introduced by Robert C. Martin (Uncle Bob), is an architectural pattern that 
+                emphasizes separation of concerns and independence of frameworks, UI, and databases. The core 
+                principle is that business logic should be independent of external concerns.
+            </p>
+
+            <h3>Core Principles</h3>
+            <ul>
+                <li><strong>Independence of Frameworks:</strong> Business logic doesn't depend on external libraries</li>
+                <li><strong>Testability:</strong> Business logic can be tested without UI, database, or external services</li>
+                <li><strong>Independence of UI:</strong> UI can be changed without affecting business logic</li>
+                <li><strong>Independence of Database:</strong> Business logic is not tied to a specific database</li>
+                <li><strong>Independence of External Services:</strong> Business rules don't depend on external APIs</li>
+            </ul>
+
+            <!-- Clean Architecture Diagram -->
+            <div class="diagram-container">
+                <div class="diagram-title">Clean Architecture Layers</div>
+                <svg width="100%" height="500" viewBox="0 0 800 500" style="max-width: 100%;">
+                    <!-- Outer Layer - Frameworks & Drivers -->
+                    <circle cx="400" cy="250" r="200" fill="none" stroke="rgba(0, 212, 255, 0.3)" stroke-width="3" />
+                    <text x="400" y="70" fill="#00d4ff" font-size="18" font-weight="bold" text-anchor="middle">Frameworks & Drivers</text>
+                    <text x="400" y="95" fill="#e0e0e0" font-size="14" text-anchor="middle">Web, DB, External Interfaces</text>
+                    
+                    <!-- Interface Adapters -->
+                    <circle cx="400" cy="250" r="150" fill="none" stroke="rgba(0, 212, 255, 0.4)" stroke-width="3" />
+                    <text x="400" y="160" fill="#00d4ff" font-size="18" font-weight="bold" text-anchor="middle">Interface Adapters</text>
+                    <text x="400" y="185" fill="#e0e0e0" font-size="14" text-anchor="middle">Controllers, Gateways, Presenters</text>
+                    
+                    <!-- Use Cases / Application Business Rules -->
+                    <circle cx="400" cy="250" r="100" fill="none" stroke="rgba(0, 212, 255, 0.5)" stroke-width="3" />
+                    <text x="400" y="230" fill="#00d4ff" font-size="18" font-weight="bold" text-anchor="middle">Use Cases</text>
+                    <text x="400" y="255" fill="#e0e0e0" font-size="14" text-anchor="middle">Application Business Rules</text>
+                    
+                    <!-- Entities / Enterprise Business Rules -->
+                    <circle cx="400" cy="250" r="50" fill="rgba(0, 212, 255, 0.2)" stroke="#00d4ff" stroke-width="3" />
+                    <text x="400" y="245" fill="#00d4ff" font-size="16" font-weight="bold" text-anchor="middle">Entities</text>
+                    <text x="400" y="265" fill="#e0e0e0" font-size="12" text-anchor="middle">Enterprise Rules</text>
+                    
+                    <!-- Dependency arrows -->
+                    <path d="M 400 200 L 400 150" stroke="#00d4ff" stroke-width="2" fill="none" marker-end="url(#arrowhead)" />
+                    <path d="M 400 300 L 400 350" stroke="#00d4ff" stroke-width="2" fill="none" marker-end="url(#arrowhead)" />
+                    <text x="420" y="175" fill="#00d4ff" font-size="12">Dependencies</text>
+                    <text x="420" y="325" fill="#00d4ff" font-size="12">Point Inward</text>
+                    
+                    <defs>
+                        <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+                            <polygon points="0 0, 10 5, 0 10" fill="#00d4ff" />
+                        </marker>
+                    </defs>
+                </svg>
+            </div>
+
+            <h3>Layer Responsibilities</h3>
+            
+            <div class="layer-box">
+                <h4>1. Entities (Core)</h4>
+                <p>Enterprise-wide business rules. These are the core business objects that encapsulate the most general and high-level rules. They are independent of any framework or technology.</p>
+            </div>
+
+            <div class="layer-box">
+                <h4>2. Use Cases (Application Layer)</h4>
+                <p>Application-specific business rules. These orchestrate the flow of data to and from entities and direct those entities to use their enterprise-wide business rules to achieve the goals of the use case.</p>
+            </div>
+
+            <div class="layer-box">
+                <h4>3. Interface Adapters</h4>
+                <p>Convert data between the format most convenient for use cases and entities, and the format most convenient for external agencies (like databases, web, etc.). This layer contains controllers, presenters, and gateways.</p>
+            </div>
+
+            <div class="layer-box">
+                <h4>4. Frameworks & Drivers</h4>
+                <p>The outermost layer containing frameworks and tools. This includes web frameworks, database tools, and external service integrations. This layer is where all the details go.</p>
+            </div>
+        </div>
+
+        <!-- Onion Architecture -->
+        <div class="content-section">
+            <h2>Onion Architecture</h2>
+            <p>
+                Onion Architecture, introduced by Jeffrey Palermo, is similar to Clean Architecture but emphasizes 
+                the dependency rule more explicitly. The name comes from the layered structure that resembles an onion, 
+                with the core at the center and dependencies pointing inward.
+            </p>
+
+            <!-- Onion Architecture Diagram -->
+            <div class="diagram-container">
+                <div class="diagram-title">Onion Architecture Layers</div>
+                <svg width="100%" height="500" viewBox="0 0 800 500" style="max-width: 100%;">
+                    <!-- Domain Core (Center) -->
+                    <circle cx="400" cy="250" r="60" fill="rgba(0, 212, 255, 0.3)" stroke="#00d4ff" stroke-width="3" />
+                    <text x="400" y="245" fill="#00d4ff" font-size="16" font-weight="bold" text-anchor="middle">Domain</text>
+                    <text x="400" y="265" fill="#e0e0e0" font-size="12" text-anchor="middle">Core</text>
+                    
+                    <!-- Domain Services -->
+                    <circle cx="400" cy="250" r="110" fill="none" stroke="rgba(0, 212, 255, 0.4)" stroke-width="3" />
+                    <text x="400" y="200" fill="#00d4ff" font-size="16" font-weight="bold" text-anchor="middle">Domain Services</text>
+                    <text x="400" y="220" fill="#e0e0e0" font-size="12" text-anchor="middle">Business Logic</text>
+                    
+                    <!-- Application Services -->
+                    <circle cx="400" cy="250" r="160" fill="none" stroke="rgba(0, 212, 255, 0.3)" stroke-width="3" />
+                    <text x="400" y="150" fill="#00d4ff" font-size="16" font-weight="bold" text-anchor="middle">Application Services</text>
+                    <text x="400" y="170" fill="#e0e0e0" font-size="12" text-anchor="middle">Use Cases</text>
+                    
+                    <!-- Infrastructure -->
+                    <circle cx="400" cy="250" r="210" fill="none" stroke="rgba(0, 212, 255, 0.2)" stroke-width="3" />
+                    <text x="400" y="70" fill="#00d4ff" font-size="16" font-weight="bold" text-anchor="middle">Infrastructure</text>
+                    <text x="400" y="90" fill="#e0e0e0" font-size="12" text-anchor="middle">DB, External APIs, Frameworks</text>
+                    
+                    <!-- UI Layer -->
+                    <circle cx="400" cy="250" r="260" fill="none" stroke="rgba(0, 212, 255, 0.2)" stroke-width="2" stroke-dasharray="5,5" />
+                    <text x="400" y="30" fill="#00d4ff" font-size="14" font-weight="bold" text-anchor="middle">UI / Presentation</text>
+                    
+                    <!-- Dependency arrows -->
+                    <path d="M 460 250 L 510 250" stroke="#00d4ff" stroke-width="2" fill="none" marker-end="url(#arrowhead2)" />
+                    <path d="M 340 250 L 290 250" stroke="#00d4ff" stroke-width="2" fill="none" marker-end="url(#arrowhead2)" />
+                    <text x="500" y="240" fill="#00d4ff" font-size="12">Dependencies</text>
+                    <text x="280" y="240" fill="#00d4ff" font-size="12">Point Inward</text>
+                    
+                    <defs>
+                        <marker id="arrowhead2" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+                            <polygon points="0 0, 10 5, 0 10" fill="#00d4ff" />
+                        </marker>
+                    </defs>
+                </svg>
+            </div>
+
+            <h3>Key Characteristics</h3>
+            <ul>
+                <li><strong>Dependency Inversion:</strong> Dependencies point inward toward the domain core</li>
+                <li><strong>Independence:</strong> Core domain is independent of infrastructure and UI</li>
+                <li><strong>Testability:</strong> Core can be tested without external dependencies</li>
+                <li><strong>Flexibility:</strong> Easy to swap out infrastructure components</li>
+                <li><strong>Focus on Domain:</strong> Business logic is at the center</li>
+            </ul>
+        </div>
+
+        <!-- Comparison -->
+        <div class="content-section">
+            <h2>Clean Architecture vs Onion Architecture</h2>
+            <p>
+                Both patterns share similar goals but have slight differences in terminology and emphasis:
+            </p>
+            
+            <div class="highlight-box">
+                <h3>Similarities:</h3>
+                <ul>
+                    <li>Both emphasize dependency inversion</li>
+                    <li>Both separate business logic from infrastructure</li>
+                    <li>Both promote testability and maintainability</li>
+                    <li>Both use layered architecture</li>
+                </ul>
+            </div>
+
+            <div class="highlight-box">
+                <h3>Differences:</h3>
+                <ul>
+                    <li><strong>Clean Architecture:</strong> More abstract, focuses on use cases and entities</li>
+                    <li><strong>Onion Architecture:</strong> More explicit about domain services and application services</li>
+                    <li><strong>Clean Architecture:</strong> Uses "Interface Adapters" terminology</li>
+                    <li><strong>Onion Architecture:</strong> Uses "Infrastructure" and "Application Services" terminology</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Practical Example with CQRS and MediatR -->
+        <div class="content-section">
+            <h2>Practical Example: CQRS with MediatR</h2>
+            <p>
+                Let's explore a practical implementation using Command Query Responsibility Segregation (CQRS) 
+                pattern with MediatR, following Clean Architecture principles.
+            </p>
+
+            <h3>Project Structure</h3>
+            <div class="code-block">
+                <pre>
+MyProject/
+├── Domain/                    # Core Business Entities
+│   ├── Entities/
+│   │   └── User.cs
+│   └── Interfaces/
+│       └── IUserRepository.cs
+│
+├── Application/               # Application Business Logic
+│   ├── Commands/
+│   │   └── CreateUserCommand.cs
+│   ├── Queries/
+│   │   └── GetUserQuery.cs
+│   ├── Handlers/
+│   │   ├── CreateUserCommandHandler.cs
+│   │   └── GetUserQueryHandler.cs
+│   └── DTOs/
+│       └── UserDto.cs
+│
+├── Infrastructure/            # External Concerns
+│   ├── Data/
+│   │   └── UserRepository.cs
+│   └── Persistence/
+│       └── ApplicationDbContext.cs
+│
+└── API/                       # Presentation Layer
+    ├── Controllers/
+    │   └── UsersController.cs
+    └── Program.cs
+                </pre>
+            </div>
+
+            <h3>Domain Layer (Core)</h3>
+            <div class="code-block">
+                <pre>
+// Domain/Entities/User.cs
+namespace Domain.Entities
+{
+    public class User
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public DateTime CreatedAt { get; set; }
+        
+        // Business rules
+        public bool IsValid()
+        {
+            return !string.IsNullOrEmpty(Email) && 
+                   Email.Contains("@");
+        }
+    }
+}
+
+// Domain/Interfaces/IUserRepository.cs
+namespace Domain.Interfaces
+{
+    public interface IUserRepository
+    {
+        Task&lt;User&gt; GetByIdAsync(int id);
+        Task&lt;User&gt; CreateAsync(User user);
+        Task&lt;IEnumerable&lt;User&gt;&gt; GetAllAsync();
+    }
+}
+                </pre>
+            </div>
+
+            <h3>Application Layer (Use Cases)</h3>
+            <div class="code-block">
+                <pre>
+// Application/Commands/CreateUserCommand.cs
+using MediatR;
+
+namespace Application.Commands
+{
+    public class CreateUserCommand : IRequest&lt;int&gt;
+    {
+        public string Name { get; set; }
+        public string Email { get; set; }
+    }
+}
+
+// Application/Handlers/CreateUserCommandHandler.cs
+using MediatR;
+using Domain.Entities;
+using Domain.Interfaces;
+
+namespace Application.Handlers
+{
+    public class CreateUserCommandHandler 
+        : IRequestHandler&lt;CreateUserCommand, int&gt;
+    {
+        private readonly IUserRepository _repository;
+        
+        public CreateUserCommandHandler(IUserRepository repository)
+        {
+            _repository = repository;
+        }
+        
+        public async Task&lt;int&gt; Handle(
+            CreateUserCommand request, 
+            CancellationToken cancellationToken)
+        {
+            var user = new User
+            {
+                Name = request.Name,
+                Email = request.Email,
+                CreatedAt = DateTime.UtcNow
+            };
+            
+            if (!user.IsValid())
+                throw new InvalidOperationException("Invalid user data");
+            
+            return await _repository.CreateAsync(user);
+        }
+    }
+}
+
+// Application/Queries/GetUserQuery.cs
+using MediatR;
+using Application.DTOs;
+
+namespace Application.Queries
+{
+    public class GetUserQuery : IRequest&lt;UserDto&gt;
+    {
+        public int Id { get; set; }
+    }
+}
+
+// Application/Handlers/GetUserQueryHandler.cs
+using MediatR;
+using Domain.Interfaces;
+using Application.DTOs;
+
+namespace Application.Handlers
+{
+    public class GetUserQueryHandler 
+        : IRequestHandler&lt;GetUserQuery, UserDto&gt;
+    {
+        private readonly IUserRepository _repository;
+        
+        public GetUserQueryHandler(IUserRepository repository)
+        {
+            _repository = repository;
+        }
+        
+        public async Task&lt;UserDto&gt; Handle(
+            GetUserQuery request, 
+            CancellationToken cancellationToken)
+        {
+            var user = await _repository.GetByIdAsync(request.Id);
+            
+            if (user == null)
+                return null;
+            
+            return new UserDto
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Email = user.Email,
+                CreatedAt = user.CreatedAt
+            };
+        }
+    }
+}
+                </pre>
+            </div>
+
+            <h3>Infrastructure Layer</h3>
+            <div class="code-block">
+                <pre>
+// Infrastructure/Data/UserRepository.cs
+using Domain.Entities;
+using Domain.Interfaces;
+using Infrastructure.Persistence;
+
+namespace Infrastructure.Data
+{
+    public class UserRepository : IUserRepository
+    {
+        private readonly ApplicationDbContext _context;
+        
+        public UserRepository(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+        
+        public async Task&lt;User&gt; GetByIdAsync(int id)
+        {
+            return await _context.Users.FindAsync(id);
+        }
+        
+        public async Task&lt;User&gt; CreateAsync(User user)
+        {
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+            return user;
+        }
+        
+        public async Task&lt;IEnumerable&lt;User&gt;&gt; GetAllAsync()
+        {
+            return await _context.Users.ToListAsync();
+        }
+    }
+}
+                </pre>
+            </div>
+
+            <h3>Presentation Layer (API)</h3>
+            <div class="code-block">
+                <pre>
+// API/Controllers/UsersController.cs
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Application.Commands;
+using Application.Queries;
+
+namespace API.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    public class UsersController : ControllerBase
+    {
+        private readonly IMediator _mediator;
+        
+        public UsersController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+        
+        [HttpGet("{id}")]
+        public async Task&lt;IActionResult&gt; GetUser(int id)
+        {
+            var query = new GetUserQuery { Id = id };
+            var user = await _mediator.Send(query);
+            
+            if (user == null)
+                return NotFound();
+            
+            return Ok(user);
+        }
+        
+        [HttpPost]
+        public async Task&lt;IActionResult&gt; CreateUser(
+            [FromBody] CreateUserCommand command)
+        {
+            var userId = await _mediator.Send(command);
+            return CreatedAtAction(
+                nameof(GetUser), 
+                new { id = userId }, 
+                null);
+        }
+    }
+}
+                </pre>
+            </div>
+
+            <h3>Benefits of This Approach</h3>
+            <ul>
+                <li><strong>Separation of Concerns:</strong> Each layer has a clear responsibility</li>
+                <li><strong>Testability:</strong> Business logic can be tested without database or HTTP</li>
+                <li><strong>Flexibility:</strong> Easy to swap implementations (e.g., change database)</li>
+                <li><strong>CQRS:</strong> Commands and queries are separated, allowing optimization</li>
+                <li><strong>MediatR:</strong> Decouples controllers from business logic</li>
+                <li><strong>Maintainability:</strong> Changes in one layer don't affect others</li>
+            </ul>
+        </div>
+
+        <!-- Best Practices -->
+        <div class="content-section">
+            <h2>Best Practices</h2>
+            
+            <h3>1. Dependency Rule</h3>
+            <p>Always ensure dependencies point inward. Outer layers depend on inner layers, never the reverse.</p>
+            
+            <h3>2. Interface Segregation</h3>
+            <p>Define interfaces in the domain layer, implement them in the infrastructure layer.</p>
+            
+            <h3>3. Use Dependency Injection</h3>
+            <p>Inject dependencies through constructors to maintain loose coupling.</p>
+            
+            <h3>4. Keep Domain Pure</h3>
+            <p>The domain layer should have no dependencies on external libraries or frameworks.</p>
+            
+            <h3>5. Use DTOs for Data Transfer</h3>
+            <p>Don't expose domain entities directly to the presentation layer. Use DTOs instead.</p>
+            
+            <h3>6. Implement Repository Pattern</h3>
+            <p>Abstract data access behind repositories to make the domain independent of persistence.</p>
+        </div>
+
+        <!-- References -->
+        <div class="content-section">
+            <h2>References</h2>
+            <ul>
+                <li>
+                    <a href="https://medium.com/@hydrurdgn/clean-architecture-with-go-a-practical-engineer-to-engineer-guide-e4e2776a8de7" 
+                       target="_blank" class="reference-link">
+                        Clean Architecture with Go - A Practical Engineer-to-Engineer Guide
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.youtube.com/watch?v=rhzWzRLOglo&t=326s" 
+                       target="_blank" class="reference-link">
+                        Clean Architecture & Onion Architecture Explained (YouTube)
+                    </a>
+                </li>
+                <li>
+                    <a href="https://medium.com/@tech.ckumar/command-query-responsibility-segregation-mediatr-7f90d6d56cbd" 
+                       target="_blank" class="reference-link">
+                        Command Query Responsibility Segregation (CQRS) with MediatR
+                    </a>
+                </li>
+                <li>
+                    <a href="https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html" 
+                       target="_blank" class="reference-link">
+                        The Clean Architecture by Robert C. Martin
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
+
