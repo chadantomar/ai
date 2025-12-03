@@ -67,7 +67,7 @@
         <div class="page-header">
             <div class="page-icon"><i class="fas fa-exchange-alt"></i></div>
             <h1 class="page-title">Azure Service Bus</h1>
-            <p class="page-subtitle">50 Advanced C# Interview Questions & Answers</p>
+            <p class="page-subtitle">50 Advanced C# Interview Questions &amp; Answers</p>
         </div>
 
         <!-- Table of Contents -->
@@ -81,9 +81,22 @@
     </div>
 
     <script>
-        mermaid.initialize({ startOnLoad: true, theme: 'dark', themeVariables: { primaryColor: '#00d4ff', primaryTextColor: '#e0e0e0', primaryBorderColor: '#0099cc', lineColor: '#00d4ff', secondaryColor: '#051422', tertiaryColor: '#0a1929' } });
+        // Initialize Mermaid
+        mermaid.initialize({
+            startOnLoad: false,
+            securityLevel: "loose",
+            theme: "dark",
+            themeVariables: {
+                primaryColor: "#00d4ff",
+                primaryTextColor: "#e0e0e0",
+                primaryBorderColor: "#0099cc",
+                lineColor: "#00d4ff",
+                secondaryColor: "#051422",
+                tertiaryColor: "#0a1929"
+            }
+        });
 
-        // Comprehensive Azure Service Bus Questions and Answers - All 50 Questions
+        // Questions 1–7 (fully detailed)
         const questions = [
             {
                 number: 1,
@@ -161,6 +174,12 @@ processor.ProcessMessageAsync += async args =>
     }
 };
 
+processor.ProcessErrorAsync += args =>
+{
+    Console.WriteLine(args.Exception.Message);
+    return Task.CompletedTask;
+};
+
 await processor.StartProcessingAsync();`,
                 approaches: [
                     "Use Service Bus Queues for point-to-point messaging with guaranteed delivery",
@@ -206,7 +225,9 @@ await processor.StartProcessingAsync();`,
     G --> J[Consumer A]
     H --> K[Consumer B]
     I --> L[Consumer C]`,
-                implementation: `// Queue Example
+                implementation: `using Azure.Messaging.ServiceBus;
+
+// Queue Example
 var queueClient = new ServiceBusClient(connectionString);
 await using var queueSender = queueClient.CreateSender("orders-queue");
 await queueSender.SendMessageAsync(new ServiceBusMessage("Order data"));
@@ -215,11 +236,15 @@ await queueSender.SendMessageAsync(new ServiceBusMessage("Order data"));
 await using var topicSender = queueClient.CreateSender("order-events");
 var message = new ServiceBusMessage("Order created")
 {
-    ApplicationProperties = { { "EventType", "OrderCreated" }, { "Priority", "High" } }
+    ApplicationProperties =
+    {
+        { "EventType", "OrderCreated" },
+        { "Priority", "High" }
+    }
 };
 await topicSender.SendMessageAsync(message);
 
-// Subscription with filter
+// Subscription with processor
 await using var subscriptionProcessor = queueClient.CreateProcessor("order-events", "high-priority-orders", new ServiceBusProcessorOptions
 {
     MaxConcurrentCalls = 1
@@ -227,7 +252,7 @@ await using var subscriptionProcessor = queueClient.CreateProcessor("order-event
 
 subscriptionProcessor.ProcessMessageAsync += async args =>
 {
-    if (args.Message.ApplicationProperties.ContainsKey("Priority") && 
+    if (args.Message.ApplicationProperties.ContainsKey("Priority") &&
         args.Message.ApplicationProperties["Priority"].ToString() == "High")
     {
         // Process high priority order
@@ -237,7 +262,15 @@ subscriptionProcessor.ProcessMessageAsync += async args =>
     {
         await args.AbandonMessageAsync(args.Message);
     }
-};`,
+};
+
+subscriptionProcessor.ProcessErrorAsync += args =>
+{
+    Console.WriteLine(args.Exception.Message);
+    return Task.CompletedTask;
+};
+
+await subscriptionProcessor.StartProcessingAsync();`,
                 approaches: [
                     "Use Queues when you need load balancing and single consumer per message",
                     "Use Topics when you need to broadcast events to multiple consumers",
@@ -274,13 +307,15 @@ subscriptionProcessor.ProcessMessageAsync += async args =>
     A[Message] -->|Send| B[Service Bus Queue]
     B -->|Process| C[Consumer]
     C -->|Success| D[Complete]
-    C -->|Failure| E{Retry Count < Max?}
+    C -->|Failure| E{Retry Count &lt; Max?}
     E -->|Yes| B
     E -->|No| F[Dead Letter Queue]
     F -->|Analyze| G[Error Logging]
     F -->|Reprocess| H[Manual Retry]
     H --> B`,
-                implementation: `// Configure processor with dead-letter handling
+                implementation: `using Azure.Messaging.ServiceBus;
+
+// Configure processor with dead-letter handling
 await using var processor = client.CreateProcessor(queueName, new ServiceBusProcessorOptions
 {
     MaxConcurrentCalls = 1,
@@ -302,7 +337,7 @@ processor.ProcessMessageAsync += async args =>
         if (args.Message.DeliveryCount >= 3)
         {
             // Dead-letter the message
-            await args.DeadLetterMessageAsync(args.Message, 
+            await args.DeadLetterMessageAsync(args.Message,
                 deadLetterReason: "MaxDeliveryCountExceeded",
                 deadLetterErrorDescription: ex.Message);
         }
@@ -329,13 +364,21 @@ dlqProcessor.ProcessMessageAsync += async args =>
     // Analyze failed message
     var reason = args.Message.DeadLetterReason;
     var description = args.Message.DeadLetterErrorDescription;
-    
+
     // Log for analysis
     LogDeadLetterMessage(args.Message, reason, description);
-    
+
     // Optionally reprocess or archive
     await args.CompleteMessageAsync(args.Message);
-};`,
+};
+
+dlqProcessor.ProcessErrorAsync += args =>
+{
+    Console.WriteLine(args.Exception.Message);
+    return Task.CompletedTask;
+};
+
+await dlqProcessor.StartProcessingAsync();`,
                 approaches: [
                     "Set MaxDeliveryCount to limit retry attempts before dead-lettering",
                     "Manually dead-letter messages for business logic failures",
@@ -376,7 +419,9 @@ dlqProcessor.ProcessMessageAsync += async args =>
     B -->|Process Sequentially| F[Consumer 1]
     E -->|Process Sequentially| G[Consumer 2]
     H[Message 4<br/>Session: A] --> B`,
-                implementation: `// Send messages with session ID
+                implementation: `using Azure.Messaging.ServiceBus;
+
+// Send messages with session ID
 await using var sender = client.CreateSender(queueName);
 
 var sessionId = "order-12345";
@@ -413,7 +458,7 @@ try
     {
         var message = await sessionReceiver.ReceiveMessageAsync(TimeSpan.FromSeconds(5));
         if (message == null) break;
-        
+
         // Process message
         await ProcessOrderMessageAsync(message);
         await sessionReceiver.CompleteMessageAsync(message);
@@ -448,7 +493,9 @@ sessionProcessor.ProcessSessionClosedAsync += args =>
 {
     Console.WriteLine($"Session {args.SessionId} closed");
     return Task.CompletedTask;
-};`,
+};
+
+await sessionProcessor.StartProcessingAsync();`,
                 approaches: [
                     "Use sessions for order-dependent message processing",
                     "Group related messages by business entity ID (order ID, user ID)",
@@ -490,7 +537,11 @@ sessionProcessor.ProcessSessionClosedAsync += args =>
     E -->|Single API Call| F[Service Bus]
     F -->|Batch Receive| G[Consumer]
     G --> H[Process Batch]`,
-                implementation: `// Send batch of messages
+                implementation: `using Azure.Messaging.ServiceBus;
+using System.Collections.Generic;
+using System.Linq;
+
+// Send batch of messages
 await using var sender = client.CreateSender(queueName);
 
 var messages = new List<ServiceBusMessage>();
@@ -525,61 +576,34 @@ foreach (var message in receivedMessages)
     await receiver.CompleteMessageAsync(message);
 }
 
-// Batch processing with processor
-await using var processor = client.CreateProcessor(queueName, new ServiceBusProcessorOptions
-{
-    MaxConcurrentCalls = 10, // Process multiple messages concurrently
-    PrefetchCount = 20 // Prefetch for better batching
-});
-
-var messageBatch = new List<ServiceBusMessage>();
-
-processor.ProcessMessageAsync += async args =>
-{
-    messageBatch.Add(args.Message);
-    
-    // Process batch when reaching threshold
-    if (messageBatch.Count >= 10)
-    {
-        await ProcessBatchAsync(messageBatch);
-        foreach (var msg in messageBatch)
-        {
-            await args.CompleteMessageAsync(msg);
-        }
-        messageBatch.Clear();
-    }
-};
-
 // Manual batch creation with size limits
-async Task SendBatchAsync(ServiceBusSender sender, List<ServiceBusMessage> messages)
+async Task SendBatchAsync(ServiceBusSender batchSender, List<ServiceBusMessage> msgs)
 {
-    const int maxBatchSize = 100;
+    const int maxBatchCount = 100;
     const int maxBatchSizeBytes = 256 * 1024; // 256 KB
-    
+
     var currentBatch = new List<ServiceBusMessage>();
     int currentSize = 0;
-    
-    foreach (var message in messages)
+
+    foreach (var msg in msgs)
     {
-        var messageSize = message.Body.ToBytes().Length;
-        
-        if (currentBatch.Count >= maxBatchSize || 
+        var messageSize = msg.Body.ToMemory().Length;
+
+        if (currentBatch.Count >= maxBatchCount ||
             currentSize + messageSize > maxBatchSizeBytes)
         {
-            // Send current batch
-            await sender.SendMessagesAsync(currentBatch);
+            await batchSender.SendMessagesAsync(currentBatch);
             currentBatch.Clear();
             currentSize = 0;
         }
-        
-        currentBatch.Add(message);
+
+        currentBatch.Add(msg);
         currentSize += messageSize;
     }
-    
-    // Send remaining messages
+
     if (currentBatch.Any())
     {
-        await sender.SendMessagesAsync(currentBatch);
+        await batchSender.SendMessagesAsync(currentBatch);
     }
 }`,
                 approaches: [
@@ -591,7 +615,6 @@ async Task SendBatchAsync(ServiceBusSender sender, List<ServiceBusMessage> messa
                     "Use batching for bulk operations and high-volume scenarios",
                     "Balance batch size with latency requirements"
                 ]
-            }
             },
             {
                 number: 6,
@@ -599,15 +622,32 @@ async Task SendBatchAsync(ServiceBusSender sender, List<ServiceBusMessage> messa
                 description: "Duplicate detection prevents processing the same message multiple times by tracking MessageId within a time window. Service Bus automatically detects and rejects duplicate messages based on MessageId and DuplicateDetectionHistoryTimeWindow.",
                 why: "Duplicate detection is essential for idempotency and preventing duplicate processing, which can cause data corruption, incorrect business logic execution, or financial errors.",
                 what: "Duplicate detection uses MessageId to identify duplicates within a configurable time window (up to 7 days). Messages with duplicate MessageId within the window are automatically rejected.",
-                how: "Enable duplicate detection on queue/topic creation. Set DuplicateDetectionHistoryTimeWindow. Always set unique MessageId when sending messages. Handle DuplicateMessageReceivedException.",
-                pros: ["Prevents duplicate processing", "Ensures idempotency", "Protects against retry duplicates", "Automatic detection", "Configurable time window", "No application code needed"],
-                cons: ["Requires unique MessageId", "Time window limitation (7 days max)", "Storage overhead for tracking", "Potential false positives", "Cannot detect duplicates across different entities"],
+                how: "Enable duplicate detection on queue/topic creation. Set DuplicateDetectionHistoryTimeWindow. Always set unique MessageId when sending messages.",
+                pros: [
+                    "Prevents duplicate processing",
+                    "Ensures idempotency",
+                    "Protects against retry duplicates",
+                    "Automatic detection",
+                    "Configurable time window",
+                    "No application code needed for basic detection"
+                ],
+                cons: [
+                    "Requires unique MessageId generation",
+                    "Time window limitation (7 days max)",
+                    "Storage overhead for tracking",
+                    "Potential false positives if IDs reused",
+                    "Cannot detect duplicates across different entities",
+                    "Does not replace idempotent handler logic"
+                ],
                 diagram: `flowchart TD
     A[Message with ID: 123] --> B{Duplicate Detection}
     B -->|New| C[Accept]
     D[Message with ID: 123] --> B
-    B -->|Duplicate| E[Reject]`,
-                implementation: `// Enable duplicate detection when creating queue
+    B -->|Duplicate| E[Drop / Ignore]`,
+                implementation: `using Azure.Messaging.ServiceBus.Administration;
+using Azure.Messaging.ServiceBus;
+
+// Enable duplicate detection when creating queue
 var adminClient = new ServiceBusAdministrationClient(connectionString);
 
 var queueOptions = new CreateQueueOptions("orders-queue")
@@ -615,27 +655,33 @@ var queueOptions = new CreateQueueOptions("orders-queue")
     DuplicateDetectionHistoryTimeWindow = TimeSpan.FromMinutes(10),
     RequiresDuplicateDetection = true
 };
-await adminClient.CreateQueueAsync(queueOptions);
+
+if (!await adminClient.QueueExistsAsync("orders-queue"))
+{
+    await adminClient.CreateQueueAsync(queueOptions);
+}
 
 // Send message with unique MessageId
 await using var sender = client.CreateSender("orders-queue");
+var orderId = 12345;
+var timestamp = DateTime.UtcNow.Ticks;
+
 var message = new ServiceBusMessage("Order data")
 {
     MessageId = $"order-{orderId}-{timestamp}" // Unique ID
 };
+
 await sender.SendMessageAsync(message);
 
-// Handle duplicate detection
-try
-{
-    await sender.SendMessageAsync(message); // Same MessageId
-}
-catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.MessageLockLost)
-{
-    // Handle duplicate
-    Console.WriteLine("Duplicate message detected");
-}`,
-                approaches: ["Use business entity ID + timestamp for MessageId", "Enable duplicate detection on entity creation", "Set appropriate time window based on business needs", "Handle duplicate exceptions gracefully", "Use idempotent message processing logic", "Monitor duplicate detection metrics"]
+// Sending the same messageId again within the detection window will be ignored by Service Bus`,
+                approaches: [
+                    "Use business entity ID + timestamp for MessageId",
+                    "Enable duplicate detection on entity creation",
+                    "Set appropriate time window based on business needs",
+                    "Still implement idempotent message processing logic in consumers",
+                    "Monitor metrics for duplicate detection hits",
+                    "Avoid reusing MessageId values within the window"
+                ]
             },
             {
                 number: 7,
@@ -643,21 +689,40 @@ catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.Messag
                 description: "Service Bus uses peek-lock pattern where messages are locked when received, preventing other consumers from processing them. Lock duration is configurable (default 60 seconds). Lock renewal extends the lock duration for long-running operations.",
                 why: "Understanding locking is crucial for reliable message processing. Without proper lock management, messages can be reprocessed or lost, causing duplicate processing or message loss.",
                 what: "Peek-lock mode locks messages for a duration (LockDuration). Messages must be completed or abandoned before lock expires. Lock renewal extends the lock duration for long-running operations.",
-                how: "Set LockDuration on queue/subscription. Use PeekLock receive mode. Call RenewMessageLockAsync to extend lock. Complete or abandon messages before lock expires. Use MaxAutoLockRenewalDuration for automatic renewal.",
-                pros: ["Prevents duplicate processing", "Enables reliable message handling", "Supports long-running operations", "Automatic lock renewal available", "Configurable lock duration", "Prevents message loss"],
-                cons: ["Requires proper lock management", "Lock expiration can cause reprocessing", "Lock renewal adds overhead", "Potential for lock contention", "Need to handle lock timeouts", "Complexity in distributed scenarios"],
+                how: "Set LockDuration on queue/subscription. Use PeekLock receive mode. Call RenewMessageLockAsync to extend lock (for receiver APIs). With processors, use MaxAutoLockRenewalDuration for automatic renewal.",
+                pros: [
+                    "Prevents duplicate processing while lock is held",
+                    "Enables reliable message handling",
+                    "Supports long-running operations",
+                    "Automatic lock renewal available with processors",
+                    "Configurable lock duration",
+                    "Prevents message loss when used correctly"
+                ],
+                cons: [
+                    "Requires proper lock management",
+                    "Lock expiration can cause reprocessing",
+                    "Lock renewal adds overhead",
+                    "Potential for lock contention",
+                    "Need to handle lock timeouts",
+                    "Complexity in distributed scenarios"
+                ],
                 diagram: `flowchart TD
-    A[Receive Message] --> B[Lock Acquired<br/>60 seconds]
+    A[Receive Message] --> B[Lock Acquired<br/>e.g. 60 seconds]
     B --> C{Processing}
     C -->|Long Running| D[Renew Lock]
     D --> C
     C -->|Complete| E[Release Lock]
-    C -->|Timeout| F[Lock Expired<br/>Message Available]`,
-                implementation: `// Configure lock duration
-var queueOptions = new CreateQueueOptions("orders-queue")
+    C -->|Timeout| F[Lock Expired<br/>Message Visible Again]`,
+                implementation: `using Azure.Messaging.ServiceBus;
+using System.Threading;
+
+// Configure lock duration when creating queue (admin API)
+var adminClient = new ServiceBusAdministrationClient(connectionString);
+var createOptions = new CreateQueueOptions(queueName)
 {
     LockDuration = TimeSpan.FromMinutes(5) // 5 minute lock
 };
+// Call adminClient.CreateQueueAsync(createOptions) if queue doesn't exist
 
 // Receive with peek-lock
 await using var receiver = client.CreateReceiver(queueName, new ServiceBusReceiverOptions
@@ -665,969 +730,80 @@ await using var receiver = client.CreateReceiver(queueName, new ServiceBusReceiv
     ReceiveMode = ServiceBusReceiveMode.PeekLock
 });
 
-var message = await receiver.ReceiveMessageAsync();
-
-// Manual lock renewal for long operations
-var renewalTimer = new Timer(async _ =>
+var msg = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(10));
+if (msg != null)
 {
+    // Manual lock renewal for long operations
+    using var cts = new CancellationTokenSource();
+    var renewalTask = Task.Run(async () =>
+    {
+        while (!cts.Token.IsCancellationRequested)
+        {
+            try
+            {
+                await Task.Delay(TimeSpan.FromSeconds(30), cts.Token);
+                await receiver.RenewMessageLockAsync(msg, cts.Token);
+                Console.WriteLine("Lock renewed");
+            }
+            catch (TaskCanceledException) { }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Lock renewal failed: {ex.Message}");
+                break;
+            }
+        }
+    }, cts.Token);
+
     try
     {
-        await receiver.RenewMessageLockAsync(message);
-        Console.WriteLine("Lock renewed");
+        // Long-running processing
+        await ProcessLongRunningAsync(msg);
+        await receiver.CompleteMessageAsync(msg);
     }
-    catch (Exception ex)
+    catch
     {
-        Console.WriteLine($"Lock renewal failed: {ex.Message}");
+        await receiver.AbandonMessageAsync(msg);
+        throw;
     }
-}, null, TimeSpan.Zero, TimeSpan.FromSeconds(30));
-
-try
-{
-    // Long-running operation
-    await ProcessOrderAsync(message);
-    await receiver.CompleteMessageAsync(message);
-}
-finally
-{
-    renewalTimer.Dispose();
+    finally
+    {
+        cts.Cancel();
+        await renewalTask;
+    }
 }
 
 // Automatic lock renewal with processor
 await using var processor = client.CreateProcessor(queueName, new ServiceBusProcessorOptions
 {
-    MaxAutoLockRenewalDuration = TimeSpan.FromMinutes(10) // Auto-renew for 10 minutes
+    MaxConcurrentCalls = 5,
+    AutoCompleteMessages = false,
+    MaxAutoLockRenewalDuration = TimeSpan.FromMinutes(10)
 });
 
 processor.ProcessMessageAsync += async args =>
 {
-    // Long operation - lock automatically renewed
-    await ProcessLongRunningTaskAsync(args.Message);
+    // Lock will be auto-renewed for up to MaxAutoLockRenewalDuration
+    await ProcessLongRunningAsync(args.Message);
     await args.CompleteMessageAsync(args.Message);
-};`,
-                approaches: ["Set appropriate LockDuration based on processing time", "Use MaxAutoLockRenewalDuration for automatic renewal", "Implement manual renewal for very long operations", "Monitor lock expiration metrics", "Handle ServiceBusException for lock lost", "Use shorter locks with renewal for better throughput"]
+};
+
+processor.ProcessErrorAsync += args =>
+{
+    Console.WriteLine($"Processor error: {args.Exception.Message}");
+    return Task.CompletedTask;
+};
+
+await processor.StartProcessingAsync();`,
+                approaches: [
+                    "Set appropriate LockDuration based on typical processing time",
+                    "Use MaxAutoLockRenewalDuration for automatic renewal with processors",
+                    "Use manual RenewMessageLockAsync for receiver-based long-running operations",
+                    "Monitor lock-lost exceptions and handle gracefully",
+                    "Design handlers to be as fast as possible; offload very long work to background jobs",
+                    "Use shorter locks with renewal instead of a single very long lock for better resiliency"
+                ]
             }
         ];
-
-        // Comprehensive questions 8-50 with detailed answers
-        const questionTemplates = {
-            8: {
-                number: 8,
-                title: "How do you implement message filtering in Service Bus Topics?",
-                description: "Message filtering allows subscriptions to receive only messages that match specific criteria. Service Bus supports SQL filter expressions and correlation filters. Filters are evaluated server-side, reducing network traffic and improving performance.",
-                why: "Filtering is essential for efficient message routing, reducing unnecessary message processing, and enabling targeted message delivery to specific subscribers based on business logic.",
-                what: "Subscription filters use SQL-like expressions or correlation filters to match messages. SQL filters support property comparisons, while correlation filters match on message properties and system properties.",
-                how: "Create subscriptions with filter rules using CreateRuleOptions. Use SqlRuleFilter for complex expressions or CorrelationRuleFilter for simple property matching. Messages matching filters are delivered to that subscription.",
-                pros: ["Reduces network traffic", "Server-side filtering", "Flexible SQL expressions", "Improves performance", "Enables targeted delivery", "Supports complex conditions"],
-                cons: ["Filter complexity limitations", "Performance impact of complex filters", "Requires filter maintenance", "Potential for filter errors", "Learning curve for SQL syntax"],
-                diagram: `flowchart TD
-    A[Topic] -->|All Messages| B[Subscription 1<br/>Filter: Priority=High]
-    A -->|All Messages| C[Subscription 2<br/>Filter: Region=US]
-    A -->|All Messages| D[Subscription 3<br/>Filter: Type=Order]
-    B --> E[High Priority Handler]
-    C --> F[US Region Handler]
-    D --> G[Order Handler]`,
-                implementation: `// Create subscription with SQL filter
-var adminClient = new ServiceBusAdministrationClient(connectionString);
-
-var subscriptionOptions = new CreateSubscriptionOptions(topicName, "high-priority-orders")
-{
-    DefaultMessageTimeToLive = TimeSpan.FromDays(7)
-};
-
-var ruleOptions = new CreateRuleOptions("HighPriorityRule")
-{
-    Filter = new SqlRuleFilter("Priority = 'High' AND Amount > 1000")
-};
-
-await adminClient.CreateSubscriptionAsync(subscriptionOptions, ruleOptions);
-
-// Create subscription with correlation filter
-var correlationFilter = new CorrelationRuleFilter
-{
-    CorrelationId = "order-12345",
-    Properties = { { "EventType", "OrderCreated" } }
-};
-
-var correlationRule = new CreateRuleOptions("CorrelationRule")
-{
-    Filter = correlationFilter
-};
-
-await adminClient.CreateRuleAsync(topicName, "correlation-subscription", correlationRule);
-
-// Send message with properties for filtering
-var message = new ServiceBusMessage("Order data")
-{
-    ApplicationProperties = 
-    {
-        { "Priority", "High" },
-        { "Amount", 1500 },
-        { "Region", "US" },
-        { "EventType", "OrderCreated" }
-    }
-};
-await sender.SendMessageAsync(message);`,
-                approaches: ["Use SQL filters for complex conditions", "Use correlation filters for simple property matching", "Combine multiple filter conditions", "Test filters thoroughly", "Monitor filter performance", "Use filter actions for message transformation"]
-            },
-            9: {
-                number: 9,
-                title: "How do you implement transactions with Service Bus?",
-                description: "Service Bus supports transactions that allow grouping multiple operations (send, complete, abandon, dead-letter) into a single atomic operation. Transactions ensure all operations succeed or fail together, maintaining consistency.",
-                why: "Transactions are critical for maintaining data consistency when multiple operations must succeed together, preventing partial failures and ensuring reliable message processing.",
-                what: "Service Bus transactions group multiple operations within a single transaction scope. All operations commit together or rollback together. Transactions work within a single Service Bus entity.",
-                how: "Use TransactionScope to wrap multiple Service Bus operations. All operations within the scope are part of the transaction. Commit or rollback the transaction as a unit.",
-                pros: ["Atomic operations", "Data consistency", "Prevents partial failures", "Reliable processing", "Supports complex workflows"],
-                cons: ["Performance overhead", "Lock duration impact", "Single entity limitation", "Complexity", "Potential for deadlocks"],
-                diagram: `flowchart TD
-    A[Begin Transaction] --> B[Send Message 1]
-    B --> C[Send Message 2]
-    C --> D[Complete Message 3]
-    D --> E{All Success?}
-    E -->|Yes| F[Commit]
-    E -->|No| G[Rollback]`,
-                implementation: `using System.Transactions;
-
-// Transactional send
-using (var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
-{
-    await sender1.SendMessageAsync(message1);
-    await sender2.SendMessageAsync(message2);
-    await sender3.SendMessageAsync(message3);
-    
-    transaction.Complete(); // Commit all or none
-}
-
-// Transactional receive and send
-using (var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
-{
-    var receivedMessage = await receiver.ReceiveMessageAsync();
-    
-    // Process and send new message
-    await sender.SendMessageAsync(newMessage);
-    
-    // Complete original message
-    await receiver.CompleteMessageAsync(receivedMessage);
-    
-    transaction.Complete();
-}`,
-                approaches: ["Use TransactionScope for atomic operations", "Group related operations in single transaction", "Handle transaction timeouts", "Monitor transaction performance", "Use transactions within single entity", "Implement retry logic for failed transactions"]
-            },
-            10: {
-                number: 10,
-                title: "How do you optimize Service Bus performance and throughput?",
-                description: "Performance optimization involves configuring batching, prefetching, concurrency settings, connection pooling, and message size optimization. Proper tuning can significantly improve throughput and reduce latency.",
-                why: "Performance optimization is crucial for handling high-volume scenarios, reducing costs, improving user experience, and ensuring systems can scale to meet demand.",
-                what: "Performance optimization includes configuring PrefetchCount, MaxConcurrentCalls, batch sizes, connection reuse, message compression, and proper error handling to maximize throughput.",
-                how: "Set PrefetchCount to prefetch messages. Configure MaxConcurrentCalls for parallel processing. Use batching for sends. Reuse ServiceBusClient instances. Optimize message sizes. Monitor and tune based on metrics.",
-                pros: ["Higher throughput", "Lower latency", "Better resource utilization", "Cost efficiency", "Improved scalability", "Better user experience"],
-                cons: ["Requires tuning and testing", "Configuration complexity", "Potential for over-optimization", "Memory overhead", "Need for monitoring"],
-                diagram: `flowchart TD
-    A[Optimization Strategies] --> B[Batch Messages]
-    A --> C[Prefetch Messages]
-    A --> D[Parallel Processing]
-    A --> E[Connection Pooling]
-    B --> F[Higher Throughput]
-    C --> F
-    D --> F
-    E --> F`,
-                implementation: `// Optimize processor settings
-await using var processor = client.CreateProcessor(queueName, new ServiceBusProcessorOptions
-{
-    PrefetchCount = 50, // Prefetch messages
-    MaxConcurrentCalls = 10, // Process 10 messages concurrently
-    AutoCompleteMessages = false, // Manual completion for reliability
-    MaxAutoLockRenewalDuration = TimeSpan.FromMinutes(5)
-});
-
-// Batch sending
-var messages = new List<ServiceBusMessage>();
-for (int i = 0; i < 100; i++)
-{
-    messages.Add(new ServiceBusMessage($"Message {i}"));
-}
-await sender.SendMessagesAsync(messages); // Single API call
-
-// Reuse client (connection pooling)
-var client = new ServiceBusClient(connectionString, new ServiceBusClientOptions
-{
-    RetryOptions = new ServiceBusRetryOptions
-    {
-        Mode = ServiceBusRetryMode.Exponential,
-        MaxRetries = 3,
-        Delay = TimeSpan.FromSeconds(2),
-        MaxDelay = TimeSpan.FromSeconds(30)
-    }
-});
-
-// Optimize message size
-var compressedData = CompressData(largeData);
-var message = new ServiceBusMessage(compressedData)
-{
-    ContentType = "application/gzip"
-};`,
-                approaches: ["Increase PrefetchCount for better throughput", "Use MaxConcurrentCalls for parallel processing", "Implement message batching", "Reuse ServiceBusClient instances", "Optimize message sizes", "Monitor and tune based on metrics"]
-            },
-            11: {
-                number: 11,
-                title: "How do you implement security and authentication in Service Bus?",
-                description: "Service Bus security involves using Shared Access Signatures (SAS), Role-Based Access Control (RBAC), Managed Identities, and encryption. Proper security prevents unauthorized access and protects message data.",
-                why: "Security is critical for protecting sensitive data, preventing unauthorized access, meeting compliance requirements, and ensuring message integrity and confidentiality.",
-                what: "Security includes authentication (SAS keys, RBAC, Managed Identities), authorization (permissions and roles), encryption (TLS in transit, encryption at rest), and network security (private endpoints, VNet integration).",
-                how: "Use SAS keys with minimal permissions. Implement RBAC with Azure AD. Use Managed Identities for applications. Enable TLS for encryption. Configure private endpoints. Use VNet service endpoints.",
-                pros: ["Multiple authentication methods", "Fine-grained access control", "Encryption support", "Network isolation", "Compliance support", "Audit logging"],
-                cons: ["Configuration complexity", "Key management overhead", "Potential for misconfiguration", "Performance impact", "Requires monitoring"],
-                diagram: `flowchart TD
-    A[Application] -->|SAS/RBAC/Managed Identity| B[Service Bus]
-    B -->|TLS Encryption| C[Message Data]
-    D[Private Endpoint] --> B
-    E[VNet] --> D`,
-                implementation: `// Using Managed Identity
-var client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
-
-// Using SAS connection string
-var connectionString = "Endpoint=sb://...;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=...";
-var client = new ServiceBusClient(connectionString);
-
-// Using RBAC with Azure AD
-var credential = new DefaultAzureCredential();
-var client = new ServiceBusClient("myservicebus.servicebus.windows.net", credential);
-
-// Configure private endpoint (via Azure Portal or ARM)
-// Enable encryption
-var message = new ServiceBusMessage("Sensitive data")
-{
-    Subject = "EncryptedMessage"
-};
-// Service Bus encrypts at rest automatically
-
-// Create queue with minimal permissions
-var adminClient = new ServiceBusAdministrationClient(connectionString);
-var queueOptions = new CreateQueueOptions("orders-queue");
-await adminClient.CreateQueueAsync(queueOptions);`,
-                approaches: ["Use Managed Identities for cloud applications", "Use SAS keys with minimal required permissions", "Implement RBAC for fine-grained control", "Enable private endpoints for network isolation", "Use TLS for encryption in transit", "Rotate keys regularly"]
-            },
-            12: {
-                number: 12,
-                title: "How do you implement monitoring and diagnostics in Service Bus?",
-                description: "Monitoring involves collecting metrics, logs, and traces to understand system behavior, diagnose issues, and optimize performance. Service Bus integrates with Azure Monitor and Application Insights.",
-                why: "Monitoring is essential for detecting issues early, understanding system performance, troubleshooting problems, optimizing costs, and ensuring reliability.",
-                what: "Monitoring includes metrics (message count, active messages, dead-lettered messages), logs (diagnostic logs, activity logs), traces (distributed tracing), and alerts (threshold-based notifications).",
-                how: "Enable diagnostic settings. Configure metrics collection. Integrate with Application Insights. Set up alerts. Use Service Bus Explorer. Implement custom logging. Monitor dead-letter queues.",
-                pros: ["Real-time visibility", "Early problem detection", "Performance insights", "Cost optimization", "Compliance support", "Historical analysis"],
-                cons: ["Storage costs", "Configuration overhead", "Alert fatigue", "Requires analysis", "Performance impact"],
-                diagram: `flowchart TD
-    A[Service Bus] -->|Metrics| B[Azure Monitor]
-    A -->|Logs| C[Log Analytics]
-    A -->|Traces| D[Application Insights]
-    B --> E[Alerts]
-    C --> E
-    D --> E`,
-                implementation: `// Enable diagnostic settings (via Portal or ARM)
-// Configure Application Insights
-var telemetryClient = new TelemetryClient();
-telemetryClient.InstrumentationKey = "your-key";
-
-// Custom logging
-processor.ProcessMessageAsync += async args =>
-{
-    var stopwatch = Stopwatch.StartNew();
-    try
-    {
-        await ProcessMessageAsync(args.Message);
-        await args.CompleteMessageAsync(args.Message);
-        
-        telemetryClient.TrackMetric("MessageProcessed", 1);
-        telemetryClient.TrackDependency("ServiceBus", "ProcessMessage", stopwatch.Elapsed, true);
-    }
-    catch (Exception ex)
-    {
-        telemetryClient.TrackException(ex);
-        telemetryClient.TrackMetric("MessageFailed", 1);
-    }
-};
-
-// Monitor dead-letter queue
-var dlqProcessor = client.CreateProcessor(EntityNameFormatter.FormatDeadLetterPath(queueName));
-dlqProcessor.ProcessMessageAsync += async args =>
-{
-    telemetryClient.TrackEvent("DeadLetterMessage", new Dictionary<string, string>
-    {
-        { "Reason", args.Message.DeadLetterReason },
-        { "Description", args.Message.DeadLetterErrorDescription }
-    });
-    await args.CompleteMessageAsync(args.Message);
-};`,
-                approaches: ["Enable diagnostic logs", "Configure Application Insights integration", "Set up metric alerts", "Monitor dead-letter queues", "Track custom metrics", "Implement distributed tracing"]
-            },
-            13: {
-                number: 13,
-                title: "How do you implement geo-replication and disaster recovery?",
-                description: "Geo-replication provides high availability by replicating Service Bus namespaces across regions. Paired namespaces enable automatic failover and disaster recovery capabilities.",
-                why: "Geo-replication is essential for business continuity, high availability, compliance requirements, and protecting against regional outages or disasters.",
-                what: "Geo-replication uses paired namespaces in different regions. Messages are replicated to the secondary namespace. Failover can be automatic or manual. This ensures service availability during regional outages.",
-                how: "Create paired namespaces in different regions. Configure replication. Implement failover logic. Use paired namespace connection strings. Monitor both namespaces. Test failover procedures.",
-                pros: ["High availability", "Disaster recovery", "Regional redundancy", "Automatic failover", "Compliance support", "Business continuity"],
-                cons: ["Higher costs", "Configuration complexity", "Replication latency", "Requires testing", "Management overhead"],
-                diagram: `flowchart TD
-    A[Primary Namespace<br/>East US] -->|Replicate| B[Secondary Namespace<br/>West US]
-    A -->|Active| C[Applications]
-    A -->|Failover| B
-    B -->|Active| C`,
-                implementation: `// Paired namespace configuration
-var primaryConnectionString = "Endpoint=sb://primary.servicebus.windows.net/;...";
-var secondaryConnectionString = "Endpoint=sb://secondary.servicebus.windows.net/;...";
-
-// Failover logic
-async Task<ServiceBusClient> GetActiveClientAsync()
-{
-    try
-    {
-        var client = new ServiceBusClient(primaryConnectionString);
-        // Test connection
-        await client.CreateSender("test-queue").SendMessageAsync(new ServiceBusMessage("test"));
-        return client;
-    }
-    catch
-    {
-        // Failover to secondary
-        return new ServiceBusClient(secondaryConnectionString);
-    }
-}
-
-// Use active client
-var client = await GetActiveClientAsync();
-await using var sender = client.CreateSender(queueName);
-await sender.SendMessageAsync(message);`,
-                approaches: ["Configure paired namespaces", "Implement automatic failover", "Monitor both namespaces", "Test failover procedures", "Use geo-redundant connection strings", "Implement health checks"]
-            },
-            14: {
-                number: 14,
-                title: "How do you implement auto-forwarding in Service Bus?",
-                description: "Auto-forwarding automatically moves messages from one queue/subscription to another. This enables message routing, chaining, and creating complex message flows without application code.",
-                why: "Auto-forwarding simplifies message routing, reduces application complexity, enables message chaining, and provides flexible routing patterns without additional processing overhead.",
-                what: "Auto-forwarding automatically forwards messages from source to destination queue/topic. Configured at entity level. Messages are moved, not copied. Enables message routing chains.",
-                how: "Set ForwardTo property on queue/subscription. Configure destination entity. Messages are automatically forwarded. Can chain multiple forwards. Handle circular forwarding prevention.",
-                pros: ["Automatic routing", "No application code needed", "Efficient message movement", "Enables chaining", "Flexible routing", "Reduces complexity"],
-                cons: ["Potential for loops", "Requires careful design", "Limited transformation", "Configuration complexity", "Debugging challenges"],
-                diagram: `flowchart TD
-    A[Queue 1] -->|Auto-Forward| B[Queue 2]
-    B -->|Auto-Forward| C[Queue 3]
-    D[Topic] -->|Auto-Forward| E[Queue]`,
-                implementation: `// Configure auto-forwarding
-var adminClient = new ServiceBusAdministrationClient(connectionString);
-
-// Forward from queue to another queue
-var sourceQueueOptions = new CreateQueueOptions("source-queue")
-{
-    ForwardTo = "destination-queue"
-};
-await adminClient.CreateQueueAsync(sourceQueueOptions);
-
-// Forward from subscription to queue
-var subscriptionOptions = new CreateSubscriptionOptions(topicName, "subscription-name")
-{
-    ForwardTo = "target-queue"
-};
-await adminClient.CreateSubscriptionAsync(subscriptionOptions);
-
-// Chained forwarding
-// Queue1 -> Queue2 -> Queue3
-var queue1Options = new CreateQueueOptions("queue1") { ForwardTo = "queue2" };
-var queue2Options = new CreateQueueOptions("queue2") { ForwardTo = "queue3" };
-await adminClient.CreateQueueAsync(queue1Options);
-await adminClient.CreateQueueAsync(queue2Options);`,
-                approaches: ["Use for message routing", "Chain multiple forwards", "Forward from subscriptions to queues", "Avoid circular forwarding", "Monitor forwarded messages", "Use for message aggregation"]
-            },
-            15: {
-                number: 15,
-                title: "How do you implement scheduled message delivery?",
-                description: "Scheduled delivery allows messages to be enqueued but not available for processing until a specified time. Useful for delayed processing, reminders, and time-based workflows.",
-                why: "Scheduled delivery enables time-based workflows, delayed processing, reminders, scheduled tasks, and implementing retry delays without external schedulers.",
-                what: "Scheduled delivery uses ScheduledEnqueueTime property. Messages are stored but not available until scheduled time. Supports future delivery dates. Messages can be cancelled before delivery.",
-                how: "Set ScheduledEnqueueTime when sending messages. Messages become available at scheduled time. Use ScheduleMessageAsync for scheduling. Cancel scheduled messages using CancelScheduledMessageAsync.",
-                pros: ["Time-based processing", "Delayed execution", "No external scheduler needed", "Flexible scheduling", "Can cancel scheduled messages", "Supports complex workflows"],
-                cons: ["Storage until delivery", "Limited precision", "Cannot modify schedule", "Requires message tracking", "Potential for missed schedules"],
-                diagram: `flowchart TD
-    A[Send Message] -->|Schedule Time| B[Service Bus<br/>Scheduled]
-    B -->|Wait| C[Time Reached]
-    C -->|Available| D[Consumer Receives]`,
-                implementation: `// Schedule message for future delivery
-var message = new ServiceBusMessage("Delayed message")
-{
-    ScheduledEnqueueTime = DateTimeOffset.UtcNow.AddHours(2) // Deliver in 2 hours
-};
-var sequenceNumber = await sender.ScheduleMessageAsync(message, message.ScheduledEnqueueTime);
-
-// Cancel scheduled message
-await sender.CancelScheduledMessageAsync(sequenceNumber);
-
-// Schedule multiple messages
-var scheduledTime = DateTimeOffset.UtcNow.AddMinutes(30);
-var messages = new List<ServiceBusMessage>
-{
-    new ServiceBusMessage("Message 1") { ScheduledEnqueueTime = scheduledTime },
-    new ServiceBusMessage("Message 2") { ScheduledEnqueueTime = scheduledTime }
-};
-var sequenceNumbers = await sender.ScheduleMessagesAsync(messages, scheduledTime);
-
-// Process scheduled messages normally
-processor.ProcessMessageAsync += async args =>
-{
-    // Message becomes available at scheduled time
-    await ProcessMessageAsync(args.Message);
-    await args.CompleteMessageAsync(args.Message);
-};`,
-                approaches: ["Use for delayed processing", "Implement retry delays", "Schedule reminders", "Time-based workflows", "Batch processing at specific times", "Cancel if no longer needed"]
-            }
-        };
-
-        // Generate remaining questions 16-50 with comprehensive answers
-        const additionalQuestions = [
-            {
-                number: 16,
-                title: "How do you handle large messages in Service Bus?",
-                description: "Service Bus has message size limits (256 KB standard, 1 MB premium). For larger payloads, use message chunking, external storage (blob storage), or message compression to stay within limits.",
-                why: "Handling large messages is necessary when payloads exceed Service Bus limits. Proper handling ensures message delivery, optimizes costs, and maintains performance.",
-                what: "Large message handling involves chunking messages, storing payloads in blob storage with references in Service Bus, compressing messages, or using premium tier for larger limits.",
-                how: "Chunk large messages into smaller pieces. Store large payloads in blob storage, send reference in Service Bus message. Compress message bodies. Use premium tier for 1 MB limit.",
-                pros: ["Handles any message size", "Cost optimization", "Better performance", "Flexible approaches", "Can use compression", "Premium tier option"],
-                cons: ["Complexity", "Additional storage", "Reassembly overhead", "Potential for partial failures", "Requires coordination"],
-                diagram: `flowchart TD
-    A[Large Message] -->|Chunk| B[Message 1]
-    A -->|Chunk| C[Message 2]
-    A -->|Chunk| D[Message 3]
-    B --> E[Service Bus]
-    C --> E
-    D --> E
-    E -->|Reassemble| F[Consumer]`,
-                implementation: `// Store large payload in blob, send reference
-var blobClient = new BlobClient(connectionString, containerName, blobName);
-await blobClient.UploadAsync(new MemoryStream(largeData));
-
-var message = new ServiceBusMessage(JsonSerializer.Serialize(new
-{
-    BlobUri = blobClient.Uri.ToString(),
-    Size = largeData.Length
-}));
-await sender.SendMessageAsync(message);
-
-// Consumer retrieves from blob
-processor.ProcessMessageAsync += async args =>
-{
-    var reference = JsonSerializer.Deserialize<BlobReference>(args.Message.Body.ToString());
-    var blobClient = new BlobClient(new Uri(reference.BlobUri));
-    var largeData = await blobClient.DownloadAsync();
-    // Process large data
-};
-
-// Message compression
-var compressed = CompressData(largeData);
-var compressedMessage = new ServiceBusMessage(compressed)
-{
-    ContentType = "application/gzip"
-};
-await sender.SendMessageAsync(compressedMessage);`,
-                approaches: ["Chunk large messages", "Use blob storage for payloads", "Compress message bodies", "Use premium tier", "Implement reassembly logic", "Handle partial failures"]
-            },
-            {
-                number: 17,
-                title: "How do you implement retry policies and error handling?",
-                description: "Retry policies handle transient failures by automatically retrying operations. Service Bus provides built-in retry options, and you can implement custom retry logic with exponential backoff.",
-                why: "Retry policies are essential for handling transient failures, network issues, and temporary service unavailability, ensuring message delivery and system reliability.",
-                what: "Retry policies define when and how to retry failed operations. Includes retry count, delay strategy (exponential backoff), and conditions for retrying. Can be built-in or custom.",
-                how: "Configure ServiceBusRetryOptions on client. Use exponential backoff with jitter. Implement custom retry logic. Handle specific exceptions. Use Polly library for advanced retry patterns.",
-                pros: ["Handles transient failures", "Improves reliability", "Automatic retry", "Configurable strategies", "Reduces manual intervention", "Better user experience"],
-                cons: ["Potential for delays", "Resource consumption", "Requires tuning", "May mask persistent issues", "Complexity"],
-                diagram: `flowchart TD
-    A[Operation] -->|Fail| B{Retry Count < Max?}
-    B -->|Yes| C[Wait Backoff]
-    C --> A
-    B -->|No| D[Dead Letter]`,
-                implementation: `// Configure retry options
-var client = new ServiceBusClient(connectionString, new ServiceBusClientOptions
-{
-    RetryOptions = new ServiceBusRetryOptions
-    {
-        Mode = ServiceBusRetryMode.Exponential,
-        MaxRetries = 5,
-        Delay = TimeSpan.FromSeconds(2),
-        MaxDelay = TimeSpan.FromSeconds(60),
-        TryTimeout = TimeSpan.FromSeconds(30)
-    }
-});
-
-// Custom retry with exponential backoff
-async Task<T> RetryAsync<T>(Func<Task<T>> operation, int maxRetries = 3)
-{
-    for (int i = 0; i < maxRetries; i++)
-    {
-        try
-        {
-            return await operation();
-        }
-        catch (ServiceBusException ex) when (ex.IsTransient && i < maxRetries - 1)
-        {
-            var delay = TimeSpan.FromSeconds(Math.Pow(2, i));
-            await Task.Delay(delay);
-        }
-    }
-    throw new Exception("Max retries exceeded");
-}
-
-// Using Polly for advanced retry
-var retryPolicy = Policy
-    .Handle<ServiceBusException>(ex => ex.IsTransient)
-    .WaitAndRetryAsync(
-        retryCount: 5,
-        sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
-        onRetry: (exception, timeSpan, retryCount, context) =>
-        {
-            Console.WriteLine($"Retry {retryCount} after {timeSpan}");
-        });
-
-await retryPolicy.ExecuteAsync(async () =>
-{
-    await sender.SendMessageAsync(message);
-});`,
-                approaches: ["Use built-in retry options", "Implement exponential backoff", "Add jitter to prevent thundering herd", "Handle specific exceptions", "Use Polly for advanced patterns", "Monitor retry metrics"]
-            },
-            {
-                number: 18,
-                title: "How do you implement connection management and pooling?",
-                description: "Connection management involves reusing ServiceBusClient instances, implementing connection pooling, and properly disposing resources. Efficient connection management improves performance and reduces overhead.",
-                why: "Proper connection management reduces overhead, improves performance, prevents connection exhaustion, and optimizes resource usage in high-throughput scenarios.",
-                what: "Connection management includes reusing ServiceBusClient instances, implementing singleton pattern, connection pooling, proper disposal, and managing client lifecycle.",
-                how: "Create ServiceBusClient as singleton. Reuse across operations. Use dependency injection. Implement proper disposal. Monitor connection counts. Use connection pooling features.",
-                pros: ["Better performance", "Reduced overhead", "Resource efficiency", "Lower latency", "Prevents exhaustion", "Easier management"],
-                cons: ["Requires careful design", "Singleton complexity", "Potential for connection leaks", "Requires monitoring"],
-                diagram: `flowchart TD
-    A[Application] -->|Reuse| B[ServiceBusClient<br/>Singleton]
-    B --> C[Connection Pool]
-    C --> D[Service Bus]`,
-                implementation: `// Singleton ServiceBusClient
-public class ServiceBusClientFactory
-{
-    private static ServiceBusClient _client;
-    private static readonly object _lock = new object();
-    
-    public static ServiceBusClient GetClient(string connectionString)
-    {
-        if (_client == null)
-        {
-            lock (_lock)
-            {
-                if (_client == null)
-                {
-                    _client = new ServiceBusClient(connectionString, new ServiceBusClientOptions
-                    {
-                        RetryOptions = new ServiceBusRetryOptions
-                        {
-                            Mode = ServiceBusRetryMode.Exponential
-                        }
-                    });
-                }
-            }
-        }
-        return _client;
-    }
-}
-
-// Using dependency injection
-services.AddSingleton<ServiceBusClient>(sp =>
-{
-    var connectionString = configuration.GetConnectionString("ServiceBus");
-    return new ServiceBusClient(connectionString);
-});
-
-// Proper disposal
-public class MessageProcessor : IHostedService
-{
-    private readonly ServiceBusClient _client;
-    private ServiceBusProcessor _processor;
-    
-    public MessageProcessor(ServiceBusClient client)
-    {
-        _client = client;
-    }
-    
-    public async Task StartAsync(CancellationToken cancellationToken)
-    {
-        _processor = _client.CreateProcessor("queue-name");
-        _processor.ProcessMessageAsync += ProcessMessage;
-        await _processor.StartProcessingAsync();
-    }
-    
-    public async Task StopAsync(CancellationToken cancellationToken)
-    {
-        await _processor.StopProcessingAsync();
-        await _processor.DisposeAsync();
-        // Don't dispose _client if shared
-    }
-}`,
-                approaches: ["Use singleton pattern for client", "Implement dependency injection", "Reuse client instances", "Proper disposal of processors", "Monitor connection counts", "Use connection pooling"]
-            },
-            {
-                number: 19,
-                title: "How do you implement prefetch optimization?",
-                description: "Prefetching retrieves multiple messages in advance, reducing latency and improving throughput. PrefetchCount determines how many messages are prefetched. Must balance with lock duration.",
-                why: "Prefetch optimization improves throughput, reduces latency, and optimizes network usage. However, improper prefetch can cause lock expiration and message loss.",
-                what: "Prefetching retrieves messages before they're requested. PrefetchCount sets the number of prefetched messages. Must be balanced with processing time and lock duration.",
-                how: "Set PrefetchCount based on processing time and lock duration. PrefetchCount should be less than lock duration allows. Monitor lock expiration. Adjust based on metrics.",
-                pros: ["Reduced latency", "Higher throughput", "Better network utilization", "Improved performance", "Efficient batching"],
-                cons: ["Lock expiration risk", "Memory overhead", "Requires tuning", "Potential for message loss", "Complexity"],
-                diagram: `flowchart TD
-    A[Consumer] -->|Prefetch 10| B[Service Bus]
-    B -->|Messages Ready| C[Process]
-    C -->|Complete| D[Next Batch]`,
-                implementation: `// Configure prefetch
-await using var receiver = client.CreateReceiver(queueName, new ServiceBusReceiverOptions
-{
-    PrefetchCount = 10, // Prefetch 10 messages
-    ReceiveMode = ServiceBusReceiveMode.PeekLock
-});
-
-// Prefetch with processor
-await using var processor = client.CreateProcessor(queueName, new ServiceBusProcessorOptions
-{
-    PrefetchCount = 20, // Prefetch 20 messages
-    MaxConcurrentCalls = 5, // Process 5 concurrently
-    MaxAutoLockRenewalDuration = TimeSpan.FromMinutes(5)
-});
-
-// Calculate optimal prefetch
-// PrefetchCount should be: (ProcessingTime / LockDuration) * MaxConcurrentCalls
-// Example: (30s / 60s) * 10 = 5 messages
-var optimalPrefetch = (int)((averageProcessingTime.TotalSeconds / lockDuration.TotalSeconds) * maxConcurrentCalls);
-
-processor.ProcessMessageAsync += async args =>
-{
-    var startTime = DateTime.UtcNow;
-    await ProcessMessageAsync(args.Message);
-    var processingTime = DateTime.UtcNow - startTime;
-    
-    // Log for optimization
-    LogMetric("ProcessingTime", processingTime.TotalSeconds);
-    
-    await args.CompleteMessageAsync(args.Message);
-};`,
-                approaches: ["Set PrefetchCount based on processing time", "Balance with lock duration", "Consider MaxConcurrentCalls", "Monitor lock expiration", "Adjust based on metrics", "Use auto-lock renewal"]
-            },
-            {
-                number: 20,
-                title: "How do you implement concurrent message processing?",
-                description: "Concurrent processing allows multiple messages to be processed simultaneously, improving throughput. Configured via MaxConcurrentCalls. Requires thread-safe processing logic.",
-                why: "Concurrent processing is essential for high-throughput scenarios, better resource utilization, and handling multiple messages efficiently. Critical for performance optimization.",
-                what: "Concurrent processing handles multiple messages simultaneously using MaxConcurrentCalls setting. Requires thread-safe code, proper error handling, and resource management.",
-                how: "Set MaxConcurrentCalls on processor. Ensure thread-safe processing. Use async/await properly. Handle exceptions per message. Monitor concurrency metrics. Balance with resources.",
-                pros: ["Higher throughput", "Better resource utilization", "Improved performance", "Handles load spikes", "Efficient processing"],
-                cons: ["Thread safety requirements", "Resource contention", "Complexity", "Potential for race conditions", "Requires careful design"],
-                diagram: `flowchart TD
-    A[Queue] -->|Messages| B[Processor<br/>MaxConcurrentCalls=5]
-    B --> C[Process 1]
-    B --> D[Process 2]
-    B --> E[Process 3]
-    B --> F[Process 4]
-    B --> G[Process 5]`,
-                implementation: `// Configure concurrent processing
-await using var processor = client.CreateProcessor(queueName, new ServiceBusProcessorOptions
-{
-    MaxConcurrentCalls = 10, // Process 10 messages concurrently
-    PrefetchCount = 20,
-    AutoCompleteMessages = false
-});
-
-// Thread-safe processing
-private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(5, 5);
-
-processor.ProcessMessageAsync += async args =>
-{
-    await _semaphore.WaitAsync();
-    try
-    {
-        // Thread-safe processing
-        await ProcessMessageSafelyAsync(args.Message);
-        await args.CompleteMessageAsync(args.Message);
-    }
-    finally
-    {
-        _semaphore.Release();
-    }
-};
-
-// Using concurrent collections
-private readonly ConcurrentDictionary<string, object> _processingState = new();
-
-async Task ProcessMessageSafelyAsync(ServiceBusMessage message)
-{
-    var key = message.MessageId;
-    _processingState.TryAdd(key, new object());
-    
-    try
-    {
-        // Process message
-        await DoWorkAsync(message);
-    }
-    finally
-    {
-        _processingState.TryRemove(key, out _);
-    }
-}`,
-                approaches: ["Set MaxConcurrentCalls appropriately", "Ensure thread safety", "Use concurrent collections", "Implement semaphores if needed", "Monitor concurrency metrics", "Balance with system resources"]
-            }
-        ];
-
-        // Add questions 21-50 with comprehensive answers
-        for (let i = 21; i <= 50; i++) {
-            const topics = [
-                "message versioning and schema evolution", "event sourcing patterns", "CQRS implementation",
-                "saga orchestration patterns", "outbox pattern for transactions", "idempotency patterns",
-                "circuit breaker patterns", "throttling and rate limiting", "message compression strategies",
-                "end-to-end encryption", "role-based access control (RBAC)", "managed identity authentication",
-                "private endpoint configuration", "virtual network integration", "custom endpoint setup",
-                "message enrichment and correlation", "distributed tracing", "observability patterns",
-                "metrics collection and analysis", "alerting and notification systems", "horizontal scaling strategies",
-                "vertical scaling approaches", "partitioning strategies", "load balancing techniques",
-                "message deduplication strategies", "exactly-once delivery semantics", "at-least-once delivery",
-                "message ordering guarantees", "priority queues implementation", "message routing patterns"
-            ];
-            const topic = topics[(i - 21) % topics.length];
-            
-            additionalQuestions.push({
-                number: i,
-                title: `How do you implement ${topic} in Azure Service Bus?`,
-                description: `This question explores implementing ${topic} in Azure Service Bus. ${topic} is essential for building robust, scalable, and maintainable messaging solutions. Understanding this concept requires deep knowledge of Service Bus capabilities, messaging patterns, and enterprise architecture principles.`,
-                why: `Understanding ${topic} is critical because it enables building reliable messaging systems that can handle complex enterprise scenarios, ensure data consistency, optimize performance, and maintain operational excellence. Without this knowledge, systems may fail under load, lose messages, experience data inconsistencies, or become difficult to maintain and scale.`,
-                what: `${topic} in Service Bus involves configuring and implementing features that enable ${getWhatDetail(i)}. This requires understanding Service Bus architecture, message patterns, integration approaches, and best practices for production-grade systems.`,
-                how: `Implementation involves ${getHowDetail(i)}. This includes proper Service Bus configuration, client code implementation, error handling strategies, monitoring setup, performance optimization, and following Service Bus best practices for enterprise production scenarios.`,
-                pros: getProsForQuestion(i),
-                cons: getConsForQuestion(i),
-                diagram: getDiagramForQuestion(i),
-                implementation: getImplementationForQuestion(i),
-                approaches: getApproachesForQuestion(i)
-            });
-        }
-
-        // Add all questions 8-50 to the main array
-        // First add template questions (8-15)
-        for (let i = 8; i <= 15; i++) {
-            if (questionTemplates[i]) {
-                questions.push(questionTemplates[i]);
-            }
-        }
-        
-        // Add all additional questions (16-50)
-        additionalQuestions.forEach(q => {
-            questions.push(q);
-        });
-        
-        // Sort by number to ensure proper order
-        questions.sort((a, b) => a.number - b.number);
-        
-        // Verify we have all 50 questions and fill any gaps
-        const questionNumbers = new Set(questions.map(q => q.number));
-        const missingQuestions = [];
-        for (let i = 1; i <= 50; i++) {
-            if (!questionNumbers.has(i)) {
-                missingQuestions.push(i);
-            }
-        }
-        
-        // Add missing questions with comprehensive answers
-        missingQuestions.forEach(num => {
-            const topic = getTopicForQuestion(num);
-            questions.push({
-                number: num,
-                title: `How do you implement ${topic} in Azure Service Bus?`,
-                description: `This question explores implementing ${topic} in Azure Service Bus. ${topic} is essential for building robust, scalable messaging solutions that handle enterprise workloads effectively. Understanding this concept requires knowledge of Service Bus architecture, patterns, and best practices. This includes configuring Service Bus entities, implementing client code, handling errors, monitoring operations, and following production best practices.`,
-                why: `Understanding ${topic} is critical because it enables building reliable messaging systems that can handle complex scenarios, optimize performance, ensure reliability, and maintain operational excellence. Without this knowledge, systems may fail under load, lose messages, experience data inconsistencies, or become difficult to maintain and scale.`,
-                what: `${topic} in Service Bus involves configuring and implementing features that enable ${getWhatDetail(num)}. This requires understanding Service Bus capabilities, message patterns, integration approaches, and enterprise architecture principles.`,
-                how: `Implementation involves ${getHowDetail(num)}. This includes proper Service Bus configuration, client code implementation, error handling strategies, monitoring setup, performance optimization, and following Service Bus best practices for enterprise production scenarios.`,
-                pros: getProsForQuestion(num),
-                cons: getConsForQuestion(num),
-                diagram: getDiagramForQuestion(num),
-                implementation: getImplementationForQuestion(num),
-                approaches: getApproachesForQuestion(num)
-            });
-        });
-        
-        // Final sort to ensure order
-        questions.sort((a, b) => a.number - b.number);
-
-        function getTopicForQuestion(num) {
-            const topics = [
-                "message routing and filtering", "transaction support", "performance optimization",
-                "security and authentication", "monitoring and diagnostics", "geo-replication",
-                "auto-forwarding", "scheduled delivery", "message transformation", "error handling",
-                "connection management", "prefetch optimization", "concurrent processing", "message size optimization",
-                "cost optimization", "high availability", "disaster recovery", "message versioning",
-                "schema evolution", "event sourcing", "CQRS patterns", "saga patterns", "outbox pattern",
-                "idempotency patterns", "circuit breaker", "retry policies", "throttling", "rate limiting",
-                "message compression", "encryption", "RBAC", "managed identities", "private endpoints",
-                "VNet integration", "custom endpoints", "message enrichment", "correlation", "tracing",
-                "observability", "metrics collection", "alerting", "scaling strategies", "partitioning"
-            ];
-            return topics[(num - 8) % topics.length];
-        }
-
-        function getWhyForQuestion(num) {
-            return "it enables building reliable, scalable, and maintainable messaging systems that can handle enterprise workloads with proper error handling, performance optimization, and operational excellence";
-        }
-
-        function getWhatDetail(num) {
-            const details = [
-                "efficient message routing and delivery",
-                "transactional message processing",
-                "high-performance message handling",
-                "secure message communication",
-                "comprehensive monitoring and diagnostics",
-                "geo-redundant message delivery",
-                "automatic message forwarding",
-                "scheduled message delivery",
-                "message transformation and enrichment",
-                "robust error handling and retry mechanisms",
-                "efficient connection pooling and management",
-                "optimized message prefetching",
-                "concurrent message processing",
-                "message size optimization and compression",
-                "cost-effective message handling",
-                "high availability and failover",
-                "disaster recovery and backup",
-                "message versioning and schema evolution",
-                "event sourcing patterns",
-                "CQRS implementation",
-                "saga orchestration",
-                "outbox pattern for transactions",
-                "idempotent message processing",
-                "circuit breaker patterns",
-                "intelligent retry policies",
-                "throttling and rate limiting",
-                "message compression",
-                "end-to-end encryption",
-                "role-based access control",
-                "managed identity authentication",
-                "private endpoint connectivity",
-                "virtual network integration",
-                "custom endpoint configuration",
-                "message enrichment and correlation",
-                "distributed tracing",
-                "observability and metrics",
-                "alerting and notifications",
-                "horizontal and vertical scaling",
-                "partitioning strategies",
-                "load balancing",
-                "message deduplication",
-                "exactly-once delivery semantics"
-            ];
-            return details[(num - 8) % details.length];
-        }
-
-        function getHowDetail(num) {
-            const details = [
-                "creating filter rules, configuring subscription filters, and using SQL or correlation filters",
-                "using TransactionScope, grouping operations, and handling transaction commits/rollbacks",
-                "optimizing batch sizes, using prefetch, implementing connection pooling, and tuning concurrency",
-                "configuring SAS keys, implementing RBAC, using managed identities, and enabling encryption",
-                "enabling diagnostic logs, configuring metrics, setting up Application Insights, and creating alerts",
-                "configuring geo-replication, setting up paired namespaces, and implementing failover logic",
-                "configuring auto-forwarding rules, setting up forwarding chains, and managing routing",
-                "using ScheduledEnqueueTime, implementing delay queues, and managing scheduled delivery",
-                "using subscription filter actions, implementing message processors, and using Azure Functions",
-                "implementing retry policies, using dead-letter queues, handling exceptions, and logging errors",
-                "reusing ServiceBusClient instances, implementing connection pooling, and managing client lifecycle",
-                "configuring PrefetchCount, optimizing batch receive, and balancing prefetch with lock duration",
-                "setting MaxConcurrentCalls, using parallel processing, and managing thread safety",
-                "implementing message chunking, using large message support, and compressing payloads",
-                "optimizing message size, using batching, implementing efficient patterns, and monitoring costs",
-                "configuring multiple namespaces, implementing health checks, and using failover mechanisms",
-                "implementing backup strategies, using geo-replication, and creating recovery procedures",
-                "using message properties for versioning, implementing schema registry, and handling migrations",
-                "storing events as messages, implementing event stores, and using event replay",
-                "separating command and query queues, implementing read/write separation, and optimizing each side",
-                "orchestrating distributed transactions, using compensating actions, and managing state",
-                "storing outbox messages, implementing polling, and ensuring transactional consistency",
-                "using MessageId for deduplication, implementing idempotent handlers, and tracking processed messages",
-                "monitoring failure rates, opening circuit on threshold, and implementing fallback logic",
-                "configuring exponential backoff, implementing jitter, and setting max retry counts",
-                "implementing rate limiters, using throttling policies, and monitoring throughput",
-                "compressing message bodies, using compression libraries, and handling decompression",
-                "enabling encryption at rest and in transit, using customer-managed keys, and implementing TLS",
-                "assigning roles, configuring permissions, and using Azure AD integration",
-                "configuring managed identities, assigning roles, and removing connection strings",
-                "creating private endpoints, configuring DNS, and restricting public access",
-                "configuring VNet integration, using service endpoints, and implementing network security",
-                "configuring custom endpoints, setting up routing, and managing endpoints",
-                "adding custom properties, implementing correlation IDs, and using message headers",
-                "implementing distributed tracing, using correlation IDs, and integrating with Application Insights",
-                "collecting metrics, implementing logging, and using monitoring tools",
-                "configuring alerts, setting thresholds, and implementing notification systems",
-                "implementing horizontal scaling, using multiple consumers, and load balancing",
-                "using partitioning keys, distributing load, and managing partitions",
-                "using multiple consumers, implementing round-robin, and distributing messages"
-            ];
-            return details[(num - 8) % details.length];
-        }
-
-        function getProsForQuestion(num) {
-            return [
-                "Improved system reliability",
-                "Better performance characteristics",
-                "Enhanced scalability",
-                "Reduced operational complexity",
-                "Better error handling",
-                "Improved monitoring capabilities"
-            ];
-        }
-
-        function getConsForQuestion(num) {
-            return [
-                "Additional complexity",
-                "Learning curve",
-                "Potential performance overhead",
-                "Configuration requirements",
-                "Monitoring needs",
-                "Cost considerations"
-            ];
-        }
-
-        function getDiagramForQuestion(num) {
-            return `flowchart TD
-    A[Component A] -->|Message| B[Service Bus]
-    B -->|Process| C[Component B]
-    B -->|Monitor| D[Monitoring]
-    C -->|Response| E[Result]`;
-        }
-
-        function getImplementationForQuestion(num) {
-            return `using Azure.Messaging.ServiceBus;
-
-var client = new ServiceBusClient(connectionString);
-await using var sender = client.CreateSender(queueName);
-
-var message = new ServiceBusMessage("Data")
-{
-    MessageId = Guid.NewGuid().ToString()
-};
-
-await sender.SendMessageAsync(message);`;
-        }
-
-        function getApproachesForQuestion(num) {
-            return [
-                "Approach 1: Standard implementation with default settings",
-                "Approach 2: Optimized configuration for performance",
-                "Approach 3: High-availability setup with redundancy",
-                "Approach 4: Cost-optimized configuration",
-                "Approach 5: Security-focused implementation"
-            ];
-        }
-
-        // Sort questions by number to ensure proper order
-        questions.sort((a, b) => a.number - b.number);
-        
-        // Verify we have all 50 questions
-        if (questions.length !== 50) {
-            console.warn(`Expected 50 questions, found ${questions.length}`);
-        }
 
         // Generate Table of Contents
         const tocList = document.getElementById('tocList');
@@ -1635,10 +811,10 @@ await sender.SendMessageAsync(message);`;
             const link = document.createElement('a');
             link.href = `#question-${q.number}`;
             link.textContent = `Q${q.number}: ${q.title.substring(0, 40)}...`;
-            link.onclick = (e) => {
+            link.addEventListener('click', (e) => {
                 e.preventDefault();
                 document.getElementById(`question-${q.number}`).scrollIntoView({ behavior: 'smooth', block: 'start' });
-            };
+            });
             tocList.appendChild(link);
         });
 
@@ -1648,23 +824,23 @@ await sender.SendMessageAsync(message);`;
             const card = document.createElement('div');
             card.className = 'question-card';
             card.id = `question-${q.number}`;
-            
+
             card.innerHTML = `
                 <div class="question-number">Question ${q.number} of 50</div>
                 <h2 class="question-title">${q.title}</h2>
-                
+
                 <div class="question-section">
                     <h3>1. Detailed Description</h3>
                     <p>${q.description}</p>
                 </div>
-                
+
                 <div class="question-section">
                     <h3>2. Why / What / How</h3>
                     <p><strong>Why:</strong> ${q.why}</p>
                     <p><strong>What:</strong> ${q.what}</p>
                     <p><strong>How:</strong> ${q.how}</p>
                 </div>
-                
+
                 <div class="question-section">
                     <h3>3. Pros and Cons</h3>
                     <div class="pros-cons">
@@ -1672,17 +848,17 @@ await sender.SendMessageAsync(message);`;
                             <h4>Pros</h4>
                             <ul>
                                 ${q.pros.map(p => `<li>${p}</li>`).join('')}
-            </ul>
-        </div>
+                            </ul>
+                        </div>
                         <div class="cons-box">
                             <h4>Cons</h4>
                             <ul>
                                 ${q.cons.map(c => `<li>${c}</li>`).join('')}
-            </ul>
-        </div>
-    </div>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                
+
                 <div class="question-section">
                     <h3>4. Design Diagram</h3>
                     <div class="diagram-container">
@@ -1690,14 +866,14 @@ await sender.SendMessageAsync(message);`;
                         <div class="mermaid">${q.diagram}</div>
                     </div>
                 </div>
-                
+
                 <div class="question-section">
                     <h3>5. Implementation (C#)</h3>
                     <div class="code-block">
-                        <pre><code>${q.implementation}</code></pre>
+                        <pre><code>${q.implementation.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</code></pre>
                     </div>
                 </div>
-                
+
                 <div class="question-section">
                     <h3>6. Approaches</h3>
                     <ul>
@@ -1705,15 +881,14 @@ await sender.SendMessageAsync(message);`;
                     </ul>
                 </div>
             `;
-            
+
             container.appendChild(card);
         });
 
-        // Reinitialize Mermaid after content is loaded
-        setTimeout(() => {
+        // Initialize Mermaid after DOM is populated
+        window.addEventListener('load', () => {
             mermaid.init(undefined, '.mermaid');
-        }, 100);
+        });
     </script>
 </body>
 </html>
-
