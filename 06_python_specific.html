@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python-Specific Interview Questions - FAANG Interview Questions</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.7;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            border-bottom: 4px solid #3498db;
+            padding-bottom: 15px;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+        }
+        
+        h2 {
+            color: #34495e;
+            margin-top: 50px;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: linear-gradient(90deg, #3498db22, transparent);
+            border-left: 5px solid #2980b9;
+            padding-left: 20px;
+        }
+        
+        h3 {
+            color: #2980b9;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.6em;
+            padding: 15px;
+            background: #ecf0f1;
+            border-radius: 5px;
+        }
+        
+        h4 {
+            color: #555;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        h5 {
+            color: #666;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        p {
+            margin-bottom: 18px;
+            text-align: justify;
+            font-size: 1.05em;
+        }
+        
+        ul, ol {
+            margin-left: 35px;
+            margin-bottom: 20px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #e83e8c;
+            border: 1px solid #e0e0e0;
+        }
+        
+        pre {
+            background: #2d2d2d;
+            padding: 25px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 25px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        pre code {
+            background: transparent;
+            padding: 0;
+            color: #f8f8f2;
+            font-size: 0.95em;
+            border: none;
+        }
+        
+        .pros-cons {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-left: 5px solid #28a745;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .pros {
+            margin-bottom: 25px;
+        }
+        
+        .pros h5 {
+            color: #28a745;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        .pros ul {
+            list-style: none;
+            margin-left: 0;
+        }
+        
+        .pros li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .pros li:before {
+            content: "✓";
+            color: #28a745;
+            font-weight: bold;
+            font-size: 1.2em;
+            position: absolute;
+            left: 0;
+        }
+        
+        .cons {
+            margin-top: 25px;
+        }
+        
+        .cons h5 {
+            color: #dc3545;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        .cons ul {
+            list-style: none;
+            margin-left: 0;
+        }
+        
+        .cons li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .cons li:before {
+            content: "✗";
+            color: #dc3545;
+            font-weight: bold;
+            font-size: 1.2em;
+            position: absolute;
+            left: 0;
+        }
+        
+        .mermaid {
+            background: white;
+            padding: 30px;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        hr {
+            border: none;
+            border-top: 3px solid #ecf0f1;
+            margin: 40px 0;
+        }
+        
+        strong {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        
+        em {
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        table th {
+            background: #3498db;
+            color: white;
+        }
+        
+        table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .section {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .section h4 {
+            color: #2980b9;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .problem-statement {
+            background: #e8f4f8;
+            border-left-color: #3498db;
+        }
+        
+        .example {
+            background: #fff9e6;
+            border-left-color: #f39c12;
+        }
+        
+        .detailed-explanation {
+            background: #f0f8f0;
+            border-left-color: #27ae60;
+        }
+        
+        .approach {
+            background: #f5f0ff;
+            border-left-color: #9b59b6;
+        }
+        
+        .complexity {
+            background: #ffe8e8;
+            border-left-color: #e74c3c;
+        }
+        
+        .code-solution {
+            background: #2d2d2d;
+            border-left-color: #f39c12;
+        }
+        
+        .code-solution h4 {
+            color: #f8f8f2;
+        }
+        
+        .code-solution p {
+            color: #f8f8f2;
+        }
+        
+        .step-section {
+            background: #fafafa;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 3px solid #95a5a6;
+            border-radius: 4px;
+        }
+        
+        .step-section {
+            background: #fafafa;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 3px solid #95a5a6;
+            border-radius: 4px;
+        }
+        
+        .step-section h5 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        
+        .step-section strong {
+            color: #2c3e50;
+        }
+        
+        .why-faang {
+            background: #fff3cd;
+            border-left-color: #ffc107;
+        }
+        
+        .why-faang h4 {
+            color: #856404;
+        }
+        
+        .section ul, .section ol {
+            margin-left: 25px;
+        }
+        
+        .section pre {
+            margin: 15px 0;
+        }
+        
+        .explanation-content, .approach-content {
+            line-height: 1.8;
+        }
+        
+        .explanation-content p, .approach-content p {
+            margin-bottom: 12px;
+        }
+        
+        .explanation-content ul, .approach-content ul {
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .explanation-content li, .approach-content li {
+            margin-bottom: 8px;
+        }
+        
+        .walkthrough {
+            background: #f0f7ff;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+            border-radius: 5px;
+        }
+        
+        .walkthrough h5 {
+            color: #2980b9;
+            margin-top: 0;
+        }
+        
+        .code-explanation {
+            background: #2d2d2d;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .code-explanation h5 {
+            color: #f8f8f2;
+            margin-top: 0;
+        }
+        
+        .code-explanation p {
+            color: #f8f8f2;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            h2 {
+                font-size: 1.4em;
+            }
+            
+            h3 {
+                font-size: 1.3em;
+            }
+        }
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        
+        .back-button i {
+            font-size: 1em;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <a href="ai/ai/interview.html" class="back-button">
+            <i class="fas fa-arrow-left"></i> Back to Interview Guide
+        </a>
+        <h1>Python-Specific Interview Questions</h1>
+
+<h2>Table of Contents</h2>
+<ul><li>[Python Fundamentals](#python-fundamentals)</li>
+<li>[Data Structures](#data-structures)</li>
+<li>[Object-Oriented Programming](#object-oriented-programming)</li>
+<li>[Advanced Concepts](#advanced-concepts)</li>
+<li>[Concurrency & Async](#concurrency--async)</li>
+<li>[Memory Management](#memory-management)</li>
+<li>[Design Patterns](#design-patterns)</li>
+<li>[Testing & Debugging](#testing--debugging)</li>
+</ul>
+<hr>
+
+<h2>Python Fundamentals</h2>
+
+<h3>Question 1: Explain the difference between list, tuple, and dictionary in Python.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Lists:</strong>
+<ul><li>Mutable, ordered collection</li>
+<li>Can contain duplicate elements</li>
+<li>Indexed by integers</li>
+<li>Use <code>[]</code> syntax</li>
+<li>Time complexity: O(1) for access, O(n) for insert/delete</li>
+</ul>
+<p><pre><code class="language-python"><h1>List example</h1>
+my_list = [1, 2, 3, 4, 5]
+my_list.append(6)  # Mutable
+my_list[0] = 10    # Can modify elements
+print(my_list)      # [10, 2, 3, 4, 5, 6]
+</code></pre></p>
+
+<strong>Tuples:</strong>
+<ul><li>Immutable, ordered collection</li>
+<li>Can contain duplicate elements</li>
+<li>Indexed by integers</li>
+<li>Use <code>()</code> syntax</li>
+<li>Time complexity: O(1) for access</li>
+<li>Faster than lists, use less memory</li>
+</ul>
+<p><pre><code class="language-python"><h1>Tuple example</h1>
+my_tuple = (1, 2, 3, 4, 5)
+<h1>my_tuple[0] = 10  # Error: tuples are immutable</h1>
+<h1>Use cases: coordinates, database records, function returns</h1>
+point = (10, 20)
+</code></pre></p>
+
+<strong>Dictionaries:</strong>
+<ul><li>Mutable, unordered collection (Python 3.7+ maintains insertion order)</li>
+<li>Key-value pairs</li>
+<li>Keys must be hashable (immutable types)</li>
+<li>Use <code>{}</code> syntax</li>
+<li>Time complexity: O(1) average for access/insert/delete</li>
+</ul>
+<p><pre><code class="language-python"><h1>Dictionary example</h1>
+my_dict = {'name': 'John', 'age': 30, 'city': 'NYC'}
+my_dict['email'] = 'john@example.com'  # Add new key-value
+my_dict['age'] = 31  # Update value
+print(my_dict)  # {'name': 'John', 'age': 31, 'city': 'NYC', 'email': 'john@example.com'}
+</code></pre></p>
+
+<strong>When to Use Each:</strong>
+<ul><li><strong>List:</strong> When you need a mutable, ordered sequence</li>
+<li><strong>Tuple:</strong> When you need an immutable sequence (keys in dicts, function arguments)</li>
+<li><strong>Dictionary:</strong> When you need key-value mapping with fast lookups</li>
+</ul>
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests fundamental Python knowledge</li>
+<li>Demonstrates understanding of data structure trade-offs</li>
+<li>Shows knowledge of time/space complexity</li>
+</ul>
+</div><hr>
+
+<h3>Question 2: Explain Python's GIL (Global Interpreter Lock) and its implications.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>What is GIL:</strong>
+<p>The Global Interpreter Lock is a mutex that protects access to Python objects, preventing multiple native threads from executing Python bytecodes at once.</p>
+
+<strong>How it Works:</strong>
+<ul><li>Only one thread can execute Python bytecode at a time</li>
+<li>Threads must acquire GIL before executing Python code</li>
+<li>GIL is released during I/O operations and C extension calls</li>
+</ul>
+<strong>Implications:</strong>
+
+<ul><li><strong>CPU-bound Tasks:</strong></li>
+</ul><pre><code class="language-python">import threading
+import time
+
+def cpu_bound_task():
+    total = 0
+    for i in range(10000000):
+        total += i
+    return total
+
+<h1>Multi-threading doesn't help for CPU-bound tasks</h1>
+start = time.time()
+threads = []
+for _ in range(4):
+    t = threading.Thread(target=cpu_bound_task)
+    t.start()
+    threads.append(t)
+
+for t in threads:
+    t.join()
+print(f"Multi-threaded: {time.time() - start}")  # Similar to single-threaded
+</code></pre>
+
+<ul><li><strong>I/O-bound Tasks:</strong></li>
+</ul><pre><code class="language-python">import threading
+import requests
+
+def io_bound_task(url):
+    response = requests.get(url)
+    return response.status_code
+
+<h1>Multi-threading helps for I/O-bound tasks</h1>
+urls = ['http://example.com'] * 10
+threads = []
+for url in urls:
+    t = threading.Thread(target=io_bound_task, args=(url,))
+    t.start()
+    threads.append(t)
+<h1>GIL is released during I/O, so threads can run concurrently</h1>
+</code></pre>
+
+<strong>Solutions:</strong>
+
+<ul><li><strong>Multiprocessing (for CPU-bound):</strong></li>
+</ul><pre><code class="language-python">from multiprocessing import Pool
+
+def cpu_bound_task(n):
+    total = 0
+    for i in range(n):
+        total += i
+    return total
+
+if __name__ == '__main__':
+    with Pool(4) as pool:
+        results = pool.map(cpu_bound_task, [10000000] * 4)
+</code></pre>
+
+<ul><li><strong>Async/Await (for I/O-bound):</strong></li>
+</ul><pre><code class="language-python">import asyncio
+import aiohttp
+
+async def io_bound_task(session, url):
+    async with session.get(url) as response:
+        return await response.status
+
+async def main():
+    async with aiohttp.ClientSession() as session:
+        urls = ['http://example.com'] * 10
+        tasks = [io_bound_task(session, url) for url in urls]
+        results = await asyncio.gather(*tasks)
+    return results
+
+asyncio.run(main())
+</code></pre>
+
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of Python's concurrency model</li>
+<li>Demonstrates knowledge of when to use threading vs multiprocessing</li>
+<li>Shows awareness of Python's limitations and solutions</li>
+</ul>
+</div><hr>
+
+<h3>Question 3: Explain Python's memory management and garbage collection.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Memory Management:</strong>
+
+<ul><li><strong>Reference Counting:</strong></li>
+</ul>   - Each object has a reference count
+<p>- Incremented when referenced, decremented when dereferenced</p>
+<p>- Object deleted when count reaches 0</p>
+
+<p><pre><code class="language-python">import sys
+
+a = [1, 2, 3]
+print(sys.getrefcount(a))  # Reference count (includes temporary ref in getrefcount)
+
+b = a  # Reference count increases
+print(sys.getrefcount(a))  # Increased
+
+del b  # Reference count decreases
+print(sys.getrefcount(a))  # Decreased
+</code></pre></p>
+
+<ul><li><strong>Garbage Collection:</strong></li>
+</ul>   - Handles circular references
+<p>- Uses generational garbage collection</p>
+<p>- Three generations (0, 1, 2)</p>
+
+<p><pre><code class="language-python">import gc
+
+<h1>Circular reference example</h1>
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.ref = None
+
+a = Node(1)
+b = Node(2)
+a.ref = b
+b.ref = a  # Circular reference
+
+<h1>Reference counting can't handle this</h1>
+<h1>Garbage collector will eventually clean it up</h1>
+del a, b
+gc.collect()  # Force garbage collection
+</code></pre></p>
+
+<strong>Memory Optimization:</strong>
+
+<p><pre><code class="language-python"><h1>Use __slots__ to reduce memory usage</h1>
+class Point:
+    __slots__ = ['x', 'y']  # Prevents __dict__ creation
+    
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+<h1>Without __slots__: ~56 bytes per instance</h1>
+<h1>With __slots__: ~40 bytes per instance</h1>
+</code></pre></p>
+
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of Python internals</li>
+<li>Demonstrates knowledge of memory optimization</li>
+<li>Shows awareness of performance considerations</li>
+</ul>
+</div><hr>
+
+<h2>Data Structures</h2>
+
+<h3>Question 4: Implement a custom data structure (e.g., LRU Cache).</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Implement an LRU (Least Recently Used) Cache.
+
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<h4>Requirements</h4>
+<ul><li><code>get(key)</code>: Return value if exists, else -1</li>
+<li><code>put(key, value)</code>: Insert or update value</li>
+<li>When cache is full, remove least recently used item</li>
+<li>Both operations should be O(1)</li>
+</ul>
+<strong>Solution using OrderedDict:</strong>
+
+<p><pre><code class="language-python">from collections import OrderedDict
+
+class LRUCache:
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.cache = OrderedDict()
+    
+    def get(self, key: int) -> int:
+        if key not in self.cache:
+            return -1
+        
+        # Move to end (most recently used)
+        self.cache.move_to_end(key)
+        return self.cache[key]
+    
+    def put(self, key: int, value: int) -> None:
+        if key in self.cache:
+            # Update existing key
+            self.cache[key] = value
+            self.cache.move_to_end(key)
+        else:
+            # Add new key
+            if len(self.cache) >= self.capacity:
+                # Remove least recently used (first item)
+                self.cache.popitem(last=False)
+            self.cache[key] = value
+
+<h1>Usage</h1>
+cache = LRUCache(2)
+cache.put(1, 1)
+cache.put(2, 2)
+print(cache.get(1))    # Returns 1
+cache.put(3, 3)        # Evicts key 2
+print(cache.get(2))    # Returns -1 (not found)
+cache.put(4, 4)        # Evicts key 1
+print(cache.get(1))    # Returns -1 (not found)
+print(cache.get(3))    # Returns 3
+print(cache.get(4))    # Returns 4
+</code></pre></p>
+
+<strong>Solution using Doubly Linked List + HashMap:</strong>
+
+<p><pre><code class="language-python">class Node:
+    def __init__(self, key=0, value=0):
+        self.key = key
+        self.value = value
+        self.prev = None
+        self.next = None
+
+class LRUCache:
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.cache = {}  # key -> node
+        
+        # Dummy head and tail
+        self.head = Node()
+        self.tail = Node()
+        self.head.next = self.tail
+        self.tail.prev = self.head
+    
+    def _add_node(self, node: Node):
+        """Add node right after head"""
+        node.prev = self.head
+        node.next = self.head.next
+        self.head.next.prev = node
+        self.head.next = node
+    
+    def _remove_node(self, node: Node):
+        """Remove node from list"""
+        prev = node.prev
+        next = node.next
+        prev.next = next
+        next.prev = prev
+    
+    def _move_to_head(self, node: Node):
+        """Move node to head (most recently used)"""
+        self._remove_node(node)
+        self._add_node(node)
+    
+    def _pop_tail(self) -> Node:
+        """Remove tail node (least recently used)"""
+        last = self.tail.prev
+        self._remove_node(last)
+        return last
+    
+    def get(self, key: int) -> int:
+        node = self.cache.get(key)
+        if not node:
+            return -1
+        
+        self._move_to_head(node)
+        return node.value
+    
+    def put(self, key: int, value: int) -> None:
+        node = self.cache.get(key)
+        
+        if not node:
+            # New node
+            new_node = Node(key, value)
+            
+            if len(self.cache) >= self.capacity:
+                # Remove LRU
+                tail = self._pop_tail()
+                del self.cache[tail.key]
+            
+            self.cache[key] = new_node
+            self._add_node(new_node)
+        else:
+            # Update existing node
+            node.value = value
+            self._move_to_head(node)
+</code></pre></p>
+
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of data structures</li>
+<li>Demonstrates ability to implement complex structures</li>
+<li>Shows knowledge of time/space complexity</li>
+<li>Evaluates problem-solving skills</li>
+</ul>
+</div><hr>
+
+<h2>Object-Oriented Programming</h2>
+
+<h3>Question 5: Explain Python's method resolution order (MRO) and multiple inheritance.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Method Resolution Order (MRO):</strong>
+<p>Python uses C3 linearization algorithm to determine the order in which base classes are searched when looking for a method.</p>
+
+<p><pre><code class="language-python">class A:
+    def method(self):
+        print("A")
+
+class B(A):
+    def method(self):
+        print("B")
+        super().method()
+
+class C(A):
+    def method(self):
+        print("C")
+        super().method()
+
+class D(B, C):
+    def method(self):
+        print("D")
+        super().method()
+
+d = D()
+d.method()
+<h1>Output:</h1>
+<h1>D</h1>
+<h1>B</h1>
+<h1>C</h1>
+<h1>A</h1>
+
+<h1>MRO: D -> B -> C -> A</h1>
+print(D.__mro__)
+<h1>(<class '__main__.D'>, <class '__main__.B'>, <class '__main__.C'>, <class '__main__.A'>, <class 'object'>)</h1>
+</code></pre></p>
+
+<strong>Diamond Problem:</strong>
+
+<p><pre><code class="language-python">class A:
+    def method(self):
+        print("A")
+
+class B(A):
+    pass
+
+class C(A):
+    pass
+
+class D(B, C):
+    pass
+
+d = D()
+d.method()  # Prints "A" - no ambiguity due to MRO
+print(D.__mro__)
+<h1>D -> B -> C -> A -> object</h1>
+</code></pre></p>
+
+<strong>super() Function:</strong>
+<code>super()</code> follows MRO to call the next method in the inheritance chain.
+
+<p><pre><code class="language-python">class Base:
+    def __init__(self):
+        print("Base init")
+
+class Derived(Base):
+    def __init__(self):
+        print("Derived init")
+        super().__init__()  # Calls Base.__init__
+
+d = Derived()
+<h1>Output:</h1>
+<h1>Derived init</h1>
+<h1>Base init</h1>
+</code></pre></p>
+
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of Python's OOP model</li>
+<li>Demonstrates knowledge of inheritance complexities</li>
+<li>Shows awareness of Python internals</li>
+</ul>
+</div><hr>
+
+<h2>Advanced Concepts</h2>
+
+<h3>Question 6: Explain decorators, generators, and context managers.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Decorators:</strong>
+<p>Functions that modify or extend the behavior of other functions.</p>
+
+<p><pre><code class="language-python"><h1>Simple decorator</h1>
+def my_decorator(func):
+    def wrapper(*args, **kwargs):
+        print("Before function call")
+        result = func(*args, **kwargs)
+        print("After function call")
+        return result
+    return wrapper
+
+@my_decorator
+def say_hello(name):
+    print(f"Hello, {name}")
+
+say_hello("John")
+<h1>Output:</h1>
+<h1>Before function call</h1>
+<h1>Hello, John</h1>
+<h1>After function call</h1>
+
+<h1>Decorator with arguments</h1>
+def repeat(times):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            for _ in range(times):
+                result = func(*args, **kwargs)
+            return result
+        return wrapper
+    return decorator
+
+@repeat(times=3)
+def greet(name):
+    print(f"Hello, {name}")
+
+greet("Alice")
+<h1>Output: (printed 3 times)</h1>
+<h1>Hello, Alice</h1>
+
+<h1>Class-based decorator</h1>
+class CountCalls:
+    def __init__(self, func):
+        self.func = func
+        self.count = 0
+    
+    def __call__(self, *args, **kwargs):
+        self.count += 1
+        print(f"Call {self.count} of {self.func.__name__}")
+        return self.func(*args, **kwargs)
+
+@CountCalls
+def say_hi():
+    print("Hi!")
+
+say_hi()  # Call 1 of say_hi
+say_hi()  # Call 2 of say_hi
+</code></pre></p>
+
+<strong>Generators:</strong>
+<p>Functions that yield values one at a time, memory-efficient.</p>
+
+<p><pre><code class="language-python"><h1>Generator function</h1>
+def countdown(n):
+    while n > 0:
+        yield n
+        n -= 1
+
+for num in countdown(5):
+    print(num)
+<h1>Output: 5, 4, 3, 2, 1</h1>
+
+<h1>Generator expression</h1>
+squares = (x**2 for x in range(10))
+print(list(squares))  # [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+
+<h1>Memory efficient for large datasets</h1>
+def read_large_file(filename):
+    with open(filename) as f:
+        for line in f:
+            yield line.strip()
+
+<h1>Doesn't load entire file into memory</h1>
+for line in read_large_file("large_file.txt"):
+    process(line)
+</code></pre></p>
+
+<strong>Context Managers:</strong>
+<p>Objects that define what happens when entering and exiting a context.</p>
+
+<p><pre><code class="language-python"><h1>Using with statement</h1>
+with open("file.txt", "r") as f:
+    content = f.read()
+<h1>File automatically closed</h1>
+
+<h1>Custom context manager (class-based)</h1>
+class Timer:
+    def __enter__(self):
+        self.start = time.time()
+        return self
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.end = time.time()
+        print(f"Elapsed time: {self.end - self.start} seconds")
+
+with Timer():
+    time.sleep(1)
+<h1>Output: Elapsed time: 1.0 seconds</h1>
+
+<h1>Context manager (function-based)</h1>
+from contextlib import contextmanager
+
+@contextmanager
+def timer():
+    start = time.time()
+    yield
+    end = time.time()
+    print(f"Elapsed time: {end - start} seconds")
+
+with timer():
+    time.sleep(1)
+</code></pre></p>
+
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of Python's advanced features</li>
+<li>Demonstrates knowledge of memory-efficient patterns</li>
+<li>Shows ability to write Pythonic code</li>
+</ul>
+</div><hr>
+
+<h2>Concurrency & Async</h2>
+
+<h3>Question 7: Explain async/await in Python and when to use it.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Async/Await:</strong>
+<p>Used for concurrent I/O operations without blocking.</p>
+
+<p><pre><code class="language-python">import asyncio
+import aiohttp
+
+<h1>Async function</h1>
+async def fetch_url(session, url):
+    async with session.get(url) as response:
+        return await response.text()
+
+<h1>Main async function</h1>
+async def main():
+    async with aiohttp.ClientSession() as session:
+        urls = [
+            'http://example.com',
+            'http://example.org',
+            'http://example.net'
+        ]
+        # Run concurrently
+        tasks = [fetch_url(session, url) for url in urls]
+        results = await asyncio.gather(*tasks)
+        return results
+
+<h1>Run async function</h1>
+results = asyncio.run(main())
+</code></pre></p>
+
+<strong>When to Use:</strong>
+<ul><li>I/O-bound operations (network requests, file I/O, database queries)</li>
+<li>Many concurrent operations</li>
+<li>Not for CPU-bound tasks (use multiprocessing)</li>
+</ul>
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of Python's concurrency model</li>
+<li>Demonstrates knowledge of when to use async</li>
+<li>Shows ability to write efficient concurrent code</li>
+</ul>
+</div><hr>
+
+<h3>Question 8: Explain Python's <code>__init__</code>, <code>__new__</code>, and <code>__call__</code> methods.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong><code>__init__</code>:</strong>
+<ul><li>Initializes instance after creation</li>
+<li>Most commonly used</li>
+<li>Sets instance attributes</li>
+</ul>
+<strong><code>__new__</code>:</strong>
+<ul><li>Creates instance before <code>__init__</code></li>
+<li>Returns instance</li>
+<li>Used for immutable types, singletons</li>
+</ul>
+<strong><code>__call__</code>:</strong>
+<ul><li>Makes instance callable</li>
+<li>Enables function-like objects</li>
+</ul>
+</div></div><div class="section example"><h4>Example</h4>
+<p><pre><code class="language-python">class Singleton:
+    _instance = None
+    
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+
+class Callable:
+    def __call__(self, x):
+        return x * 2
+
+f = Callable()
+print(f(5))  # 10
+</code></pre></p>
+
+</div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of object creation</li>
+<li>Demonstrates knowledge of Python internals</li>
+<li>Shows ability to use advanced features</li>
+</ul>
+</div><hr>
+
+<h3>Question 9: Explain metaclasses in Python.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Metaclasses:</strong>
+<ul><li>Classes that create classes</li>
+<li>Control class creation</li>
+<li>Advanced feature</li>
+</ul>
+<strong>Use Cases:</strong>
+<ul><li>Register classes</li>
+<li>Enforce patterns</li>
+<li>Modify class creation</li>
+</ul>
+</div></div><div class="section example"><h4>Example</h4>
+<p><pre><code class="language-python">class Meta(type):
+    def __new__(cls, name, bases, dct):
+        dct['created_by'] = 'Meta'
+        return super().__new__(cls, name, bases, dct)
+
+class MyClass(metaclass=Meta):
+    pass
+
+print(MyClass.created_by)  # 'Meta'
+</code></pre></p>
+
+</div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of Python's class system</li>
+<li>Demonstrates knowledge of advanced concepts</li>
+<li>Shows ability to use metaclasses</li>
+</ul>
+</div><hr>
+
+<h3>Question 10: Explain Python's descriptor protocol.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Descriptors:</strong>
+<ul><li>Objects that define <code>__get__</code>, <code>__set__</code>, <code>__delete__</code></li>
+<li>Used for properties, methods, static methods</li>
+<li>Control attribute access</li>
+</ul>
+</div></div><div class="section example"><h4>Example</h4>
+<p><pre><code class="language-python">class Descriptor:
+    def __get__(self, obj, objtype=None):
+        return 'value'
+    
+    def __set__(self, obj, value):
+        print(f'Setting to {value}')
+
+class MyClass:
+    attr = Descriptor()
+
+obj = MyClass()
+print(obj.attr)  # 'value'
+obj.attr = 10    # Setting to 10
+</code></pre></p>
+
+</div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of attribute access</li>
+<li>Demonstrates knowledge of Python internals</li>
+<li>Shows ability to create custom behavior</li>
+</ul>
+</div><hr>
+
+<h3>Question 11: Explain Python's import system.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Import System:</strong>
+<ul><li>Module search path</li>
+<li><code>sys.path</code> contains search locations</li>
+<li>Import caching</li>
+</ul>
+<strong>Import Types:</strong>
+<ul><li><code>import module</code></li>
+<li><code>from module import name</code></li>
+<li><code>import module as alias</code></li>
+</ul>
+<strong>Import Mechanism:</strong>
+<ul><li>Check <code>sys.modules</code> (cache)</li>
+<li>Search <code>sys.path</code></li>
+<li>Load and execute module</li>
+<li>Cache in <code>sys.modules</code></li>
+</ul>
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of module system</li>
+<li>Demonstrates knowledge of Python internals</li>
+<li>Shows ability to debug import issues</li>
+</ul>
+</div><hr>
+
+<h3>Question 12: Explain Python's name mangling.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Name Mangling:</strong>
+<ul><li><code>__name</code> becomes <code>_ClassName__name</code></li>
+<li>Prevents accidental overriding</li>
+<li>Not true privacy</li>
+</ul>
+</div></div><div class="section example"><h4>Example</h4>
+<p><pre><code class="language-python">class MyClass:
+    def __init__(self):
+        self.__private = 10
+        self.public = 20
+
+obj = MyClass()
+<h1>obj.__private  # AttributeError</h1>
+print(obj._MyClass__private)  # 10 (still accessible)
+</code></pre></p>
+
+</div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of Python's privacy model</li>
+<li>Demonstrates knowledge of name mangling</li>
+<li>Shows awareness of Python's design philosophy</li>
+</ul>
+</div><hr>
+
+<h3>Question 13: Explain Python's <code>*args</code> and <code>**kwargs</code>.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong><code>*args</code>:</strong>
+<ul><li>Variable positional arguments</li>
+<li>Tuple of arguments</li>
+<li>Allows flexible function signatures</li>
+</ul>
+<strong><code></strong>kwargs</code>:**
+<ul><li>Variable keyword arguments</li>
+<li>Dictionary of arguments</li>
+<li>Allows flexible function signatures</li>
+</ul>
+</div></div><div class="section example"><h4>Example</h4>
+<p><pre><code class="language-python">def func(*args, **kwargs):
+    print(f'args: {args}')
+    print(f'kwargs: {kwargs}')
+
+func(1, 2, 3, a=4, b=5)
+<h1>args: (1, 2, 3)</h1>
+<h1>kwargs: {'a': 4, 'b': 5}</h1>
+</code></pre></p>
+
+</div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of function arguments</li>
+<li>Demonstrates knowledge of flexible APIs</li>
+<li>Shows ability to write versatile functions</li>
+</ul>
+</div><hr>
+
+<h3>Question 14: Explain Python's list comprehensions vs generator expressions.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>List Comprehensions:</strong>
+<ul><li>Create lists immediately</li>
+<li>Memory: O(n)</li>
+<li>Syntax: <code>[x for x in range(10)]</code></li>
+</ul>
+<strong>Generator Expressions:</strong>
+<ul><li>Create generators (lazy)</li>
+<li>Memory: O(1)</li>
+<li>Syntax: <code>(x for x in range(10))</code></li>
+</ul>
+<strong>When to Use:</strong>
+<ul><li>List: Need all values, small dataset</li>
+<li>Generator: Large dataset, memory constrained</li>
+</ul>
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of memory efficiency</li>
+<li>Demonstrates knowledge of generators</li>
+<li>Shows ability to optimize code</li>
+</ul>
+</div><hr>
+
+<h3>Question 15: Explain Python's <code>itertools</code> module.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong><code>itertools</code>:</strong>
+<ul><li>Efficient iterator functions</li>
+<li>Memory efficient</li>
+<li>Common patterns</li>
+</ul>
+<strong>Common Functions:</strong>
+<ul><li><code>count()</code>: Infinite counter</li>
+<li><code>cycle()</code>: Cycle through iterable</li>
+<li><code>chain()</code>: Chain iterables</li>
+<li><code>combinations()</code>: Combinations</li>
+<li><code>permutations()</code>: Permutations</li>
+</ul>
+</div></div><div class="section example"><h4>Example</h4>
+<p><pre><code class="language-python">from itertools import combinations, chain
+
+list(combinations([1,2,3], 2))  # [(1,2), (1,3), (2,3)]
+list(chain([1,2], [3,4]))  # [1,2,3,4]
+</code></pre></p>
+
+</div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of iterators</li>
+<li>Demonstrates knowledge of standard library</li>
+<li>Shows ability to write efficient code</li>
+</ul>
+</div><hr>
+
+<h3>Question 16: Explain Python's <code>collections</code> module.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Collections Module:</strong>
+<ul><li>Specialized container datatypes</li>
+<li>Extend built-in containers</li>
+</ul>
+<strong>Key Types:</strong>
+<ul><li><code>defaultdict</code>: Dictionary with default factory</li>
+<li><code>Counter</code>: Count hashable objects</li>
+<li><code>deque</code>: Double-ended queue</li>
+<li><code>namedtuple</code>: Tuple with named fields</li>
+<li><code>OrderedDict</code>: Dictionary that remembers order</li>
+</ul>
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Step-by-Step Explanation</h5>
+                    <p><strong>Problem Analysis:</strong></p>
+                    <p>This problem requires finding two numbers in an array that sum to a target value. The key challenge is doing this efficiently.</p>
+                    
+                    <p><strong>Naive Solution Analysis:</strong></p>
+                    <p>The brute force approach would be to check every possible pair of numbers:</p>
+                    <ul>
+                        <li>For each number at index i, check all numbers at indices j > i</li>
+                        <li>If nums[i] + nums[j] == target, return [i, j]</li>
+                        <li>Time Complexity: O(n²) - nested loops</li>
+                        <li>Space Complexity: O(1) - no extra space</li>
+                    </ul>
+                    
+                    <p><strong>Optimization Strategy:</strong></p>
+                    <p>We can optimize using a hash map (dictionary) to store numbers we've already seen:</p>
+                    <ul>
+                        <li>As we iterate through the array, we store each number and its index</li>
+                        <li>For each new number, we calculate what number we need (complement = target - current)</li>
+                        <li>We check if this complement exists in our hash map</li>
+                        <li>If it does, we've found our pair!</li>
+                    </ul>
+                    
+                    <p><strong>Why This Works:</strong></p>
+                    <p>The key insight is that if we need number X to pair with current number Y to sum to target, and we've already seen X earlier in the array, we can immediately return the answer without checking all remaining numbers.</p>
+                    
+                    <p><strong>Example Walkthrough:</strong></p>
+                    <p>For nums = [2, 7, 11, 15], target = 9:</p>
+                    <ol>
+                        <li>i=0, num=2: complement = 9-2 = 7. Is 7 in map? No. Store {2: 0}</li>
+                        <li>i=1, num=7: complement = 9-7 = 2. Is 2 in map? Yes! Return [0, 1]</li>
+                    </ol>
+                    
+                    <p><strong>Edge Cases to Consider:</strong></p>
+                    <ul>
+                        <li>Empty array: Return empty list</li>
+                        <li>No solution: Problem states there's always exactly one, but in real scenarios, handle gracefully</li>
+                        <li>Negative numbers: Works fine, complement calculation handles it</li>
+                        <li>Duplicate numbers: First occurrence is stored, second occurrence can use it</li>
+                    </ul>
+                </div>
+                </div></div><div class="section example"><h4>Example</h4>
+<p><pre><code class="language-python">from collections import Counter, defaultdict
+
+Counter('hello')  # Counter({'l': 2, 'h': 1, 'e': 1, 'o': 1})
+dd = defaultdict(list)
+dd['key'].append('value')  # No KeyError
+</code></pre></p>
+
+</div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of data structures</li>
+<li>Demonstrates knowledge of standard library</li>
+<li>Shows ability to choose appropriate containers</li>
+</ul>
+</div><hr>
+
+<h3>Question 17: Explain Python's <code>functools</code> module.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong><code>functools</code>:</strong>
+<ul><li>Higher-order functions</li>
+<li>Function manipulation</li>
+</ul>
+<strong>Key Functions:</strong>
+<ul><li><code>lru_cache</code>: Memoization decorator</li>
+<li><code>partial</code>: Partial function application</li>
+<li><code>wraps</code>: Preserve function metadata</li>
+<li><code>reduce</code>: Reduce function</li>
+</ul>
+</div></div><div class="section example"><h4>Example</h4>
+<p><pre><code class="language-python">from functools import lru_cache, partial
+
+@lru_cache(maxsize=128)
+def fibonacci(n):
+    if n < 2:
+        return n
+    return fibonacci(n-1) + fibonacci(n-2)
+
+add_10 = partial(lambda x, y: x + y, y=10)
+print(add_10(5))  # 15
+</code></pre></p>
+
+</div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of functional programming</li>
+<li>Demonstrates knowledge of optimization</li>
+<li>Shows ability to use advanced features</li>
+</ul>
+</div><hr>
+
+<h3>Question 18: Explain Python's <code>contextlib</code> module.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong><code>contextlib</code>:</strong>
+<ul><li>Utilities for context managers</li>
+<li>Simplify context manager creation</li>
+</ul>
+<strong>Key Functions:</strong>
+<ul><li><code>contextmanager</code>: Decorator for context managers</li>
+<li><code>closing</code>: Context manager for objects with close()</li>
+<li><code>suppress</code>: Suppress exceptions</li>
+<li><code>redirect_stdout</code>: Redirect stdout</li>
+</ul>
+</div></div><div class="section example"><h4>Example</h4>
+<p><pre><code class="language-python">from contextlib import contextmanager, suppress
+
+@contextmanager
+def my_context():
+    print('Enter')
+    yield
+    print('Exit')
+
+with suppress(FileNotFoundError):
+    os.remove('file.txt')
+</code></pre></p>
+
+</div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of context managers</li>
+<li>Demonstrates knowledge of resource management</li>
+<li>Shows ability to use standard library</li>
+</ul>
+</div><hr>
+
+<h3>Question 19: Explain Python's <code>dataclasses</code> module.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong><code>dataclasses</code>:</strong>
+<ul><li>Decorator for classes</li>
+<li>Automatically generates special methods</li>
+<li>Reduces boilerplate</li>
+</ul>
+<strong>Features:</strong>
+<ul><li><code>__init__</code>, <code>__repr__</code>, <code>__eq__</code></li>
+<li>Type hints support</li>
+<li>Field customization</li>
+</ul>
+</div></div><div class="section example"><h4>Example</h4>
+<p><pre><code class="language-python">from dataclasses import dataclass, field
+
+@dataclass
+class Point:
+    x: int
+    y: int
+    z: int = field(default=0)
+
+p = Point(1, 2)
+print(p)  # Point(x=1, y=2, z=0)
+</code></pre></p>
+
+</div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of modern Python</li>
+<li>Demonstrates knowledge of type hints</li>
+<li>Shows ability to write clean code</li>
+</ul>
+</div><hr>
+
+<h3>Question 20: Explain Python's type hints and typing module.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Type Hints:</strong>
+<ul><li>Annotations for types</li>
+<li>Not enforced at runtime</li>
+<li>Help with IDE support, static analysis</li>
+</ul>
+<strong><code>typing</code> Module:</strong>
+<ul><li>Type hints utilities</li>
+<li><code>List</code>, <code>Dict</code>, <code>Optional</code>, <code>Union</code></li>
+<li>Generic types</li>
+</ul>
+</div></div><div class="section example"><h4>Example</h4>
+<p><pre><code class="language-python">from typing import List, Dict, Optional, Union
+
+def process(items: List[int]) -> Dict[str, int]:
+    return {'count': len(items)}
+
+def get_value(key: str) -> Optional[int]:
+    return None if key not in data else data[key]
+</code></pre></p>
+
+</div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of type hints</li>
+<li>Demonstrates knowledge of modern Python</li>
+<li>Shows ability to write maintainable code</li>
+</ul>
+</div><hr>
+
+<h2>Summary</h2>
+
+<p>Python-specific questions test:</p>
+
+<ul><li><strong>Language Fundamentals:</strong> Core concepts, data structures</li>
+<li><strong>Advanced Features:</strong> Decorators, generators, async/await</li>
+<li><strong>Memory Management:</strong> GIL, garbage collection, optimization</li>
+<li><strong>OOP:</strong> Inheritance, MRO, design patterns</li>
+<li><strong>Concurrency:</strong> Threading, multiprocessing, async</li>
+</ul>
+<p>Key takeaways:</p>
+<ul><li>Understand Python's unique features (GIL, MRO)</li>
+<li>Know when to use different data structures</li>
+<li>Write Pythonic, efficient code</li>
+<li>Understand memory and performance implications</li>
+</ul>
+<p>Practice implementing common data structures and algorithms in Python, and understand the language's internals.</p>
+
+
+    </div>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+    </script>
+</body>
+</html>
