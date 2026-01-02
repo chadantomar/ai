@@ -1,0 +1,2084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Structures & Algorithms Interview Questions - FAANG Interview Questions</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.7;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            border-bottom: 4px solid #3498db;
+            padding-bottom: 15px;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+        }
+        
+        h2 {
+            color: #34495e;
+            margin-top: 50px;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: linear-gradient(90deg, #3498db22, transparent);
+            border-left: 5px solid #2980b9;
+            padding-left: 20px;
+        }
+        
+        h3 {
+            color: #2980b9;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.6em;
+            padding: 15px;
+            background: #ecf0f1;
+            border-radius: 5px;
+        }
+        
+        h4 {
+            color: #555;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        h5 {
+            color: #666;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        p {
+            margin-bottom: 18px;
+            text-align: justify;
+            font-size: 1.05em;
+        }
+        
+        ul, ol {
+            margin-left: 35px;
+            margin-bottom: 20px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #e83e8c;
+            border: 1px solid #e0e0e0;
+        }
+        
+        pre {
+            background: #2d2d2d;
+            padding: 25px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 25px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        pre code {
+            background: transparent;
+            padding: 0;
+            color: #f8f8f2;
+            font-size: 0.95em;
+            border: none;
+        }
+        
+        .pros-cons {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-left: 5px solid #28a745;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .pros {
+            margin-bottom: 25px;
+        }
+        
+        .pros h5 {
+            color: #28a745;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        .pros ul {
+            list-style: none;
+            margin-left: 0;
+        }
+        
+        .pros li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .pros li:before {
+            content: "✓";
+            color: #28a745;
+            font-weight: bold;
+            font-size: 1.2em;
+            position: absolute;
+            left: 0;
+        }
+        
+        .cons {
+            margin-top: 25px;
+        }
+        
+        .cons h5 {
+            color: #dc3545;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        .cons ul {
+            list-style: none;
+            margin-left: 0;
+        }
+        
+        .cons li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .cons li:before {
+            content: "✗";
+            color: #dc3545;
+            font-weight: bold;
+            font-size: 1.2em;
+            position: absolute;
+            left: 0;
+        }
+        
+        .mermaid {
+            background: white;
+            padding: 30px;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        hr {
+            border: none;
+            border-top: 3px solid #ecf0f1;
+            margin: 40px 0;
+        }
+        
+        strong {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        
+        em {
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        table th {
+            background: #3498db;
+            color: white;
+        }
+        
+        table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .section {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .section h4 {
+            color: #2980b9;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .problem-statement {
+            background: #e8f4f8;
+            border-left-color: #3498db;
+        }
+        
+        .example {
+            background: #fff9e6;
+            border-left-color: #f39c12;
+        }
+        
+        .detailed-explanation {
+            background: #f0f8f0;
+            border-left-color: #27ae60;
+        }
+        
+        .approach {
+            background: #f5f0ff;
+            border-left-color: #9b59b6;
+        }
+        
+        .complexity {
+            background: #ffe8e8;
+            border-left-color: #e74c3c;
+        }
+        
+        .code-solution {
+            background: #2d2d2d;
+            border-left-color: #f39c12;
+        }
+        
+        .code-solution h4 {
+            color: #f8f8f2;
+        }
+        
+        .code-solution p {
+            color: #f8f8f2;
+        }
+        
+        .step-section {
+            background: #fafafa;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 3px solid #95a5a6;
+            border-radius: 4px;
+        }
+        
+        .step-section {
+            background: #fafafa;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 3px solid #95a5a6;
+            border-radius: 4px;
+        }
+        
+        .step-section h5 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        
+        .step-section strong {
+            color: #2c3e50;
+        }
+        
+        .why-faang {
+            background: #fff3cd;
+            border-left-color: #ffc107;
+        }
+        
+        .why-faang h4 {
+            color: #856404;
+        }
+        
+        .section ul, .section ol {
+            margin-left: 25px;
+        }
+        
+        .section pre {
+            margin: 15px 0;
+        }
+        
+        .explanation-content, .approach-content {
+            line-height: 1.8;
+        }
+        
+        .explanation-content p, .approach-content p {
+            margin-bottom: 12px;
+        }
+        
+        .explanation-content ul, .approach-content ul {
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .explanation-content li, .approach-content li {
+            margin-bottom: 8px;
+        }
+        
+        .walkthrough {
+            background: #f0f7ff;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+            border-radius: 5px;
+        }
+        
+        .walkthrough h5 {
+            color: #2980b9;
+            margin-top: 0;
+        }
+        
+        .code-explanation {
+            background: #2d2d2d;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .code-explanation h5 {
+            color: #f8f8f2;
+            margin-top: 0;
+        }
+        
+        .code-explanation p {
+            color: #f8f8f2;
+        }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            transition: background 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .back-btn:hover {
+            background: #2980b9;
+        }
+        
+        .back-btn i {
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            h2 {
+                font-size: 1.4em;
+            }
+            
+            h3 {
+                font-size: 1.3em;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <a href="interview.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Interview Guide</a>
+        <h1>Data Structures & Algorithms Interview Questions</h1>
+
+<h2>Table of Contents</h2>
+<ul><li>[Arrays & Strings](#arrays--strings)</li>
+<li>[Linked Lists](#linked-lists)</li>
+<li>[Trees & Graphs](#trees--graphs)</li>
+<li>[Dynamic Programming](#dynamic-programming)</li>
+<li>[Sorting & Searching](#sorting--searching)</li>
+<li>[Hash Tables & Maps](#hash-tables--maps)</li>
+<li>[Stacks & Queues](#stacks--queues)</li>
+<li>[Greedy Algorithms](#greedy-algorithms)</li>
+<li>[Backtracking](#backtracking)</li>
+<li>[Bit Manipulation](#bit-manipulation)</li>
+</ul>
+<hr>
+
+<h2>Arrays & Strings</h2>
+
+<h3>Question 1: Two Sum Problem</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Given an array of integers <code>nums</code> and an integer <code>target</code>, return indices of the two numbers such that they add up to <code>target</code>. You may assume that each input would have exactly one solution, and you may not use the same element twice.
+
+</div><div class="section example"><h4>Example</h4>
+<p><pre><code class="language-text">Input: nums = [2,7,11,15], target = 9
+Output: [0,1]
+Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
+</code></pre></p>
+
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+<p>This is a classic hash map problem. The naive approach would be to check every pair of numbers, which gives O(n²) time complexity. However, we can optimize this to O(n) time and O(n) space using a hash map.</p>
+
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Step-by-Step Explanation</h5>
+                    <p><strong>Problem Analysis:</strong></p>
+                    <p>This problem requires finding two numbers in an array that sum to a target value. The key challenge is doing this efficiently.</p>
+                    
+                    <p><strong>Naive Solution Analysis:</strong></p>
+                    <p>The brute force approach would be to check every possible pair of numbers:</p>
+                    <ul>
+                        <li>For each number at index i, check all numbers at indices j > i</li>
+                        <li>If nums[i] + nums[j] == target, return [i, j]</li>
+                        <li>Time Complexity: O(n²) - nested loops</li>
+                        <li>Space Complexity: O(1) - no extra space</li>
+                    </ul>
+                    
+                    <p><strong>Optimization Strategy:</strong></p>
+                    <p>We can optimize using a hash map (dictionary) to store numbers we've already seen:</p>
+                    <ul>
+                        <li>As we iterate through the array, we store each number and its index</li>
+                        <li>For each new number, we calculate what number we need (complement = target - current)</li>
+                        <li>We check if this complement exists in our hash map</li>
+                        <li>If it does, we've found our pair!</li>
+                    </ul>
+                    
+                    <p><strong>Why This Works:</strong></p>
+                    <p>The key insight is that if we need number X to pair with current number Y to sum to target, and we've already seen X earlier in the array, we can immediately return the answer without checking all remaining numbers.</p>
+                    
+                    <p><strong>Example Walkthrough:</strong></p>
+                    <p>For nums = [2, 7, 11, 15], target = 9:</p>
+                    <ol>
+                        <li>i=0, num=2: complement = 9-2 = 7. Is 7 in map? No. Store {2: 0}</li>
+                        <li>i=1, num=7: complement = 9-7 = 2. Is 2 in map? Yes! Return [0, 1]</li>
+                    </ol>
+                    
+                    <p><strong>Edge Cases to Consider:</strong></p>
+                    <ul>
+                        <li>Empty array: Return empty list</li>
+                        <li>No solution: Problem states there's always exactly one, but in real scenarios, handle gracefully</li>
+                        <li>Negative numbers: Works fine, complement calculation handles it</li>
+                        <li>Duplicate numbers: First occurrence is stored, second occurrence can use it</li>
+                    </ul>
+                </div>
+                </div></div><div class="section approach"><h4>Approach</h4><div class="approach-content">
+<ul><li>Create a hash map to store each number and its index as we iterate through the array</li>
+<li>For each number, calculate the complement (target - current number)</li>
+<li>Check if the complement exists in the hash map</li>
+<li>If it exists, return the current index and the complement's index</li>
+<li>Otherwise, add the current number and its index to the hash map</li>
+</ul>
+</div></div><div class="section complexity"><h4>Complexity Analysis</h4><div class="section complexity"><h4>Complexity Analysis</h4><h4>Time Complexity</h4> O(n) - single pass through the array
+</div><div class="section complexity"><h4>Complexity Analysis</h4><h4>Space Complexity</h4> O(n) - hash map storage
+
+</div></div><div class="section code-solution"><h4>Code Solution</h4>
+<p><pre><code class="language-python">def twoSum(nums, target):
+    hash_map = {}
+    for i, num in enumerate(nums):
+        complement = target - num
+        if complement in hash_map:
+            return [hash_map[complement], i]
+        hash_map[num] = i
+    return []
+</code></pre></p>
+
+
+                <div class="code-explanation">
+                    <h5>Detailed Code Walkthrough</h5>
+                    <p><strong>Line-by-Line Explanation:</strong></p>
+                
+                    <p><strong>1. Initialize Data Structure:</strong></p>
+                    <p>We create an empty hash map (dictionary) to store numbers we've encountered along with their indices. This allows O(1) lookup time.</p>
+                    
+                    <p><strong>2. Iterate Through Array:</strong></p>
+                    <p>We use a single loop to traverse the array once. This gives us O(n) time complexity instead of O(n²) from nested loops.</p>
+                    
+                    <p><strong>3. Calculate Complement:</strong></p>
+                    <p>For each number, we calculate what number we need to pair with it: complement = target - current_number. This tells us what we're looking for.</p>
+                    
+                    <p><strong>4. Check for Complement:</strong></p>
+                    <p>We check if the complement exists in our hash map. This is an O(1) operation thanks to hash map's constant-time lookup.</p>
+                    
+                    <p><strong>5. Return or Store:</strong></p>
+                    <p>If complement exists, we immediately return the indices. Otherwise, we store the current number for future lookups.</p>
+                    
+                    <p><strong>Time Complexity Analysis:</strong></p>
+                    <p>Each element is visited exactly once, and hash map operations (insert and lookup) are O(1) on average. Therefore, overall time complexity is O(n).</p>
+                    
+                    <p><strong>Space Complexity Analysis:</strong></p>
+                    <p>In the worst case, we store all n elements in the hash map before finding a pair. Therefore, space complexity is O(n).</p>
+                    
+                    <p><strong>Optimization Benefits:</strong></p>
+                    <ul>
+                        <li>Reduced time complexity from O(n²) to O(n)</li>
+                        <li>Single pass through the array</li>
+                        <li>Early termination when solution is found</li>
+                    </ul>
+                </div>
+                </div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of hash maps and their trade-offs</li>
+<li>Demonstrates ability to optimize from O(n²) to O(n)</li>
+<li>Shows problem-solving approach and code clarity</li>
+</ul>
+</div><hr>
+
+<h3>Question 2: Longest Substring Without Repeating Characters</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Given a string <code>s</code>, find the length of the longest substring without repeating characters.
+
+</div><div class="section example"><h4>Example</h4>
+<p><pre><code class="language-text">Input: s = "abcabcbb"
+Output: 3
+Explanation: The answer is "abc", with the length of 3.
+</code></pre></p>
+
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+<p>This problem requires finding the longest contiguous substring with all unique characters. The sliding window technique is perfect for this.</p>
+
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Step-by-Step Explanation</h5>
+                    <p><strong>Problem Analysis:</strong></p>
+                    <p>We need to find the longest substring with all unique characters. This is a classic sliding window problem.</p>
+                    
+                    <p><strong>Sliding Window Technique:</strong></p>
+                    <p>The sliding window technique uses two pointers to maintain a window of elements that satisfy a condition:</p>
+                    <ul>
+                        <li><strong>Left pointer:</strong> Marks the start of the current window</li>
+                        <li><strong>Right pointer:</strong> Marks the end of the current window</li>
+                        <li><strong>Window:</strong> The substring between left and right pointers</li>
+                    </ul>
+                    
+                    <p><strong>Algorithm Flow:</strong></p>
+                    <ol>
+                        <li>Initialize left = 0, right = 0, and a set to track characters in current window</li>
+                        <li>Expand window by moving right pointer</li>
+                        <li>If we encounter a duplicate character, shrink window from left until duplicate is removed</li>
+                        <li>Track the maximum window size seen so far</li>
+                    </ol>
+                    
+                    <p><strong>Why Two Pointers Work:</strong></p>
+                    <p>Once we find a duplicate, we know that any window starting before the duplicate's first occurrence will also contain the duplicate. So we can safely move the left pointer past it.</p>
+                </div>
+                </div></div><div class="section approach"><h4>Approach</h4><div class="approach-content">
+<ul><li>Use two pointers (left and right) to maintain a sliding window</li>
+<li>Use a hash set to track characters currently in the window</li>
+<li>Expand the window by moving the right pointer</li>
+<li>If a duplicate is found, shrink the window from the left until the duplicate is removed</li>
+<li>Keep track of the maximum window size</li>
+</ul>
+</div></div><div class="section complexity"><h4>Complexity Analysis</h4><div class="section complexity"><h4>Complexity Analysis</h4><h4>Time Complexity</h4> O(n) - each character is visited at most twice
+</div><div class="section complexity"><h4>Complexity Analysis</h4><h4>Space Complexity</h4> O(min(n, m)) where m is the size of the charset
+
+</div></div><div class="section code-solution"><h4>Code Solution</h4>
+<p><pre><code class="language-python">def lengthOfLongestSubstring(s):
+    char_set = set()
+    left = 0
+    max_length = 0
+    
+    for right in range(len(s)):
+        while s[right] in char_set:
+            char_set.remove(s[left])
+            left += 1
+        char_set.add(s[right])
+        max_length = max(max_length, right - left + 1)
+    
+    return max_length
+</code></pre></p>
+
+
+                <div class="code-explanation">
+                    <h5>Detailed Code Walkthrough</h5>
+                    <p><strong>Line-by-Line Explanation:</strong></p>
+                
+                    <p><strong>Function Structure:</strong></p>
+                    <p>The solution is implemented as a function that takes input parameters and returns the result. This modular approach makes the code reusable and testable.</p>
+                    
+                    <p><strong>Algorithm Implementation:</strong></p>
+                    <p>The function implements the optimized algorithm using appropriate data structures to achieve the desired time and space complexity.</p>
+                    
+                    <p><strong>Time Complexity Analysis:</strong></p>
+                    <p>Each element is visited exactly once, and hash map operations (insert and lookup) are O(1) on average. Therefore, overall time complexity is O(n).</p>
+                    
+                    <p><strong>Space Complexity Analysis:</strong></p>
+                    <p>In the worst case, we store all n elements in the hash map before finding a pair. Therefore, space complexity is O(n).</p>
+                    
+                    <p><strong>Optimization Benefits:</strong></p>
+                    <ul>
+                        <li>Reduced time complexity from O(n²) to O(n)</li>
+                        <li>Single pass through the array</li>
+                        <li>Early termination when solution is found</li>
+                    </ul>
+                </div>
+                </div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of sliding window technique</li>
+<li>Demonstrates ability to optimize space and time</li>
+<li>Shows knowledge of string manipulation and set operations</li>
+</ul>
+</div><hr>
+
+<h3>Question 3: Container With Most Water</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> You are given an integer array <code>height</code> of length <code>n</code>. There are <code>n</code> vertical lines drawn such that the two endpoints of the <code>i-th</code> line are <code>(i, 0)</code> and <code>(i, height[i])</code>. Find two lines that together with the x-axis form a container, such that the container contains the most water.
+
+</div><div class="section example"><h4>Example</h4>
+<p><pre><code class="language-text">Input: height = [1,8,6,2,5,4,8,3,7]
+Output: 49
+Explanation: The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this case, the max area of water (blue section) the container can contain is 49.
+</code></pre></p>
+
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+<p>This problem can be solved using a two-pointer approach. The key insight is that the area is limited by the shorter line, and we should move the pointer at the shorter line to potentially find a better solution.</p>
+
+</div></div><div class="section approach"><h4>Approach</h4><div class="approach-content">
+<ul><li>Start with two pointers at the beginning and end of the array</li>
+<li>Calculate the area: <code>min(height[left], height[right]) <em> (right - left)</code></li>
+<li>Move the pointer pointing to the shorter line inward</li>
+<li>Update the maximum area found</li>
+<li>Continue until pointers meet</li>
+</ul>
+</div></div><div class="section complexity"><h4>Complexity Analysis</h4><div class="section complexity"><h4>Complexity Analysis</h4><h4>Time Complexity</h4> O(n) - single pass through the array
+</div><div class="section complexity"><h4>Complexity Analysis</h4><h4>Space Complexity</h4> O(1) - only using two pointers
+
+</div></div><div class="section code-solution"><h4>Code Solution</h4>
+<p><pre><code class="language-python">def maxArea(height):
+    left, right = 0, len(height) - 1
+    max_area = 0
+    
+    while left < right:
+        width = right - left
+        area = min(height[left], height[right]) * width
+        max_area = max(max_area, area)
+        
+        if height[left] < height[right]:
+            left += 1
+        else:
+            right -= 1
+    
+    return max_area
+</code></pre></p>
+
+
+                <div class="code-explanation">
+                    <h5>Detailed Code Walkthrough</h5>
+                    <p><strong>Line-by-Line Explanation:</strong></p>
+                
+                    <p><strong>Function Structure:</strong></p>
+                    <p>The solution is implemented as a function that takes input parameters and returns the result. This modular approach makes the code reusable and testable.</p>
+                    
+                    <p><strong>Algorithm Implementation:</strong></p>
+                    <p>The function implements the optimized algorithm using appropriate data structures to achieve the desired time and space complexity.</p>
+                    
+                    <p><strong>Time Complexity Analysis:</strong></p>
+                    <p>Each element is visited exactly once, and hash map operations (insert and lookup) are O(1) on average. Therefore, overall time complexity is O(n).</p>
+                    
+                    <p><strong>Space Complexity Analysis:</strong></p>
+                    <p>In the worst case, we store all n elements in the hash map before finding a pair. Therefore, space complexity is O(n).</p>
+                    
+                    <p><strong>Optimization Benefits:</strong></p>
+                    <ul>
+                        <li>Reduced time complexity from O(n²) to O(n)</li>
+                        <li>Single pass through the array</li>
+                        <li>Early termination when solution is found</li>
+                    </ul>
+                </div>
+                </div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of two-pointer technique</li>
+<li>Demonstrates ability to identify optimal strategy</li>
+<li>Shows mathematical reasoning and optimization skills</li>
+</ul>
+</div><hr>
+
+<h2>Linked Lists</h2>
+
+<h3>Question 4: Reverse Linked List</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Given the head of a singly linked list, reverse the list, and return the reversed list.
+
+</div><div class="section example"><h4>Example</h4>
+<p><pre><code class="language-text">Input: head = [1,2,3,4,5]
+Output: [5,4,3,2,1]
+</code></pre></p>
+
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+<p>Reversing a linked list requires careful pointer manipulation. We need to reverse the direction of each link while maintaining references to the previous and next nodes.</p>
+
+<strong>Approach (Iterative):</strong>
+<ul><li>Initialize three pointers: <code>prev = None</code>, <code>current = head</code>, <code>next = None</code></li>
+<li>While <code>current</code> is not None:</li>
+</ul>   - Store the next node: <code>next = current.next</code>
+<p>- Reverse the link: <code>current.next = prev</code></p>
+<p>- Move pointers forward: <code>prev = current</code>, <code>current = next</code></p>
+<ul><li>Return <code>prev</code> as the new head</li>
+</ul>
+</div></div><div class="section complexity"><h4>Complexity Analysis</h4><div class="section complexity"><h4>Complexity Analysis</h4><h4>Time Complexity</h4> O(n) - visit each node once
+</div><div class="section complexity"><h4>Complexity Analysis</h4><h4>Space Complexity</h4> O(1) - only using pointers
+
+</div></div><div class="section code-solution"><h4>Code Solution</h4>
+<p><pre><code class="language-python">class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+def reverseList(head):
+    prev = None
+    current = head
+    
+    while current:
+        next_node = current.next
+        current.next = prev
+        prev = current
+        current = next_node
+    
+    return prev
+</code></pre></p>
+
+<strong>Approach (Recursive):</strong>
+<p><pre><code class="language-python">def reverseListRecursive(head):
+    if not head or not head.next:
+        return head
+    
+    reversed_head = reverseListRecursive(head.next)
+    head.next.next = head
+    head.next = None
+    
+    return reversed_head
+</code></pre></p>
+
+
+                <div class="code-explanation">
+                    <h5>Detailed Code Walkthrough</h5>
+                    <p><strong>Line-by-Line Explanation:</strong></p>
+                
+                    <p><strong>Implementation Details:</strong></p>
+                    <p>The code implements the solution using efficient data structures and algorithms to solve the problem optimally.</p>
+                    
+                    <p><strong>Time Complexity Analysis:</strong></p>
+                    <p>Each element is visited exactly once, and hash map operations (insert and lookup) are O(1) on average. Therefore, overall time complexity is O(n).</p>
+                    
+                    <p><strong>Space Complexity Analysis:</strong></p>
+                    <p>In the worst case, we store all n elements in the hash map before finding a pair. Therefore, space complexity is O(n).</p>
+                    
+                    <p><strong>Optimization Benefits:</strong></p>
+                    <ul>
+                        <li>Reduced time complexity from O(n²) to O(n)</li>
+                        <li>Single pass through the array</li>
+                        <li>Early termination when solution is found</li>
+                    </ul>
+                </div>
+                </div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Fundamental linked list manipulation</li>
+<li>Tests understanding of pointers and references</li>
+<li>Demonstrates both iterative and recursive thinking</li>
+</ul>
+</div><hr>
+
+<h3>Question 5: Merge Two Sorted Lists</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> You are given the heads of two sorted linked lists <code>list1</code> and <code>list2</code>. Merge the two lists in a one sorted list. The list should be made by splicing together the nodes of the first two lists.
+
+</div><div class="section example"><h4>Example</h4>
+<p><pre><code class="language-text">Input: list1 = [1,2,4], list2 = [1,3,4]
+Output: [1,1,2,3,4,4]
+</code></pre></p>
+
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+<p>This is a classic merge operation similar to the merge step in merge sort. We compare nodes from both lists and link them in sorted order.</p>
+
+</div></div><div class="section approach"><h4>Approach</h4><div class="approach-content">
+<ul><li>Create a dummy node to simplify edge cases</li>
+<li>Use a pointer to build the merged list</li>
+<li>Compare nodes from both lists</li>
+<li>Link the smaller node and advance the pointer</li>
+<li>Continue until one list is exhausted</li>
+<li>Link the remaining nodes from the non-empty list</li>
+</ul>
+</div></div><div class="section complexity"><h4>Complexity Analysis</h4><div class="section complexity"><h4>Complexity Analysis</h4><h4>Time Complexity</h4> O(n + m) where n and m are lengths of the lists
+</div><div class="section complexity"><h4>Complexity Analysis</h4><h4>Space Complexity</h4> O(1) - only using pointers
+
+</div></div><div class="section code-solution"><h4>Code Solution</h4>
+<p><pre><code class="language-python">def mergeTwoLists(list1, list2):
+    dummy = ListNode(0)
+    current = dummy
+    
+    while list1 and list2:
+        if list1.val <= list2.val:
+            current.next = list1
+            list1 = list1.next
+        else:
+            current.next = list2
+            list2 = list2.next
+        current = current.next
+    
+    current.next = list1 if list1 else list2
+    
+    return dummy.next
+</code></pre></p>
+
+
+                <div class="code-explanation">
+                    <h5>Detailed Code Walkthrough</h5>
+                    <p><strong>Line-by-Line Explanation:</strong></p>
+                
+                    <p><strong>Function Structure:</strong></p>
+                    <p>The solution is implemented as a function that takes input parameters and returns the result. This modular approach makes the code reusable and testable.</p>
+                    
+                    <p><strong>Algorithm Implementation:</strong></p>
+                    <p>The function implements the optimized algorithm using appropriate data structures to achieve the desired time and space complexity.</p>
+                    
+                    <p><strong>Time Complexity Analysis:</strong></p>
+                    <p>Each element is visited exactly once, and hash map operations (insert and lookup) are O(1) on average. Therefore, overall time complexity is O(n).</p>
+                    
+                    <p><strong>Space Complexity Analysis:</strong></p>
+                    <p>In the worst case, we store all n elements in the hash map before finding a pair. Therefore, space complexity is O(n).</p>
+                    
+                    <p><strong>Optimization Benefits:</strong></p>
+                    <ul>
+                        <li>Reduced time complexity from O(n²) to O(n)</li>
+                        <li>Single pass through the array</li>
+                        <li>Early termination when solution is found</li>
+                    </ul>
+                </div>
+                </div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of linked list manipulation</li>
+<li>Demonstrates merge algorithm knowledge</li>
+<li>Shows ability to handle edge cases</li>
+</ul>
+</div><hr>
+
+<h2>Trees & Graphs</h2>
+
+<h3>Question 6: Maximum Depth of Binary Tree</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Given the root of a binary tree, return its maximum depth. A binary tree's maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
+
+</div><div class="section example"><h4>Example</h4>
+<p><pre><code class="language-text">Input: root = [3,9,20,null,null,15,7]
+Output: 3
+</code></pre></p>
+
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+<p>The maximum depth of a binary tree is the longest path from root to any leaf. This can be solved using recursion or iterative BFS/DFS.</p>
+
+<strong>Approach (Recursive):</strong>
+<ul><li>Base case: if root is None, return 0</li>
+<li>Recursively find depth of left and right subtrees</li>
+<li>Return 1 + maximum of left and right depths</li>
+</ul>
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Algorithm Explanation</h5>
+                    <p><strong>Tree/Graph Traversal:</strong></p>
+                    <p>Tree and graph problems often require traversal algorithms:</p>
+                    <ul>
+                        <li><strong>DFS (Depth-First Search):</strong> Explore as deep as possible before backtracking</li>
+                        <li><strong>BFS (Breadth-First Search):</strong> Explore level by level</li>
+                        <li><strong>Recursive Approach:</strong> Natural for tree problems, uses call stack</li>
+                        <li><strong>Iterative Approach:</strong> Uses explicit stack/queue, more control</li>
+                    </ul>
+                    
+                    <p><strong>Key Considerations:</strong></p>
+                    <ul>
+                        <li>Base case: Handle null/empty nodes</li>
+                        <li>Recursive case: Process current node and recurse on children</li>
+                        <li>State management: Track visited nodes, path, or other state</li>
+                        <li>Space complexity: Consider recursion stack depth</li>
+                    </ul>
+                </div>
+                </div></div><div class="section complexity"><h4>Complexity Analysis</h4><div class="section complexity"><h4>Complexity Analysis</h4><h4>Time Complexity</h4> O(n) - visit each node once
+</div><div class="section complexity"><h4>Complexity Analysis</h4><h4>Space Complexity</h4> O(h) where h is the height (for recursion stack)
+
+</div></div><div class="section code-solution"><h4>Code Solution</h4>
+<p><pre><code class="language-python">class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def maxDepth(root):
+    if not root:
+        return 0
+    
+    left_depth = maxDepth(root.left)
+    right_depth = maxDepth(root.right)
+    
+    return 1 + max(left_depth, right_depth)
+</code></pre></p>
+
+<strong>Approach (Iterative BFS):</strong>
+<p><pre><code class="language-python">from collections import deque
+
+def maxDepthBFS(root):
+    if not root:
+        return 0
+    
+    queue = deque([root])
+    depth = 0
+    
+    while queue:
+        depth += 1
+        level_size = len(queue)
+        
+        for _ in range(level_size):
+            node = queue.popleft()
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+    
+    return depth
+</code></pre></p>
+
+
+                <div class="code-explanation">
+                    <h5>Detailed Code Walkthrough</h5>
+                    <p><strong>Line-by-Line Explanation:</strong></p>
+                
+                    <p><strong>Implementation Details:</strong></p>
+                    <p>The code implements the solution using efficient data structures and algorithms to solve the problem optimally.</p>
+                    
+                    <p><strong>Time Complexity Analysis:</strong></p>
+                    <p>Each element is visited exactly once, and hash map operations (insert and lookup) are O(1) on average. Therefore, overall time complexity is O(n).</p>
+                    
+                    <p><strong>Space Complexity Analysis:</strong></p>
+                    <p>In the worst case, we store all n elements in the hash map before finding a pair. Therefore, space complexity is O(n).</p>
+                    
+                    <p><strong>Optimization Benefits:</strong></p>
+                    <ul>
+                        <li>Reduced time complexity from O(n²) to O(n)</li>
+                        <li>Single pass through the array</li>
+                        <li>Early termination when solution is found</li>
+                    </ul>
+                </div>
+                </div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Fundamental tree traversal problem</li>
+<li>Tests understanding of recursion</li>
+<li>Demonstrates knowledge of BFS/DFS algorithms</li>
+</ul>
+</div><hr>
+
+<h3>Question 7: Validate Binary Search Tree</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Given the root of a binary tree, determine if it is a valid binary search tree (BST). A valid BST is defined as follows:
+<ul><li>The left subtree of a node contains only nodes with keys less than the node's key</li>
+<li>The right subtree of a node contains only nodes with keys greater than the node's key</li>
+<li>Both the left and right subtrees must also be binary search trees</li>
+</ul>
+</div><div class="section example"><h4>Example</h4>
+<p><pre><code class="language-text">Input: root = [2,1,3]
+Output: true
+</code></pre></p>
+
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+<p>The key insight is that for a BST, each node must be within a valid range. For the root, there's no constraint. For left children, they must be less than parent and greater than the minimum value passed down. For right children, they must be greater than parent and less than the maximum value passed down.</p>
+
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Algorithm Explanation</h5>
+                    <p><strong>Tree/Graph Traversal:</strong></p>
+                    <p>Tree and graph problems often require traversal algorithms:</p>
+                    <ul>
+                        <li><strong>DFS (Depth-First Search):</strong> Explore as deep as possible before backtracking</li>
+                        <li><strong>BFS (Breadth-First Search):</strong> Explore level by level</li>
+                        <li><strong>Recursive Approach:</strong> Natural for tree problems, uses call stack</li>
+                        <li><strong>Iterative Approach:</strong> Uses explicit stack/queue, more control</li>
+                    </ul>
+                    
+                    <p><strong>Key Considerations:</strong></p>
+                    <ul>
+                        <li>Base case: Handle null/empty nodes</li>
+                        <li>Recursive case: Process current node and recurse on children</li>
+                        <li>State management: Track visited nodes, path, or other state</li>
+                        <li>Space complexity: Consider recursion stack depth</li>
+                    </ul>
+                </div>
+                </div></div><div class="section approach"><h4>Approach</h4><div class="approach-content">
+<ul><li>Use recursion with min and max bounds</li>
+<li>For each node, check if its value is within (min, max)</li>
+<li>Recursively validate left subtree with bounds (min, node.val)</li>
+<li>Recursively validate right subtree with bounds (node.val, max)</li>
+</ul>
+</div></div><div class="section complexity"><h4>Complexity Analysis</h4><div class="section complexity"><h4>Complexity Analysis</h4><h4>Time Complexity</h4> O(n) - visit each node once
+</div><div class="section complexity"><h4>Complexity Analysis</h4><h4>Space Complexity</h4> O(h) for recursion stack
+
+</div></div><div class="section code-solution"><h4>Code Solution</h4>
+<p><pre><code class="language-python">def isValidBST(root):
+    def validate(node, min_val, max_val):
+        if not node:
+            return True
+        
+        if node.val <= min_val or node.val >= max_val:
+            return False
+        
+        return (validate(node.left, min_val, node.val) and 
+                validate(node.right, node.val, max_val))
+    
+    return validate(root, float('-inf'), float('inf'))
+</code></pre></p>
+
+
+                <div class="code-explanation">
+                    <h5>Detailed Code Walkthrough</h5>
+                    <p><strong>Line-by-Line Explanation:</strong></p>
+                
+                    <p><strong>Function Structure:</strong></p>
+                    <p>The solution is implemented as a function that takes input parameters and returns the result. This modular approach makes the code reusable and testable.</p>
+                    
+                    <p><strong>Algorithm Implementation:</strong></p>
+                    <p>The function implements the optimized algorithm using appropriate data structures to achieve the desired time and space complexity.</p>
+                    
+                    <p><strong>Time Complexity Analysis:</strong></p>
+                    <p>Each element is visited exactly once, and hash map operations (insert and lookup) are O(1) on average. Therefore, overall time complexity is O(n).</p>
+                    
+                    <p><strong>Space Complexity Analysis:</strong></p>
+                    <p>In the worst case, we store all n elements in the hash map before finding a pair. Therefore, space complexity is O(n).</p>
+                    
+                    <p><strong>Optimization Benefits:</strong></p>
+                    <ul>
+                        <li>Reduced time complexity from O(n²) to O(n)</li>
+                        <li>Single pass through the array</li>
+                        <li>Early termination when solution is found</li>
+                    </ul>
+                </div>
+                </div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of BST properties</li>
+<li>Demonstrates ability to track constraints through recursion</li>
+<li>Shows attention to edge cases (boundary conditions)</li>
+</ul>
+</div><hr>
+
+<h3>Question 8: Clone Graph</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Given a reference of a node in a connected undirected graph, return a deep copy (clone) of the graph.
+
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+<p>This requires creating a new graph with the same structure. We need to avoid cycles and ensure all nodes and edges are copied correctly.</p>
+
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Step-by-Step Explanation</h5>
+                    <p><strong>Problem Analysis:</strong></p>
+                    <p>This problem requires finding two numbers in an array that sum to a target value. The key challenge is doing this efficiently.</p>
+                    
+                    <p><strong>Naive Solution Analysis:</strong></p>
+                    <p>The brute force approach would be to check every possible pair of numbers:</p>
+                    <ul>
+                        <li>For each number at index i, check all numbers at indices j > i</li>
+                        <li>If nums[i] + nums[j] == target, return [i, j]</li>
+                        <li>Time Complexity: O(n²) - nested loops</li>
+                        <li>Space Complexity: O(1) - no extra space</li>
+                    </ul>
+                    
+                    <p><strong>Optimization Strategy:</strong></p>
+                    <p>We can optimize using a hash map (dictionary) to store numbers we've already seen:</p>
+                    <ul>
+                        <li>As we iterate through the array, we store each number and its index</li>
+                        <li>For each new number, we calculate what number we need (complement = target - current)</li>
+                        <li>We check if this complement exists in our hash map</li>
+                        <li>If it does, we've found our pair!</li>
+                    </ul>
+                    
+                    <p><strong>Why This Works:</strong></p>
+                    <p>The key insight is that if we need number X to pair with current number Y to sum to target, and we've already seen X earlier in the array, we can immediately return the answer without checking all remaining numbers.</p>
+                    
+                    <p><strong>Example Walkthrough:</strong></p>
+                    <p>For nums = [2, 7, 11, 15], target = 9:</p>
+                    <ol>
+                        <li>i=0, num=2: complement = 9-2 = 7. Is 7 in map? No. Store {2: 0}</li>
+                        <li>i=1, num=7: complement = 9-7 = 2. Is 2 in map? Yes! Return [0, 1]</li>
+                    </ol>
+                    
+                    <p><strong>Edge Cases to Consider:</strong></p>
+                    <ul>
+                        <li>Empty array: Return empty list</li>
+                        <li>No solution: Problem states there's always exactly one, but in real scenarios, handle gracefully</li>
+                        <li>Negative numbers: Works fine, complement calculation handles it</li>
+                        <li>Duplicate numbers: First occurrence is stored, second occurrence can use it</li>
+                    </ul>
+                </div>
+                </div></div><div class="section approach"><h4>Approach</h4><div class="approach-content">
+<ul><li>Use DFS or BFS to traverse the graph</li>
+<li>Use a hash map to map original nodes to cloned nodes</li>
+<li>For each node, create a clone and add it to the map</li>
+<li>For each neighbor, recursively clone it and add to the clone's neighbors list</li>
+</ul>
+</div></div><div class="section complexity"><h4>Complexity Analysis</h4><div class="section complexity"><h4>Complexity Analysis</h4><h4>Time Complexity</h4> O(V + E) where V is vertices and E is edges
+</div><div class="section complexity"><h4>Complexity Analysis</h4><h4>Space Complexity</h4> O(V) for the hash map and recursion stack
+
+</div></div><div class="section code-solution"><h4>Code Solution</h4>
+<p><pre><code class="language-python">class Node:
+    def __init__(self, val=0, neighbors=None):
+        self.val = val
+        self.neighbors = neighbors if neighbors is not None else []
+
+def cloneGraph(node):
+    if not node:
+        return None
+    
+    clone_map = {}
+    
+    def dfs(original):
+        if original in clone_map:
+            return clone_map[original]
+        
+        clone = Node(original.val)
+        clone_map[original] = clone
+        
+        for neighbor in original.neighbors:
+            clone.neighbors.append(dfs(neighbor))
+        
+        return clone
+    
+    return dfs(node)
+</code></pre></p>
+
+
+                <div class="code-explanation">
+                    <h5>Detailed Code Walkthrough</h5>
+                    <p><strong>Line-by-Line Explanation:</strong></p>
+                
+                    <p><strong>1. Initialize Data Structure:</strong></p>
+                    <p>We create an empty hash map (dictionary) to store numbers we've encountered along with their indices. This allows O(1) lookup time.</p>
+                    
+                    <p><strong>2. Iterate Through Array:</strong></p>
+                    <p>We use a single loop to traverse the array once. This gives us O(n) time complexity instead of O(n²) from nested loops.</p>
+                    
+                    <p><strong>3. Calculate Complement:</strong></p>
+                    <p>For each number, we calculate what number we need to pair with it: complement = target - current_number. This tells us what we're looking for.</p>
+                    
+                    <p><strong>4. Check for Complement:</strong></p>
+                    <p>We check if the complement exists in our hash map. This is an O(1) operation thanks to hash map's constant-time lookup.</p>
+                    
+                    <p><strong>5. Return or Store:</strong></p>
+                    <p>If complement exists, we immediately return the indices. Otherwise, we store the current number for future lookups.</p>
+                    
+                    <p><strong>Time Complexity Analysis:</strong></p>
+                    <p>Each element is visited exactly once, and hash map operations (insert and lookup) are O(1) on average. Therefore, overall time complexity is O(n).</p>
+                    
+                    <p><strong>Space Complexity Analysis:</strong></p>
+                    <p>In the worst case, we store all n elements in the hash map before finding a pair. Therefore, space complexity is O(n).</p>
+                    
+                    <p><strong>Optimization Benefits:</strong></p>
+                    <ul>
+                        <li>Reduced time complexity from O(n²) to O(n)</li>
+                        <li>Single pass through the array</li>
+                        <li>Early termination when solution is found</li>
+                    </ul>
+                </div>
+                </div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of graph traversal</li>
+<li>Demonstrates knowledge of deep copying</li>
+<li>Shows ability to handle cycles in graphs</li>
+</ul>
+</div><hr>
+
+<h2>Dynamic Programming</h2>
+
+<h3>Question 9: Climbing Stairs</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> You are climbing a staircase. It takes <code>n</code> steps to reach the top. Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+
+</div><div class="section example"><h4>Example</h4>
+<p><pre><code class="language-text">Input: n = 3
+Output: 3
+Explanation: There are three ways to climb to the top.
+1. 1 step + 1 step + 1 step
+2. 1 step + 2 steps
+3. 2 steps + 1 step
+</code></pre></p>
+
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+<p>This is essentially the Fibonacci sequence. To reach step <code>n</code>, you can come from step <code>n-1</code> (1 step) or step <code>n-2</code> (2 steps). So <code>ways(n) = ways(n-1) + ways(n-2)</code>.</p>
+
+</div></div><div class="section approach"><h4>Approach</h4><div class="approach-content">
+<ul><li>Base cases: <code>ways(1) = 1</code>, <code>ways(2) = 2</code></li>
+<li>For <code>n > 2</code>: <code>ways(n) = ways(n-1) + ways(n-2)</code></li>
+<li>Use bottom-up DP to avoid recalculating subproblems</li>
+</ul>
+</div></div><div class="section complexity"><h4>Complexity Analysis</h4><div class="section complexity"><h4>Complexity Analysis</h4><h4>Time Complexity</h4> O(n) - single pass
+</div><div class="section complexity"><h4>Complexity Analysis</h4><h4>Space Complexity</h4> O(1) - only storing last two values
+
+</div></div><div class="section code-solution"><h4>Code Solution</h4>
+<p><pre><code class="language-python">def climbStairs(n):
+    if n <= 2:
+        return n
+    
+    prev2 = 1  # ways to reach step 1
+    prev1 = 2  # ways to reach step 2
+    
+    for i in range(3, n + 1):
+        current = prev1 + prev2
+        prev2 = prev1
+        prev1 = current
+    
+    return prev1
+</code></pre></p>
+
+
+                <div class="code-explanation">
+                    <h5>Detailed Code Walkthrough</h5>
+                    <p><strong>Line-by-Line Explanation:</strong></p>
+                
+                    <p><strong>Function Structure:</strong></p>
+                    <p>The solution is implemented as a function that takes input parameters and returns the result. This modular approach makes the code reusable and testable.</p>
+                    
+                    <p><strong>Algorithm Implementation:</strong></p>
+                    <p>The function implements the optimized algorithm using appropriate data structures to achieve the desired time and space complexity.</p>
+                    
+                    <p><strong>Time Complexity Analysis:</strong></p>
+                    <p>Each element is visited exactly once, and hash map operations (insert and lookup) are O(1) on average. Therefore, overall time complexity is O(n).</p>
+                    
+                    <p><strong>Space Complexity Analysis:</strong></p>
+                    <p>In the worst case, we store all n elements in the hash map before finding a pair. Therefore, space complexity is O(n).</p>
+                    
+                    <p><strong>Optimization Benefits:</strong></p>
+                    <ul>
+                        <li>Reduced time complexity from O(n²) to O(n)</li>
+                        <li>Single pass through the array</li>
+                        <li>Early termination when solution is found</li>
+                    </ul>
+                </div>
+                </div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Classic DP problem</li>
+<li>Tests understanding of memoization and optimization</li>
+<li>Demonstrates ability to identify patterns</li>
+</ul>
+</div><hr>
+
+<h3>Question 10: Longest Increasing Subsequence</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Given an integer array <code>nums</code>, return the length of the longest strictly increasing subsequence.
+
+</div><div class="section example"><h4>Example</h4>
+<p><pre><code class="language-text">Input: nums = [10,9,2,5,3,7,101,18]
+Output: 4
+Explanation: The longest increasing subsequence is [2,3,7,18], therefore the length is 4.
+</code></pre></p>
+
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+<p>This requires finding the longest subsequence (not necessarily contiguous) where elements are in strictly increasing order.</p>
+
+<strong>Approach (DP - O(n²)):</strong>
+<ul><li>Create <code>dp</code> array where <code>dp[i]</code> represents length of LIS ending at index <code>i</code></li>
+<li>For each position, check all previous positions</li>
+<li>If <code>nums[j] < nums[i]</code>, update <code>dp[i] = max(dp[i], dp[j] + 1)</code></li>
+</ul>
+</div></div><div class="section complexity"><h4>Complexity Analysis</h4><div class="section complexity"><h4>Complexity Analysis</h4><h4>Time Complexity</h4> O(n²)
+</div><div class="section complexity"><h4>Complexity Analysis</h4><h4>Space Complexity</h4> O(n)
+
+</div></div><div class="section code-solution"><h4>Code Solution</h4>
+<p><pre><code class="language-python">def lengthOfLIS(nums):
+    n = len(nums)
+    dp = [1] * n
+    
+    for i in range(1, n):
+        for j in range(i):
+            if nums[j] < nums[i]:
+                dp[i] = max(dp[i], dp[j] + 1)
+    
+    return max(dp)
+</code></pre></p>
+
+<strong>Approach (Binary Search - O(n log n)):</strong>
+<p><pre><code class="language-python">import bisect
+
+def lengthOfLISOptimized(nums):
+    tails = []
+    
+    for num in nums:
+        pos = bisect.bisect_left(tails, num)
+        if pos == len(tails):
+            tails.append(num)
+        else:
+            tails[pos] = num
+    
+    return len(tails)
+</code></pre></p>
+
+
+                <div class="code-explanation">
+                    <h5>Detailed Code Walkthrough</h5>
+                    <p><strong>Line-by-Line Explanation:</strong></p>
+                
+                    <p><strong>Function Structure:</strong></p>
+                    <p>The solution is implemented as a function that takes input parameters and returns the result. This modular approach makes the code reusable and testable.</p>
+                    
+                    <p><strong>Algorithm Implementation:</strong></p>
+                    <p>The function implements the optimized algorithm using appropriate data structures to achieve the desired time and space complexity.</p>
+                    
+                    <p><strong>Time Complexity Analysis:</strong></p>
+                    <p>Each element is visited exactly once, and hash map operations (insert and lookup) are O(1) on average. Therefore, overall time complexity is O(n).</p>
+                    
+                    <p><strong>Space Complexity Analysis:</strong></p>
+                    <p>In the worst case, we store all n elements in the hash map before finding a pair. Therefore, space complexity is O(n).</p>
+                    
+                    <p><strong>Optimization Benefits:</strong></p>
+                    <ul>
+                        <li>Reduced time complexity from O(n²) to O(n)</li>
+                        <li>Single pass through the array</li>
+                        <li>Early termination when solution is found</li>
+                    </ul>
+                </div>
+                </div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of dynamic programming</li>
+<li>Demonstrates knowledge of optimization techniques</li>
+<li>Shows ability to improve time complexity</li>
+</ul>
+</div><hr>
+
+<h2>Sorting & Searching</h2>
+
+<h3>Question 11: Merge Intervals</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Given an array of intervals where <code>intervals[i] = [starti, endi]</code>, merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the intervals in the input.
+
+</div><div class="section example"><h4>Example</h4>
+<p><pre><code class="language-text">Input: intervals = [[1,3],[2,6],[8,10],[15,18]]
+Output: [[1,6],[8,10],[15,18]]
+Explanation: Since intervals [1,3] and [2,6] overlap, merge them into [1,6].
+</code></pre></p>
+
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+<p>The key is to sort intervals by start time, then merge overlapping ones by comparing with the last merged interval.</p>
+
+</div></div><div class="section approach"><h4>Approach</h4><div class="approach-content">
+<ul><li>Sort intervals by start time</li>
+<li>Initialize result with first interval</li>
+<li>For each subsequent interval:</li>
+</ul>   - If it overlaps with last merged interval, merge them
+<p>- Otherwise, add it as a new interval</p>
+
+</div></div><div class="section complexity"><h4>Complexity Analysis</h4><div class="section complexity"><h4>Complexity Analysis</h4><h4>Time Complexity</h4> O(n log n) due to sorting
+</div><div class="section complexity"><h4>Complexity Analysis</h4><h4>Space Complexity</h4> O(n) for the result
+
+</div></div><div class="section code-solution"><h4>Code Solution</h4>
+<p><pre><code class="language-python">def merge(intervals):
+    if not intervals:
+        return []
+    
+    intervals.sort(key=lambda x: x[0])
+    merged = [intervals[0]]
+    
+    for current in intervals[1:]:
+        last = merged[-1]
+        
+        if current[0] <= last[1]:
+            last[1] = max(last[1], current[1])
+        else:
+            merged.append(current)
+    
+    return merged
+</code></pre></p>
+
+
+                <div class="code-explanation">
+                    <h5>Detailed Code Walkthrough</h5>
+                    <p><strong>Line-by-Line Explanation:</strong></p>
+                
+                    <p><strong>Function Structure:</strong></p>
+                    <p>The solution is implemented as a function that takes input parameters and returns the result. This modular approach makes the code reusable and testable.</p>
+                    
+                    <p><strong>Algorithm Implementation:</strong></p>
+                    <p>The function implements the optimized algorithm using appropriate data structures to achieve the desired time and space complexity.</p>
+                    
+                    <p><strong>Time Complexity Analysis:</strong></p>
+                    <p>Each element is visited exactly once, and hash map operations (insert and lookup) are O(1) on average. Therefore, overall time complexity is O(n).</p>
+                    
+                    <p><strong>Space Complexity Analysis:</strong></p>
+                    <p>In the worst case, we store all n elements in the hash map before finding a pair. Therefore, space complexity is O(n).</p>
+                    
+                    <p><strong>Optimization Benefits:</strong></p>
+                    <ul>
+                        <li>Reduced time complexity from O(n²) to O(n)</li>
+                        <li>Single pass through the array</li>
+                        <li>Early termination when solution is found</li>
+                    </ul>
+                </div>
+                </div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of sorting and interval manipulation</li>
+<li>Demonstrates ability to handle edge cases</li>
+<li>Shows problem-solving with real-world applications</li>
+</ul>
+</div><hr>
+
+<h3>Question 12: Search in Rotated Sorted Array</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> There is an integer array <code>nums</code> sorted in ascending order (with distinct values). Prior to being passed to your function, <code>nums</code> is possibly rotated at an unknown pivot index <code>k</code> (1 <= k < nums.length) such that the resulting array is <code>[nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]]</code>. Given the array <code>nums</code> after the rotation and an integer <code>target</code>, return the index of <code>target</code> if it is in <code>nums</code>, or <code>-1</code> if it is not in <code>nums</code>.
+
+</div><div class="section example"><h4>Example</h4>
+<p><pre><code class="language-text">Input: nums = [4,5,6,7,0,1,2], target = 0
+Output: 4
+</code></pre></p>
+
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+<p>This is a modified binary search. The array has two sorted halves, and we need to determine which half contains our target.</p>
+
+</div></div><div class="section approach"><h4>Approach</h4><div class="approach-content">
+<ul><li>Use binary search</li>
+<li>Determine which half is sorted (left or right)</li>
+<li>Check if target is in the sorted half</li>
+<li>If yes, search in that half; otherwise, search in the other half</li>
+</ul>
+</div></div><div class="section complexity"><h4>Complexity Analysis</h4><div class="section complexity"><h4>Complexity Analysis</h4><h4>Time Complexity</h4> O(log n)
+</div><div class="section complexity"><h4>Complexity Analysis</h4><h4>Space Complexity</h4> O(1)
+
+</div></div><div class="section code-solution"><h4>Code Solution</h4>
+<p><pre><code class="language-python">def search(nums, target):
+    left, right = 0, len(nums) - 1
+    
+    while left <= right:
+        mid = (left + right) // 2
+        
+        if nums[mid] == target:
+            return mid
+        
+        # Left half is sorted
+        if nums[left] <= nums[mid]:
+            if nums[left] <= target < nums[mid]:
+                right = mid - 1
+            else:
+                left = mid + 1
+        # Right half is sorted
+        else:
+            if nums[mid] < target <= nums[right]:
+                left = mid + 1
+            else:
+                right = mid - 1
+    
+    return -1
+</code></pre></p>
+
+
+                <div class="code-explanation">
+                    <h5>Detailed Code Walkthrough</h5>
+                    <p><strong>Line-by-Line Explanation:</strong></p>
+                
+                    <p><strong>Function Structure:</strong></p>
+                    <p>The solution is implemented as a function that takes input parameters and returns the result. This modular approach makes the code reusable and testable.</p>
+                    
+                    <p><strong>Algorithm Implementation:</strong></p>
+                    <p>The function implements the optimized algorithm using appropriate data structures to achieve the desired time and space complexity.</p>
+                    
+                    <p><strong>Time Complexity Analysis:</strong></p>
+                    <p>Each element is visited exactly once, and hash map operations (insert and lookup) are O(1) on average. Therefore, overall time complexity is O(n).</p>
+                    
+                    <p><strong>Space Complexity Analysis:</strong></p>
+                    <p>In the worst case, we store all n elements in the hash map before finding a pair. Therefore, space complexity is O(n).</p>
+                    
+                    <p><strong>Optimization Benefits:</strong></p>
+                    <ul>
+                        <li>Reduced time complexity from O(n²) to O(n)</li>
+                        <li>Single pass through the array</li>
+                        <li>Early termination when solution is found</li>
+                    </ul>
+                </div>
+                </div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of binary search variations</li>
+<li>Demonstrates ability to handle edge cases</li>
+<li>Shows problem-solving with modified algorithms</li>
+</ul>
+</div><hr>
+
+<h2>Hash Tables & Maps</h2>
+
+<h3>Question 13: Group Anagrams</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Given an array of strings <code>strs</code>, group the anagrams together. You can return the answer in any order.
+
+</div><div class="section example"><h4>Example</h4>
+<p><pre><code class="language-text">Input: strs = ["eat","tea","tan","ate","nat","bat"]
+Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
+</code></pre></p>
+
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+<p>Anagrams have the same character frequency. We can use sorted strings as keys or character frequency counts.</p>
+
+</div></div><div class="section approach"><h4>Approach</h4><div class="approach-content">
+<ul><li>For each string, create a key (sorted string or character count)</li>
+<li>Group strings with the same key together</li>
+<li>Return grouped lists</li>
+</ul>
+</div></div><div class="section complexity"><h4>Complexity Analysis</h4><div class="section complexity"><h4>Complexity Analysis</h4><h4>Time Complexity</h4> O(n </em> k log k) where k is average string length
+</div><div class="section complexity"><h4>Complexity Analysis</h4><h4>Space Complexity</h4> O(n <em> k)
+
+</div></div><div class="section code-solution"><h4>Code Solution</h4>
+<p><pre><code class="language-python">from collections import defaultdict
+
+def groupAnagrams(strs):
+    groups = defaultdict(list)
+    
+    for s in strs:
+        key = ''.join(sorted(s))
+        groups[key].append(s)
+    
+    return list(groups.values())
+</code></pre></p>
+
+<strong>Optimized with character count:</strong>
+<p><pre><code class="language-python">def groupAnagramsOptimized(strs):
+    groups = defaultdict(list)
+    
+    for s in strs:
+        count = [0] * 26
+        for char in s:
+            count[ord(char) - ord('a')] += 1
+        groups[tuple(count)].append(s)
+    
+    return list(groups.values())
+</code></pre></p>
+
+
+                <div class="code-explanation">
+                    <h5>Detailed Code Walkthrough</h5>
+                    <p><strong>Line-by-Line Explanation:</strong></p>
+                
+                    <p><strong>1. Initialize Data Structure:</strong></p>
+                    <p>We create an empty hash map (dictionary) to store numbers we've encountered along with their indices. This allows O(1) lookup time.</p>
+                    
+                    <p><strong>2. Iterate Through Array:</strong></p>
+                    <p>We use a single loop to traverse the array once. This gives us O(n) time complexity instead of O(n²) from nested loops.</p>
+                    
+                    <p><strong>3. Calculate Complement:</strong></p>
+                    <p>For each number, we calculate what number we need to pair with it: complement = target - current_number. This tells us what we're looking for.</p>
+                    
+                    <p><strong>4. Check for Complement:</strong></p>
+                    <p>We check if the complement exists in our hash map. This is an O(1) operation thanks to hash map's constant-time lookup.</p>
+                    
+                    <p><strong>5. Return or Store:</strong></p>
+                    <p>If complement exists, we immediately return the indices. Otherwise, we store the current number for future lookups.</p>
+                    
+                    <p><strong>Time Complexity Analysis:</strong></p>
+                    <p>Each element is visited exactly once, and hash map operations (insert and lookup) are O(1) on average. Therefore, overall time complexity is O(n).</p>
+                    
+                    <p><strong>Space Complexity Analysis:</strong></p>
+                    <p>In the worst case, we store all n elements in the hash map before finding a pair. Therefore, space complexity is O(n).</p>
+                    
+                    <p><strong>Optimization Benefits:</strong></p>
+                    <ul>
+                        <li>Reduced time complexity from O(n²) to O(n)</li>
+                        <li>Single pass through the array</li>
+                        <li>Early termination when solution is found</li>
+                    </ul>
+                </div>
+                </div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of hash maps and string manipulation</li>
+<li>Demonstrates ability to optimize solutions</li>
+<li>Shows knowledge of different approaches</li>
+</ul>
+</div><hr>
+
+<h2>Stacks & Queues</h2>
+
+<h3>Question 14: Valid Parentheses</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Given a string <code>s</code> containing just the characters <code>'('</code>, <code>')'</code>, <code>'{'</code>, <code>'}'</code>, <code>'['</code> and <code>']'</code>, determine if the input string is valid. An input string is valid if:
+<ul><li>Open brackets must be closed by the same type of brackets</li>
+<li>Open brackets must be closed in the correct order</li>
+<li>Every close bracket has a corresponding open bracket of the same type</li>
+</ul>
+</div><div class="section example"><h4>Example</h4>
+<p><pre><code class="language-text">Input: s = "()[]{}"
+Output: true
+</code></pre></p>
+
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+<p>This is a classic stack problem. We use a stack to track opening brackets and match them with closing brackets.</p>
+
+</div></div><div class="section approach"><h4>Approach</h4><div class="approach-content">
+<ul><li>Use a stack to store opening brackets</li>
+<li>For each character:</li>
+</ul>   - If it's an opening bracket, push to stack
+<p>- If it's a closing bracket, check if it matches the top of stack</p>
+<p>- If match, pop; otherwise, return False</p>
+<ul><li>Return True if stack is empty at the end</li>
+</ul>
+</div></div><div class="section complexity"><h4>Complexity Analysis</h4><div class="section complexity"><h4>Complexity Analysis</h4><h4>Time Complexity</h4> O(n)
+</div><div class="section complexity"><h4>Complexity Analysis</h4><h4>Space Complexity</h4> O(n) for the stack
+
+</div></div><div class="section code-solution"><h4>Code Solution</h4>
+<p><pre><code class="language-python">def isValid(s):
+    stack = []
+    mapping = {')': '(', '}': '{', ']': '['}
+    
+    for char in s:
+        if char in mapping:
+            if not stack or stack.pop() != mapping[char]:
+                return False
+        else:
+            stack.append(char)
+    
+    return len(stack) == 0
+</code></pre></p>
+
+
+                <div class="code-explanation">
+                    <h5>Detailed Code Walkthrough</h5>
+                    <p><strong>Line-by-Line Explanation:</strong></p>
+                
+                    <p><strong>Function Structure:</strong></p>
+                    <p>The solution is implemented as a function that takes input parameters and returns the result. This modular approach makes the code reusable and testable.</p>
+                    
+                    <p><strong>Algorithm Implementation:</strong></p>
+                    <p>The function implements the optimized algorithm using appropriate data structures to achieve the desired time and space complexity.</p>
+                    
+                    <p><strong>Time Complexity Analysis:</strong></p>
+                    <p>Each element is visited exactly once, and hash map operations (insert and lookup) are O(1) on average. Therefore, overall time complexity is O(n).</p>
+                    
+                    <p><strong>Space Complexity Analysis:</strong></p>
+                    <p>In the worst case, we store all n elements in the hash map before finding a pair. Therefore, space complexity is O(n).</p>
+                    
+                    <p><strong>Optimization Benefits:</strong></p>
+                    <ul>
+                        <li>Reduced time complexity from O(n²) to O(n)</li>
+                        <li>Single pass through the array</li>
+                        <li>Early termination when solution is found</li>
+                    </ul>
+                </div>
+                </div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Classic stack problem</li>
+<li>Tests understanding of LIFO data structure</li>
+<li>Demonstrates ability to handle matching problems</li>
+</ul>
+</div><hr>
+
+<h3>Question 15: Daily Temperatures</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Given an array of integers <code>temperatures</code> representing the daily temperatures, return an array <code>answer</code> such that <code>answer[i]</code> is the number of days you have to wait after the <code>i-th</code> day to get a warmer temperature. If there is no future day for which this is possible, keep <code>answer[i] == 0</code> instead.
+
+</div><div class="section example"><h4>Example</h4>
+<p><pre><code class="language-text">Input: temperatures = [73,74,75,71,69,72,76,73]
+Output: [1,1,4,2,1,1,0,0]
+</code></pre></p>
+
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+<p>This requires finding the next greater element for each position. A monotonic stack is perfect for this.</p>
+
+</div></div><div class="section approach"><h4>Approach</h4><div class="approach-content">
+<ul><li>Use a stack to store indices</li>
+<li>For each temperature:</li>
+</ul>   - While stack is not empty and current temp > temp at stack top:
+<p>- Pop index from stack</p>
+<p>- Calculate days difference and store in result</p>
+<p>- Push current index to stack</p>
+
+</div></div><div class="section complexity"><h4>Complexity Analysis</h4><div class="section complexity"><h4>Complexity Analysis</h4><h4>Time Complexity</h4> O(n) - each element pushed and popped once
+</div><div class="section complexity"><h4>Complexity Analysis</h4><h4>Space Complexity</h4> O(n) for the stack
+
+</div></div><div class="section code-solution"><h4>Code Solution</h4>
+<p><pre><code class="language-python">def dailyTemperatures(temperatures):
+    n = len(temperatures)
+    result = [0] * n
+    stack = []
+    
+    for i in range(n):
+        while stack and temperatures[i] > temperatures[stack[-1]]:
+            prev_index = stack.pop()
+            result[prev_index] = i - prev_index
+        stack.append(i)
+    
+    return result
+</code></pre></p>
+
+
+                <div class="code-explanation">
+                    <h5>Detailed Code Walkthrough</h5>
+                    <p><strong>Line-by-Line Explanation:</strong></p>
+                
+                    <p><strong>Function Structure:</strong></p>
+                    <p>The solution is implemented as a function that takes input parameters and returns the result. This modular approach makes the code reusable and testable.</p>
+                    
+                    <p><strong>Algorithm Implementation:</strong></p>
+                    <p>The function implements the optimized algorithm using appropriate data structures to achieve the desired time and space complexity.</p>
+                    
+                    <p><strong>Time Complexity Analysis:</strong></p>
+                    <p>Each element is visited exactly once, and hash map operations (insert and lookup) are O(1) on average. Therefore, overall time complexity is O(n).</p>
+                    
+                    <p><strong>Space Complexity Analysis:</strong></p>
+                    <p>In the worst case, we store all n elements in the hash map before finding a pair. Therefore, space complexity is O(n).</p>
+                    
+                    <p><strong>Optimization Benefits:</strong></p>
+                    <ul>
+                        <li>Reduced time complexity from O(n²) to O(n)</li>
+                        <li>Single pass through the array</li>
+                        <li>Early termination when solution is found</li>
+                    </ul>
+                </div>
+                </div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of monotonic stacks</li>
+<li>Demonstrates next greater element pattern</li>
+<li>Shows ability to optimize with data structures</li>
+</ul>
+</div><hr>
+
+<h2>Greedy Algorithms</h2>
+
+<h3>Question 16: Jump Game</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> You are given an integer array <code>nums</code>. You are initially positioned at the array's first index, and each element in the array represents your maximum jump length at that position. Return <code>true</code> if you can reach the last index, or <code>false</code> otherwise.
+
+</div><div class="section example"><h4>Example</h4>
+<p><pre><code class="language-text">Input: nums = [2,3,1,1,4]
+Output: true
+Explanation: Jump 1 step from index 0 to 1, then 3 steps from index 1 to the last index.
+</code></pre></p>
+
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+<p>We need to track the farthest position we can reach. If we can reach a position, we can reach all positions before it.</p>
+
+</div></div><div class="section approach"><h4>Approach</h4><div class="approach-content">
+<ul><li>Track the farthest reachable position</li>
+<li>For each position, update farthest if current position + jump > farthest</li>
+<li>If current position > farthest, we can't reach it, return False</li>
+<li>If farthest >= last index, return True</li>
+</ul>
+</div></div><div class="section complexity"><h4>Complexity Analysis</h4><div class="section complexity"><h4>Complexity Analysis</h4><h4>Time Complexity</h4> O(n)
+</div><div class="section complexity"><h4>Complexity Analysis</h4><h4>Space Complexity</h4> O(1)
+
+</div></div><div class="section code-solution"><h4>Code Solution</h4>
+<p><pre><code class="language-python">def canJump(nums):
+    farthest = 0
+    
+    for i in range(len(nums)):
+        if i > farthest:
+            return False
+        
+        farthest = max(farthest, i + nums[i])
+        
+        if farthest >= len(nums) - 1:
+            return True
+    
+    return True
+</code></pre></p>
+
+
+                <div class="code-explanation">
+                    <h5>Detailed Code Walkthrough</h5>
+                    <p><strong>Line-by-Line Explanation:</strong></p>
+                
+                    <p><strong>Function Structure:</strong></p>
+                    <p>The solution is implemented as a function that takes input parameters and returns the result. This modular approach makes the code reusable and testable.</p>
+                    
+                    <p><strong>Algorithm Implementation:</strong></p>
+                    <p>The function implements the optimized algorithm using appropriate data structures to achieve the desired time and space complexity.</p>
+                    
+                    <p><strong>Time Complexity Analysis:</strong></p>
+                    <p>Each element is visited exactly once, and hash map operations (insert and lookup) are O(1) on average. Therefore, overall time complexity is O(n).</p>
+                    
+                    <p><strong>Space Complexity Analysis:</strong></p>
+                    <p>In the worst case, we store all n elements in the hash map before finding a pair. Therefore, space complexity is O(n).</p>
+                    
+                    <p><strong>Optimization Benefits:</strong></p>
+                    <ul>
+                        <li>Reduced time complexity from O(n²) to O(n)</li>
+                        <li>Single pass through the array</li>
+                        <li>Early termination when solution is found</li>
+                    </ul>
+                </div>
+                </div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of greedy algorithms</li>
+<li>Demonstrates ability to optimize solutions</li>
+<li>Shows problem-solving with optimal substructure</li>
+</ul>
+</div><hr>
+
+<h2>Backtracking</h2>
+
+<h3>Question 17: Generate Parentheses</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Given <code>n</code> pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+
+</div><div class="section example"><h4>Example</h4>
+<p><pre><code class="language-text">Input: n = 3
+Output: ["((()))","(()())","(())()","()(())","()()()"]
+</code></pre></p>
+
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+<p>This requires generating all valid combinations. We use backtracking with constraints: we can add '(' if count < n, and ')' if count of ')' < count of '('.</p>
+
+</div></div><div class="section approach"><h4>Approach</h4><div class="approach-content">
+<ul><li>Use backtracking with two counters: open_count and close_count</li>
+<li>Base case: if length == 2</em>n, add to result</li>
+<li>Recursive cases:</li>
+</ul>   - Add '(' if open_count < n
+<p>- Add ')' if close_count < open_count</p>
+
+</div></div><div class="section complexity"><h4>Complexity Analysis</h4><div class="section complexity"><h4>Complexity Analysis</h4><h4>Time Complexity</h4> O(4^n / √n) - Catalan number
+</div><div class="section complexity"><h4>Complexity Analysis</h4><h4>Space Complexity</h4> O(n) for recursion stack
+
+</div></div><div class="section code-solution"><h4>Code Solution</h4>
+<p><pre><code class="language-python">def generateParenthesis(n):
+    result = []
+    
+    def backtrack(current, open_count, close_count):
+        if len(current) == 2 * n:
+            result.append(current)
+            return
+        
+        if open_count < n:
+            backtrack(current + '(', open_count + 1, close_count)
+        
+        if close_count < open_count:
+            backtrack(current + ')', open_count, close_count + 1)
+    
+    backtrack('', 0, 0)
+    return result
+</code></pre></p>
+
+
+                <div class="code-explanation">
+                    <h5>Detailed Code Walkthrough</h5>
+                    <p><strong>Line-by-Line Explanation:</strong></p>
+                
+                    <p><strong>Function Structure:</strong></p>
+                    <p>The solution is implemented as a function that takes input parameters and returns the result. This modular approach makes the code reusable and testable.</p>
+                    
+                    <p><strong>Algorithm Implementation:</strong></p>
+                    <p>The function implements the optimized algorithm using appropriate data structures to achieve the desired time and space complexity.</p>
+                    
+                    <p><strong>Time Complexity Analysis:</strong></p>
+                    <p>Each element is visited exactly once, and hash map operations (insert and lookup) are O(1) on average. Therefore, overall time complexity is O(n).</p>
+                    
+                    <p><strong>Space Complexity Analysis:</strong></p>
+                    <p>In the worst case, we store all n elements in the hash map before finding a pair. Therefore, space complexity is O(n).</p>
+                    
+                    <p><strong>Optimization Benefits:</strong></p>
+                    <ul>
+                        <li>Reduced time complexity from O(n²) to O(n)</li>
+                        <li>Single pass through the array</li>
+                        <li>Early termination when solution is found</li>
+                    </ul>
+                </div>
+                </div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of backtracking</li>
+<li>Demonstrates constraint handling</li>
+<li>Shows recursive thinking</li>
+</ul>
+</div><hr>
+
+<h2>Bit Manipulation</h2>
+
+<h3>Question 18: Single Number</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Given a non-empty array of integers <code>nums</code>, every element appears twice except for one. Find that single one. You must implement a solution with a linear runtime complexity and use only constant extra space.
+
+</div><div class="section example"><h4>Example</h4>
+<p><pre><code class="language-text">Input: nums = [2,2,1]
+Output: 1
+</code></pre></p>
+
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+<p>The key insight is that XOR of a number with itself is 0, and XOR with 0 is the number itself. So XORing all numbers will cancel out pairs, leaving the single number.</p>
+
+</div></div><div class="section approach"><h4>Approach</h4><div class="approach-content">
+<ul><li>Initialize result as 0</li>
+<li>XOR all numbers in the array</li>
+<li>The result is the single number</li>
+</ul>
+</div></div><div class="section complexity"><h4>Complexity Analysis</h4><div class="section complexity"><h4>Complexity Analysis</h4><h4>Time Complexity</h4> O(n)
+</div><div class="section complexity"><h4>Complexity Analysis</h4><h4>Space Complexity</h4> O(1)
+
+</div></div><div class="section code-solution"><h4>Code Solution</h4>
+<p><pre><code class="language-python">def singleNumber(nums):
+    result = 0
+    for num in nums:
+        result ^= num
+    return result
+</code></pre></p>
+
+
+                <div class="code-explanation">
+                    <h5>Detailed Code Walkthrough</h5>
+                    <p><strong>Line-by-Line Explanation:</strong></p>
+                
+                    <p><strong>Function Structure:</strong></p>
+                    <p>The solution is implemented as a function that takes input parameters and returns the result. This modular approach makes the code reusable and testable.</p>
+                    
+                    <p><strong>Algorithm Implementation:</strong></p>
+                    <p>The function implements the optimized algorithm using appropriate data structures to achieve the desired time and space complexity.</p>
+                    
+                    <p><strong>Time Complexity Analysis:</strong></p>
+                    <p>Each element is visited exactly once, and hash map operations (insert and lookup) are O(1) on average. Therefore, overall time complexity is O(n).</p>
+                    
+                    <p><strong>Space Complexity Analysis:</strong></p>
+                    <p>In the worst case, we store all n elements in the hash map before finding a pair. Therefore, space complexity is O(n).</p>
+                    
+                    <p><strong>Optimization Benefits:</strong></p>
+                    <ul>
+                        <li>Reduced time complexity from O(n²) to O(n)</li>
+                        <li>Single pass through the array</li>
+                        <li>Early termination when solution is found</li>
+                    </ul>
+                </div>
+                </div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of bit manipulation</li>
+<li>Demonstrates knowledge of XOR properties</li>
+<li>Shows ability to optimize space complexity</li>
+</ul>
+</div><hr>
+
+<h3>Question 19: Number of 1 Bits</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Write a function that takes an unsigned integer and returns the number of '1' bits it has (also known as the Hamming weight).
+
+</div><div class="section example"><h4>Example</h4>
+<p><pre><code class="language-text">Input: n = 00000000000000000000000000001011
+Output: 3
+Explanation: The input binary string 00000000000000000000000000001011 has a total of three '1' bits.
+</code></pre></p>
+
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+<p>We need to count set bits. We can use bit manipulation tricks like <code>n & (n-1)</code> which clears the rightmost set bit.</p>
+
+</div></div><div class="section approach"><h4>Approach</h4><div class="approach-content">
+<ul><li>Use <code>n & (n-1)</code> to clear rightmost set bit</li>
+<li>Count iterations until n becomes 0</li>
+</ul>
+</div></div><div class="section complexity"><h4>Complexity Analysis</h4><div class="section complexity"><h4>Complexity Analysis</h4><h4>Time Complexity</h4> O(k) where k is number of set bits
+</div><div class="section complexity"><h4>Complexity Analysis</h4><h4>Space Complexity</h4> O(1)
+
+</div></div><div class="section code-solution"><h4>Code Solution</h4>
+<p><pre><code class="language-python">def hammingWeight(n):
+    count = 0
+    while n:
+        n &= n - 1
+        count += 1
+    return count
+</code></pre></p>
+
+
+                <div class="code-explanation">
+                    <h5>Detailed Code Walkthrough</h5>
+                    <p><strong>Line-by-Line Explanation:</strong></p>
+                
+                    <p><strong>Function Structure:</strong></p>
+                    <p>The solution is implemented as a function that takes input parameters and returns the result. This modular approach makes the code reusable and testable.</p>
+                    
+                    <p><strong>Algorithm Implementation:</strong></p>
+                    <p>The function implements the optimized algorithm using appropriate data structures to achieve the desired time and space complexity.</p>
+                    
+                    <p><strong>Time Complexity Analysis:</strong></p>
+                    <p>Each element is visited exactly once, and hash map operations (insert and lookup) are O(1) on average. Therefore, overall time complexity is O(n).</p>
+                    
+                    <p><strong>Space Complexity Analysis:</strong></p>
+                    <p>In the worst case, we store all n elements in the hash map before finding a pair. Therefore, space complexity is O(n).</p>
+                    
+                    <p><strong>Optimization Benefits:</strong></p>
+                    <ul>
+                        <li>Reduced time complexity from O(n²) to O(n)</li>
+                        <li>Single pass through the array</li>
+                        <li>Early termination when solution is found</li>
+                    </ul>
+                </div>
+                </div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of bit manipulation tricks</li>
+<li>Demonstrates knowledge of bitwise operations</li>
+<li>Shows optimization techniques</li>
+</ul>
+</div><hr>
+
+<h3>Question 20: Best Time to Buy and Sell Stock</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> You are given an array <code>prices</code> where <code>prices[i]</code> is the price of a given stock on the <code>i-th</code> day. You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock. Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
+
+</div><div class="section example"><h4>Example</h4>
+<p><pre><code class="language-text">Input: prices = [7,1,5,3,6,4]
+Output: 5
+Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
+</code></pre></p>
+
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+<p>This problem requires finding the maximum difference between two elements where the larger element comes after the smaller one. We can solve this with a single pass through the array.</p>
+
+</div></div><div class="section approach"><h4>Approach</h4><div class="approach-content">
+<ul><li>Track the minimum price seen so far</li>
+<li>For each day, calculate profit if we sell today (current price - min price)</li>
+<li>Update maximum profit if current profit is greater</li>
+<li>Update minimum price if current price is lower</li>
+</ul>
+</div></div><div class="section complexity"><h4>Complexity Analysis</h4><div class="section complexity"><h4>Complexity Analysis</h4><h4>Time Complexity</h4> O(n) - single pass
+</div><div class="section complexity"><h4>Complexity Analysis</h4><h4>Space Complexity</h4> O(1) - only using variables
+
+</div></div><div class="section code-solution"><h4>Code Solution</h4>
+<p><pre><code class="language-python">def maxProfit(prices):
+    min_price = float('inf')
+    max_profit = 0
+    
+    for price in prices:
+        if price < min_price:
+            min_price = price
+        elif price - min_price > max_profit:
+            max_profit = price - min_price
+    
+    return max_profit
+</code></pre></p>
+
+
+                <div class="code-explanation">
+                    <h5>Detailed Code Walkthrough</h5>
+                    <p><strong>Line-by-Line Explanation:</strong></p>
+                
+                    <p><strong>Function Structure:</strong></p>
+                    <p>The solution is implemented as a function that takes input parameters and returns the result. This modular approach makes the code reusable and testable.</p>
+                    
+                    <p><strong>Algorithm Implementation:</strong></p>
+                    <p>The function implements the optimized algorithm using appropriate data structures to achieve the desired time and space complexity.</p>
+                    
+                    <p><strong>Time Complexity Analysis:</strong></p>
+                    <p>Each element is visited exactly once, and hash map operations (insert and lookup) are O(1) on average. Therefore, overall time complexity is O(n).</p>
+                    
+                    <p><strong>Space Complexity Analysis:</strong></p>
+                    <p>In the worst case, we store all n elements in the hash map before finding a pair. Therefore, space complexity is O(n).</p>
+                    
+                    <p><strong>Optimization Benefits:</strong></p>
+                    <ul>
+                        <li>Reduced time complexity from O(n²) to O(n)</li>
+                        <li>Single pass through the array</li>
+                        <li>Early termination when solution is found</li>
+                    </ul>
+                </div>
+                </div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of array manipulation</li>
+<li>Demonstrates ability to optimize with single pass</li>
+<li>Shows problem-solving with dynamic programming concepts</li>
+</ul>
+</div><hr>
+
+<h2>Summary</h2>
+
+<p>These questions cover fundamental data structures and algorithms commonly asked in FAANG interviews. Key takeaways:</p>
+
+<ul><li><strong>Time-Space Trade-offs:</strong> Understanding when to optimize for time vs. space</li>
+<li><strong>Pattern Recognition:</strong> Identifying common patterns (two pointers, sliding window, etc.)</li>
+<li><strong>Edge Cases:</strong> Always consider empty inputs, single elements, etc.</li>
+<li><strong>Optimization:</strong> Start with brute force, then optimize</li>
+<li><strong>Code Clarity:</strong> Write clean, readable code with proper variable names</li>
+</ul>
+<p>Practice these problems regularly and focus on understanding the underlying concepts rather than memorizing solutions.</p>
+
+
+    </div>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+    </script>
+</body>
+</html>

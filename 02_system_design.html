@@ -1,0 +1,2747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Design Interview Questions - FAANG Interview Questions</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.7;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            border-bottom: 4px solid #3498db;
+            padding-bottom: 15px;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+        }
+        
+        h2 {
+            color: #34495e;
+            margin-top: 50px;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: linear-gradient(90deg, #3498db22, transparent);
+            border-left: 5px solid #2980b9;
+            padding-left: 20px;
+        }
+        
+        h3 {
+            color: #2980b9;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.6em;
+            padding: 15px;
+            background: #ecf0f1;
+            border-radius: 5px;
+        }
+        
+        h4 {
+            color: #555;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        h5 {
+            color: #666;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        p {
+            margin-bottom: 18px;
+            text-align: justify;
+            font-size: 1.05em;
+        }
+        
+        ul, ol {
+            margin-left: 35px;
+            margin-bottom: 20px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #e83e8c;
+            border: 1px solid #e0e0e0;
+        }
+        
+        pre {
+            background: #2d2d2d;
+            padding: 25px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 25px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        pre code {
+            background: transparent;
+            padding: 0;
+            color: #f8f8f2;
+            font-size: 0.95em;
+            border: none;
+        }
+        
+        .pros-cons {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-left: 5px solid #28a745;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .pros {
+            margin-bottom: 25px;
+        }
+        
+        .pros h5 {
+            color: #28a745;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        .pros ul {
+            list-style: none;
+            margin-left: 0;
+        }
+        
+        .pros li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .pros li:before {
+            content: "✓";
+            color: #28a745;
+            font-weight: bold;
+            font-size: 1.2em;
+            position: absolute;
+            left: 0;
+        }
+        
+        .cons {
+            margin-top: 25px;
+        }
+        
+        .cons h5 {
+            color: #dc3545;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        .cons ul {
+            list-style: none;
+            margin-left: 0;
+        }
+        
+        .cons li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .cons li:before {
+            content: "✗";
+            color: #dc3545;
+            font-weight: bold;
+            font-size: 1.2em;
+            position: absolute;
+            left: 0;
+        }
+        
+        .mermaid {
+            background: white;
+            padding: 30px;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        hr {
+            border: none;
+            border-top: 3px solid #ecf0f1;
+            margin: 40px 0;
+        }
+        
+        strong {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        
+        em {
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        table th {
+            background: #3498db;
+            color: white;
+        }
+        
+        table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .section {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .section h4 {
+            color: #2980b9;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .problem-statement {
+            background: #e8f4f8;
+            border-left-color: #3498db;
+        }
+        
+        .example {
+            background: #fff9e6;
+            border-left-color: #f39c12;
+        }
+        
+        .detailed-explanation {
+            background: #f0f8f0;
+            border-left-color: #27ae60;
+        }
+        
+        .approach {
+            background: #f5f0ff;
+            border-left-color: #9b59b6;
+        }
+        
+        .complexity {
+            background: #ffe8e8;
+            border-left-color: #e74c3c;
+        }
+        
+        .code-solution {
+            background: #2d2d2d;
+            border-left-color: #f39c12;
+        }
+        
+        .code-solution h4 {
+            color: #f8f8f2;
+        }
+        
+        .code-solution p {
+            color: #f8f8f2;
+        }
+        
+        .step-section {
+            background: #fafafa;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 3px solid #95a5a6;
+            border-radius: 4px;
+        }
+        
+        .step-section {
+            background: #fafafa;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 3px solid #95a5a6;
+            border-radius: 4px;
+        }
+        
+        .step-section h5 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        
+        .step-section strong {
+            color: #2c3e50;
+        }
+        
+        .why-faang {
+            background: #fff3cd;
+            border-left-color: #ffc107;
+        }
+        
+        .why-faang h4 {
+            color: #856404;
+        }
+        
+        .section ul, .section ol {
+            margin-left: 25px;
+        }
+        
+        .section pre {
+            margin: 15px 0;
+        }
+        
+        .explanation-content, .approach-content {
+            line-height: 1.8;
+        }
+        
+        .explanation-content p, .approach-content p {
+            margin-bottom: 12px;
+        }
+        
+        .explanation-content ul, .approach-content ul {
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .explanation-content li, .approach-content li {
+            margin-bottom: 8px;
+        }
+        
+        .walkthrough {
+            background: #f0f7ff;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+            border-radius: 5px;
+        }
+        
+        .walkthrough h5 {
+            color: #2980b9;
+            margin-top: 0;
+        }
+        
+        .code-explanation {
+            background: #2d2d2d;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .code-explanation h5 {
+            color: #f8f8f2;
+            margin-top: 0;
+        }
+        
+        .code-explanation p {
+            color: #f8f8f2;
+        }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            transition: background 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .back-btn:hover {
+            background: #2980b9;
+        }
+        
+        .back-btn i {
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            h2 {
+                font-size: 1.4em;
+            }
+            
+            h3 {
+                font-size: 1.3em;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <a href="interview.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Interview Guide</a>
+        <h1>System Design Interview Questions</h1>
+
+<h2>Table of Contents</h2>
+<ul><li>[Scalability & Performance](#scalability--performance)</li>
+<li>[Distributed Systems](#distributed-systems)</li>
+<li>[Caching Strategies](#caching-strategies)</li>
+<li>[Load Balancing](#load-balancing)</li>
+<li>[Database Design](#database-design)</li>
+<li>[API Design](#api-design)</li>
+<li>[Real-time Systems](#real-time-systems)</li>
+<li>[Storage Systems](#storage-systems)</li>
+<li>[Messaging Systems](#messaging-systems)</li>
+<li>[Security & Authentication](#security--authentication)</li>
+</ul>
+<hr>
+
+<h2>Scalability & Performance</h2>
+
+<h3>Question 1: Design a URL Shortener (like bit.ly)</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a service that can shorten long URLs and redirect users to the original URL when they access the shortened version.
+
+<h4>Requirements</h4>
+<ul><li>Shorten URLs to 6-8 character aliases</li>
+<li>Redirect to original URL when short URL is accessed</li>
+<li>Handle 100 million URLs per month</li>
+<li>100:1 read to write ratio</li>
+<li>URLs expire after 2 years</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Step 1: Capacity Estimation</strong>
+<ul><li>100M URLs/month = ~1160 URLs/second write</li>
+<li>100:1 read ratio = 116,000 reads/second</li>
+<li>Storage: 100M URLs × 500 bytes (original URL + metadata) = 50GB/year</li>
+<li>With 2-year retention: ~100GB storage needed</li>
+</ul>
+<strong>Step 2: System APIs</strong>
+<p><pre><code class="language-text">POST /api/v1/shorten
+  - Request: { "url": "https://example.com/very/long/url" }
+  - Response: { "short_url": "http://short.ly/abc123" }
+
+GET /api/v1/{short_code}
+  - Response: 301 Redirect to original URL
+</code></pre></p>
+
+<strong>Step 3: Database Design</strong>
+<ul><li><strong>URLs Table:</strong></li>
+</ul>  - <code>id</code> (BIGINT, Primary Key)
+<p>- <code>short_code</code> (VARCHAR(8), Unique Index)</p>
+<p>- <code>original_url</code> (TEXT)</p>
+<p>- <code>created_at</code> (TIMESTAMP)</p>
+<p>- <code>expires_at</code> (TIMESTAMP)</p>
+<p>- <code>user_id</code> (BIGINT, Optional)</p>
+
+<strong>Step 4: Encoding Algorithm</strong>
+<ul><li><strong>Option 1: Base62 Encoding</strong></li>
+</ul>  - Use 0-9, a-z, A-Z (62 characters)
+<p>- 6 characters = 62^6 = ~56.8 billion unique URLs</p>
+<p>- Convert auto-incrementing ID to base62</p>
+
+<ul><li><strong>Option 2: Hash-based</strong></li>
+</ul>  - Hash original URL using MD5/SHA256
+<p>- Take first 6 characters</p>
+<p>- Handle collisions with retry or longer code</p>
+
+<strong>Step 5: System Architecture</strong>
+
+<p><div class="mermaid">
+graph TD
+    n1["Client Load API Balancer Servers"]
+    n2["Cache Layer (Redis)"]
+    n3["Database (MySQL/NoSQL)"]
+    n1 --> n2
+    n2 --> n3
+
+</div></p>
+
+<strong>Step 6: Key Components</strong>
+
+<ul><li><strong>Application Servers:</strong></li>
+</ul>   - Stateless servers behind load balancer
+<p>- Handle URL shortening and redirection</p>
+<p>- Use connection pooling for database</p>
+
+<ul><li><strong>Database:</strong></li>
+</ul>   - Master-slave replication for reads
+<p>- Sharding by short_code hash</p>
+<p>- Index on short_code for fast lookups</p>
+
+<ul><li><strong>Cache:</strong></li>
+</ul>   - Redis for hot URLs (80% of traffic)
+<p>- Cache original URLs by short_code</p>
+<p>- TTL based on expiration date</p>
+
+<ul><li><strong>Load Balancer:</strong></li>
+</ul>   - Distribute traffic across API servers
+<p>- Health checks for servers</p>
+
+<strong>Step 7: URL Shortening Flow</strong>
+<ul><li>Client sends POST request with original URL</li>
+<li>Server validates URL format</li>
+<li>Check cache for existing short URL (optional)</li>
+<li>Generate short code (base62 of next ID or hash)</li>
+<li>Store in database (handle collisions)</li>
+<li>Cache the mapping</li>
+<li>Return short URL</li>
+</ul>
+<strong>Step 8: URL Redirection Flow</strong>
+<ul><li>Client requests short URL</li>
+<li>Check Redis cache first</li>
+<li>If cache miss, query database</li>
+<li>If found, cache result and return 301 redirect</li>
+<li>If not found, return 404</li>
+</ul>
+<strong>Step 9: Scaling Considerations</strong>
+<ul><li><strong>Horizontal Scaling:</strong> Add more API servers</li>
+<li><strong>Database Sharding:</strong> Partition by short_code hash</li>
+<li><strong>CDN:</strong> Cache popular URLs at edge locations</li>
+<li><strong>Rate Limiting:</strong> Prevent abuse</li>
+<li><strong>Analytics:</strong> Track click counts (separate service)</li>
+</ul>
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of scalability</li>
+<li>Demonstrates knowledge of caching strategies</li>
+<li>Shows ability to design for high read/write ratios</li>
+<li>Evaluates database design skills</li>
+</ul>
+</div><hr>
+
+<h3>Question 2: Design a Distributed Cache System</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a distributed caching system like Redis or Memcached that can handle millions of requests per second with high availability.
+
+<h4>Requirements</h4>
+<ul><li>Support get, set, delete operations</li>
+<li>Handle 10 million requests/second</li>
+<li>99.9% availability</li>
+<li>Data consistency across nodes</li>
+<li>Automatic failover</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Step 1: Capacity Estimation</strong>
+<ul><li>10M requests/second</li>
+<li>Average key size: 100 bytes</li>
+<li>Average value size: 1KB</li>
+<li>1 billion keys = 1TB data</li>
+<li>Need multiple nodes for capacity and redundancy</li>
+</ul>
+<strong>Step 2: System Architecture</strong>
+
+<p><div class="mermaid">
+graph TD
+    n1["Client"]
+    n2["Load Balancer"]
+    n3["Cache Proxy Layer (Consistent Hashing Router)"]
+    n4["Cache Cache Cache Cache Node 1 Node 2 Node 3 Node N (Master) (Master) (Master) (Master)"]
+    n5["Replica Replica Replica Replica Node 1 Node 2 Node 3 Node N"]
+    n1 --> n2
+    n2 --> n3
+    n3 --> n4
+    n4 --> n5
+
+</div></p>
+
+<strong>Step 3: Key Components</strong>
+
+<ul><li><strong>Consistent Hashing:</strong></li>
+</ul>   - Map keys to nodes using hash ring
+<p>- Virtual nodes for better distribution</p>
+<p>- Handle node additions/removals with minimal rehashing</p>
+
+<ul><li><strong>Replication Strategy:</strong></li>
+</ul>   - Master-replica architecture
+<p>- Synchronous replication for critical data</p>
+<p>- Asynchronous replication for better performance</p>
+<p>- Read from replicas, write to master</p>
+
+<ul><li><strong>Data Partitioning:</strong></li>
+</ul>   - Partition by key hash
+<p>- Each partition on separate node</p>
+<p>- Replicate each partition for availability</p>
+
+<strong>Step 4: Consistency Models</strong>
+
+<ul><li><strong>Strong Consistency:</strong> All reads see latest write (slower)</li>
+<li><strong>Eventual Consistency:</strong> Replicas converge over time (faster)</li>
+<li><strong>Read Repair:</strong> Fix inconsistencies during reads</li>
+<li><strong>Hinted Handoff:</strong> Store writes for temporarily down nodes</li>
+</ul>
+<strong>Step 5: Eviction Policies</strong>
+<ul><li><strong>LRU (Least Recently Used):</strong> Evict least recently accessed</li>
+<li><strong>LFU (Least Frequently Used):</strong> Evict least frequently accessed</li>
+<li><strong>TTL-based:</strong> Evict expired entries</li>
+<li><strong>Random:</strong> Simple but less efficient</li>
+</ul>
+<strong>Step 6: Failure Handling</strong>
+<ul><li><strong>Health Checks:</strong> Monitor node health</li>
+<li><strong>Automatic Failover:</strong> Promote replica to master</li>
+<li><strong>Data Recovery:</strong> Replicate from other nodes</li>
+<li><strong>Split-brain Prevention:</strong> Use quorum-based decisions</li>
+</ul>
+<strong>Step 7: API Design</strong>
+<p><pre><code class="language-text">GET /cache/{key}
+  - Returns value if exists, 404 if not
+
+SET /cache/{key}
+  - Body: { "value": "...", "ttl": 3600 }
+  - Returns success/error
+
+DELETE /cache/{key}
+  - Deletes key from cache
+  - Propagates to replicas
+</code></pre></p>
+
+<strong>Step 8: Performance Optimizations</strong>
+<ul><li><strong>Connection Pooling:</strong> Reuse connections</li>
+<li><strong>Pipelining:</strong> Batch multiple operations</li>
+<li><strong>Compression:</strong> Compress large values</li>
+<li><strong>Local Cache:</strong> Client-side caching</li>
+<li><strong>Write-through vs Write-back:</strong> Choose based on consistency needs</li>
+</ul>
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of distributed systems</li>
+<li>Demonstrates knowledge of consistency models</li>
+<li>Shows ability to design for high availability</li>
+<li>Evaluates performance optimization skills</li>
+</ul>
+</div><hr>
+
+<h2>Distributed Systems</h2>
+
+<h3>Question 3: Design a Distributed Lock Service</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a distributed locking service that allows multiple processes to coordinate access to shared resources.
+
+<h4>Requirements</h4>
+<ul><li>Acquire and release locks</li>
+<li>Handle network partitions</li>
+<li>Prevent deadlocks</li>
+<li>Support lock expiration</li>
+<li>High availability</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Step 1: Use Cases</strong>
+<ul><li>Prevent concurrent modifications</li>
+<li>Coordinate distributed transactions</li>
+<li>Leader election</li>
+<li>Rate limiting</li>
+</ul>
+<strong>Step 2: Lock Properties</strong>
+<ul><li><strong>Mutual Exclusion:</strong> Only one process holds lock</li>
+<li><strong>Deadlock Free:</strong> Locks eventually released</li>
+<li><strong>Fault Tolerance:</strong> Works despite node failures</li>
+<li><strong>Performance:</strong> Low latency operations</li>
+</ul>
+<strong>Step 3: Implementation Approaches</strong>
+
+<strong>Approach 1: Database-based</strong>
+<ul><li>Use database with unique constraint</li>
+<li>Insert row to acquire, delete to release</li>
+<li>Pros: Simple, ACID guarantees</li>
+<li>Cons: Database becomes bottleneck</li>
+</ul>
+<strong>Approach 2: Redis-based</strong>
+<ul><li>Use SETNX (SET if Not eXists) command</li>
+<li>Set expiration time (TTL)</li>
+<li>Pros: Fast, built-in expiration</li>
+<li>Cons: Single point of failure</li>
+</ul>
+<strong>Approach 3: ZooKeeper/etcd</strong>
+<ul><li>Create ephemeral nodes</li>
+<li>Watch for node deletion</li>
+<li>Pros: Strong consistency, automatic cleanup</li>
+<li>Cons: More complex, higher latency</li>
+</ul>
+<strong>Step 4: Redis Implementation</strong>
+
+<p><pre><code class="language-python">import redis
+import uuid
+import time
+
+class DistributedLock:
+    def __init__(self, redis_client, lock_name, timeout=10):
+        self.redis = redis_client
+        self.lock_name = f"lock:{lock_name}"
+        self.timeout = timeout
+        self.identifier = str(uuid.uuid4())
+    
+    def acquire(self):
+        end = time.time() + self.timeout
+        while time.time() < end:
+            if self.redis.set(
+                self.lock_name,
+                self.identifier,
+                nx=True,  # Only set if not exists
+                ex=self.timeout  # Expiration time
+            ):
+                return True
+            time.sleep(0.001)  # Small delay before retry
+        return False
+    
+    def release(self):
+        # Lua script for atomic check-and-delete
+        script = """
+        if redis.call("get", KEYS[1]) == ARGV[1] then
+            return redis.call("del", KEYS[1])
+        else
+            return 0
+        end
+        """
+        return self.redis.eval(script, 1, self.lock_name, self.identifier)
+</code></pre></p>
+
+<strong>Step 5: Redlock Algorithm (Multi-node)</strong>
+<ul><li>Acquire lock on majority of nodes</li>
+<li>Use same expiration time</li>
+<li>Release on all nodes</li>
+<li>Handles single node failures</li>
+</ul>
+<strong>Step 6: Challenges & Solutions</strong>
+
+<ul><li><strong>Clock Skew:</strong></li>
+</ul>   - Use logical clocks or lease-based approach
+<p>- Add safety margin to TTL</p>
+
+<ul><li><strong>Network Partitions:</strong></li>
+</ul>   - Use quorum-based approach
+<p>- Favor availability or consistency based on use case</p>
+
+<ul><li><strong>Lock Renewal:</strong></li>
+</ul>   - Extend lock before expiration
+<p>- Use background thread to renew</p>
+
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of distributed coordination</li>
+<li>Demonstrates knowledge of consensus algorithms</li>
+<li>Shows ability to handle edge cases</li>
+<li>Evaluates trade-off analysis skills</li>
+</ul>
+</div><hr>
+
+<h2>Caching Strategies</h2>
+
+<h3>Question 4: Design a Multi-level Cache System</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a caching system with multiple cache levels (L1, L2, L3) to optimize for different access patterns.
+
+<h4>Requirements</h4>
+<ul><li>L1: In-memory cache (fastest, smallest)</li>
+<li>L2: Distributed cache (fast, medium size)</li>
+<li>L3: Database (slowest, largest)</li>
+<li>Handle cache invalidation</li>
+<li>Support different eviction policies per level</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Step 1: Cache Hierarchy</strong>
+
+<p><div class="mermaid">
+graph TD
+    n1["Client"]
+    n2["L1 Cache (In-process)"]
+    n3["L2 Cache (Redis Cluster)"]
+    n4["L3 Cache (Database)"]
+    n1 --> n2
+    n2 --> n3
+    n3 --> n4
+
+</div></p>
+
+<strong>Step 2: Read Flow</strong>
+<ul><li>Check L1 cache</li>
+<li>If miss, check L2 cache</li>
+<li>If miss, query L3 database</li>
+<li>Populate L1 and L2 on way back</li>
+<li>Return data to client</li>
+</ul>
+<strong>Step 3: Write Flow</strong>
+<ul><li>Write to L3 database</li>
+<li>Invalidate L1 and L2 entries</li>
+<li>Optionally write-through to L2</li>
+</ul>
+<strong>Step 4: Cache Invalidation Strategies</strong>
+
+<ul><li><strong>Write-through:</strong> Write to cache and DB simultaneously</li>
+<li><strong>Write-back:</strong> Write to cache, flush to DB later</li>
+<li><strong>Write-around:</strong> Write to DB, invalidate cache</li>
+<li><strong>TTL-based:</strong> Automatic expiration</li>
+</ul>
+<strong>Step 5: Implementation</strong>
+
+<p><pre><code class="language-python">class MultiLevelCache:
+    def __init__(self):
+        self.l1_cache = {}  # In-memory dict
+        self.l2_cache = redis.Redis()  # Redis client
+        self.db = Database()
+        self.l1_ttl = 60  # 1 minute
+        self.l2_ttl = 3600  # 1 hour
+    
+    def get(self, key):
+        # Check L1
+        if key in self.l1_cache:
+            value, timestamp = self.l1_cache[key]
+            if time.time() - timestamp < self.l1_ttl:
+                return value
+            del self.l1_cache[key]
+        
+        # Check L2
+        value = self.l2_cache.get(key)
+        if value:
+            self.l1_cache[key] = (value, time.time())
+            return value
+        
+        # Check L3
+        value = self.db.get(key)
+        if value:
+            self.l2_cache.setex(key, self.l2_ttl, value)
+            self.l1_cache[key] = (value, time.time())
+        
+        return value
+    
+    def set(self, key, value):
+        # Write to L3
+        self.db.set(key, value)
+        
+        # Invalidate L1
+        if key in self.l1_cache:
+            del self.l1_cache[key]
+        
+        # Invalidate L2
+        self.l2_cache.delete(key)
+</code></pre></p>
+
+<strong>Step 6: Cache Warming</strong>
+<ul><li>Pre-populate cache with hot data</li>
+<li>Use background jobs to refresh</li>
+<li>Monitor cache hit rates</li>
+</ul>
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of cache hierarchies</li>
+<li>Demonstrates knowledge of performance optimization</li>
+<li>Shows ability to design for different access patterns</li>
+<li>Evaluates trade-off analysis</li>
+</ul>
+</div><hr>
+
+<h2>Load Balancing</h2>
+
+<h3>Question 5: Design a Load Balancer</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a load balancer that distributes incoming requests across multiple backend servers.
+
+<h4>Requirements</h4>
+<ul><li>Support multiple algorithms (round-robin, least connections, etc.)</li>
+<li>Health checks for backend servers</li>
+<li>Session persistence (sticky sessions)</li>
+<li>Handle server failures gracefully</li>
+<li>Support SSL termination</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Step 1: Load Balancing Algorithms</strong>
+
+<ul><li><strong>Round Robin:</strong></li>
+</ul>   - Distribute requests sequentially
+<p>- Simple, equal distribution</p>
+<p>- Doesn't consider server load</p>
+
+<ul><li><strong>Least Connections:</strong></li>
+</ul>   - Route to server with fewest active connections
+<p>- Better for long-lived connections</p>
+<p>- Requires connection tracking</p>
+
+<ul><li><strong>Weighted Round Robin:</strong></li>
+</ul>   - Assign weights to servers
+<p>- More requests to powerful servers</p>
+<p>- Good for heterogeneous servers</p>
+
+<ul><li><strong>IP Hash:</strong></li>
+</ul>   - Hash client IP to select server
+<p>- Ensures same client → same server</p>
+<p>- Good for session persistence</p>
+
+<ul><li><strong>Geographic:</strong></li>
+</ul>   - Route based on client location
+<p>- Minimize latency</p>
+<p>- Requires geo-location data</p>
+
+<strong>Step 2: Architecture</strong>
+
+<p><div class="mermaid">
+graph TD
+    n1["Clients"]
+    n2["Load Balancer - Health Checker - Algorithm Selector - Session Manager"]
+    n3["Server 1 Server 2 Server 3 Server N"]
+    n1 --> n2
+    n2 --> n3
+
+</div></p>
+
+<strong>Step 3: Health Checks</strong>
+<ul><li><strong>Active:</strong> Periodically send requests to servers</li>
+<li><strong>Passive:</strong> Monitor responses from real requests</li>
+<li><strong>HTTP:</strong> Check /health endpoint</li>
+<li><strong>TCP:</strong> Check if port is open</li>
+<li><strong>Custom:</strong> Application-specific checks</li>
+</ul>
+<strong>Step 4: Session Persistence</strong>
+<ul><li><strong>Cookie-based:</strong> Set cookie with server identifier</li>
+<li><strong>IP-based:</strong> Hash client IP</li>
+<li><strong>URL rewriting:</strong> Embed session ID in URL</li>
+<li><strong>Session replication:</strong> Share sessions across servers</li>
+</ul>
+<strong>Step 5: Implementation</strong>
+
+<p><pre><code class="language-python">class LoadBalancer:
+    def __init__(self, algorithm='round_robin'):
+        self.servers = []
+        self.algorithm = algorithm
+        self.current_index = 0
+        self.health_status = {}
+        self.connection_count = {}
+    
+    def add_server(self, server):
+        self.servers.append(server)
+        self.health_status[server] = True
+        self.connection_count[server] = 0
+    
+    def health_check(self, server):
+        try:
+            response = requests.get(f"{server}/health", timeout=2)
+            return response.status_code == 200
+        except:
+            return False
+    
+    def get_server(self, request):
+        healthy_servers = [
+            s for s in self.servers 
+            if self.health_status.get(s, False)
+        ]
+        
+        if not healthy_servers:
+            return None
+        
+        if self.algorithm == 'round_robin':
+            server = healthy_servers[self.current_index % len(healthy_servers)]
+            self.current_index += 1
+            return server
+        
+        elif self.algorithm == 'least_connections':
+            return min(healthy_servers, 
+                      key=lambda s: self.connection_count[s])
+        
+        elif self.algorithm == 'ip_hash':
+            ip_hash = hash(request.client_ip) % len(healthy_servers)
+            return healthy_servers[ip_hash]
+        
+        return healthy_servers[0]
+    
+    def forward_request(self, request):
+        server = self.get_server(request)
+        if not server:
+            return {"error": "No healthy servers available"}
+        
+        self.connection_count[server] += 1
+        try:
+            response = requests.request(
+                method=request.method,
+                url=f"{server}{request.path}",
+                data=request.data,
+                headers=request.headers
+            )
+            return response
+        finally:
+            self.connection_count[server] -= 1
+</code></pre></p>
+
+<strong>Step 6: Advanced Features</strong>
+<ul><li><strong>SSL Termination:</strong> Decrypt at load balancer</li>
+<li><strong>Content-based Routing:</strong> Route by URL path</li>
+<li><strong>Rate Limiting:</strong> Prevent abuse</li>
+<li><strong>DDoS Protection:</strong> Filter malicious traffic</li>
+</ul>
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of distributed systems</li>
+<li>Demonstrates knowledge of networking</li>
+<li>Shows ability to handle failures</li>
+<li>Evaluates performance optimization skills</li>
+</ul>
+</div><hr>
+
+<h2>Database Design</h2>
+
+<h3>Question 6: Design a News Feed System</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a system like Facebook's news feed that shows personalized content to users.
+
+<h4>Requirements</h4>
+<ul><li>Support 1 billion users</li>
+<li>500 million daily active users</li>
+<li>Each user follows average 200 people</li>
+<li>Generate feed in <200ms</li>
+<li>Support real-time updates</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Step 1: Capacity Estimation</strong>
+<ul><li>500M DAU</li>
+<li>Each user views feed 5 times/day = 2.5B feed views/day</li>
+<li>~29,000 requests/second</li>
+<li>Each feed has ~100 posts</li>
+<li>Need to store billions of posts</li>
+</ul>
+<strong>Step 2: Data Models</strong>
+
+<strong>Users Table:</strong>
+<p><pre><code class="language-text">id (BIGINT, PK)
+username (VARCHAR)
+created_at (TIMESTAMP)
+</code></pre></p>
+
+<strong>Posts Table:</strong>
+<p><pre><code class="language-text">id (BIGINT, PK)
+user_id (BIGINT, FK)
+content (TEXT)
+created_at (TIMESTAMP)
+</code></pre></p>
+
+<strong>Follows Table:</strong>
+<p><pre><code class="language-text">follower_id (BIGINT, FK)
+followee_id (BIGINT, FK)
+created_at (TIMESTAMP)
+PRIMARY KEY (follower_id, followee_id)
+</code></pre></p>
+
+<strong>Feed Cache:</strong>
+<p><pre><code class="language-text">user_id (BIGINT, PK)
+post_ids (JSON ARRAY)
+last_updated (TIMESTAMP)
+</code></pre></p>
+
+<strong>Step 3: Approaches</strong>
+
+<strong>Approach 1: Pull Model (On-demand)</strong>
+<ul><li>When user requests feed, query posts from followed users</li>
+<li>Sort by timestamp, return top N</li>
+<li>Pros: Simple, always fresh</li>
+<li>Cons: Slow for users with many follows</li>
+</ul>
+<strong>Approach 2: Push Model (Fan-out)</strong>
+<ul><li>When user posts, push to all followers' feeds</li>
+<li>Store pre-computed feeds</li>
+<li>Pros: Fast reads</li>
+<li>Cons: Slow writes for popular users, storage intensive</li>
+</ul>
+<strong>Approach 3: Hybrid Model</strong>
+<ul><li>Push for active users (fan-out)</li>
+<li>Pull for inactive users (on-demand)</li>
+<li>Use cache for recent posts</li>
+</ul>
+<strong>Step 4: Hybrid Architecture</strong>
+
+<p><div class="mermaid">
+graph TD
+    n1["Write Service"]
+    n2["Feed Cache Database Queue (Redis) (MySQL) (Kafka)"]
+    n3["Feed Generator (Background)"]
+    n1 --> n2
+    n2 --> n3
+
+</div></p>
+
+<strong>Step 5: Feed Generation Flow</strong>
+
+<ul><li><strong>Write Path:</strong></li>
+</ul>   - User creates post → Store in database
+<p>- Get list of followers</p>
+<p>- For active followers: Push to their feed cache</p>
+<p>- For inactive followers: Skip (will pull on-demand)</p>
+<p>- Publish to message queue for async processing</p>
+
+<ul><li><strong>Read Path:</strong></li>
+</ul>   - Check feed cache for user
+<p>- If exists and fresh: Return cached feed</p>
+<p>- If stale or missing: Generate feed on-demand</p>
+<p>- Cache result for future requests</p>
+
+<strong>Step 6: Ranking Algorithm</strong>
+<ul><li><strong>Factors:</strong></li>
+</ul>  - Post recency (newer = higher)
+<p>- User engagement (likes, comments)</p>
+<p>- Relationship strength</p>
+<p>- Content type preferences</p>
+<ul><li><strong>Score = f(recency, engagement, relationship, preferences)</strong></li>
+</ul>
+<strong>Step 7: Optimization Strategies</strong>
+
+<ul><li><strong>Caching:</strong></li>
+</ul>   - Cache feeds for 5 minutes
+<p>- Cache user follow lists</p>
+<p>- Use CDN for static content</p>
+
+<ul><li><strong>Database Optimization:</strong></li>
+</ul>   - Index on (user_id, created_at) for posts
+<p>- Index on follower_id for follows</p>
+<p>- Partition posts table by date</p>
+
+<ul><li><strong>Sharding:</strong></li>
+</ul>   - Shard by user_id
+<p>- Co-locate user data and feed cache</p>
+
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of large-scale systems</li>
+<li>Demonstrates knowledge of caching strategies</li>
+<li>Shows ability to optimize read/write patterns</li>
+<li>Evaluates database design skills</li>
+</ul>
+</div><hr>
+
+<h2>API Design</h2>
+
+<h3>Question 7: Design a RESTful API for an E-commerce Platform</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design RESTful APIs for an e-commerce platform supporting products, orders, payments, and inventory.
+
+<h4>Requirements</h4>
+<ul><li>RESTful principles</li>
+<li>Support versioning</li>
+<li>Handle authentication/authorization</li>
+<li>Rate limiting</li>
+<li>Pagination</li>
+<li>Error handling</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Step 1: API Design Principles</strong>
+
+<ul><li><strong>Resource-based URLs:</strong></li>
+</ul>   - <code>/products/{id}</code> not <code>/getProduct?id=123</code>
+<p>- Use nouns, not verbs</p>
+
+<ul><li><strong>HTTP Methods:</strong></li>
+</ul>   - GET: Retrieve resource
+<p>- POST: Create resource</p>
+<p>- PUT: Update entire resource</p>
+<p>- PATCH: Partial update</p>
+<p>- DELETE: Remove resource</p>
+
+<ul><li><strong>Status Codes:</strong></li>
+</ul>   - 200: Success
+<p>- 201: Created</p>
+<p>- 400: Bad Request</p>
+<p>- 401: Unauthorized</p>
+<p>- 404: Not Found</p>
+<p>- 500: Server Error</p>
+
+<strong>Step 2: API Endpoints</strong>
+
+<strong>Products:</strong>
+<p><pre><code class="language-text">GET    /api/v1/products              # List products
+GET    /api/v1/products/{id}         # Get product
+POST   /api/v1/products              # Create product (admin)
+PUT    /api/v1/products/{id}         # Update product (admin)
+DELETE /api/v1/products/{id}         # Delete product (admin)
+</code></pre></p>
+
+<strong>Orders:</strong>
+<p><pre><code class="language-text">GET    /api/v1/orders                # List user's orders
+GET    /api/v1/orders/{id}           # Get order details
+POST   /api/v1/orders                # Create order
+PATCH  /api/v1/orders/{id}/status    # Update order status
+</code></pre></p>
+
+<strong>Cart:</strong>
+<p><pre><code class="language-text">GET    /api/v1/cart                  # Get cart
+POST   /api/v1/cart/items            # Add item to cart
+PUT    /api/v1/cart/items/{id}       # Update cart item
+DELETE /api/v1/cart/items/{id}       # Remove cart item
+DELETE /api/v1/cart                  # Clear cart
+</code></pre></p>
+
+<strong>Step 3: Request/Response Examples</strong>
+
+<strong>Get Products:</strong>
+<p><pre><code class="language-http">GET /api/v1/products?page=1&limit=20&category=electronics
+Authorization: Bearer {token}
+
+Response:
+{
+  "data": [
+    {
+      "id": "123",
+      "name": "Laptop",
+      "price": 999.99,
+      "category": "electronics",
+      "in_stock": true
+    }
+  ],
+  "pagination": {
+    "page": 1,
+    "limit": 20,
+    "total": 150,
+    "total_pages": 8
+  }
+}
+</code></pre></p>
+
+<strong>Create Order:</strong>
+<p><pre><code class="language-http">POST /api/v1/orders
+Authorization: Bearer {token}
+Content-Type: application/json
+
+{
+  "items": [
+    {"product_id": "123", "quantity": 2},
+    {"product_id": "456", "quantity": 1}
+  ],
+  "shipping_address": {
+    "street": "123 Main St",
+    "city": "San Francisco",
+    "zip": "94102"
+  },
+  "payment_method": "credit_card"
+}
+
+Response:
+{
+  "id": "order_789",
+  "status": "pending",
+  "total": 2499.98,
+  "created_at": "2024-01-15T10:30:00Z"
+}
+</code></pre></p>
+
+<strong>Step 4: Authentication</strong>
+
+<strong>JWT Token Flow:</strong>
+<ul><li>User logs in → Receive JWT token</li>
+<li>Include token in Authorization header</li>
+<li>Server validates token</li>
+<li>Extract user info from token</li>
+</ul>
+<strong>Step 5: Rate Limiting</strong>
+<ul><li>Use token bucket or sliding window</li>
+<li>Limit by user/IP</li>
+<li>Return 429 Too Many Requests when exceeded</li>
+<li>Include rate limit headers:</li>
+</ul>  <pre><code class="language-text">  X-RateLimit-Limit: 100
+  X-RateLimit-Remaining: 95
+  X-RateLimit-Reset: 1640995200
+  </code></pre>
+
+<strong>Step 6: Error Handling</strong>
+
+<strong>Standard Error Response:</strong>
+<p><pre><code class="language-json">{
+  "error": {
+    "code": "PRODUCT_NOT_FOUND",
+    "message": "Product with ID 123 not found",
+    "details": {
+      "product_id": "123"
+    }
+  }
+}
+</code></pre></p>
+
+<strong>Step 7: Versioning</strong>
+<ul><li>URL versioning: <code>/api/v1/products</code></li>
+<li>Header versioning: <code>Accept: application/vnd.api+json;version=1</code></li>
+<li>Prefer URL versioning for clarity</li>
+</ul>
+<strong>Step 8: Pagination</strong>
+
+<strong>Cursor-based (preferred for large datasets):</strong>
+<p><pre><code class="language-text">GET /api/v1/products?cursor=eyJpZCI6IjEyMyJ9&limit=20
+</code></pre></p>
+
+<strong>Offset-based (simpler):</strong>
+<p><pre><code class="language-text">GET /api/v1/products?page=1&limit=20
+</code></pre></p>
+
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of REST principles</li>
+<li>Demonstrates API design best practices</li>
+<li>Shows ability to handle real-world requirements</li>
+<li>Evaluates security awareness</li>
+</ul>
+</div><hr>
+
+<h2>Real-time Systems</h2>
+
+<h3>Question 8: Design a Real-time Chat System</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a real-time messaging system like WhatsApp or Slack supporting one-on-one and group chats.
+
+<h4>Requirements</h4>
+<ul><li>Support 1 billion users</li>
+<li>50 million concurrent connections</li>
+<li>Message delivery in <100ms</li>
+<li>Support text, images, files</li>
+<li>Message history</li>
+<li>Online/offline status</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Step 1: Capacity Estimation</strong>
+<ul><li>1B users, 50M concurrent</li>
+<li>Average 30 messages/user/day = 30B messages/day</li>
+<li>~347K messages/second</li>
+<li>Average message size: 100 bytes</li>
+<li>Storage: 30B × 100 bytes = 3TB/day</li>
+</ul>
+<strong>Step 2: Architecture</strong>
+
+<p><div class="mermaid">
+graph TD
+    n1["Client"]
+    n2["Load Balancer"]
+    n3["Connection Manager (WebSocket Servers) - Maintain connections - Route messages"]
+    n4["Message Presence Media Service Service Service"]
+    n5["Database Cache Object (Messages) (Online) Store"]
+    n1 --> n2
+    n2 --> n3
+    n3 --> n4
+    n4 --> n5
+
+</div></p>
+
+<strong>Step 3: Components</strong>
+
+<ul><li><strong>Connection Manager:</strong></li>
+</ul>   - Maintain WebSocket connections
+<p>- Map user_id to connection</p>
+<p>- Handle reconnections</p>
+
+<ul><li><strong>Message Service:</strong></li>
+</ul>   - Process incoming messages
+<p>- Store in database</p>
+<p>- Route to recipients</p>
+<p>- Handle delivery receipts</p>
+
+<ul><li><strong>Presence Service:</strong></li>
+</ul>   - Track online/offline status
+<p>- Update in real-time</p>
+<p>- Cache in Redis</p>
+
+<ul><li><strong>Media Service:</strong></li>
+</ul>   - Handle file uploads
+<p>- Store in object storage (S3)</p>
+<p>- Generate thumbnails</p>
+
+<strong>Step 4: Message Flow</strong>
+
+<ul><li><strong>Send Message:</strong></li>
+</ul>   - Client sends message via WebSocket
+<p>- Connection Manager receives message</p>
+<p>- Message Service validates and stores</p>
+<p>- Check if recipient is online</p>
+<p>- If online: Push via WebSocket</p>
+<p>- If offline: Store for later delivery</p>
+<p>- Send delivery receipt to sender</p>
+
+<ul><li><strong>Receive Message:</strong></li>
+</ul>   - Message Service pushes to Connection Manager
+<p>- Connection Manager finds recipient's connection</p>
+<p>- Push message via WebSocket</p>
+<p>- Update read receipts</p>
+
+<strong>Step 5: Database Design</strong>
+
+<strong>Messages Table:</strong>
+<p><pre><code class="language-text">id (BIGINT, PK)
+chat_id (BIGINT, FK)
+sender_id (BIGINT, FK)
+content (TEXT)
+message_type (ENUM: text, image, file)
+created_at (TIMESTAMP)
+INDEX (chat_id, created_at)
+</code></pre></p>
+
+<strong>Chats Table:</strong>
+<p><pre><code class="language-text">id (BIGINT, PK)
+type (ENUM: direct, group)
+created_at (TIMESTAMP)
+</code></pre></p>
+
+<strong>Chat Participants:</strong>
+<p><pre><code class="language-text">chat_id (BIGINT, FK)
+user_id (BIGINT, FK)
+joined_at (TIMESTAMP)
+PRIMARY KEY (chat_id, user_id)
+</code></pre></p>
+
+<strong>Step 6: Scaling Considerations</strong>
+
+<ul><li><strong>Connection Scaling:</strong></li>
+</ul>   - Use connection pooling
+<p>- Horizontal scaling of WebSocket servers</p>
+<p>- Use message queue for inter-server communication</p>
+
+<ul><li><strong>Message Storage:</strong></li>
+</ul>   - Partition by chat_id or user_id
+<p>- Archive old messages</p>
+<p>- Use time-series database for recent messages</p>
+
+<ul><li><strong>Presence:</strong></li>
+</ul>   - Cache in Redis with TTL
+<p>- Use pub/sub for updates</p>
+<p>- Handle network partitions</p>
+
+<strong>Step 7: Message Queue</strong>
+
+<p>Use Kafka/RabbitMQ for:</p>
+<ul><li>Inter-server message routing</li>
+<li>Offline message delivery</li>
+<li>Notification delivery</li>
+<li>Analytics processing</li>
+</ul>
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of real-time systems</li>
+<li>Demonstrates knowledge of WebSockets</li>
+<li>Shows ability to handle high concurrency</li>
+<li>Evaluates system design skills</li>
+</ul>
+</div><hr>
+
+<h2>Storage Systems</h2>
+
+<h3>Question 9: Design a File Storage System (like Dropbox)</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a cloud file storage system that allows users to upload, download, and sync files across devices.
+
+<h4>Requirements</h4>
+<ul><li>Support files up to 10GB</li>
+<li>500 million users</li>
+<li>100 petabytes total storage</li>
+<li>Fast upload/download</li>
+<li>File versioning</li>
+<li>Sync across devices</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Step 1: Capacity Estimation</strong>
+<ul><li>500M users</li>
+<li>Average 200GB/user = 100PB total</li>
+<li>1M uploads/day = ~12 uploads/second</li>
+<li>Average file size: 100MB</li>
+<li>Need distributed storage</li>
+</ul>
+<strong>Step 2: Architecture</strong>
+
+<p><div class="mermaid">
+graph TD
+    n1["Client"]
+    n2["API Gateway"]
+    n3["Metadata Upload Download Sync Service Service Service Service"]
+    n4["Database Object CDN Message (Files) Storage Cache Queue"]
+    n1 --> n2
+    n2 --> n3
+    n3 --> n4
+
+</div></p>
+
+<strong>Step 3: Components</strong>
+
+<ul><li><strong>Metadata Service:</strong></li>
+</ul>   - Store file metadata (name, size, path, versions)
+<p>- Track file hierarchy</p>
+<p>- Handle permissions</p>
+
+<ul><li><strong>Upload Service:</strong></li>
+</ul>   - Handle file uploads
+<p>- Chunk large files</p>
+<p>- Store in object storage</p>
+<p>- Update metadata</p>
+
+<ul><li><strong>Download Service:</strong></li>
+</ul>   - Retrieve files from storage
+<p>- Serve via CDN for popular files</p>
+<p>- Handle range requests for partial downloads</p>
+
+<ul><li><strong>Sync Service:</strong></li>
+</ul>   - Detect file changes
+<p>- Sync across devices</p>
+<p>- Handle conflicts</p>
+
+<strong>Step 4: File Upload Flow</strong>
+
+<ul><li>Client initiates upload → Get upload URL</li>
+<li>Split file into chunks (e.g., 10MB chunks)</li>
+<li>Upload chunks in parallel</li>
+<li>After all chunks uploaded, notify service</li>
+<li>Service assembles chunks and stores</li>
+<li>Update metadata database</li>
+<li>Trigger sync to other devices</li>
+</ul>
+<strong>Step 5: Database Schema</strong>
+
+<strong>Files Table:</strong>
+<p><pre><code class="language-text">id (BIGINT, PK)
+user_id (BIGINT, FK)
+name (VARCHAR)
+path (VARCHAR)
+size (BIGINT)
+file_hash (VARCHAR)  # For deduplication
+storage_path (VARCHAR)
+version (INT)
+created_at (TIMESTAMP)
+updated_at (TIMESTAMP)
+INDEX (user_id, path)
+</code></pre></p>
+
+<strong>File Chunks:</strong>
+<p><pre><code class="language-text">file_id (BIGINT, FK)
+chunk_number (INT)
+storage_path (VARCHAR)
+chunk_hash (VARCHAR)
+PRIMARY KEY (file_id, chunk_number)
+</code></pre></p>
+
+<strong>Step 6: Deduplication</strong>
+<ul><li>Calculate file hash (SHA-256)</li>
+<li>Check if hash exists</li>
+<li>If exists, create reference instead of storing</li>
+<li>Saves storage for duplicate files</li>
+</ul>
+<strong>Step 7: Versioning</strong>
+<ul><li>Store each version as separate object</li>
+<li>Keep metadata for all versions</li>
+<li>Allow rollback to previous versions</li>
+<li>Archive old versions to cheaper storage</li>
+</ul>
+<strong>Step 8: Sync Algorithm</strong>
+<ul><li>Client sends sync request with last sync timestamp</li>
+<li>Server returns list of changed files</li>
+<li>Client downloads changed files</li>
+<li>Client uploads local changes</li>
+<li>Handle conflicts (last write wins or manual resolution)</li>
+</ul>
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of distributed storage</li>
+<li>Demonstrates knowledge of file systems</li>
+<li>Shows ability to handle large-scale data</li>
+<li>Evaluates optimization skills</li>
+</ul>
+</div><hr>
+
+<h2>Messaging Systems</h2>
+
+<h3>Question 10: Design a Message Queue System</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a distributed message queue system like Kafka or RabbitMQ.
+
+<h4>Requirements</h4>
+<ul><li>Support pub/sub and point-to-point messaging</li>
+<li>Handle 1 million messages/second</li>
+<li>Guarantee message delivery</li>
+<li>Support message ordering</li>
+<li>Handle consumer failures</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Step 1: Core Concepts</strong>
+
+<ul><li><strong>Producer:</strong> Publishes messages to topics</li>
+<li><strong>Consumer:</strong> Subscribes to topics and processes messages</li>
+<li><strong>Broker:</strong> Server that stores and routes messages</li>
+<li><strong>Topic:</strong> Category/stream of messages</li>
+<li><strong>Partition:</strong> Subdivision of topic for parallelism</li>
+</ul>
+<strong>Step 2: Architecture</strong>
+
+<p><div class="mermaid">
+graph TD
+    n1["Producer 1 Producer 2 Producer N"]
+    n2["Message Broker Cluster Topic: orders ├─ Partition 0 ├─ Partition 1 └─ Partition 2"]
+    n3["Consumer 1 Consumer 2 Group A Group B"]
+    n1 --> n2
+    n2 --> n3
+
+</div></p>
+
+<strong>Step 3: Message Flow</strong>
+
+<ul><li><strong>Publishing:</strong></li>
+</ul>   - Producer sends message to broker
+<p>- Broker determines partition (hash key or round-robin)</p>
+<p>- Append to partition log</p>
+<p>- Return acknowledgment</p>
+
+<ul><li><strong>Consuming:</strong></li>
+</ul>   - Consumer subscribes to topic
+<p>- Broker assigns partitions to consumer</p>
+<p>- Consumer reads from assigned partitions</p>
+<p>- Process messages and commit offset</p>
+
+<strong>Step 4: Partitioning Strategy</strong>
+
+<ul><li><strong>Key-based:</strong> Messages with same key go to same partition</li>
+<li><strong>Round-robin:</strong> Distribute evenly across partitions</li>
+<li><strong>Custom:</strong> User-defined partitioner</li>
+</ul>
+<strong>Step 5: Delivery Guarantees</strong>
+
+<ul><li><strong>At-most-once:</strong> May lose messages, no duplicates</li>
+<li><strong>At-least-once:</strong> No message loss, may have duplicates</li>
+<li><strong>Exactly-once:</strong> No loss, no duplicates (hardest)</li>
+</ul>
+<strong>Step 6: Offset Management</strong>
+
+<ul><li><strong>Auto-commit:</strong> Consumer automatically commits offsets</li>
+<li><strong>Manual commit:</strong> Consumer explicitly commits after processing</li>
+<li><strong>Offset storage:</strong> Store in broker or external system</li>
+</ul>
+<strong>Step 7: Replication</strong>
+
+<ul><li>Replicate partitions across multiple brokers</li>
+<li>Leader handles reads/writes</li>
+<li>Followers replicate from leader</li>
+<li>If leader fails, promote follower</li>
+</ul>
+<strong>Step 8: Implementation Considerations</strong>
+
+<p><pre><code class="language-python">class MessageQueue:
+    def __init__(self):
+        self.topics = {}
+        self.partitions = {}
+        self.consumer_groups = {}
+    
+    def create_topic(self, topic_name, num_partitions=3):
+        self.topics[topic_name] = {
+            'partitions': num_partitions,
+            'replication_factor': 3
+        }
+        for i in range(num_partitions):
+            partition_id = f"{topic_name}-{i}"
+            self.partitions[partition_id] = []
+    
+    def produce(self, topic, message, key=None):
+        partition = self.get_partition(topic, key)
+        partition_id = f"{topic}-{partition}"
+        self.partitions[partition_id].append({
+            'offset': len(self.partitions[partition_id]),
+            'key': key,
+            'value': message,
+            'timestamp': time.time()
+        })
+        return {'partition': partition, 'offset': len(self.partitions[partition_id]) - 1}
+    
+    def consume(self, topic, consumer_group, partition=None):
+        if partition is None:
+            partition = self.assign_partition(consumer_group, topic)
+        
+        partition_id = f"{topic}-{partition}"
+        offset = self.get_offset(consumer_group, partition_id)
+        
+        if offset < len(self.partitions[partition_id]):
+            message = self.partitions[partition_id][offset]
+            return message
+        return None
+    
+    def commit_offset(self, consumer_group, partition_id, offset):
+        key = f"{consumer_group}:{partition_id}"
+        self.consumer_groups[key] = offset
+</code></pre></p>
+
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of distributed systems</li>
+<li>Demonstrates knowledge of messaging patterns</li>
+<li>Shows ability to handle high throughput</li>
+<li>Evaluates consistency and reliability understanding</li>
+</ul>
+</div><hr>
+
+<h2>Security & Authentication</h2>
+
+<h3>Question 11: Design an Authentication System</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a secure authentication and authorization system supporting multiple authentication methods.
+
+<h4>Requirements</h4>
+<ul><li>Support username/password, OAuth, 2FA</li>
+<li>Handle 100 million users</li>
+<li>Secure session management</li>
+<li>Role-based access control (RBAC)</li>
+<li>Prevent common attacks (SQL injection, XSS, CSRF)</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Step 1: Authentication Methods</strong>
+
+<ul><li><strong>Username/Password:</strong></li>
+</ul>   - Hash passwords (bcrypt, Argon2)
+<p>- Salt each password</p>
+<p>- Never store plaintext passwords</p>
+
+<ul><li><strong>OAuth 2.0:</strong></li>
+</ul>   - Support Google, Facebook, GitHub login
+<p>- Handle authorization code flow</p>
+<p>- Store OAuth tokens securely</p>
+
+<ul><li><strong>Two-Factor Authentication:</strong></li>
+</ul>   - TOTP (Time-based One-Time Password)
+<p>- SMS codes</p>
+<p>- Email codes</p>
+
+<strong>Step 2: Architecture</strong>
+
+<p><div class="mermaid">
+graph TD
+    n1["Client"]
+    n2["Auth Gateway"]
+    n3["Password OAuth 2FA Session Service Service Service Service"]
+    n4["Database OAuth SMS Redis (Users) Providers Gateway (Sessions)"]
+    n1 --> n2
+    n2 --> n3
+    n3 --> n4
+
+</div></p>
+
+<strong>Step 3: Password Storage</strong>
+
+<p><pre><code class="language-python">import bcrypt
+import secrets
+
+def hash_password(password):
+    salt = bcrypt.gensalt()
+    hashed = bcrypt.hashpw(password.encode(), salt)
+    return hashed.decode()
+
+def verify_password(password, hashed):
+    return bcrypt.checkpw(password.encode(), hashed.encode())
+</code></pre></p>
+
+<strong>Step 4: Session Management</strong>
+
+<strong>JWT-based:</strong>
+<ul><li>Stateless tokens</li>
+<li>Include user info and expiration</li>
+<li>Signed with secret key</li>
+<li>Store in HTTP-only cookies</li>
+</ul>
+<strong>Session-based:</strong>
+<ul><li>Server-side session storage (Redis)</li>
+<li>Session ID in cookie</li>
+<li>More control over sessions</li>
+<li>Can revoke immediately</li>
+</ul>
+<strong>Step 5: Authorization (RBAC)</strong>
+
+<strong>Roles:</strong>
+<ul><li>Admin: Full access</li>
+<li>Moderator: Content moderation</li>
+<li>User: Standard access</li>
+<li>Guest: Limited access</li>
+</ul>
+<strong>Permissions:</strong>
+<ul><li>read:user</li>
+<li>write:user</li>
+<li>delete:post</li>
+<li>moderate:content</li>
+</ul>
+<strong>Step 6: Security Measures</strong>
+
+<ul><li><strong>Rate Limiting:</strong></li>
+</ul>   - Limit login attempts
+<p>- Prevent brute force attacks</p>
+<p>- Use exponential backoff</p>
+
+<ul><li><strong>CSRF Protection:</strong></li>
+</ul>   - CSRF tokens
+<p>- SameSite cookie attribute</p>
+<p>- Verify origin header</p>
+
+<ul><li><strong>XSS Prevention:</strong></li>
+</ul>   - Sanitize user input
+<p>- Use Content Security Policy</p>
+<p>- Encode output</p>
+
+<ul><li><strong>SQL Injection Prevention:</strong></li>
+</ul>   - Use parameterized queries
+<p>- Input validation</p>
+<p>- Least privilege database access</p>
+
+<strong>Step 7: Database Schema</strong>
+
+<strong>Users Table:</strong>
+<p><pre><code class="language-text">id (BIGINT, PK)
+username (VARCHAR, UNIQUE)
+email (VARCHAR, UNIQUE)
+password_hash (VARCHAR)
+salt (VARCHAR)
+created_at (TIMESTAMP)
+last_login (TIMESTAMP)
+is_2fa_enabled (BOOLEAN)
+</code></pre></p>
+
+<strong>Sessions Table:</strong>
+<p><pre><code class="language-text">id (VARCHAR, PK)
+user_id (BIGINT, FK)
+token (VARCHAR)
+expires_at (TIMESTAMP)
+created_at (TIMESTAMP)
+INDEX (user_id, expires_at)
+</code></pre></p>
+
+<strong>Roles Table:</strong>
+<p><pre><code class="language-text">id (BIGINT, PK)
+name (VARCHAR)
+permissions (JSON)
+</code></pre></p>
+
+<strong>User Roles:</strong>
+<p><pre><code class="language-text">user_id (BIGINT, FK)
+role_id (BIGINT, FK)
+PRIMARY KEY (user_id, role_id)
+</code></pre></p>
+
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of security principles</li>
+<li>Demonstrates knowledge of authentication flows</li>
+<li>Shows ability to prevent common attacks</li>
+<li>Evaluates security awareness</li>
+</ul>
+</div><hr>
+
+<h3>Question 12: Design a Video Streaming Service (like Netflix)</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a video streaming service that can serve millions of users with high-quality video content.
+
+<h4>Requirements</h4>
+<ul><li>Support millions of concurrent viewers</li>
+<li>Multiple video qualities (SD, HD, 4K)</li>
+<li>Low latency streaming</li>
+<li>Content delivery optimization</li>
+<li>Recommendation system</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<h4>Architecture</h4>
+
+<p><div class="mermaid">
+graph LR
+    n0["Users"]
+    n1["CDN (Edge Servers)"]
+    n0 --> n1
+    n2["Origin Servers"]
+    n1 --> n2
+    n3["Video Storage
+         
+         ▼
+    Recommendation Engine"]
+    n2 --> n3
+
+</div></p>
+
+<h4>Key Components</h4>
+
+<ul><li><strong>Video Storage:</strong></li>
+</ul>   - Object storage (S3) for video files
+<p>- Multiple encodings (different qualities)</p>
+<p>- Chunked storage for streaming</p>
+
+<ul><li><strong>CDN:</strong></li>
+</ul>   - Edge servers worldwide
+<p>- Cache popular videos</p>
+<p>- Reduce latency</p>
+
+<ul><li><strong>Streaming Protocol:</strong></li>
+</ul>   - HLS (HTTP Live Streaming)
+<p>- DASH (Dynamic Adaptive Streaming)</p>
+<p>- Adaptive bitrate streaming</p>
+
+<ul><li><strong>Recommendation System:</strong></li>
+</ul>   - Collaborative filtering
+<p>- Content-based filtering</p>
+<p>- Real-time recommendations</p>
+
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of media streaming</li>
+<li>Demonstrates knowledge of CDN usage</li>
+<li>Shows ability to design for scale</li>
+</ul>
+</div><hr>
+
+<h3>Question 13: Design a Search Engine</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a search engine that can index billions of web pages and return relevant results quickly.
+
+<h4>Requirements</h4>
+<ul><li>Index billions of pages</li>
+<li>Sub-second search response</li>
+<li>Rank results by relevance</li>
+<li>Handle high query volume</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Components:</strong>
+
+<ul><li><strong>Web Crawler:</strong></li>
+</ul>   - Discover and fetch web pages
+<p>- Respect robots.txt</p>
+<p>- Distributed crawling</p>
+
+<ul><li><strong>Indexer:</strong></li>
+</ul>   - Parse HTML content
+<p>- Extract keywords</p>
+<p>- Build inverted index</p>
+
+<ul><li><strong>Ranking Algorithm:</strong></li>
+</ul>   - PageRank
+<p>- TF-IDF</p>
+<p>- Machine learning models</p>
+
+<ul><li><strong>Query Processor:</strong></li>
+</ul>   - Parse queries
+<p>- Retrieve relevant documents</p>
+<p>- Rank and return results</p>
+
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of search systems</li>
+<li>Demonstrates knowledge of indexing</li>
+<li>Shows ability to design ranking systems</li>
+</ul>
+</div><hr>
+
+<h3>Question 14: Design a Distributed File System</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a distributed file system that can store petabytes of data across multiple nodes.
+
+<h4>Requirements</h4>
+<ul><li>Handle petabytes of data</li>
+<li>High availability</li>
+<li>Fault tolerance</li>
+<li>Consistent performance</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<h4>Architecture</h4>
+
+<p><div class="mermaid">
+graph LR
+    n0["Client"]
+    n1["Name Node"]
+    n0 --> n1
+    n2["Data Nodes
+         
+         ▼
+    Metadata Store"]
+    n1 --> n2
+
+</div></p>
+
+<strong>Components:</strong>
+
+<ul><li><strong>Name Node:</strong></li>
+</ul>   - Manages file system namespace
+<p>- Stores metadata</p>
+<p>- Coordinates data nodes</p>
+
+<ul><li><strong>Data Nodes:</strong></li>
+</ul>   - Store actual file data
+<p>- Replicate data</p>
+<p>- Report to name node</p>
+
+<ul><li><strong>Replication:</strong></li>
+</ul>   - Multiple copies of data
+<p>- Distributed across nodes</p>
+<p>- Handle node failures</p>
+
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of distributed storage</li>
+<li>Demonstrates knowledge of file systems</li>
+<li>Shows ability to design for fault tolerance</li>
+</ul>
+</div><hr>
+
+<h3>Question 15: Design a Rate Limiting System</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a rate limiting system that can handle millions of requests per second and prevent abuse.
+
+<h4>Requirements</h4>
+<ul><li>Support millions of requests/second</li>
+<li>Multiple rate limiting algorithms</li>
+<li>Per-user and per-IP limits</li>
+<li>Distributed rate limiting</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Algorithms:</strong>
+
+<ul><li><strong>Token Bucket:</strong></li>
+</ul>   - Tokens added at fixed rate
+<p>- Request consumes token</p>
+<p>- Reject if no tokens</p>
+
+<ul><li><strong>Sliding Window:</strong></li>
+</ul>   - Track requests in time window
+<p>- Count requests in window</p>
+<p>- Reject if limit exceeded</p>
+
+<ul><li><strong>Fixed Window:</strong></li>
+</ul>   - Count requests per time window
+<p>- Reset at window boundary</p>
+<p>- Simple but can burst</p>
+
+<strong>Implementation:</strong>
+<ul><li>Redis for distributed rate limiting</li>
+<li>In-memory for single server</li>
+<li>Distributed counters</li>
+</ul>
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of rate limiting</li>
+<li>Demonstrates knowledge of algorithms</li>
+<li>Shows ability to prevent abuse</li>
+</ul>
+</div><hr>
+
+<h3>Question 16: Design a Distributed Configuration Management System</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a system for managing configuration across distributed services.
+
+<h4>Requirements</h4>
+<ul><li>Centralized configuration</li>
+<li>Real-time updates</li>
+<li>Version control</li>
+<li>High availability</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Components:</strong>
+
+<ul><li><strong>Configuration Store:</strong></li>
+</ul>   - Centralized database
+<p>- Version control</p>
+<p>- Change history</p>
+
+<ul><li><strong>Configuration Service:</strong></li>
+</ul>   - Serve configurations
+<p>- Handle updates</p>
+<p>- Notify subscribers</p>
+
+<ul><li><strong>Client Libraries:</strong></li>
+</ul>   - Fetch configurations
+<p>- Cache locally</p>
+<p>- Subscribe to updates</p>
+
+<strong>Features:</strong>
+<ul><li>Environment-specific configs</li>
+<li>Feature flags</li>
+<li>A/B testing support</li>
+<li>Rollback capability</li>
+</ul>
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of configuration management</li>
+<li>Demonstrates knowledge of distributed systems</li>
+<li>Shows ability to design for flexibility</li>
+</ul>
+</div><hr>
+
+<h3>Question 17: Design a Distributed Lock Manager</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a distributed lock manager for coordinating access to shared resources.
+
+<h4>Requirements</h4>
+<ul><li>Support acquire/release locks</li>
+<li>Handle network partitions</li>
+<li>Prevent deadlocks</li>
+<li>High availability</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Approaches:</strong>
+
+<ul><li><strong>Database-based:</strong></li>
+</ul>   - Use database locks
+<p>- Simple but can be bottleneck</p>
+
+<ul><li><strong>Redis-based:</strong></li>
+</ul>   - SETNX command
+<p>- TTL for expiration</p>
+<p>- Redlock for multi-node</p>
+
+<ul><li><strong>ZooKeeper/etcd:</strong></li>
+</ul>   - Ephemeral nodes
+<p>- Watch for changes</p>
+<p>- Strong consistency</p>
+
+<strong>Features:</strong>
+<ul><li>Lock expiration</li>
+<li>Lock renewal</li>
+<li>Deadlock detection</li>
+<li>Fair queuing</li>
+</ul>
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of distributed coordination</li>
+<li>Demonstrates knowledge of locking mechanisms</li>
+<li>Shows ability to handle concurrency</li>
+</ul>
+</div><hr>
+
+<h3>Question 18: Design a Distributed Tracing System</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a distributed tracing system to track requests across microservices.
+
+<h4>Requirements</h4>
+<ul><li>Track requests across services</li>
+<li>Low overhead</li>
+<li>Store trace data</li>
+<li>Query and visualize traces</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Components:</strong>
+
+<ul><li><strong>Tracing Library:</strong></li>
+</ul>   - Instrument services
+<p>- Generate trace IDs</p>
+<p>- Propagate context</p>
+
+<ul><li><strong>Trace Collector:</strong></li>
+</ul>   - Collect trace data
+<p>- Batch and send</p>
+<p>- Handle high volume</p>
+
+<ul><li><strong>Trace Storage:</strong></li>
+</ul>   - Store trace data
+<p>- Index by trace ID</p>
+<p>- Time-based retention</p>
+
+<ul><li><strong>Trace UI:</strong></li>
+</ul>   - Visualize traces
+<p>- Search traces</p>
+<p>- Performance analysis</p>
+
+<strong>Standards:</strong>
+<ul><li>OpenTelemetry</li>
+<li>OpenTracing</li>
+<li>Zipkin format</li>
+</ul>
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of observability</li>
+<li>Demonstrates knowledge of distributed debugging</li>
+<li>Shows ability to design monitoring systems</li>
+</ul>
+</div><hr>
+
+<h3>Question 19: Design a Content Delivery Network (CDN)</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a CDN system to deliver content globally with low latency.
+
+<h4>Requirements</h4>
+<ul><li>Global edge locations</li>
+<li>Low latency</li>
+<li>High availability</li>
+<li>Cache management</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<h4>Architecture</h4>
+
+<p><div class="mermaid">
+graph LR
+    n0["Origin Server"]
+    n1["Edge Servers (Global)"]
+    n0 --> n1
+    n2["Users"]
+    n1 --> n2
+
+</div></p>
+
+<strong>Components:</strong>
+
+<ul><li><strong>Edge Servers:</strong></li>
+</ul>   - Cache content locally
+<p>- Serve requests</p>
+<p>- Report to origin</p>
+
+<ul><li><strong>Origin Server:</strong></li>
+</ul>   - Source of truth
+<p>- Push content to edges</p>
+<p>- Handle cache misses</p>
+
+<ul><li><strong>DNS:</strong></li>
+</ul>   - Route to nearest edge
+<p>- Geographic routing</p>
+<p>- Load balancing</p>
+
+<strong>Cache Strategies:</strong>
+<ul><li>Cache-control headers</li>
+<li>TTL management</li>
+<li>Cache invalidation</li>
+<li>Prefetching</li>
+</ul>
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of CDN architecture</li>
+<li>Demonstrates knowledge of caching</li>
+<li>Shows ability to optimize content delivery</li>
+</ul>
+</div><hr>
+
+<h3>Question 20: Design a Distributed Log Aggregation System</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a system to collect, store, and query logs from distributed services.
+
+<h4>Requirements</h4>
+<ul><li>Collect logs from thousands of services</li>
+<li>Store petabytes of logs</li>
+<li>Fast querying</li>
+<li>Real-time search</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Components:</strong>
+
+<ul><li><strong>Log Collectors:</strong></li>
+</ul>   - Collect logs from services
+<p>- Parse and format</p>
+<p>- Send to aggregators</p>
+
+<ul><li><strong>Log Aggregators:</strong></li>
+</ul>   - Receive logs
+<p>- Batch and buffer</p>
+<p>- Forward to storage</p>
+
+<ul><li><strong>Log Storage:</strong></li>
+</ul>   - Time-series database
+<p>- Partitioned by time</p>
+<p>- Compressed storage</p>
+
+<ul><li><strong>Query Engine:</strong></li>
+</ul>   - Parse queries
+<p>- Search logs</p>
+<p>- Return results</p>
+
+<strong>Technologies:</strong>
+<ul><li>ELK Stack (Elasticsearch, Logstash, Kibana)</li>
+<li>Splunk</li>
+<li>CloudWatch Logs</li>
+</ul>
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of log management</li>
+<li>Demonstrates knowledge of time-series data</li>
+<li>Shows ability to design observability systems</li>
+</ul>
+</div><hr>
+
+<h2>Summary</h2>
+
+<p>These system design questions cover fundamental concepts needed for FAANG interviews:</p>
+
+<ul><li><strong>Scalability:</strong> Design systems that handle millions of users</li>
+<li><strong>Reliability:</strong> Handle failures gracefully</li>
+<li><strong>Performance:</strong> Optimize for latency and throughput</li>
+<li><strong>Consistency:</strong> Choose appropriate consistency models</li>
+<li><strong>Security:</strong> Implement proper authentication and authorization</li>
+</ul>
+<p>Key principles to remember:</p>
+<ul><li>Start with requirements and constraints</li>
+<li>Estimate capacity and scale</li>
+<li>Design core components first</li>
+<li>Consider trade-offs (consistency vs availability, etc.)</li>
+<li>Discuss scaling strategies</li>
+<li>Mention monitoring and observability</li>
+</ul>
+<p>Practice designing systems end-to-end, considering all aspects from APIs to databases to caching.</p>
+
+
+    </div>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+    </script>
+</body>
+</html>

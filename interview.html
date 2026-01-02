@@ -31,7 +31,7 @@
         .sidebar-section { margin-bottom: 30px; }
         .sidebar-section-title { color: var(--neon-blue); font-size: 18px; font-weight: 700; padding: 10px 20px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid rgba(0, 212, 255, 0.2); }
         .sidebar-menu { list-style: none; }
-        .sidebar-menu-item { }
+        .sidebar-menu-item { margin: 0; }
         .sidebar-menu-link { display: block; padding: 12px 20px; color: #e0e0e0; text-decoration: none; transition: all 0.3s ease; border-left: 3px solid transparent; }
         .sidebar-menu-link:hover { background: rgba(0, 212, 255, 0.1); border-left-color: var(--neon-blue); color: var(--neon-blue); }
         .sidebar-menu-link.active { background: rgba(0, 212, 255, 0.15); border-left-color: var(--neon-blue); color: var(--neon-blue); }
@@ -100,19 +100,17 @@
             <input type="text" class="search-box" placeholder="Search topics..." id="searchBox" onkeyup="filterTopics()">
         </div>
         
-        <div class="sidebar-section">
+        <div class="sidebar-section" style="display:none">
             <div class="sidebar-section-title">Expertise</div>
             <ul class="sidebar-menu">
-                <li class="sidebar-menu-item"><a href="#ai-driven-systems" class="sidebar-menu-link" onclick="showTopic('ai-driven-systems')">AI-Driven Systems</a></li>
-                <li class="sidebar-menu-item"><a href="#cloud-architecture" class="sidebar-menu-link" onclick="showTopic('cloud-architecture')">Cloud Architecture</a></li>
-                <li class="sidebar-menu-item"><a href="#rag-vector-search" class="sidebar-menu-link" onclick="showTopic('rag-vector-search')">RAG & Vector Search</a></li>
-                <li class="sidebar-menu-item"><a href="#engineering-patterns" class="sidebar-menu-link" onclick="showTopic('engineering-patterns')">Engineering Patterns</a></li>
-                <li class="sidebar-menu-item"><a href="#legacy-modernization" class="sidebar-menu-link" onclick="showTopic('legacy-modernization')">Legacy Modernization</a></li>
-                <li class="sidebar-menu-item"><a href="#research-innovation" class="sidebar-menu-link" onclick="showTopic('research-innovation')">Research & Innovation</a></li>
+                <li class="sidebar-menu-item"><a href="rag-vector-search.html" class="sidebar-menu-link">RAG & Vector Search</a></li>
+                <li class="sidebar-menu-item"><a href="engineering-patterns.html" class="sidebar-menu-link">Engineering Patterns</a></li>
+                <li class="sidebar-menu-item"><a href="legacy-modernization.html" class="sidebar-menu-link">Legacy Modernization</a></li>
+                <li class="sidebar-menu-item"><a href="research-innovation.html" class="sidebar-menu-link">Research & Innovation</a></li>
             </ul>
         </div>
 
-        <div class="sidebar-section">
+        <div class="sidebar-section"  style="display:none">
             <div class="sidebar-section-title">Core Focus</div>
             <ul class="sidebar-menu">
                 <li class="sidebar-menu-item"><a href="#ai-architecture" class="sidebar-menu-link" onclick="showTopic('ai-architecture')">AI Architecture</a></li>
@@ -120,7 +118,7 @@
                 <li class="sidebar-menu-item"><a href="#llm-orchestration" class="sidebar-menu-link" onclick="showTopic('llm-orchestration')">LLM Orchestration</a></li>
                 <li class="sidebar-menu-item"><a href="#rag-pipelines" class="sidebar-menu-link" onclick="showTopic('rag-pipelines')">RAG Pipelines</a></li>
                 <li class="sidebar-menu-item"><a href="#vector-search" class="sidebar-menu-link" onclick="showTopic('vector-search')">Vector Search</a></li>
-                <li class="sidebar-menu-item"><a href="#system-design" class="sidebar-menu-link" onclick="showTopic('system-design')">System Design</a></li>
+                <li class="sidebar-menu-item"><a href="02_system_design.html" class="sidebar-menu-link">System Design</a></li>
                 <li class="sidebar-menu-item"><a href="#microservices" class="sidebar-menu-link" onclick="showTopic('microservices')">Microservices</a></li>
                 <li class="sidebar-menu-item"><a href="#azure-engineering" class="sidebar-menu-link" onclick="showTopic('azure-engineering')">Azure Engineering</a></li>
                 <li class="sidebar-menu-item"><a href="#devops-automation" class="sidebar-menu-link" onclick="showTopic('devops-automation')">DevOps Automation</a></li>
@@ -131,26 +129,28 @@
         <div class="sidebar-section">
             <div class="sidebar-section-title">Technical Skills</div>
             <ul class="sidebar-menu">
-                <li class="sidebar-menu-item"><a href="#python" class="sidebar-menu-link" onclick="showTopic('python')">Python</a></li>
+                <li class="sidebar-menu-item"><a href="01_data_structures_algorithms.html" class="sidebar-menu-link">Data Structures & Algorithms</a></li>
+                <li class="sidebar-menu-item"><a href="10_machine_learning_ai.html" class="sidebar-menu-link">Machine Learning & AI</a></li>
+                <li class="sidebar-menu-item"><a href="../../06_python_specific.html" class="sidebar-menu-link">Python</a></li>
                 <li class="sidebar-menu-item"><a href="dotnet.html" class="sidebar-menu-link">C# / .NET</a></li>
-                <li class="sidebar-menu-item"><a href="#javascript-react" class="sidebar-menu-link" onclick="showTopic('javascript-react')">JavaScript / React</a></li>
-                <li class="sidebar-menu-item"><a href="#azure-cloud" class="sidebar-menu-link" onclick="showTopic('azure-cloud')">Azure Cloud</a></li>
-                <li class="sidebar-menu-item"><a href="cosmosdb.html" class="sidebar-menu-link" >Cosmos DB</a></li>
-                <li class="sidebar-menu-item"><a href="#service-bus" class="sidebar-menu-link" onclick="showTopic('service-bus')">Service Bus</a></li>
-                <li class="sidebar-menu-item"><a href="#semantic-kernel" class="sidebar-menu-link" onclick="showTopic('semantic-kernel')">Semantic Kernel</a></li>
-                <li class="sidebar-menu-item"><a href="#crewai" class="sidebar-menu-link" onclick="showTopic('crewai')">CrewAI</a></li>
-                <li class="sidebar-menu-item"><a href="#autogen" class="sidebar-menu-link" onclick="showTopic('autogen')">Autogen</a></li>
-                <li class="sidebar-menu-item"><a href="#rag-engineering" class="sidebar-menu-link" onclick="showTopic('rag-engineering')">RAG Engineering</a></li>
-                <li class="sidebar-menu-item"><a href="#distributed-systems" class="sidebar-menu-link" onclick="showTopic('distributed-systems')">Distributed Systems</a></li>
+                <li class="sidebar-menu-item"><a href="javascript-react.html" class="sidebar-menu-link">JavaScript / React</a></li>
+                <li class="sidebar-menu-item"><a href="azure-cloud.html" class="sidebar-menu-link">Azure Cloud</a></li>
+                <li class="sidebar-menu-item"><a href="cosmosdb.html" class="sidebar-menu-link">Cosmos DB</a></li>
+                <li class="sidebar-menu-item"><a href="service-bus.html" class="sidebar-menu-link">Service Bus</a></li>
+                <li class="sidebar-menu-item"><a href="semantic-kernel.html" class="sidebar-menu-link">Semantic Kernel</a></li>
+                <li class="sidebar-menu-item"><a href="crewai.html" class="sidebar-menu-link">CrewAI</a></li>
+                <li class="sidebar-menu-item"><a href="autogen.html" class="sidebar-menu-link">Autogen</a></li>
+                <li class="sidebar-menu-item"><a href="rag-engineering.html" class="sidebar-menu-link">RAG Engineering</a></li>
+                <li class="sidebar-menu-item"><a href="08_distributed_systems.html" class="sidebar-menu-link">Distributed Systems</a></li>
             </ul>
         </div>
 
         <div class="sidebar-section">
             <div class="sidebar-section-title">Projects</div>
             <ul class="sidebar-menu">
-                <li class="sidebar-menu-item"><a href="#ai-chatbot" class="sidebar-menu-link" onclick="showTopic('ai-chatbot')">AI Chatbot System</a></li>
-                <li class="sidebar-menu-item"><a href="#multi-agent-platform" class="sidebar-menu-link" onclick="showTopic('multi-agent-platform')">Multi-Agent Platform</a></li>
-                <li class="sidebar-menu-item"><a href="#cloud-microservices" class="sidebar-menu-link" onclick="showTopic('cloud-microservices')">Cloud Microservices</a></li>
+                <li class="sidebar-menu-item"><a href="ai-chatbot-system.html" class="sidebar-menu-link">AI Chatbot System</a></li>
+                <li class="sidebar-menu-item"><a href="multi-agent-platform.html" class="sidebar-menu-link">Multi-Agent Platform</a></li>
+                <li class="sidebar-menu-item"><a href="07_cloud_architecture.html" class="sidebar-menu-link">Cloud Microservices</a></li>
             </ul>
         </div>
     </aside>

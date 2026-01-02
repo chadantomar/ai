@@ -6,7 +6,7 @@
     <title>C# .NET / .NET Core - 50 Advanced Interview Questions | Chandan Kumar</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
@@ -230,6 +230,31 @@
             padding: 20px;
             border-radius: 10px;
         }
+        .mermaid svg {
+            max-width: 100%;
+            height: auto;
+        }
+        .mermaid .nodeLabel,
+        .mermaid .edgeLabel,
+        .mermaid .cluster-label text,
+        .mermaid .label text,
+        .mermaid text {
+            fill: #000000 !important;
+            color: #000000 !important;
+        }
+        .mermaid .node rect,
+        .mermaid .node circle,
+        .mermaid .node ellipse,
+        .mermaid .cluster rect {
+            fill: #ffffff;
+            stroke: #333333;
+        }
+        .mermaid .edgePath .path {
+            stroke: #333333;
+        }
+        .mermaid .arrowheadPath {
+            fill: #333333;
+        }
         .code-block {
             background: rgba(0, 0, 0, 0.5);
             border-radius: 10px;
@@ -297,8 +322,8 @@
     <nav>
         <div class="nav-container">
             <div class="logo">Chandan Kumar</div>
-            <a href="index.html" class="back-btn">
-                <i class="fas fa-arrow-left"></i> Back to Home
+            <a href="interview.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Interview Guide
             </a>
         </div>
     </nav>
@@ -323,23 +348,25 @@
     <script>
         const questions = [];
 
-        // Q1
+        // Q1 - Explain the difference between .NET Framework, .NET Core, and .NET 5+
         questions.push({
             number: 1,
-            title: "Explain the evolution from .NET Framework to .NET Core to modern .NET and why it matters for architects.",
+            title: "Explain the difference between .NET Framework, .NET Core, and .NET 5+",
             description:
-                "Originally, .NET Framework targeted Windows-only and was tightly coupled to IIS and the Windows ecosystem. " +
+                ".NET Framework is Windows-only and effectively in maintenance mode. " +
                 ".NET Core introduced cross-platform support, modular deployment, and a high-performance runtime. " +
                 "Modern .NET (5 and later) unified .NET Core and .NET Framework into a single product line, with a common BCL, SDK-style projects, and a yearly release cadence.",
             why:
-                "Architects must understand runtime evolution to make decisions about migration, performance, cross-platform hosting, containerization, and long-term support. " +
+                "Understanding the evolution helps architects make decisions about migration, performance, cross-platform hosting, containerization, and long-term support. " +
                 "Choosing the wrong runtime version directly impacts deployment options and maintenance.",
             what:
-                ".NET Framework is Windows-only and effectively in maintenance mode. " +
-                "Modern .NET is cross-platform, open-source, and optimized for cloud-native apps. " +
-                "It supports self-contained deployment, containers, Kubernetes, and unified APIs across workloads.",
+                ".NET Framework: Windows-only runtime, mature and stable, large ecosystem, being phased out. " +
+                ".NET Core: Cross-platform (Windows, Linux, macOS), open-source, modular and lightweight, fast performance, side-by-side installation. " +
+                ".NET 5+ (.NET 6, 7, 8): Unified platform, single .NET runtime, replaces both Framework and Core, modern and high-performance, long-term support versions. " +
+                "Key Differences: Platform Support (Core/5+ are cross-platform, Framework is Windows-only), Performance (Core/5+ are faster and more efficient), " +
+                "Deployment (Core/5+ support self-contained deployments), Package Management (Core/5+ use NuGet packages, Framework uses assemblies).",
             how:
-                "For new greenfield apps, target the latest LTS (for example, .NET 8). " +
+                "For new greenfield apps, target the latest LTS (.NET 8 or later). " +
                 "For brownfield apps, incrementally move libraries to .NET Standard / .NET, split monoliths into services, and modernize hosting with Kestrel and containers.",
             pros: [
                 "Cross-platform (Windows, Linux, macOS, containers)",
@@ -357,10 +384,10 @@
                 "Some legacy tech (WebForms, WCF server) not directly supported"
             ],
             diagram: `flowchart TD
-    A[.NET Framework - Windows and IIS] --> B[.NET Core - Cross-platform and Kestrel]
-    B --> C[Modern .NET - Unified Platform]
-    C --> D[Cloud-native Apps - Containers and Kubernetes]`,
-            implementation: `// Example: SDK-style modern .NET web project
+    A[".NET Framework<br/>Windows Only"] --> B[".NET Core<br/>Cross-platform"]
+    B --> C[".NET 5+<br/>Unified Platform"]
+    C --> D["Cloud-native Apps<br/>Containers & Kubernetes"]`,
+            implementation: `// Modern .NET project file
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -371,18 +398,8 @@
 
 // Program.cs (minimal hosting)
 var builder = WebApplication.CreateBuilder(args);
-
 builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
 var app = builder.Build();
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
 app.MapControllers();
 app.Run();`,
             approaches: [
@@ -394,18 +411,77 @@ app.Run();`,
             ]
         });
 
-        // Q2
+        // Q2 - Explain .NET Core's dependency injection container
         questions.push({
             number: 2,
-            title: "How does the ASP.NET Core middleware pipeline work and how do you design custom middleware?",
+            title: "Explain .NET Core's dependency injection container",
+            description:
+                ".NET Core has built-in dependency injection with three main lifetimes: Singleton, Scoped, and Transient. " +
+                "Services are registered in the container and injected into controllers, middleware, background services, and more via constructor injection.",
+            why:
+                "Proper DI usage reduces coupling, improves testability, and clarifies ownership of resources. " +
+                "Incorrect lifetimes can cause memory leaks, concurrency bugs, and unexpected state sharing.",
+            what:
+                ".NET Core DI Container: Built-in dependency injection, service lifetime management, constructor injection by default. " +
+                "Service Lifetimes: Singleton (one instance for application lifetime, shared across all requests, thread-safe required), " +
+                "Scoped (one instance per request/scope, created per HTTP request, disposed at end of scope), " +
+                "Transient (new instance every time, created each time requested, most lightweight).",
+            how:
+                "Register services in builder.Services. Inject them via constructor injection where needed. " +
+                "Avoid the Service Locator pattern and make lifetimes explicit.",
+            pros: [
+                "Built-in and consistent DI story",
+                "Supports constructor injection everywhere",
+                "Clear lifetimes and ownership semantics",
+                "Integration with configuration, logging, and options pattern"
+            ],
+            cons: [
+                "Default container lacks some advanced features (interception, decorators) without extra code",
+                "Misusing lifetimes can cause subtle bugs",
+                "Circular dependencies can appear if design is not clean"
+            ],
+            diagram: `flowchart TD
+    A["Service Collection"] --> B["Singleton Services"]
+    A --> C["Scoped Services"]
+    A --> D["Transient Services"]
+    B --> E["Controllers and Handlers"]
+    C --> E
+    D --> E`,
+            implementation: `// Startup.cs or Program.cs
+builder.Services.AddSingleton<ICacheService, CacheService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddTransient<IEmailService, EmailService>();
+
+// Usage
+public class UserController : ControllerBase
+{
+    private readonly IUserService _userService;
+    
+    public UserController(IUserService userService)
+    {
+        _userService = userService; // Injected automatically
+    }
+}`,
+            approaches: [
+                "Use Scoped for domain and application services tied to a web request.",
+                "Use Singleton only for stateless services or caches that are thread-safe.",
+                "Use Transient for lightweight, short-lived services.",
+                "Avoid capturing scoped services in singletons.",
+                "Consider external DI containers only if advanced features are truly needed."
+            ]
+        });
+
+        // Q3 - Explain .NET Core middleware pipeline
+        questions.push({
+            number: 3,
+            title: "Explain .NET Core middleware pipeline",
             description:
                 "ASP.NET Core uses a request-delegate pipeline composed of middleware components. " +
                 "Each middleware can inspect, short-circuit, or modify the HTTP request and response, then call the next delegate. Ordering is critical.",
             why:
                 "Understanding middleware is crucial for cross-cutting concerns like logging, metrics, correlation IDs, authentication, authorization, caching, and error handling.",
             what:
-                "Middleware is a function or class that receives HttpContext and a 'next' delegate. " +
-                "You register middleware in Program.cs using methods like Use, UseWhen, and Map.",
+                "Middleware Pipeline: Request processing pipeline, components executed in order, each middleware can process request/response, can short-circuit pipeline.",
             how:
                 "Implement a class with a constructor accepting RequestDelegate and an Invoke or InvokeAsync method. " +
                 "Manipulate HttpContext before and after calling await _next(context). " +
@@ -424,49 +500,44 @@ app.Run();`,
                 "Risk of swallowing exceptions if handled incorrectly"
             ],
             diagram: `flowchart LR
-    A[Incoming Request] --> B[Exception Handling Middleware]
-    B --> C[Routing Middleware]
-    C --> D[Auth and AuthZ Middleware]
-    D --> E[Custom Business Middleware]
-    E --> F[Endpoint Handler]
-    F --> G[Outgoing Response]`,
-            implementation: `// Custom middleware example
-public class RequestTimingMiddleware
+    A["Incoming Request"] --> B["Exception Handler"]
+    B --> C["Routing"]
+    C --> D["Authentication"]
+    D --> E["Authorization"]
+    E --> F["Custom Middleware"]
+    F --> G["Endpoint Handler"]
+    G --> H["Outgoing Response"]`,
+            implementation: `public void Configure(IApplicationBuilder app)
 {
-    private readonly RequestDelegate _next;
-    private readonly ILogger<RequestTimingMiddleware> _logger;
-
-    public RequestTimingMiddleware(RequestDelegate next,
-                                   ILogger<RequestTimingMiddleware> logger)
+    app.UseExceptionHandler(); // Error handling
+    app.UseHttpsRedirection();
+    app.UseStaticFiles();
+    app.UseRouting();
+    app.UseAuthentication();
+    app.UseAuthorization();
+    app.UseEndpoints(endpoints =>
     {
-        _next = next;
-        _logger = logger;
-    }
-
-    public async Task InvokeAsync(HttpContext context)
-    {
-        var sw = Stopwatch.StartNew();
-        try
-        {
-            await _next(context);
-        }
-        finally
-        {
-            sw.Stop();
-            _logger.LogInformation("Request {Path} took {Elapsed} ms",
-                context.Request.Path, sw.ElapsedMilliseconds);
-        }
-    }
+        endpoints.MapControllers();
+    });
 }
 
-// Registration in Program.cs
-var app = builder.Build();
-
-app.UseMiddleware<RequestTimingMiddleware>();
-app.UseAuthentication();
-app.UseAuthorization();
-app.MapControllers();
-app.Run();`,
+// Custom Middleware
+public class CustomMiddleware
+{
+    private readonly RequestDelegate _next;
+    
+    public CustomMiddleware(RequestDelegate next)
+    {
+        _next = next;
+    }
+    
+    public async Task InvokeAsync(HttpContext context)
+    {
+        // Before next middleware
+        await _next(context);
+        // After next middleware
+    }
+}`,
             approaches: [
                 "Put global exception handling and logging as the first middleware.",
                 "Auth and authorization should run before business logic.",
@@ -476,155 +547,70 @@ app.Run();`,
             ]
         });
 
-        // Q3
-        questions.push({
-            number: 3,
-            title: "Explain dependency injection in .NET Core and how service lifetimes affect architecture.",
-            description:
-                ".NET Core has built-in dependency injection with three main lifetimes: Singleton, Scoped, and Transient. " +
-                "Services are registered in the container and injected into controllers, middleware, background services, and more.",
-            why:
-                "Proper DI usage reduces coupling, improves testability, and clarifies ownership of resources. " +
-                "Incorrect lifetimes can cause memory leaks, concurrency bugs, and unexpected state sharing.",
-            what:
-                "Singleton: one instance for the entire application lifetime. " +
-                "Scoped: one instance per request or logical scope. " +
-                "Transient: new instance every time it is requested.",
-            how:
-                "Register services in builder.Services. Inject them via constructor injection where needed. " +
-                "Avoid the Service Locator pattern and make lifetimes explicit.",
-            pros: [
-                "Built-in and consistent DI story",
-                "Supports constructor injection everywhere",
-                "Clear lifetimes and ownership semantics",
-                "Integration with configuration, logging, and options pattern"
-            ],
-            cons: [
-                "Default container lacks some advanced features (interception, decorators) without extra code",
-                "Misusing lifetimes can cause subtle bugs",
-                "Circular dependencies can appear if design is not clean"
-            ],
-            diagram: `flowchart TD
-    A[Service Collection] --> B[Singleton Services]
-    A --> C[Scoped Services]
-    A --> D[Transient Services]
-    B --> E[Controllers and Handlers]
-    C --> E
-    D --> E`,
-            implementation: `// Program.cs - service registrations
-builder.Services.AddSingleton<ICacheProvider, MemoryCacheProvider>();
-builder.Services.AddScoped<IOrderService, OrderService>();
-builder.Services.AddTransient<IEmailSender, SmtpEmailSender>();
-
-// Example usage
-public class OrdersController : ControllerBase
-{
-    private readonly IOrderService _orderService;
-    private readonly IEmailSender _emailSender;
-
-    public OrdersController(IOrderService orderService, IEmailSender emailSender)
-    {
-        _orderService = orderService;
-        _emailSender = emailSender;
-    }
-
-    [HttpPost("orders")]
-    public async Task<IActionResult> CreateOrder(CreateOrderDto dto)
-    {
-        var order = await _orderService.CreateOrderAsync(dto);
-        await _emailSender.SendAsync(order.CustomerEmail, "Order created", "...");
-        return Ok(order);
-    }
-}`,
-            approaches: [
-                "Use Scoped for domain and application services tied to a web request.",
-                "Use Singleton only for stateless services or caches that are thread-safe.",
-                "Use Transient for lightweight, short-lived services.",
-                "Avoid capturing scoped services in singletons.",
-                "Consider external DI containers only if advanced features are truly needed."
-            ]
-        });
-
-        // Q4
+        // Q4 - Explain C# async/await and Task-based programming
         questions.push({
             number: 4,
-            title: "How does the configuration and options pattern work in .NET Core?",
+            title: "Explain C# async/await and Task-based programming",
             description:
-                "Configuration in .NET Core is hierarchical and provider-based (JSON, environment variables, Key Vault, etc.). " +
-                "The options pattern binds configuration sections to strongly-typed POCO classes using IOptions, IOptionsSnapshot, or IOptionsMonitor.",
+                "Async/Await is the primary model for asynchronous programming in C#. " +
+                "It enables non-blocking I/O operations and returns Task or Task<T>. " +
+                "In ASP.NET Core, it is crucial for scalability and performance.",
             why:
-                "Strongly-typed configuration improves safety, discoverability, and testability. " +
-                "It also supports per-environment overrides and live reload in some scenarios.",
+                "High-throughput APIs rely on async I/O to scale. " +
+                "Understanding async/await is essential for writing efficient, non-blocking code that can handle many concurrent requests.",
             what:
-                "IOptions<T> provides a singleton snapshot at startup. " +
-                "IOptionsSnapshot<T> provides per-request snapshots, useful in web apps. " +
-                "IOptionsMonitor<T> supports change notifications.",
+                "Async/Await: Asynchronous programming model, non-blocking I/O operations, returns Task or Task<T>. " +
+                "Task vs Task<T>: Task represents async operation without return value, Task<T> represents async operation returning T. " +
+                "Best Practices: Use async/await for I/O-bound operations, avoid async void (use async Task), ConfigureAwait(false) in libraries, use CancellationToken for cancellation.",
             how:
-                "Bind a configuration section to a POCO using services.Configure<T>(configuration.GetSection(\"SectionName\")). " +
-                "Inject IOptions<T> or IOptionsSnapshot<T> into services and controllers.",
+                "Mark methods with async keyword and return Task or Task<T>. " +
+                "Use await to suspend execution until the awaited task completes. " +
+                "Use async APIs for database, HTTP, file I/O, and messaging operations.",
             pros: [
-                "Strongly typed, IntelliSense-friendly configuration",
-                "Supports multiple configuration providers and environments",
-                "Centralized configuration binding and validation",
-                "Supports reload and change notifications"
+                "Improved scalability via non-blocking I/O",
+                "Simpler code compared to callbacks or manual tasks",
+                "Better CPU utilization under load",
+                "Type-safe async operations"
             ],
             cons: [
-                "Misuse of IOptions variants can be confusing",
-                "Complex configuration hierarchies can be hard to manage",
-                "Requires discipline to keep configuration keys consistent"
+                "Learning curve for async flow and error handling",
+                "Potential for fire-and-forget bugs",
+                "Unobserved exceptions if tasks are not awaited",
+                "Can complicate debugging stack traces"
             ],
             diagram: `flowchart TD
-    A[appsettings.json] --> B[Configuration Builder]
-    C[Environment Variables] --> B
-    D[Key Vault or User Secrets] --> B
-    B --> E[IConfiguration]
-    E --> F[Options Binding]
-    F --> G[Injected Services and Controllers]`,
-            implementation: `// appsettings.json
+    A["HTTP Request"] --> B["Async Controller"]
+    B --> C["Async DB Call"]
+    C -->|"I/O Pending"| D["Thread to Pool"]
+    D --> E["Serve Other Requests"]
+    C -->|"Completed"| F["Continuation"]
+    F --> G["Build Response"]
+    G --> H["Send Response"]`,
+            implementation: `public async Task<string> GetDataAsync()
 {
-  "Smtp": {
-    "Host": "smtp.example.com",
-    "Port": 587,
-    "User": "user",
-    "Password": "secret"
-  }
+    using var client = new HttpClient();
+    var response = await client.GetStringAsync("https://api.example.com/data");
+    return response;
 }
-
-// Options class
-public class SmtpOptions
-{
-    public string Host { get; set; } = "";
-    public int Port { get; set; }
-    public string User { get; set; } = "";
-    public string Password { get; set; } = "";
-}
-
-// Program.cs
-builder.Services.Configure<SmtpOptions>(
-    builder.Configuration.GetSection("Smtp"));
 
 // Usage
-public class SmtpEmailSender : IEmailSender
+var data = await GetDataAsync();
+
+// Task vs Task<T>
+Task task = DoSomethingAsync(); // No return value
+Task<string> taskWithResult = GetDataAsync(); // Returns string
+
+// Best Practices
+public async Task ProcessAsync(CancellationToken cancellationToken)
 {
-    private readonly SmtpOptions _options;
-
-    public SmtpEmailSender(IOptions<SmtpOptions> options)
-    {
-        _options = options.Value;
-    }
-
-    public Task SendAsync(string to, string subject, string body)
-    {
-        // Use _options.Host, _options.Port etc.
-        return Task.CompletedTask;
-    }
+    await Task.Delay(1000, cancellationToken);
 }`,
             approaches: [
-                "Centralize configuration keys and bind via the options pattern.",
-                "Validate options using AddOptions and data annotations.",
-                "Use environment variables for secrets in containers.",
-                "Use Secret Manager or Key Vault for sensitive values.",
-                "Prefer IOptionsSnapshot in web apps where per-request updates may be needed."
+                "Make the entire call chain async all the way down.",
+                "Never block on async code in web apps.",
+                "Use async APIs for DB, HTTP, IO, and messaging.",
+                "Log and handle Task cancellations gracefully.",
+                "Apply ConfigureAwait(false) in class libraries where resume on context is not required."
             ]
         });
 
@@ -657,13 +643,13 @@ public class SmtpEmailSender : IEmailSender
                 "Can complicate debugging stack traces"
             ],
             diagram: `flowchart TD
-    A[Incoming HTTP Request] --> B[Controller Action (async)]
-    B --> C[Database Async Call]
-    C -->|I/O Pending| D[Thread Returned to Pool]
-    D --> E[Serves Other Requests]
-    C -->|Completed| F[Continuation]
-    F --> G[Build Response]
-    G --> H[Send Response]`,
+    A["Incoming HTTP Request"] --> B["Controller Action async"]
+    B --> C["Database Async Call"]
+    C -->|"I/O Pending"| D["Thread Returned to Pool"]
+    D --> E["Serves Other Requests"]
+    C -->|"Completed"| F["Continuation"]
+    F --> G["Build Response"]
+    G --> H["Send Response"]`,
             implementation: `// Good: fully async controller
 [ApiController]
 [Route("api/[controller]")]
@@ -1101,10 +1087,10 @@ builder.Services.AddHostedService<EmailBackgroundService>();`,
                 "Requires coordination with DevOps for thresholds and probes"
             ],
             diagram: `flowchart TD
-    A[Service Instance] --> B[/health/live]
-    A --> C[/health/ready]
-    B --> D[Kubernetes Liveness Probe]
-    C --> E[Load Balancer Readiness Probe]`,
+    A["Service Instance"] --> B["/health/live"]
+    A --> C["/health/ready"]
+    B --> D["Kubernetes Liveness Probe"]
+    C --> E["Load Balancer Readiness Probe"]`,
             implementation: `// Program.cs
 builder.Services.AddHealthChecks()
     .AddSqlServer(builder.Configuration.GetConnectionString("Default"))
@@ -1147,10 +1133,10 @@ app.MapHealthChecks("/health/ready");`,
                 "Need strong communication with consumers"
             ],
             diagram: `flowchart TD
-    A[Client v1] --> B[/api/v1/orders]
-    A --> C[/api/v1/customers]
-    D[Client v2] --> E[/api/v2/orders]
-    E --> F[New Contract or Behavior]`,
+    A["Client v1"] --> B["/api/v1/orders"]
+    A --> C["/api/v1/customers"]
+    D["Client v2"] --> E["/api/v2/orders"]
+    E --> F["New Contract or Behavior"]`,
             implementation: `// Program.cs
 builder.Services.AddApiVersioning(options =>
 {
@@ -1187,7 +1173,553 @@ public class OrdersV2Controller : ControllerBase
             ]
         });
 
-        // Generic topics for Q13–Q50
+        // Q13 - Explain the difference between .NET Framework, .NET Core, and .NET 5+
+        questions.push({
+            number: 13,
+            title: "Explain the difference between .NET Framework, .NET Core, and .NET 5+",
+            description:
+                ".NET Framework is Windows-only and effectively in maintenance mode. " +
+                ".NET Core introduced cross-platform support, modular deployment, and a high-performance runtime. " +
+                "Modern .NET (5 and later) unified .NET Core and .NET Framework into a single product line, with a common BCL, SDK-style projects, and a yearly release cadence.",
+            why:
+                "Understanding the evolution helps architects make decisions about migration, performance, cross-platform hosting, containerization, and long-term support. " +
+                "Choosing the wrong runtime version directly impacts deployment options and maintenance.",
+            what:
+                ".NET Framework: Windows-only runtime, mature and stable, large ecosystem, being phased out. " +
+                ".NET Core: Cross-platform (Windows, Linux, macOS), open-source, modular and lightweight, fast performance, side-by-side installation. " +
+                ".NET 5+: Unified platform, single .NET runtime, replaces both Framework and Core, modern and high-performance, long-term support versions.",
+            how:
+                "For new greenfield apps, target the latest LTS (.NET 8 or later). " +
+                "For brownfield apps, incrementally move libraries to .NET Standard / .NET, split monoliths into services, and modernize hosting with Kestrel and containers.",
+            pros: [
+                "Cross-platform (Windows, Linux, macOS, containers)",
+                "Higher performance and lower memory footprint",
+                "Unified SDK-style project system",
+                "Regular release cadence and active improvements",
+                "Better tooling and CLI support",
+                "First-class container and cloud support"
+            ],
+            cons: [
+                "Migration effort from legacy .NET Framework",
+                "API gaps for very old or niche libraries",
+                "Need to upgrade build and deployment pipelines",
+                "New hosting concepts (Kestrel, generic host) to learn",
+                "Some legacy tech (WebForms, WCF server) not directly supported"
+            ],
+            diagram: `flowchart TD
+    A[.NET Framework<br/>Windows Only] --> B[.NET Core<br/>Cross-platform]
+    B --> C[.NET 5+<br/>Unified Platform]
+    C --> D[Cloud-native Apps<br/>Containers & Kubernetes]`,
+            implementation: `// Modern .NET project file
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+</Project>
+
+// Program.cs (minimal hosting)
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddControllers();
+var app = builder.Build();
+app.MapControllers();
+app.Run();`,
+            approaches: [
+                "New projects: start on latest LTS (.NET 8 or later).",
+                "For legacy apps: use the strangler-fig pattern to carve out services.",
+                "Use .NET Upgrade Assistant for guided migrations.",
+                "Standardize solution templates across the organization.",
+                "Align runtime versions with container base images and DevOps pipelines."
+            ]
+        });
+
+        // Q14 - Explain .NET Core's dependency injection container
+        questions.push({
+            number: 14,
+            title: "Explain .NET Core's dependency injection container and service lifetimes",
+            description:
+                ".NET Core has built-in dependency injection with three main lifetimes: Singleton, Scoped, and Transient. " +
+                "Services are registered in the container and injected into controllers, middleware, background services, and more via constructor injection.",
+            why:
+                "Proper DI usage reduces coupling, improves testability, and clarifies ownership of resources. " +
+                "Incorrect lifetimes can cause memory leaks, concurrency bugs, and unexpected state sharing.",
+            what:
+                "Singleton: one instance for the entire application lifetime, shared across all requests, thread-safe required. " +
+                "Scoped: one instance per request or logical scope, created per HTTP request, disposed at end of scope. " +
+                "Transient: new instance every time it is requested, created each time requested, most lightweight.",
+            how:
+                "Register services in builder.Services. Inject them via constructor injection where needed. " +
+                "Avoid the Service Locator pattern and make lifetimes explicit.",
+            pros: [
+                "Built-in and consistent DI story",
+                "Supports constructor injection everywhere",
+                "Clear lifetimes and ownership semantics",
+                "Integration with configuration, logging, and options pattern"
+            ],
+            cons: [
+                "Default container lacks some advanced features (interception, decorators) without extra code",
+                "Misusing lifetimes can cause subtle bugs",
+                "Circular dependencies can appear if design is not clean"
+            ],
+            diagram: `flowchart TD
+    A[Service Collection] --> B[Singleton Services]
+    A --> C[Scoped Services]
+    A --> D[Transient Services]
+    B --> E[Controllers & Handlers]
+    C --> E
+    D --> E`,
+            implementation: `// Program.cs - service registrations
+builder.Services.AddSingleton<ICacheService, CacheService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddTransient<IEmailService, EmailService>();
+
+// Usage
+public class UserController : ControllerBase
+{
+    private readonly IUserService _userService;
+    
+    public UserController(IUserService userService)
+    {
+        _userService = userService; // Injected automatically
+    }
+}`,
+            approaches: [
+                "Use Scoped for domain and application services tied to a web request.",
+                "Use Singleton only for stateless services or caches that are thread-safe.",
+                "Use Transient for lightweight, short-lived services.",
+                "Avoid capturing scoped services in singletons.",
+                "Consider external DI containers only if advanced features are truly needed."
+            ]
+        });
+
+        // Q15 - Explain .NET Core middleware pipeline
+        questions.push({
+            number: 15,
+            title: "Explain .NET Core middleware pipeline and custom middleware",
+            description:
+                "ASP.NET Core uses a request-delegate pipeline composed of middleware components. " +
+                "Each middleware can inspect, short-circuit, or modify the HTTP request and response, then call the next delegate. Ordering is critical.",
+            why:
+                "Understanding middleware is crucial for cross-cutting concerns like logging, metrics, correlation IDs, authentication, authorization, caching, and error handling.",
+            what:
+                "Middleware is a function or class that receives HttpContext and a 'next' delegate. " +
+                "You register middleware in Program.cs using methods like Use, UseWhen, and Map.",
+            how:
+                "Implement a class with a constructor accepting RequestDelegate and an Invoke or InvokeAsync method. " +
+                "Manipulate HttpContext before and after calling await _next(context). " +
+                "Register it with app.UseMiddleware<T>().",
+            pros: [
+                "Clear separation of cross-cutting concerns",
+                "Composable and testable pipeline",
+                "Fine-grained control over request and response processing",
+                "Good performance with minimal overhead",
+                "Supports branching for custom routes"
+            ],
+            cons: [
+                "Order-dependent and easy to misconfigure",
+                "Coupled to HTTP abstractions",
+                "Complex pipelines can be hard to debug",
+                "Risk of swallowing exceptions if handled incorrectly"
+            ],
+            diagram: `flowchart LR
+    A[Incoming Request] --> B[Exception Handler]
+    B --> C[Routing]
+    C --> D[Authentication]
+    D --> E[Authorization]
+    E --> F[Custom Middleware]
+    F --> G[Endpoint Handler]
+    G --> H[Outgoing Response]`,
+            implementation: `// Custom middleware example
+public class RequestTimingMiddleware
+{
+    private readonly RequestDelegate _next;
+    private readonly ILogger<RequestTimingMiddleware> _logger;
+
+    public RequestTimingMiddleware(RequestDelegate next,
+                                   ILogger<RequestTimingMiddleware> logger)
+    {
+        _next = next;
+        _logger = logger;
+    }
+
+    public async Task InvokeAsync(HttpContext context)
+    {
+        var sw = Stopwatch.StartNew();
+        try
+        {
+            await _next(context);
+        }
+        finally
+        {
+            sw.Stop();
+            _logger.LogInformation("Request {Path} took {Elapsed} ms",
+                context.Request.Path, sw.ElapsedMilliseconds);
+        }
+    }
+}
+
+// Registration in Program.cs
+var app = builder.Build();
+app.UseMiddleware<RequestTimingMiddleware>();
+app.UseAuthentication();
+app.UseAuthorization();
+app.MapControllers();
+app.Run();`,
+            approaches: [
+                "Put global exception handling and logging as the first middleware.",
+                "Auth and authorization should run before business logic.",
+                "Use MapWhen or UseWhen to branch the pipeline for specific paths.",
+                "Keep middleware small and focused; avoid heavy domain logic inside it.",
+                "Write integration tests using TestServer and HttpClient."
+            ]
+        });
+
+        // Q16 - Explain C# async/await and Task-based programming
+        questions.push({
+            number: 16,
+            title: "Explain C# async/await and Task-based programming",
+            description:
+                "async and await is the primary model for asynchronous programming in C#. " +
+                "In ASP.NET Core, it is crucial for non-blocking I/O and scalability. " +
+                "However, improper use can cause thread pool starvation and performance issues.",
+            why:
+                "High-throughput APIs rely on async I/O to scale. " +
+                "Blocking calls using Task.Result or .Wait() can reduce concurrency and cause timeouts under load.",
+            what:
+                "An async method returns Task or Task<T>. The await keyword suspends the method until the awaited task completes, " +
+                "freeing the thread to serve other requests. ASP.NET Core does not use the legacy SynchronizationContext, reducing deadlock issues.",
+            how:
+                "Mark controller actions async and use asynchronous I/O APIs (EF Core async methods, HttpClient async APIs, etc.). " +
+                "Avoid blocking on tasks and use ConfigureAwait(false) appropriately in libraries.",
+            pros: [
+                "Improved scalability via non-blocking I/O",
+                "Simpler code compared to callbacks or manual tasks",
+                "Better CPU utilization under load"
+            ],
+            cons: [
+                "Learning curve for async flow and error handling",
+                "Potential for fire-and-forget bugs",
+                "Unobserved exceptions if tasks are not awaited",
+                "Can complicate debugging stack traces"
+            ],
+            diagram: `flowchart TD
+    A[HTTP Request] --> B[Async Controller]
+    B --> C[Async DB Call]
+    C -->|I/O Pending| D[Thread to Pool]
+    D --> E[Serve Other Requests]
+    C -->|Completed| F[Continuation]
+    F --> G[Build Response]
+    G --> H[Send Response]`,
+            implementation: `// Good: fully async controller
+[ApiController]
+[Route("api/[controller]")]
+public class ProductsController : ControllerBase
+{
+    private readonly AppDbContext _db;
+
+    public ProductsController(AppDbContext db) => _db = db;
+
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<Product>>> Get()
+    {
+        var products = await _db.Products
+            .AsNoTracking()
+            .ToListAsync();
+        return Ok(products);
+    }
+}
+
+// Bad: blocking on async
+public IActionResult GetSync()
+{
+    // This can cause thread-pool starvation
+    var products = _db.Products.ToListAsync().Result;
+    return Ok(products);
+}`,
+            approaches: [
+                "Make the entire call chain async all the way down.",
+                "Never block on async code in web apps.",
+                "Use async APIs for DB, HTTP, IO, and messaging.",
+                "Log and handle Task cancellations gracefully.",
+                "Apply ConfigureAwait(false) in class libraries where resume on context is not required."
+            ]
+        });
+
+        // Q17 - Explain LINQ and its query syntax vs method syntax
+        questions.push({
+            number: 17,
+            title: "Explain LINQ and its query syntax vs method syntax",
+            description:
+                "LINQ (Language Integrated Query) provides a unified way to query data from various sources. " +
+                "It supports both query syntax (SQL-like) and method syntax (fluent API). " +
+                "LINQ uses deferred execution, meaning queries are not executed until enumerated.",
+            why:
+                "LINQ is fundamental to C# development and enables functional programming patterns. " +
+                "Understanding deferred execution is crucial for performance and memory efficiency.",
+            what:
+                "Query Syntax: SQL-like syntax using from, where, orderby, select keywords. " +
+                "Method Syntax: Fluent API using extension methods like Where, OrderBy, Select. " +
+                "Deferred Execution: Query not executed until enumerated (ToList, ToArray, foreach).",
+            how:
+                "Use query syntax for complex joins and grouping. " +
+                "Use method syntax for simple filtering and transformations. " +
+                "Materialize queries with ToList() or ToArray() when you need the results immediately.",
+            pros: [
+                "Unified query syntax for different data sources",
+                "Type-safe queries with IntelliSense support",
+                "Deferred execution for efficient memory usage",
+                "Composable and chainable operations"
+            ],
+            cons: [
+                "Learning curve for complex queries",
+                "Potential performance issues if not used correctly",
+                "N+1 query problem if not careful with navigation properties"
+            ],
+            diagram: `flowchart TD
+    A[Data Source] --> B[LINQ Query]
+    B --> C[Query Syntax]
+    B --> D[Method Syntax]
+    C --> E[Deferred Execution]
+    D --> E
+    E --> F[Materialization]
+    F --> G[Results]`,
+            implementation: `// Query Syntax
+var result = from user in users
+             where user.Age > 18
+             orderby user.Name
+             select user.Name;
+
+// Method Syntax
+var result = users
+    .Where(user => user.Age > 18)
+    .OrderBy(user => user.Name)
+    .Select(user => user.Name);
+
+// Deferred Execution
+var query = users.Where(u => u.IsActive); // Not executed yet
+var list = query.ToList(); // Now executed
+
+// Immediate Execution
+var count = users.Count(); // Executed immediately`,
+            approaches: [
+                "Use query syntax for complex joins and grouping.",
+                "Use method syntax for simple filtering and transformations.",
+                "Materialize queries with ToList() or ToArray() when needed.",
+                "Be aware of deferred execution to avoid multiple enumerations.",
+                "Use AsQueryable() for database queries to translate to SQL."
+            ]
+        });
+
+        // Q18 - Explain C# generics and constraints
+        questions.push({
+            number: 18,
+            title: "Explain C# generics and constraints",
+            description:
+                "Generics enable type-safe code reuse by allowing classes, methods, and interfaces to work with any data type. " +
+                "Constraints restrict the types that can be used as type arguments, ensuring type safety and enabling specific operations.",
+            why:
+                "Generics provide type safety at compile-time, eliminate boxing/unboxing overhead, and enable code reuse without sacrificing type safety.",
+            what:
+                "Generics allow you to define type parameters that are specified when the generic type is used. " +
+                "Constraints (where T : class, where T : struct, where T : new(), where T : IComparable) restrict what types can be used.",
+            how:
+                "Define generic types with type parameters: class Repository<T>. " +
+                "Add constraints: where T : class, where T : IComparable. " +
+                "Use generic types: var repo = new Repository<User>();",
+            pros: [
+                "Type-safe code reuse",
+                "Compile-time type checking",
+                "Performance benefits (no boxing)",
+                "IntelliSense support"
+            ],
+            cons: [
+                "Can make code more complex",
+                "Learning curve for advanced scenarios",
+                "Some constraints can be restrictive"
+            ],
+            diagram: `flowchart TD
+    A[Generic Type Definition] --> B[Type Parameter T]
+    B --> C[Constraints]
+    C --> D[where T : class]
+    C --> E[where T : struct]
+    C --> F[where T : IComparable]
+    D --> G[Concrete Type Usage]
+    E --> G
+    F --> G`,
+            implementation: `// Generic class with constraints
+public class Repository<T> where T : class
+{
+    private List<T> _items = new List<T>();
+    
+    public void Add(T item)
+    {
+        _items.Add(item);
+    }
+    
+    public T GetById(int id)
+    {
+        return _items.FirstOrDefault();
+    }
+}
+
+// Generic method
+public static T Max<T>(T a, T b) where T : IComparable<T>
+{
+    return a.CompareTo(b) > 0 ? a : b;
+}
+
+// Usage
+var userRepo = new Repository<User>();
+var maxValue = Max(10, 20);`,
+            approaches: [
+                "Use generics for code that works with multiple types.",
+                "Apply constraints to ensure type safety and enable specific operations.",
+                "Prefer generic collections (List<T>, Dictionary<K,V>) over non-generic ones.",
+                "Use generic methods for algorithms that work with multiple types.",
+                "Consider covariance and contravariance for interfaces."
+            ]
+        });
+
+        // Q19 - Explain C# delegates, events, and lambda expressions
+        questions.push({
+            number: 19,
+            title: "Explain C# delegates, events, and lambda expressions",
+            description:
+                "Delegates are type-safe function pointers that can reference methods. " +
+                "Events are a special type of delegate that follow the observer pattern. " +
+                "Lambda expressions provide a concise way to write anonymous functions.",
+            why:
+                "Delegates and events enable event-driven programming and decoupling. " +
+                "Lambda expressions simplify code and are essential for LINQ and functional programming patterns.",
+            what:
+                "Delegates: Type-safe function pointers that can reference methods, support multicast. " +
+                "Events: Special type of delegate, encapsulated delegate, follow observer pattern. " +
+                "Lambda Expressions: Anonymous functions written with => syntax.",
+            how:
+                "Define delegates: public delegate void Notify(string message). " +
+                "Use events: public event Notify OnNotify. " +
+                "Use lambdas: var result = numbers.Select(x => x * x).",
+            pros: [
+                "Type-safe function references",
+                "Enables event-driven programming",
+                "Concise syntax with lambdas",
+                "Essential for LINQ and functional programming"
+            ],
+            cons: [
+                "Can make code harder to debug",
+                "Memory leaks if events not unsubscribed",
+                "Learning curve for complex scenarios"
+            ],
+            diagram: `flowchart TD
+    A[Delegate Definition] --> B[Method Reference]
+    A --> C[Lambda Expression]
+    B --> D[Event Subscription]
+    C --> D
+    D --> E[Event Invocation]
+    E --> F[Subscribed Methods Execute]`,
+            implementation: `// Delegate definition
+public delegate void Notify(string message);
+
+// Event usage
+public class Publisher
+{
+    public event Notify OnNotify;
+    
+    public void DoSomething()
+    {
+        OnNotify?.Invoke("Something happened");
+    }
+}
+
+// Lambda expressions
+Func<int, int> square = x => x * x;
+
+// Used in LINQ
+var numbers = new[] { 1, 2, 3, 4, 5 };
+var squares = numbers.Select(x => x * x);
+
+// Event subscription
+var publisher = new Publisher();
+publisher.OnNotify += message => Console.WriteLine(message);`,
+            approaches: [
+                "Use delegates for callback scenarios.",
+                "Use events for observer pattern implementations.",
+                "Prefer lambda expressions for short, simple functions.",
+                "Unsubscribe from events to prevent memory leaks.",
+                "Use Action<T> and Func<T> for common delegate scenarios."
+            ]
+        });
+
+        // Q20 - Explain C# reflection and attributes
+        questions.push({
+            number: 20,
+            title: "Explain C# reflection and attributes",
+            description:
+                "Reflection allows you to inspect types, methods, and properties at runtime. " +
+                "Attributes provide metadata that can be accessed via reflection. " +
+                "Together, they enable frameworks like ASP.NET Core, Entity Framework, and serialization libraries.",
+            why:
+                "Reflection and attributes are fundamental to many .NET frameworks. " +
+                "Understanding them is crucial for building extensible systems and working with existing frameworks.",
+            what:
+                "Reflection: Inspect types at runtime, access metadata, create instances dynamically. " +
+                "Attributes: Metadata annotations applied to types and members, accessible via reflection.",
+            how:
+                "Use typeof() to get Type objects. " +
+                "Use GetProperties(), GetMethods() to inspect members. " +
+                "Apply attributes with [AttributeName] syntax. " +
+                "Access attributes via GetCustomAttributes().",
+            pros: [
+                "Enables dynamic type inspection",
+                "Foundation for many frameworks",
+                "Allows metadata-driven programming",
+                "Enables extensibility"
+            ],
+            cons: [
+                "Performance overhead",
+                "No compile-time checking",
+                "Can make code harder to understand",
+                "Security considerations"
+            ],
+            diagram: `flowchart TD
+    A[Type Definition] --> B[Attributes Applied]
+    B --> C[Reflection API]
+    C --> D[GetType]
+    C --> E[GetProperties]
+    C --> F[GetCustomAttributes]
+    D --> G[Runtime Inspection]
+    E --> G
+    F --> G`,
+            implementation: `// Attributes
+[Serializable]
+[Author("John Doe")]
+public class MyClass
+{
+    [Required]
+    [MaxLength(100)]
+    public string Name { get; set; }
+}
+
+// Reflection
+Type type = typeof(MyClass);
+PropertyInfo[] properties = type.GetProperties();
+MethodInfo method = type.GetMethod("MyMethod");
+object instance = Activator.CreateInstance(type);
+
+// Accessing attributes
+var attributes = type.GetCustomAttributes(typeof(AuthorAttribute), false);
+var author = (AuthorAttribute)attributes[0];`,
+            approaches: [
+                "Use reflection sparingly due to performance overhead.",
+                "Cache reflection results when possible.",
+                "Use attributes for metadata that frameworks can consume.",
+                "Consider source generators as an alternative to runtime reflection.",
+                "Be aware of security implications of reflection."
+            ]
+        });
+
+        // Generic topics for Q21–Q50
         const advancedTopics = [
             "CQRS and MediatR-based architecture in .NET",
             "Domain-driven design layers in a .NET Core solution",
@@ -1230,78 +1762,333 @@ public class OrdersV2Controller : ControllerBase
             "Custom authentication handlers and schemes"
         ];
 
+        // Enhanced question templates with detailed content
+        const detailedQuestionTemplates = {
+            "CQRS and MediatR-based architecture in .NET": {
+                description: "CQRS (Command Query Responsibility Segregation) separates read and write operations. MediatR is a popular .NET library that implements the mediator pattern, enabling CQRS by routing requests to appropriate handlers. This pattern improves scalability and allows independent optimization of read and write paths.",
+                why: "CQRS is essential for high-performance systems where read and write workloads differ significantly. MediatR simplifies implementation by providing a clean way to handle commands and queries without tight coupling between components.",
+                what: "CQRS separates commands (write operations) from queries (read operations). MediatR acts as a mediator, routing requests to appropriate handlers. Commands change state, queries return data without side effects.",
+                how: "Define command and query classes, create handlers implementing IRequestHandler, register MediatR services, and use IMediator to send requests. Use separate read and write models for optimal performance.",
+                implementation: `// Command
+public class CreateOrderCommand : IRequest<OrderDto>
+{
+    public string CustomerId { get; set; }
+    public List<OrderItemDto> Items { get; set; }
+}
+
+// Command Handler
+public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, OrderDto>
+{
+    private readonly IOrderRepository _repository;
+    
+    public CreateOrderCommandHandler(IOrderRepository repository)
+    {
+        _repository = repository;
+    }
+    
+    public async Task<OrderDto> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
+    {
+        var order = new Order { CustomerId = request.CustomerId };
+        await _repository.AddAsync(order);
+        return MapToDto(order);
+    }
+}
+
+// Query
+public class GetOrderQuery : IRequest<OrderDto>
+{
+    public int OrderId { get; set; }
+}
+
+// Query Handler
+public class GetOrderQueryHandler : IRequestHandler<GetOrderQuery, OrderDto>
+{
+    private readonly IOrderReadRepository _readRepository;
+    
+    public async Task<OrderDto> Handle(GetOrderQuery request, CancellationToken cancellationToken)
+    {
+        return await _readRepository.GetByIdAsync(request.OrderId);
+    }
+}
+
+// Usage in Controller
+[HttpPost]
+public async Task<IActionResult> CreateOrder(CreateOrderCommand command)
+{
+    var result = await _mediator.Send(command);
+    return Ok(result);
+}
+
+// Registration
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));`
+            },
+            "Using Span<T> and Memory<T> for high-performance APIs": {
+                description: "Span<T> and Memory<T> are stack-allocated and heap-allocated slices respectively, enabling zero-copy operations on arrays and memory buffers. They are crucial for high-performance scenarios where avoiding allocations is critical.",
+                why: "In high-throughput APIs, memory allocations can become a bottleneck. Span<T> and Memory<T> allow working with data without copying, significantly improving performance in scenarios like parsing, serialization, and data transformation.",
+                what: "Span<T> is a stack-only struct that provides a view over contiguous memory. Memory<T> is similar but can be stored on the heap. Both enable zero-copy operations and are essential for performance-critical code.",
+                how: "Use Span<T> for stack-allocated scenarios and Memory<T> when you need to store references. Convert arrays to spans, use ReadOnlySpan for immutable operations, and leverage stackalloc for small buffers.",
+                implementation: `// Using Span<T> for zero-copy parsing
+public static int ParseInt(ReadOnlySpan<char> span)
+{
+    int result = 0;
+    foreach (var c in span)
+    {
+        if (char.IsDigit(c))
+        {
+            result = result * 10 + (c - '0');
+        }
+    }
+    return result;
+}
+
+// Usage
+var text = "12345";
+var span = text.AsSpan();
+var number = ParseInt(span);
+
+// Using Memory<T> for async scenarios
+public async Task ProcessDataAsync(Memory<byte> data)
+{
+    // Can be stored and passed to async methods
+    await ProcessChunkAsync(data.Slice(0, 100));
+}
+
+// Stack allocation for small buffers
+Span<byte> buffer = stackalloc byte[256];
+ProcessBuffer(buffer);`
+            },
+            "Records versus classes for immutable DTOs and domain objects": {
+                description: "C# records provide a concise way to create immutable reference types with value-based equality. They are ideal for DTOs, value objects, and immutable domain entities where equality is based on values rather than reference identity.",
+                why: "Records reduce boilerplate code for immutable types, provide built-in value equality, and make intent clear. They are perfect for DTOs, API responses, and value objects in domain-driven design.",
+                what: "Records are reference types with value semantics. They automatically generate equality members, ToString(), and support with expressions for creating modified copies. Classes are better for mutable entities with identity.",
+                how: "Use records for DTOs, value objects, and immutable data. Use classes for entities with identity and mutable state. Leverage with expressions to create modified copies of records.",
+                implementation: `// Record for DTO
+public record OrderDto(
+    int Id,
+    string CustomerName,
+    decimal Total,
+    DateTime CreatedAt
+);
+
+// Value object as record
+public record Money(decimal Amount, string Currency)
+{
+    public Money Add(Money other)
+    {
+        if (Currency != other.Currency)
+            throw new InvalidOperationException("Cannot add different currencies");
+        return this with { Amount = Amount + other.Amount };
+    }
+}
+
+// Class for entity with identity
+public class Order
+{
+    public int Id { get; private set; }
+    public string CustomerId { get; private set; }
+    public OrderStatus Status { get; private set; }
+    
+    public void ChangeStatus(OrderStatus newStatus)
+    {
+        Status = newStatus;
+    }
+}
+
+// Usage
+var dto = new OrderDto(1, "John", 100.50m, DateTime.UtcNow);
+var updated = dto with { Total = 150.00m }; // Creates new record`
+            },
+            "Custom authentication handlers and schemes": {
+                description: "ASP.NET Core authentication is built on a scheme-based system where you can create custom authentication handlers. This allows implementing custom authentication logic such as API keys, custom tokens, or integration with external identity providers.",
+                why: "Custom authentication handlers are essential when standard authentication schemes don't meet requirements. They enable integration with legacy systems, custom token formats, or specialized authentication protocols.",
+                what: "Authentication handlers implement AuthenticationHandler<TOptions> and handle authentication challenges. Schemes are registered with AddAuthentication and can be combined. Handlers validate credentials and create authentication tickets.",
+                how: "Create a custom handler class inheriting from AuthenticationHandler, implement HandleAuthenticateAsync, register the scheme with AddAuthentication().AddScheme(), and use [Authorize(AuthenticationSchemes = \"CustomScheme\")].",
+                implementation: `// Custom authentication options
+public class ApiKeyAuthenticationOptions : AuthenticationSchemeOptions
+{
+    public string ApiKeyHeaderName { get; set; } = "X-API-Key";
+    public string ValidApiKey { get; set; } = string.Empty;
+}
+
+// Custom authentication handler
+public class ApiKeyAuthenticationHandler : AuthenticationHandler<ApiKeyAuthenticationOptions>
+{
+    public ApiKeyAuthenticationHandler(
+        IOptionsMonitor<ApiKeyAuthenticationOptions> options,
+        ILoggerFactory logger,
+        UrlEncoder encoder,
+        ISystemClock clock)
+        : base(options, logger, encoder, clock)
+    {
+    }
+
+    protected override Task<AuthenticateResult> HandleAuthenticateAsync()
+    {
+        if (!Request.Headers.TryGetValue(Options.ApiKeyHeaderName, out var apiKeyHeaderValues))
+        {
+            return Task.FromResult(AuthenticateResult.Fail("API Key was not provided"));
+        }
+
+        var providedApiKey = apiKeyHeaderValues.ToString();
+        if (providedApiKey != Options.ValidApiKey)
+        {
+            return Task.FromResult(AuthenticateResult.Fail("Invalid API Key"));
+        }
+
+        var claims = new[] { new Claim(ClaimTypes.Name, "ApiUser") };
+        var identity = new ClaimsIdentity(claims, Scheme.Name);
+        var principal = new ClaimsPrincipal(identity);
+        var ticket = new AuthenticationTicket(principal, Scheme.Name);
+
+        return Task.FromResult(AuthenticateResult.Success(ticket));
+    }
+}
+
+// Registration
+builder.Services.AddAuthentication("ApiKey")
+    .AddScheme<ApiKeyAuthenticationOptions, ApiKeyAuthenticationHandler>(
+        "ApiKey", options => 
+        {
+            options.ValidApiKey = builder.Configuration["ApiKey"];
+        });
+
+// Usage
+[Authorize(AuthenticationSchemes = "ApiKey")]
+[ApiController]
+public class SecureController : ControllerBase
+{
+    [HttpGet]
+    public IActionResult Get() => Ok("Authenticated");
+}`
+            }
+        };
+
         function generateGenericQuestion(index, topic) {
+            // Check if we have detailed template for this topic
+            const detailedTemplate = detailedQuestionTemplates[topic];
+            
+            if (detailedTemplate) {
+                return {
+                    number: index,
+                    title: `How would you implement and reason about ${topic} in a real-world .NET Core system?`,
+                    description: detailedTemplate.description,
+                    why: detailedTemplate.why,
+                    what: detailedTemplate.what,
+                    how: detailedTemplate.how,
+                    pros: [
+                        "Improved separation of concerns and testability",
+                        "Better resilience and fault tolerance in production",
+                        "Easier evolution of the system as requirements change",
+                        "Clearer boundaries between domain and infrastructure",
+                        "Enhanced performance and scalability"
+                    ],
+                    cons: [
+                        "Higher initial complexity and learning curve",
+                        "More moving parts to monitor and operate",
+                        "Risk of over-engineering for small systems",
+                        "Requires strong team discipline and documentation",
+                        "Additional abstraction layers to understand"
+                    ],
+                    diagram: `flowchart TD
+    A["API Layer"] --> B["Application Layer"]
+    B --> C["Domain Layer"]
+    B --> D["Infrastructure Layer"]
+    D --> E["External Systems"]`,
+                    implementation: detailedTemplate.implementation,
+                    approaches: [
+                        "Start from domain use-cases and derive where this pattern fits.",
+                        "Implement a vertical slice end to end before generalizing.",
+                        "Add observability from day one using logs, metrics, and traces.",
+                        "Document the decision in an architecture decision record.",
+                        "Continuously review and simplify patterns that are not pulling their weight.",
+                        "Consider performance implications and measure before optimizing."
+                    ]
+                };
+            }
+            
+            // Default generic question
             return {
                 number: index,
                 title: `How would you implement and reason about ${topic} in a real-world .NET Core system?`,
                 description:
                     `${topic} is a common advanced requirement in enterprise .NET applications. ` +
                     `It affects how you design boundaries, handle reliability, and meet non-functional requirements ` +
-                    `such as performance, security, and maintainability.`,
+                    `such as performance, security, and maintainability. Understanding this topic is crucial for building ` +
+                    `scalable, maintainable, and performant .NET Core applications.`,
                 why:
-                    `Architects and senior engineers must understand ${topic} to make trade-offs between complexity, ` +
+                    `Architects and senior engineers must understand ${topic} to make informed trade-offs between complexity, ` +
                     `operational cost, and long-term flexibility. Poor design here often surfaces as production issues ` +
-                    `under load or during failures.`,
+                    `under load or during failures. This knowledge enables teams to build robust systems that can evolve over time.`,
                 what:
                     `${topic} typically involves combining core .NET features (async and await, dependency injection, configuration, logging) ` +
                     `with architectural patterns such as clean architecture, domain-driven design, microservices, or modular monoliths. ` +
-                    `The goal is to keep domain code clean while handling cross-cutting concerns in the infrastructure layer.`,
+                    `The goal is to keep domain code clean while handling cross-cutting concerns in the infrastructure layer. ` +
+                    `This requires deep understanding of .NET Core internals and best practices.`,
                 how:
                     `In practice, you would design an abstraction in the application or domain layer and provide ` +
                     `one or more infrastructure implementations. You would register them via dependency injection with appropriate lifetimes, ` +
-                    `configure them via options, and validate their behavior via integration tests. Observability ` +
-                    `is added via middleware, filters, or pipeline behaviors.`,
+                    `configure them via options pattern, and validate their behavior via integration tests. Observability ` +
+                    `is added via middleware, filters, or pipeline behaviors. Performance optimization involves profiling, ` +
+                    `caching strategies, and efficient resource management.`,
                 pros: [
                     "Improved separation of concerns and testability",
                     "Better resilience and fault tolerance in production",
                     "Easier evolution of the system as requirements change",
-                    "Clearer boundaries between domain and infrastructure"
+                    "Clearer boundaries between domain and infrastructure",
+                    "Enhanced performance through optimized patterns"
                 ],
                 cons: [
                     "Higher initial complexity and learning curve",
                     "More moving parts to monitor and operate",
                     "Risk of over-engineering for small systems",
-                    "Requires strong team discipline and documentation"
+                    "Requires strong team discipline and documentation",
+                    "Additional cognitive overhead for team members"
                 ],
                 diagram: `flowchart TD
-    A[API Layer or Endpoints] --> B[Application Layer]
-    B --> C[Domain Layer]
-    B --> D[Infrastructure - ${topic}]
-    D --> E[External Systems or Resources]`,
-                implementation: `// Skeleton pattern showing separation
+    A["API Layer"] --> B["Application Layer"]
+    B --> C["Domain Layer"]
+    B --> D["Infrastructure Layer"]
+    D --> E["External Systems"]`,
+                implementation: `// Example implementation pattern for ${topic}
 
-// Domain layer
-public interface IAdvancedTopic${index}Service
+// Domain layer interface
+public interface I${topic.replace(/[^a-zA-Z0-9]/g, '')}Service
 {
-    Task HandleAsync(CancellationToken cancellationToken = default);
+    Task ProcessAsync(CancellationToken cancellationToken = default);
 }
 
 // Application layer implementation
-public class AdvancedTopic${index}Service : IAdvancedTopic${index}Service
+public class ${topic.replace(/[^a-zA-Z0-9]/g, '')}Service : I${topic.replace(/[^a-zA-Z0-9]/g, '')}Service
 {
-    private readonly ILogger<AdvancedTopic${index}Service> _logger;
+    private readonly ILogger<${topic.replace(/[^a-zA-Z0-9]/g, '')}Service> _logger;
+    private readonly IConfiguration _configuration;
 
-    public AdvancedTopic${index}Service(ILogger<AdvancedTopic${index}Service> logger)
+    public ${topic.replace(/[^a-zA-Z0-9]/g, '')}Service(
+        ILogger<${topic.replace(/[^a-zA-Z0-9]/g, '')}Service> logger,
+        IConfiguration configuration)
     {
         _logger = logger;
+        _configuration = configuration;
     }
 
-    public async Task HandleAsync(CancellationToken cancellationToken = default)
+    public async Task ProcessAsync(CancellationToken cancellationToken = default)
     {
-        _logger.LogInformation("Handling advanced concern: ${topic}");
-        // Apply pattern-specific logic here
+        _logger.LogInformation("Processing: ${topic}");
+        // Implementation specific to ${topic}
         await Task.CompletedTask;
     }
 }
 
-// Registration
-builder.Services.AddScoped<IAdvancedTopic${index}Service, AdvancedTopic${index}Service>();`,
+// Registration in Program.cs
+builder.Services.AddScoped<I${topic.replace(/[^a-zA-Z0-9]/g, '')}Service, ${topic.replace(/[^a-zA-Z0-9]/g, '')}Service>();`,
                 approaches: [
                     "Start from domain use-cases and derive where this pattern fits.",
                     "Implement a vertical slice end to end before generalizing.",
                     "Add observability from day one using logs, metrics, and traces.",
                     "Document the decision in an architecture decision record.",
-                    "Continuously review and simplify patterns that are not pulling their weight."
+                    "Continuously review and simplify patterns that are not pulling their weight.",
+                    "Measure performance impact before and after implementation.",
+                    "Consider team expertise and provide adequate training."
                 ]
             };
         }
@@ -1371,7 +2158,7 @@ builder.Services.AddScoped<IAdvancedTopic${index}Service, AdvancedTopic${index}S
                     <h3>4. Design Diagram</h3>
                     <div class="diagram-container">
                         <div class="diagram-title">Architecture Diagram</div>
-                        <div class="mermaid">${q.diagram}</div>
+                        <div class="mermaid" data-diagram="${q.diagram.replace(/"/g, '&quot;').replace(/\n/g, '\\n').replace(/</g, '&lt;').replace(/>/g, '&gt;')}">${q.diagram}</div>
                     </div>
                 </div>
 
@@ -1393,15 +2180,231 @@ builder.Services.AddScoped<IAdvancedTopic${index}Service, AdvancedTopic${index}S
             container.appendChild(card);
         });
 
-        // Initialize Mermaid after dynamic content is added
-        mermaid.initialize({
-            startOnLoad: false,
-            theme: "default"
-        });
+        // Function to apply black text styling to rendered SVG
+        function applyBlackTextStyling(svg) {
+            if (!svg) return;
+            
+            // Set SVG background to white
+            svg.style.backgroundColor = '#ffffff';
+            
+            // Force all text to black
+            const allTexts = svg.querySelectorAll('text, tspan');
+            allTexts.forEach(text => {
+                text.setAttribute('fill', '#000000');
+                text.style.fill = '#000000';
+                text.style.color = '#000000';
+            });
+            
+            // Update node styles
+            const nodes = svg.querySelectorAll('.node rect, .node circle, .node ellipse, .cluster rect');
+            nodes.forEach(node => {
+                node.setAttribute('fill', '#ffffff');
+                node.setAttribute('stroke', '#000000');
+                node.style.fill = '#ffffff';
+                node.style.stroke = '#000000';
+            });
+            
+            // Update edge colors
+            const edges = svg.querySelectorAll('.edgePath .path, .edgePath marker path, line');
+            edges.forEach(edge => {
+                edge.setAttribute('stroke', '#000000');
+                edge.style.stroke = '#000000';
+            });
+            
+            // Update arrowheads
+            const arrows = svg.querySelectorAll('.arrowheadPath, marker path');
+            arrows.forEach(arrow => {
+                arrow.setAttribute('fill', '#000000');
+                arrow.style.fill = '#000000';
+            });
+        }
 
-        setTimeout(() => {
-            mermaid.run({ querySelector: ".mermaid" });
-        }, 200);
+        // Initialize and render mermaid diagrams
+        function renderMermaidDiagrams() {
+            // Check if mermaid is loaded
+            if (typeof mermaid === 'undefined') {
+                console.error('Mermaid library not loaded');
+                return;
+            }
+
+            // Log mermaid version info for debugging
+            console.log('Mermaid loaded. Available methods:', Object.keys(mermaid).filter(k => typeof mermaid[k] === 'function'));
+
+            // Initialize Mermaid
+            mermaid.initialize({
+                startOnLoad: false,
+                theme: "default",
+                themeVariables: {
+                    primaryColor: "#ffffff",
+                    primaryTextColor: "#000000",
+                    primaryBorderColor: "#000000",
+                    lineColor: "#000000",
+                    secondaryColor: "#f0f0f0",
+                    tertiaryColor: "#ffffff",
+                    textColor: "#000000",
+                    mainBkg: "#ffffff",
+                    secondBkg: "#f0f0f0",
+                    tertiaryBkg: "#ffffff"
+                },
+                flowchart: {
+                    useMaxWidth: true,
+                    htmlLabels: true,
+                    curve: 'basis',
+                    nodeSpacing: 50,
+                    rankSpacing: 50
+                }
+            });
+
+            // Get all mermaid elements
+            const mermaidElements = document.querySelectorAll('.mermaid');
+            console.log(`Found ${mermaidElements.length} mermaid diagrams to render`);
+            
+            if (mermaidElements.length === 0) {
+                console.warn('No mermaid diagrams found');
+                return;
+            }
+
+            // Render each diagram individually using Promise.all for better error handling
+            const renderPromises = Array.from(mermaidElements).map(async (element, index) => {
+                try {
+                    // Get the diagram definition from data attribute first (cleanest source)
+                    // If not available, get from textContent
+                    let graphDefinition = element.getAttribute('data-diagram');
+                    
+                    // If data attribute exists, unescape it
+                    if (graphDefinition) {
+                        graphDefinition = graphDefinition.replace(/\\n/g, '\n')
+                            .replace(/&quot;/g, '"')
+                            .replace(/&lt;/g, '<')
+                            .replace(/&gt;/g, '>');
+                    } else {
+                        // Fallback to textContent
+                        graphDefinition = element.textContent || element.innerText || '';
+                    }
+                    
+                    // Clean the definition - remove any CSS or style tags that might have been injected
+                    graphDefinition = graphDefinition.trim();
+                    
+                    // Remove any CSS styles that might be in the text (from previous failed renders)
+                    graphDefinition = graphDefinition.replace(/#mermaid-\d+{[^}]*}/g, '');
+                    graphDefinition = graphDefinition.replace(/#mermaid-\d+\s*\{[^}]*\}/g, '');
+                    graphDefinition = graphDefinition.replace(/\{[^}]*font[^}]*\}/gi, '');
+                    graphDefinition = graphDefinition.replace(/\{[^}]*fill[^}]*\}/gi, '');
+                    
+                    // Find the actual diagram definition - it should start with a diagram type
+                    const diagramTypes = ['flowchart', 'graph', 'sequenceDiagram', 'classDiagram', 'stateDiagram', 'erDiagram', 'journey', 'gantt', 'pie', 'gitgraph', 'requirement'];
+                    let cleanDefinition = '';
+                    
+                    // Look for diagram type at the start or after whitespace
+                    for (const type of diagramTypes) {
+                        const regex = new RegExp(`^\\s*${type}[\\s\\n]`, 'i');
+                        if (regex.test(graphDefinition)) {
+                            // Found at start, use it
+                            cleanDefinition = graphDefinition.trim();
+                            break;
+                        }
+                        const index = graphDefinition.toLowerCase().indexOf(type);
+                        if (index !== -1) {
+                            // Found diagram type, extract from here
+                            cleanDefinition = graphDefinition.substring(index).trim();
+                            break;
+                        }
+                    }
+                    
+                    // If still no clean definition, use the original but validate it
+                    if (!cleanDefinition) {
+                        cleanDefinition = graphDefinition.trim();
+                    }
+                    
+                    // Validate that it starts with a diagram type
+                    const startsWithDiagramType = diagramTypes.some(type => 
+                        cleanDefinition.toLowerCase().trim().startsWith(type.toLowerCase())
+                    );
+                    
+                    if (!startsWithDiagramType) {
+                        console.warn(`Diagram ${index} doesn't start with a valid diagram type.`);
+                        console.warn('Content preview:', cleanDefinition.substring(0, 200));
+                        element.innerHTML = '<div style="color: #e0e0e0; padding: 20px; text-align: center; border: 1px solid #ffaa00;">' +
+                            '<p style="color: #ffaa00;">Invalid diagram format.</p>' +
+                            '<p style="font-size: 11px; color: #999;">Diagram must start with: flowchart, graph, sequenceDiagram, etc.</p>' +
+                            '</div>';
+                        return;
+                    }
+                    
+                    if (!cleanDefinition) {
+                        console.warn(`Empty mermaid diagram at index ${index}`);
+                        return;
+                    }
+                    
+                    // Generate unique ID for this diagram
+                    const id = 'mermaid-' + index + '-' + Date.now();
+                    
+                    console.log(`Rendering diagram ${index}, definition length: ${cleanDefinition.length}`);
+                    
+                    // Use mermaid.render() API - this is the most reliable method
+                    try {
+                        const result = await mermaid.render(id, cleanDefinition);
+                        // mermaid.render() returns {svg, bindFunctions}
+                        if (result && result.svg) {
+                            element.innerHTML = result.svg;
+                            
+                            // Apply black text styling
+                            const svgElement = element.querySelector('svg');
+                            if (svgElement) {
+                                applyBlackTextStyling(svgElement);
+                            }
+                        } else {
+                            throw new Error('Invalid result from mermaid.render()');
+                        }
+                    } catch (renderError) {
+                        console.error(`Error rendering diagram ${index}:`, renderError);
+                        console.error('Clean diagram definition (first 300 chars):', cleanDefinition.substring(0, 300));
+                        console.error('Original text (first 300 chars):', graphDefinition.substring(0, 300));
+                        
+                        // Show error message with diagram text for debugging
+                        element.innerHTML = '<div style="color: #e0e0e0; padding: 20px; text-align: center; border: 1px solid #ff4444; background: rgba(255,68,68,0.1);">' +
+                            '<p style="color: #ff4444; font-weight: bold;">Diagram rendering error</p>' +
+                            '<p style="font-size: 11px; color: #999; margin-top: 10px;">Index: ' + index + '</p>' +
+                            '<details style="margin-top: 10px; text-align: left;"><summary style="cursor: pointer; color: #00d4ff;">Show error details</summary>' +
+                            '<pre style="font-size: 10px; color: #ccc; margin-top: 5px; overflow-x: auto; max-height: 200px;">' + 
+                            (renderError.message || String(renderError)) + 
+                            '</pre></details>' +
+                            '</div>';
+                    }
+                } catch (error) {
+                    console.error(`Error processing diagram ${index}:`, error);
+                    element.innerHTML = '<div style="color: #e0e0e0; padding: 20px; text-align: center;">' +
+                        '<p>Diagram processing error.</p>' +
+                        '</div>';
+                }
+            });
+            
+            // Wait for all diagrams to render
+            Promise.all(renderPromises).then(() => {
+                console.log('All mermaid diagrams processed');
+            }).catch((error) => {
+                console.error('Error in mermaid rendering batch:', error);
+            });
+        }
+
+        // Wait for everything to be ready
+        function initMermaid() {
+            // Wait for mermaid library
+            if (typeof mermaid === 'undefined') {
+                setTimeout(initMermaid, 100);
+                return;
+            }
+            
+            // Wait a bit more for DOM to be fully ready
+            setTimeout(renderMermaidDiagrams, 300);
+        }
+
+        // Start initialization
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initMermaid);
+        } else {
+            initMermaid();
+        }
     </script>
 </body>
 </html>

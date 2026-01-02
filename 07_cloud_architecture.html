@@ -1,0 +1,1945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Architecture Interview Questions - FAANG Interview Questions</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.7;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            border-bottom: 4px solid #3498db;
+            padding-bottom: 15px;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+        }
+        
+        h2 {
+            color: #34495e;
+            margin-top: 50px;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: linear-gradient(90deg, #3498db22, transparent);
+            border-left: 5px solid #2980b9;
+            padding-left: 20px;
+        }
+        
+        h3 {
+            color: #2980b9;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.6em;
+            padding: 15px;
+            background: #ecf0f1;
+            border-radius: 5px;
+        }
+        
+        h4 {
+            color: #555;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        h5 {
+            color: #666;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        p {
+            margin-bottom: 18px;
+            text-align: justify;
+            font-size: 1.05em;
+        }
+        
+        ul, ol {
+            margin-left: 35px;
+            margin-bottom: 20px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #e83e8c;
+            border: 1px solid #e0e0e0;
+        }
+        
+        pre {
+            background: #2d2d2d;
+            padding: 25px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 25px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        pre code {
+            background: transparent;
+            padding: 0;
+            color: #f8f8f2;
+            font-size: 0.95em;
+            border: none;
+        }
+        
+        .pros-cons {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-left: 5px solid #28a745;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .pros {
+            margin-bottom: 25px;
+        }
+        
+        .pros h5 {
+            color: #28a745;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        .pros ul {
+            list-style: none;
+            margin-left: 0;
+        }
+        
+        .pros li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .pros li:before {
+            content: "✓";
+            color: #28a745;
+            font-weight: bold;
+            font-size: 1.2em;
+            position: absolute;
+            left: 0;
+        }
+        
+        .cons {
+            margin-top: 25px;
+        }
+        
+        .cons h5 {
+            color: #dc3545;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        .cons ul {
+            list-style: none;
+            margin-left: 0;
+        }
+        
+        .cons li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .cons li:before {
+            content: "✗";
+            color: #dc3545;
+            font-weight: bold;
+            font-size: 1.2em;
+            position: absolute;
+            left: 0;
+        }
+        
+        .mermaid {
+            background: white;
+            padding: 30px;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        hr {
+            border: none;
+            border-top: 3px solid #ecf0f1;
+            margin: 40px 0;
+        }
+        
+        strong {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        
+        em {
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        table th {
+            background: #3498db;
+            color: white;
+        }
+        
+        table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .section {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .section h4 {
+            color: #2980b9;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .problem-statement {
+            background: #e8f4f8;
+            border-left-color: #3498db;
+        }
+        
+        .example {
+            background: #fff9e6;
+            border-left-color: #f39c12;
+        }
+        
+        .detailed-explanation {
+            background: #f0f8f0;
+            border-left-color: #27ae60;
+        }
+        
+        .approach {
+            background: #f5f0ff;
+            border-left-color: #9b59b6;
+        }
+        
+        .complexity {
+            background: #ffe8e8;
+            border-left-color: #e74c3c;
+        }
+        
+        .code-solution {
+            background: #2d2d2d;
+            border-left-color: #f39c12;
+        }
+        
+        .code-solution h4 {
+            color: #f8f8f2;
+        }
+        
+        .code-solution p {
+            color: #f8f8f2;
+        }
+        
+        .step-section {
+            background: #fafafa;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 3px solid #95a5a6;
+            border-radius: 4px;
+        }
+        
+        .step-section {
+            background: #fafafa;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 3px solid #95a5a6;
+            border-radius: 4px;
+        }
+        
+        .step-section h5 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        
+        .step-section strong {
+            color: #2c3e50;
+        }
+        
+        .why-faang {
+            background: #fff3cd;
+            border-left-color: #ffc107;
+        }
+        
+        .why-faang h4 {
+            color: #856404;
+        }
+        
+        .section ul, .section ol {
+            margin-left: 25px;
+        }
+        
+        .section pre {
+            margin: 15px 0;
+        }
+        
+        .explanation-content, .approach-content {
+            line-height: 1.8;
+        }
+        
+        .explanation-content p, .approach-content p {
+            margin-bottom: 12px;
+        }
+        
+        .explanation-content ul, .approach-content ul {
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .explanation-content li, .approach-content li {
+            margin-bottom: 8px;
+        }
+        
+        .walkthrough {
+            background: #f0f7ff;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+            border-radius: 5px;
+        }
+        
+        .walkthrough h5 {
+            color: #2980b9;
+            margin-top: 0;
+        }
+        
+        .code-explanation {
+            background: #2d2d2d;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .code-explanation h5 {
+            color: #f8f8f2;
+            margin-top: 0;
+        }
+        
+        .code-explanation p {
+            color: #f8f8f2;
+        }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            transition: background 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .back-btn:hover {
+            background: #2980b9;
+        }
+        
+        .back-btn i {
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            h2 {
+                font-size: 1.4em;
+            }
+            
+            h3 {
+                font-size: 1.3em;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <a href="interview.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Interview Guide</a>
+        <h1>Cloud Architecture Interview Questions</h1>
+
+<h2>Table of Contents</h2>
+<ul><li>[Cloud Fundamentals](#cloud-fundamentals)</li>
+<li>[AWS Services](#aws-services)</li>
+<li>[Azure Services](#azure-services)</li>
+<li>[GCP Services](#gcp-services)</li>
+<li>[Serverless Architecture](#serverless-architecture)</li>
+<li>[Containerization](#containerization)</li>
+<li>[DevOps & CI/CD](#devops--cicd)</li>
+<li>[Security & Compliance](#security--compliance)</li>
+</ul>
+<hr>
+
+<h2>Cloud Fundamentals</h2>
+
+<h3>Question 1: Design a scalable cloud architecture for a web application.</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a cloud architecture that can handle millions of users with high availability and scalability.
+
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Real-World Scenario - FastMCP Deployment:</strong>
+<p><em>Scenario: Deploying FastMCP (CrewAI-style multi-agent system) to handle 10 million workflow executions per month with 99.9% availability, supporting users globally.</em></p>
+
+<strong>Architecture Components:</strong>
+
+<p><div class="mermaid">
+graph TD
+    n1["Users"]
+    n2["CloudFront/CDN"]
+    n3["Load Balancer"]
+    n4["App App App App Server 1 Server 2 Server 3 Server N (Auto (Auto (Auto (Auto Scaling) Scaling) Scaling) Scaling)"]
+    n5["ElastiCache RDS/ (Redis) DynamoDB"]
+    n1 --> n2
+    n2 --> n3
+    n3 --> n4
+    n4 --> n5
+
+</div></p>
+
+<h4>Key Components</h4>
+
+<ul><li><strong>CDN (CloudFront):</strong></li>
+</ul>   - Cache static content at edge locations
+<p>- Reduce latency globally</p>
+<p>- Offload origin servers</p>
+
+<ul><li><strong>Load Balancer:</strong></li>
+</ul>   - Distribute traffic across instances
+<p>- Health checks</p>
+<p>- SSL termination</p>
+
+<ul><li><strong>Auto Scaling:</strong></li>
+</ul>   - Scale based on CPU, memory, or custom metrics
+<p>- Minimum, desired, maximum instances</p>
+<p>- Scale in/out automatically</p>
+
+<ul><li><strong>Caching Layer:</strong></li>
+</ul>   - Redis/ElastiCache for session data
+<p>- Reduce database load</p>
+<p>- Improve response times</p>
+
+<ul><li><strong>Database:</strong></li>
+</ul>   - RDS with read replicas
+<p>- Or DynamoDB for NoSQL</p>
+<p>- Multi-AZ for high availability</p>
+
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of cloud architecture</li>
+<li>Demonstrates knowledge of scalability patterns</li>
+<li>Shows ability to design for high availability</li>
+</ul>
+</div><hr>
+
+<h2>AWS Services</h2>
+
+<h3>Question 2: Explain AWS services for building a serverless application.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Real-World Scenario - Serverless Agent Workflow API:</strong>
+<p><em>Scenario: Building a serverless API for FastMCP that allows users to submit agent workflows, execute them asynchronously, and receive results. The system needs to handle 100K requests per day with auto-scaling and pay-per-use pricing.</em></p>
+
+<strong>Core Services:</strong>
+
+<ul><li><strong>Lambda (Compute):</strong></li>
+</ul>   - Serverless functions
+<p>- Pay per execution</p>
+<p>- Auto-scaling</p>
+
+<ul><li><strong>API Gateway:</strong></li>
+</ul>   - REST/HTTP APIs
+<p>- Authentication/authorization</p>
+<p>- Rate limiting</p>
+
+<ul><li><strong>DynamoDB (Database):</strong></li>
+</ul>   - NoSQL database
+<p>- Auto-scaling</p>
+<p>- Single-digit millisecond latency</p>
+
+<ul><li><strong>S3 (Storage):</strong></li>
+</ul>   - Object storage
+<p>- Versioning, lifecycle policies</p>
+<p>- Static website hosting</p>
+
+<ul><li><strong>CloudFront (CDN):</strong></li>
+</ul>   - Content delivery
+<p>- Edge locations</p>
+<p>- DDoS protection</p>
+
+<strong>FastMCP Serverless Architecture:</strong>
+
+<p><pre><code class="language-text">User submits workflow via API
+    │
+    ▼
+API Gateway (REST API, rate limiting, auth)
+    │
+    ▼
+Lambda Function (workflow orchestrator)
+    │                  │
+    │                  ▼
+    │            DynamoDB (workflow state, results)
+    │                  │
+    │                  ▼
+    │            S3 (store large outputs, logs)
+    │
+    ▼
+Step Functions (coordinate multi-step agent tasks)
+    │
+    ▼
+Lambda Functions (individual agent execution)
+    │
+    ▼
+SNS/SQS (notify completion, handle failures)
+</code></pre></p>
+
+<strong>Implementation Details:</strong>
+<ul><li><strong>API Gateway:</strong> RESTful API with JWT authentication, rate limiting (1000 req/min per user), request validation</li>
+<li><strong>Lambda Functions:</strong> 
+  - Workflow orchestrator: 512MB memory, 30s timeout
+  - Agent executors: 1GB memory, 5min timeout for complex tasks
+  - Result processor: 256MB memory, 10s timeout</li>
+<li><strong>DynamoDB:</strong> 
+  - Workflow table: Partition key (workflow_id), GSI on user_id for queries
+  - TTL enabled for completed workflows (30 days)
+  - On-demand billing for unpredictable traffic</li>
+<li><strong>S3:</strong> 
+  - Input bucket: User-uploaded data
+  - Output bucket: Agent execution results
+  - Lifecycle policies: Move to Glacier after 90 days</li>
+<li><strong>Step Functions:</strong> State machine for complex multi-agent workflows with retry logic and error handling</li>
+</ul>
+
+<strong>Cost Optimization:</strong>
+<ul><li>Lambda: Pay only for execution time (~$0.20 per 1M requests)</li>
+<li>DynamoDB: On-demand pricing, no capacity planning needed</li>
+<li>S3: Intelligent tiering for cost-effective storage</li>
+<li>Estimated monthly cost: ~$200-500 for 100K requests/day</li>
+</ul>
+
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests knowledge of AWS services</li>
+<li>Demonstrates understanding of serverless architecture</li>
+<li>Shows ability to choose appropriate services</li>
+</ul>
+</div><hr>
+
+<h2>Azure Services</h2>
+
+<h3>Question 3: Design a microservices architecture on Azure.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Real-World Scenario - FastMCP Microservices on Azure:</strong>
+<p><em>Scenario: Migrating FastMCP to Azure with microservices architecture. Need to deploy agent coordination service, workflow engine, MCP server, and monitoring service as separate microservices with independent scaling and deployment.</em></p>
+
+<strong>Azure Services:</strong>
+
+<ul><li><strong>Azure Kubernetes Service (AKS):</strong></li>
+</ul>   - Container orchestration
+<p>- Auto-scaling</p>
+<p>- Service mesh support</p>
+
+<ul><li><strong>Azure Functions:</strong></li>
+</ul>   - Serverless compute
+<p>- Event-driven</p>
+<p>- Multiple languages</p>
+
+<ul><li><strong>Azure Cosmos DB:</strong></li>
+</ul>   - Multi-model database
+<p>- Global distribution</p>
+<p>- Low latency</p>
+
+<ul><li><strong>Azure Service Bus:</strong></li>
+</ul>   - Messaging
+<p>- Pub/sub</p>
+<p>- Queue management</p>
+
+<ul><li><strong>Azure Application Gateway:</strong></li>
+</ul>   - Load balancing
+<p>- SSL termination</p>
+<p>- WAF integration</p>
+
+<h4>FastMCP Microservices Architecture on Azure</h4>
+
+<p><div class="mermaid">
+graph TD
+    n1["Users/API Clients"]
+    n2["Azure Application Gateway"]
+    n3["Agent Coordination Service AKS"]
+    n4["Workflow Engine Service AKS"]
+    n5["MCP Server Service AKS"]
+    n6["Monitoring Service AKS"]
+    n7["Azure Cosmos DB"]
+    n8["Azure Service Bus"]
+    n9["Azure Redis Cache"]
+    n1 --> n2
+    n2 --> n3
+    n2 --> n4
+    n2 --> n5
+    n3 --> n7
+    n4 --> n7
+    n3 --> n8
+    n4 --> n8
+    n5 --> n8
+    n6 --> n8
+    n3 --> n9
+    n4 --> n9
+
+</div></p>
+
+<strong>Microservices Breakdown:</strong>
+<ul><li><strong>Agent Coordination Service:</strong>
+  - Container: Python FastAPI app
+  - AKS: 3 replicas, auto-scale 2-10 pods
+  - Handles agent communication, state management
+  - Uses Redis for session state</li>
+<li><strong>Workflow Engine Service:</strong>
+  - Container: Python workflow executor
+  - AKS: 5 replicas, auto-scale 3-15 pods
+  - Executes workflow state machine
+  - Uses Service Bus for async task processing</li>
+<li><strong>MCP Server Service:</strong>
+  - Container: Python MCP stdio server
+  - AKS: 2 replicas, auto-scale 1-5 pods
+  - Handles editor integration
+  - Stateless, scales based on active connections</li>
+<li><strong>Monitoring Service:</strong>
+  - Container: Python monitoring agent
+  - AKS: 2 replicas
+  - Collects metrics, logs, traces
+  - Publishes to Azure Monitor</li>
+</ul>
+
+<strong>Data Layer:</strong>
+<ul><li><strong>Azure Cosmos DB:</strong>
+  - Multi-model database (SQL API)
+  - Global distribution across 3 regions
+  - Automatic indexing, <10ms latency
+  - Partition key: workflow_id for even distribution</li>
+<li><strong>Azure Redis Cache:</strong>
+  - Premium tier (6GB)
+  - Session state, frequently accessed workflow data
+  - Reduces Cosmos DB load by 70%</li>
+<li><strong>Azure Service Bus:</strong>
+  - Standard tier
+  - Topics for pub/sub (workflow events)
+  - Queues for async processing</li>
+</ul>
+
+<strong>Deployment Strategy:</strong>
+<ul><li>Each microservice in separate AKS namespace</li>
+<li>Blue-green deployment for zero-downtime updates</li>
+<li>Health probes for automatic pod replacement</li>
+<li>Azure DevOps pipelines for CI/CD</li>
+<li>Container registry: Azure Container Registry (ACR)</li>
+</ul>
+
+<strong>Monitoring & Observability:</strong>
+<ul><li>Azure Monitor: Metrics, logs, Application Insights</li>
+<li>Distributed tracing across services</li>
+<li>Alert rules for error rates, latency, pod failures</li>
+<li>Cost tracking per service</li>
+</ul>
+
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests Azure-specific knowledge</li>
+<li>Demonstrates microservices understanding</li>
+<li>Shows ability to design on Azure</li>
+</ul>
+</div><hr>
+
+<h2>Serverless Architecture</h2>
+
+<h3>Question 4: Design a serverless data processing pipeline.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Real-World Scenario - FastMCP Workflow Analytics Pipeline:</strong>
+<p><em>Scenario: Building a serverless pipeline to process FastMCP workflow execution logs, extract metrics (execution time, success rates, agent performance), and store analytics in a data warehouse for reporting. Process 1 million workflow logs per day.</em></p>
+
+<strong>Components:</strong>
+
+<ul><li><strong>S3 (Storage):</strong></li>
+</ul>   - Store raw data
+<p>- Trigger events on upload</p>
+
+<ul><li><strong>Lambda (Processing):</strong></li>
+</ul>   - Process data
+<p>- Transform/validate</p>
+<p>- Triggered by S3 events</p>
+
+<ul><li><strong>Step Functions (Orchestration):</strong></li>
+</ul>   - Coordinate workflows
+<p>- Handle retries</p>
+<p>- Error handling</p>
+
+<ul><li><strong>DynamoDB (Results):</strong></li>
+</ul>   - Store processed data
+<p>- Fast queries</p>
+
+<strong>AWS Serverless Pipeline Flow:</strong>
+
+<p><div class="mermaid">
+graph LR
+    n0["S3: Raw Logs"]
+    n1["Lambda: Validate & Parse"]
+    n0 --> n1
+    n2["Step Functions: Orchestrate"]
+    n1 --> n2
+    n3["Lambda: Extract Metrics"]
+    n2 --> n3
+    n4["Lambda: Aggregate"]
+    n3 --> n4
+    n5["Redshift: Analytics"]
+    n4 --> n5
+    n6["SNS: Notify"]
+    n5 --> n6
+
+</div></p>
+
+<strong>Detailed Pipeline Design:</strong>
+<ul><li><strong>S3 Bucket (Raw Logs):</strong>
+  - Partitioned by date: logs/year/month/day/
+  - Lifecycle: Move to Glacier after 30 days
+  - Event notification triggers Lambda on PUT</li>
+<li><strong>Lambda Function 1 - Log Validator:</strong>
+  - Memory: 512MB, Timeout: 30s
+  - Validates JSON structure, checks required fields
+  - Filters invalid logs to dead-letter queue
+  - Outputs validated logs to S3 staging bucket</li>
+<li><strong>Step Functions State Machine:</strong>
+  - Coordinates the entire pipeline
+  - Handles retries (3 attempts with exponential backoff)
+  - Catches errors and sends to SNS for alerting
+  - Parallel execution for multiple log files</li>
+<li><strong>Lambda Function 2 - Metric Extractor:</strong>
+  - Memory: 1GB, Timeout: 5min
+  - Extracts: execution_time, success_rate, agent_utilization
+  - Calculates percentiles (p50, p95, p99)
+  - Outputs structured metrics to S3</li>
+<li><strong>Lambda Function 3 - Aggregator:</strong>
+  - Memory: 2GB, Timeout: 15min
+  - Aggregates metrics by hour/day
+  - Joins with reference data (agent types, workflow categories)
+  - Formats for Redshift loading</li>
+<li><strong>Amazon Redshift:</strong>
+  - Cluster: 2 dc2.large nodes
+  - Tables: workflow_metrics, agent_performance, daily_summary
+  - COPY command from S3 for bulk loading
+  - Materialized views for fast queries</li>
+<li><strong>SNS Topic:</strong>
+  - Notifies on pipeline completion
+  - Alerts on failures
+  - Sends to Slack/Email</li>
+</ul>
+
+<strong>Azure Alternative Architecture:</strong>
+<ul><li><strong>Azure Data Lake Storage Gen2:</strong> Raw log storage</li>
+<li><strong>Azure Functions:</strong> Log processing (Consumption plan)</li>
+<li><strong>Azure Data Factory:</strong> Pipeline orchestration</li>
+<li><strong>Azure Databricks:</strong> Spark-based transformation</li>
+<li><strong>Azure Synapse Analytics:</strong> Data warehouse</li>
+<li><strong>Azure Event Grid:</strong> Event-driven triggers</li>
+</ul>
+
+<strong>Cost Comparison:</strong>
+<ul><li><strong>AWS:</strong> ~$300-500/month (Lambda: $50, Redshift: $200, S3: $50, Step Functions: $20)</li>
+<li><strong>Azure:</strong> ~$400-600/month (Functions: $80, Synapse: $250, Data Lake: $60, Data Factory: $30)</li>
+</ul>
+
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests serverless architecture knowledge</li>
+<li>Demonstrates event-driven design</li>
+<li>Shows understanding of cloud-native patterns</li>
+</ul>
+</div><hr>
+
+<h2>Containerization</h2>
+
+<h3>Question 5: Explain containerization and orchestration strategies.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Docker:</strong>
+<ul><li>Containerization platform</li>
+<li>Package application and dependencies</li>
+<li>Consistent environments</li>
+</ul>
+<strong>Kubernetes:</strong>
+<ul><li>Container orchestration</li>
+<li>Auto-scaling</li>
+<li>Service discovery</li>
+<li>Load balancing</li>
+</ul>
+<strong>Benefits:</strong>
+<ul><li>Portability</li>
+<li>Scalability</li>
+<li>Resource efficiency</li>
+<li>Isolation</li>
+</ul>
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests containerization knowledge</li>
+<li>Demonstrates understanding of orchestration</li>
+<li>Shows ability to design containerized systems</li>
+</ul>
+</div><hr>
+
+<h3>Question 6: Design a multi-region architecture for high availability.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Real-World Scenario - FastMCP Global Deployment:</strong>
+<p><em>Scenario: Deploying FastMCP across 3 regions (US-East, EU-West, Asia-Pacific) to serve global users with <100ms latency and 99.99% availability. Handle regional failures gracefully.</em></p>
+
+<strong>AWS Multi-Region Architecture:</strong>
+<ul><li><strong>Route 53 (Global DNS):</strong>
+  - Latency-based routing to nearest region
+  - Health checks every 30 seconds
+  - Automatic failover if region becomes unhealthy
+  - Geolocation routing for compliance</li>
+<li><strong>CloudFront (Global CDN):</strong>
+  - Edge locations in 50+ cities
+  - Cache API responses, static assets
+  - Origin failover to backup region</li>
+<li><strong>Regional Deployments:</strong>
+  - US-East (Primary): 10 EC2 instances, RDS Multi-AZ
+  - EU-West (Active): 8 EC2 instances, RDS Multi-AZ
+  - Asia-Pacific (Active): 6 EC2 instances, RDS Multi-AZ</li>
+<li><strong>DynamoDB Global Tables:</strong>
+  - Active-active replication across regions
+  - <1 second replication lag
+  - Conflict resolution: Last-write-wins</li>
+<li><strong>RDS Cross-Region Replication:</strong>
+  - Read replicas in each region
+  - Async replication (RPO: <5 minutes)
+  - Promote replica to primary on failover</li>
+<li><strong>S3 Cross-Region Replication:</strong>
+  - Replicate workflow outputs, logs
+  - Versioning enabled for recovery</li>
+</ul>
+
+<strong>Azure Multi-Region Architecture:</strong>
+<ul><li><strong>Azure Traffic Manager:</strong>
+  - Performance routing method
+  - Health probes every 30 seconds
+  - Automatic failover</li>
+<li><strong>Azure Front Door:</strong>
+  - Global CDN with WAF
+  - SSL termination
+  - Origin health monitoring</li>
+<li><strong>Regional Deployments:</strong>
+  - US East (Primary): AKS cluster, Azure SQL with geo-replication
+  - West Europe (Active): AKS cluster, Azure SQL geo-replica
+  - Southeast Asia (Active): AKS cluster, Azure SQL geo-replica</li>
+<li><strong>Azure Cosmos DB:</strong>
+  - Multi-region writes enabled
+  - Automatic failover (RTO: <1 minute)
+  - Strong or eventual consistency per region</li>
+<li><strong>Azure SQL Database:</strong>
+  - Active geo-replication
+  - Auto-failover groups
+  - RPO: <5 seconds, RTO: <1 minute</li>
+<li><strong>Azure Storage:</strong>
+  - Geo-redundant storage (GRS)
+  - Read-access geo-redundant (RA-GRS)</li>
+</ul>
+
+<strong>Failover Scenarios:</strong>
+<ul><li><strong>Regional Outage:</strong>
+  - Route 53/Traffic Manager detects failure
+  - Routes traffic to healthy regions
+  - DynamoDB/Cosmos DB continues serving from other regions
+  - RDS/Azure SQL promotes replica to primary</li>
+<li><strong>Partial Failure:</strong>
+  - Load balancer removes unhealthy instances
+  - Auto-scaling launches new instances
+  - Database continues serving from healthy replicas</li>
+<li><strong>Data Center Failure:</strong>
+  - Multi-AZ deployment handles AZ-level failures
+  - Cross-region replication handles region-level failures</li>
+</ul>
+
+<strong>Cost Considerations:</strong>
+<ul><li>AWS: ~$2000-3000/month (3x regional costs + replication)</li>
+<li>Azure: ~$2500-3500/month (3x regional costs + geo-replication)</li>
+<li>Trade-off: Higher cost for better availability and lower latency</li>
+</ul>
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of global architecture</li>
+<li>Demonstrates knowledge of disaster recovery</li>
+<li>Shows ability to design for availability</li>
+</ul>
+</div><hr>
+
+<h3>Question 7: Explain auto-scaling strategies.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Real-World Scenario - FastMCP Auto-Scaling:</strong>
+<p><em>Scenario: FastMCP experiences variable load - peak hours (9 AM - 5 PM EST) with 10K concurrent workflows, off-peak with 500 workflows. Need to scale automatically to handle traffic spikes while minimizing costs.</em></p>
+
+<strong>AWS Auto-Scaling Strategy:</strong>
+<ul><li><strong>EC2 Auto Scaling Group:</strong>
+  - Min: 2 instances (for high availability)
+  - Desired: 4 instances (baseline)
+  - Max: 20 instances (peak capacity)
+  - Instance type: t3.large (2 vCPU, 8GB RAM)</li>
+<li><strong>Scaling Policies:</strong>
+  - <strong>CPU-based:</strong> Scale out when CPU > 70% for 2 minutes
+  - <strong>Memory-based:</strong> Scale out when memory > 80% for 3 minutes
+  - <strong>Custom metric:</strong> Scale based on SQS queue depth (>1000 messages)
+  - <strong>Scheduled scaling:</strong> Pre-scale before peak hours (8:30 AM)</li>
+<li><strong>Scaling Configuration:</strong>
+  - Scale out: Add 2 instances at a time
+  - Scale in: Remove 1 instance at a time (conservative)
+  - Cooldown: 5 minutes (prevent thrashing)
+  - Health check: Replace unhealthy instances</li>
+<li><strong>Cost Optimization:</strong>
+  - Use Spot Instances for 50% of capacity (60-70% savings)
+  - Reserved Instances for baseline (40% savings)
+  - Auto-terminate idle instances after 30 minutes</li>
+</ul>
+
+<strong>Azure Auto-Scaling Strategy:</strong>
+<ul><li><strong>VM Scale Sets:</strong>
+  - Min: 2 VMs
+  - Max: 20 VMs
+  - VM size: Standard_D2s_v3 (2 vCPU, 8GB RAM)</li>
+<li><strong>Auto-Scale Rules:</strong>
+  - <strong>CPU:</strong> Scale out when average CPU > 75% for 5 minutes
+  - <strong>Memory:</strong> Scale out when average memory > 80% for 5 minutes
+  - <strong>Queue depth:</strong> Scale out when Service Bus queue > 1000 messages
+  - <strong>Schedule:</strong> Scale to 10 VMs at 8:30 AM, scale down at 6 PM</li>
+<li><strong>Scaling Behavior:</strong>
+  - Scale out: Increase by 2 VMs
+  - Scale in: Decrease by 1 VM
+  - Cooldown: 5 minutes
+  - Predictive autoscaling: ML-based forecasting</li>
+<li><strong>Cost Optimization:</strong>
+  - Spot VMs for 40% of capacity (up to 90% savings)
+  - Reserved instances for baseline
+  - Auto-shutdown during off-hours</li>
+</ul>
+
+<strong>Kubernetes Auto-Scaling (AKS/EKS):</strong>
+<ul><li><strong>Horizontal Pod Autoscaler (HPA):</strong>
+  - Min replicas: 3
+  - Max replicas: 50
+  - Target CPU: 70%
+  - Target memory: 80%</li>
+<li><strong>Vertical Pod Autoscaler (VPA):</strong>
+  - Adjusts CPU/memory requests
+  - Prevents OOM kills
+  - Optimizes resource allocation</li>
+<li><strong>Cluster Autoscaler:</strong>
+  - Adds nodes when pods can't be scheduled
+  - Removes idle nodes
+  - Works with Spot instances</li>
+</ul>
+
+<strong>Monitoring & Alerts:</strong>
+<ul><li>AWS: CloudWatch alarms trigger scaling</li>
+<li>Azure: Azure Monitor metrics trigger scaling</li>
+<li>Alert on: Scaling failures, cost threshold exceeded</li>
+</ul>
+
+<strong>Cost Impact:</strong>
+<ul><li>Without auto-scaling: $2000/month (always-on peak capacity)</li>
+<li>With auto-scaling: $600-800/month (60-70% savings)</li>
+</ul>
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of scaling</li>
+<li>Demonstrates knowledge of automation</li>
+<li>Shows ability to optimize resources</li>
+</ul>
+</div><hr>
+
+<h3>Question 8: Design a CI/CD pipeline on cloud.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Real-World Scenario - FastMCP CI/CD Pipeline:</strong>
+<p><em>Scenario: Setting up CI/CD for FastMCP microservices with automated testing, Docker image building, security scanning, and deployment to AKS/AWS EKS. Support multiple environments (dev, staging, production).</em></p>
+
+<strong>AWS CI/CD Pipeline (CodePipeline + CodeBuild + ECR):</strong>
+<ul><li><strong>Source Stage:</strong>
+  - GitHub repository (main branch)
+  - Webhook triggers pipeline on push
+  - Supports feature branch deployments</li>
+<li><strong>Build Stage:</strong>
+  - CodeBuild: Runs unit tests, integration tests
+  - Builds Docker images for each microservice
+  - Pushes to Amazon ECR (Elastic Container Registry)
+  - Tags images with git commit SHA</li>
+<li><strong>Test Stage:</strong>
+  - Runs test suite in isolated environment
+  - Security scanning (Trivy, Snyk)
+  - Performance tests
+  - Code quality checks (SonarQube)</li>
+<li><strong>Deploy to Dev:</strong>
+  - ECS/EKS: Deploys to dev cluster
+  - Blue-green deployment
+  - Smoke tests</li>
+<li><strong>Deploy to Staging:</strong>
+  - Manual approval gate
+  - Deploys to staging cluster
+  - Integration tests</li>
+<li><strong>Deploy to Production:</strong>
+  - Manual approval + change request
+  - Canary deployment (10% → 50% → 100%)
+  - Rollback on error rate increase</li>
+</ul>
+
+<strong>Azure CI/CD Pipeline (Azure DevOps):</strong>
+<ul><li><strong>Source Stage:</strong>
+  - Azure Repos or GitHub
+  - Branch policies: PR required, build must pass
+  - Triggers on merge to main</li>
+<li><strong>Build Stage:</strong>
+  - Azure Pipelines: YAML-based pipeline
+  - Runs tests, builds Docker images
+  - Pushes to Azure Container Registry (ACR)
+  - Image scanning with Azure Security Center</li>
+<li><strong>Test Stage:</strong>
+  - Unit tests, integration tests
+  - Code coverage reporting
+  - Security vulnerability scanning
+  - Performance benchmarking</li>
+<li><strong>Deploy to Dev:</strong>
+  - AKS: Deploys via kubectl/Helm
+  - Namespace: fastmcp-dev
+  - Automatic deployment on build success</li>
+<li><strong>Deploy to Staging:</strong>
+  - Manual approval required
+  - AKS: Namespace fastmcp-staging
+  - Load testing with Azure Load Testing</li>
+<li><strong>Deploy to Production:</strong>
+  - Manual approval + change management
+  - AKS: Namespace fastmcp-prod
+  - Progressive deployment (canary → full)
+  - Azure Monitor alerts for rollback triggers</li>
+</ul>
+
+<strong>Pipeline Configuration Example (Azure DevOps YAML):</strong>
+<pre><code class="language-yaml">trigger:
+  branches:
+    include:
+    - main
+
+stages:
+- stage: Build
+  jobs:
+  - job: BuildAndTest
+    steps:
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'ACR'
+        repository: 'fastmcp/agent-coordinator'
+        command: 'buildAndPush'
+    - script: |
+        pytest tests/
+        docker run --rm fastmcp/agent-coordinator:$(Build.BuildId) pytest
+
+- stage: DeployDev
+  dependsOn: Build
+  jobs:
+  - deployment: Deploy
+    environment: 'dev'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: Kubernetes@1
+            inputs:
+              kubernetesServiceEndpoint: 'AKS'
+              namespace: 'fastmcp-dev'
+              command: 'apply'
+</code></pre>
+
+<strong>Key Features:</strong>
+<ul><li>Infrastructure as Code: Terraform/ARM templates versioned in repo</li>
+<li>Secrets Management: AWS Secrets Manager / Azure Key Vault</li>
+<li>Feature Flags: LaunchDarkly / Azure App Configuration</li>
+<li>Monitoring: CloudWatch / Azure Monitor integration</li>
+<li>Cost: AWS ~$50/month, Azure ~$40/month (for small teams)</li>
+</ul>
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of DevOps</li>
+<li>Demonstrates knowledge of automation</li>
+<li>Shows ability to design pipelines</li>
+</ul>
+</div><hr>
+
+<h3>Question 9: Explain infrastructure as code (IaC).</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Infrastructure as Code:</strong>
+<ul><li>Define infrastructure in code</li>
+<li>Version controlled</li>
+<li>Reproducible</li>
+</ul>
+<strong>Tools:</strong>
+<ul><li>Terraform</li>
+<li>CloudFormation</li>
+<li>ARM templates</li>
+</ul>
+<strong>Benefits:</strong>
+<ul><li>Consistency</li>
+<li>Version control</li>
+<li>Faster provisioning</li>
+</ul>
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of IaC</li>
+<li>Demonstrates knowledge of infrastructure management</li>
+<li>Shows ability to automate infrastructure</li>
+</ul>
+</div><hr>
+
+<h3>Question 10: Design a disaster recovery strategy.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Disaster Recovery:</strong>
+<ul><li>Plan for catastrophic failures</li>
+<li>RTO (Recovery Time Objective)</li>
+<li>RPO (Recovery Point Objective)</li>
+</ul>
+<strong>Strategies:</strong>
+<ul><li>Backup and restore</li>
+<li>Pilot light</li>
+<li>Warm standby</li>
+<li>Multi-site</li>
+</ul>
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of disaster recovery</li>
+<li>Demonstrates knowledge of business continuity</li>
+<li>Shows ability to plan for failures</li>
+</ul>
+</div><hr>
+
+<h3>Question 11: Explain cloud security best practices.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Real-World Scenario - Securing FastMCP:</strong>
+<p><em>Scenario: FastMCP handles sensitive workflow data and user credentials. Need to implement comprehensive security: authentication, authorization, encryption, network isolation, and compliance (SOC 2, GDPR).</em></p>
+
+<strong>AWS Security Architecture:</strong>
+<ul><li><strong>Identity & Access Management (IAM):</strong>
+  - IAM roles for services (least privilege)
+  - MFA required for admin accounts
+  - IAM policies: Deny by default, explicit allow
+  - Example: Lambda execution role can only read from specific S3 bucket</li>
+<li><strong>Encryption:</strong>
+  - <strong>At Rest:</strong> S3 (SSE-S3), RDS (encryption enabled), DynamoDB (encryption at rest)
+  - <strong>In Transit:</strong> TLS 1.2+ for all API calls, SSL certificates via ACM
+  - <strong>Key Management:</strong> AWS KMS for encryption keys, key rotation every 90 days</li>
+<li><strong>Network Security:</strong>
+  - VPC: Private subnets for application servers
+  - Security Groups: Restrictive rules (only necessary ports)
+  - NACLs: Additional subnet-level protection
+  - WAF: Protect API Gateway from common attacks</li>
+<li><strong>Monitoring & Logging:</strong>
+  - CloudTrail: Log all API calls, audit trail
+  - CloudWatch: Monitor for suspicious activity
+  - GuardDuty: Threat detection (malicious IPs, unusual API calls)
+  - Config: Track configuration changes</li>
+<li><strong>Secrets Management:</strong>
+  - AWS Secrets Manager: Store API keys, DB passwords
+  - Automatic rotation for RDS credentials
+  - Parameter Store: Configuration parameters</li>
+<li><strong>Compliance:</strong>
+  - AWS Artifact: SOC 2, ISO 27001 reports
+  - Data residency: Deploy in specific regions for GDPR
+  - DLP: Data Loss Prevention policies</li>
+</ul>
+
+<strong>Azure Security Architecture:</strong>
+<ul><li><strong>Identity & Access Management:</strong>
+  - Azure AD: Single sign-on, conditional access
+  - Managed Identities: Service-to-service auth (no secrets)
+  - RBAC: Role-based access control
+  - Example: AKS pod uses managed identity to access Key Vault</li>
+<li><strong>Encryption:</strong>
+  - <strong>At Rest:</strong> Azure Storage (encryption enabled), Azure SQL (TDE), Cosmos DB (encryption)
+  - <strong>In Transit:</strong> TLS 1.2+ for all connections
+  - <strong>Key Management:</strong> Azure Key Vault for keys, automatic rotation</li>
+<li><strong>Network Security:</strong>
+  - Virtual Network: Isolated network segments
+  - Network Security Groups: Firewall rules
+  - Azure Firewall: Centralized network security
+  - DDoS Protection: Standard tier for production</li>
+<li><strong>Monitoring & Logging:</strong>
+  - Azure Monitor: Comprehensive logging
+  - Azure Sentinel: SIEM for threat detection
+  - Activity Log: Audit trail of all operations
+  - Security Center: Security recommendations</li>
+<li><strong>Secrets Management:</strong>
+  - Azure Key Vault: Store secrets, certificates, keys
+  - Automatic rotation for storage account keys
+  - Access policies: Granular permissions</li>
+<li><strong>Compliance:</strong>
+  - Compliance Manager: Track compliance status
+  - Blueprints: Pre-configured compliance templates
+  - Data residency: Deploy in specific regions</li>
+</ul>
+
+<strong>Security Best Practices Implementation:</strong>
+<ul><li><strong>Defense in Depth:</strong>
+  - Multiple layers: Network, application, data
+  - Fail-secure: Deny by default</li>
+<li><strong>Least Privilege:</strong>
+  - IAM roles with minimal permissions
+  - Regular access reviews</li>
+<li><strong>Security Monitoring:</strong>
+  - Real-time alerts on suspicious activity
+  - Automated response (e.g., block IP, disable account)</li>
+<li><strong>Regular Audits:</strong>
+  - Monthly security reviews
+  - Penetration testing quarterly
+  - Vulnerability scanning weekly</li>
+</ul>
+
+<strong>Cost:</strong>
+<ul><li>AWS: ~$200-300/month (GuardDuty, WAF, KMS, CloudTrail)</li>
+<li>Azure: ~$250-350/month (Sentinel, Firewall, Key Vault, Security Center)</li>
+</ul>
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of cloud security</li>
+<li>Demonstrates knowledge of security practices</li>
+<li>Shows ability to secure cloud systems</li>
+</ul>
+</div><hr>
+
+<h3>Question 12: Design a serverless architecture for image processing.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Real-World Scenario - Agent Output Processing:</strong>
+<p><em>Scenario: Processing agent-generated outputs (images, documents) in FastMCP workflows. Handle 10K images per day with resizing, format conversion, and thumbnail generation. Need to process asynchronously with retry logic.</em></p>
+
+<strong>AWS Serverless Image Processing Architecture:</strong>
+<ul><li><strong>S3 Buckets:</strong>
+  - Input bucket: raw-images/ (user uploads)
+  - Output bucket: processed-images/ (resized, converted)
+  - Thumbnails bucket: thumbnails/ (small previews)
+  - Lifecycle: Archive to Glacier after 90 days</li>
+<li><strong>S3 Event Triggers:</strong>
+  - PUT event on input bucket
+  - Triggers Lambda function automatically
+  - Supports batch processing</li>
+<li><strong>Lambda Function - Image Processor:</strong>
+  - Runtime: Python 3.11 with Pillow library
+  - Memory: 3008MB (for large images)
+  - Timeout: 5 minutes
+  - Concurrency: 10 (to avoid overwhelming downstream)
+  - Uses SQS for queue management</li>
+<li><strong>SQS Queue:</strong>
+  - Standard queue for reliability
+  - Dead-letter queue for failed processing
+  - Visibility timeout: 5 minutes
+  - Message retention: 14 days</li>
+<li><strong>Step Functions State Machine:</strong>
+  - Orchestrates: Validate → Resize → Convert → Generate Thumbnail
+  - Parallel execution for multiple sizes
+  - Retry logic: 3 attempts with exponential backoff
+  - Error handling: Send to DLQ on failure</li>
+<li><strong>Lambda Functions (Step Functions Tasks):</strong>
+  - Validator: Check image format, size limits
+  - Resizer: Create multiple sizes (small, medium, large)
+  - Converter: Convert formats (JPEG → PNG, etc.)
+  - Thumbnail Generator: Create 150x150 thumbnails</li>
+<li><strong>DynamoDB:</strong>
+  - Tracks processing status
+  - Stores metadata (dimensions, file size, format)
+  - TTL: 30 days for completed jobs</li>
+<li><strong>SNS Topic:</strong>
+  - Notifies on completion
+  - Alerts on failures
+  - Sends to webhook/email</li>
+</ul>
+
+<strong>Azure Serverless Image Processing Architecture:</strong>
+<ul><li><strong>Azure Blob Storage:</strong>
+  - Containers: raw-images, processed-images, thumbnails
+  - Event Grid triggers on blob creation
+  - Lifecycle management: Archive tier after 90 days</li>
+<li><strong>Azure Functions:</strong>
+  - Runtime: Python 3.11
+  - Plan: Premium (for better performance)
+  - Blob trigger: Processes on upload
+  - Uses Azure Queue Storage for queuing</li>
+<li><strong>Azure Queue Storage:</strong>
+  - Queue for pending jobs
+  - Dead-letter queue for failures
+  - Visibility timeout: 5 minutes</li>
+<li><strong>Azure Durable Functions:</strong>
+  - Orchestrator function coordinates workflow
+  - Activity functions: Validate, Resize, Convert, Thumbnail
+  - Built-in retry and error handling
+  - Checkpointing for reliability</li>
+<li><strong>Azure Cosmos DB:</strong>
+  - Tracks job status and metadata
+  - Change feed for real-time updates</li>
+<li><strong>Azure Event Grid:</strong>
+  - Publishes events on completion
+  - Subscribers: Webhooks, Logic Apps, Functions</li>
+</ul>
+
+<strong>Processing Flow:</strong>
+<pre><code class="language-text">1. User uploads image → S3/Blob Storage
+2. Event triggers Lambda/Function
+3. Job queued in SQS/Azure Queue
+4. Step Functions/Durable Functions orchestrates:
+   a. Validate image (format, size)
+   b. Resize to multiple sizes (parallel)
+   c. Convert format if needed
+   d. Generate thumbnail
+5. Store results in S3/Blob Storage
+6. Update status in DynamoDB/Cosmos DB
+7. Send notification via SNS/Event Grid
+</code></pre>
+
+<strong>Cost Comparison:</strong>
+<ul><li><strong>AWS:</strong> ~$50-100/month
+  - Lambda: $20 (10K images × 5min × $0.0000166667/GB-second)
+  - S3: $20 (storage + requests)
+  - SQS: $5
+  - Step Functions: $5</li>
+<li><strong>Azure:</strong> ~$60-120/month
+  - Functions: $30 (Premium plan)
+  - Blob Storage: $25
+  - Queue Storage: $2
+  - Event Grid: $3</li>
+</ul>
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of serverless</li>
+<li>Demonstrates knowledge of event-driven architecture</li>
+<li>Shows ability to design serverless systems</li>
+</ul>
+</div><hr>
+
+<h3>Question 13: Explain cloud cost optimization strategies.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Cost Optimization:</strong>
+<ul><li>Right-sizing instances</li>
+<li>Reserved instances</li>
+<li>Spot instances</li>
+<li>Auto-scaling</li>
+</ul>
+<strong>Monitoring:</strong>
+<ul><li>Cost allocation tags</li>
+<li>Budget alerts</li>
+<li>Cost analysis tools</li>
+</ul>
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of cost management</li>
+<li>Demonstrates knowledge of optimization</li>
+<li>Shows ability to reduce costs</li>
+</ul>
+</div><hr>
+
+<h3>Question 14: Design a data lake architecture.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Data Lake:</strong>
+<ul><li>Centralized repository</li>
+<li>Store raw and processed data</li>
+<li>Multiple data formats</li>
+</ul>
+<strong>Components:</strong>
+<ul><li>Storage (S3, Azure Data Lake)</li>
+<li>Processing (Spark, Hadoop)</li>
+<li>Catalog (Glue, Data Catalog)</li>
+<li>Analytics (Athena, Redshift)</li>
+</ul>
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of data architecture</li>
+<li>Demonstrates knowledge of big data</li>
+<li>Shows ability to design data systems</li>
+</ul>
+</div><hr>
+
+<h3>Question 15: Explain cloud monitoring and observability.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Monitoring:</strong>
+<ul><li>Metrics collection</li>
+<li>Log aggregation</li>
+<li>Distributed tracing</li>
+<li>Alerting</li>
+</ul>
+<strong>Services:</strong>
+<ul><li>CloudWatch (AWS)</li>
+<li>Azure Monitor</li>
+<li>Stackdriver (GCP)</li>
+</ul>
+<strong>Observability:</strong>
+<ul><li>Metrics</li>
+<li>Logs</li>
+<li>Traces</li>
+</ul>
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of observability</li>
+<li>Demonstrates knowledge of monitoring</li>
+<li>Shows ability to debug cloud systems</li>
+</ul>
+</div><hr>
+
+<h3>Question 16: Design a hybrid cloud architecture.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Hybrid Cloud:</strong>
+<ul><li>Combine public and private cloud</li>
+<li>On-premises integration</li>
+<li>Data sovereignty</li>
+</ul>
+<strong>Use Cases:</strong>
+<ul><li>Legacy systems</li>
+<li>Compliance requirements</li>
+<li>Cost optimization</li>
+</ul>
+<strong>Challenges:</strong>
+<ul><li>Connectivity</li>
+<li>Data synchronization</li>
+<li>Management complexity</li>
+</ul>
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of hybrid architectures</li>
+<li>Demonstrates knowledge of cloud integration</li>
+<li>Shows ability to design hybrid systems</li>
+</ul>
+</div><hr>
+
+<h3>Question 17: Explain cloud networking (VPC, subnets, security groups).</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>VPC (Virtual Private Cloud):</strong>
+<ul><li>Isolated network</li>
+<li>Custom IP ranges</li>
+<li>Subnets for organization</li>
+</ul>
+<strong>Security Groups:</strong>
+<ul><li>Firewall rules</li>
+<li>Inbound/outbound rules</li>
+<li>Stateful</li>
+</ul>
+<strong>Network ACLs:</strong>
+<ul><li>Stateless rules</li>
+<li>Subnet level</li>
+</ul>
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of cloud networking</li>
+<li>Demonstrates knowledge of network security</li>
+<li>Shows ability to design secure networks</li>
+</ul>
+</div><hr>
+
+<h3>Question 18: Design a content delivery network (CDN) architecture.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>CDN:</strong>
+<ul><li>Distribute content globally</li>
+<li>Edge locations</li>
+<li>Cache static content</li>
+</ul>
+<strong>Benefits:</strong>
+<ul><li>Lower latency</li>
+<li>Reduced origin load</li>
+<li>Better user experience</li>
+</ul>
+<strong>Services:</strong>
+<ul><li>CloudFront (AWS)</li>
+<li>Azure CDN</li>
+<li>Cloud CDN (GCP)</li>
+</ul>
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of CDN</li>
+<li>Demonstrates knowledge of content delivery</li>
+<li>Shows ability to optimize performance</li>
+</ul>
+</div><hr>
+
+<h3>Question 19: Explain cloud database services and when to use each.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Relational Databases:</strong>
+<ul><li>RDS (AWS), Azure SQL</li>
+<li>ACID compliance</li>
+<li>Complex queries</li>
+</ul>
+<strong>NoSQL Databases:</strong>
+<ul><li>DynamoDB, Cosmos DB</li>
+<li>High scalability</li>
+<li>Flexible schema</li>
+</ul>
+<strong>Data Warehouses:</strong>
+<ul><li>Redshift, BigQuery</li>
+<li>Analytics workloads</li>
+<li>Columnar storage</li>
+</ul>
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of database services</li>
+<li>Demonstrates knowledge of database selection</li>
+<li>Shows ability to choose appropriate database</li>
+</ul>
+</div><hr>
+
+<h3>Question 20: Design a serverless API with authentication.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Real-World Scenario - FastMCP REST API:</strong>
+<p><em>Scenario: Building a serverless REST API for FastMCP that allows users to create workflows, execute agents, and retrieve results. Support 50K users with JWT authentication, rate limiting, and API versioning.</em></p>
+
+<strong>AWS Serverless API Architecture:</strong>
+<ul><li><strong>API Gateway:</strong>
+  - REST API with custom domain (api.fastmcp.com)
+  - API versioning: /v1/, /v2/
+  - Rate limiting: 1000 requests/minute per user
+  - Throttling: 5000 requests/second globally
+  - Request validation: JSON schema validation
+  - CORS: Configured for web clients</li>
+<li><strong>Amazon Cognito:</strong>
+  - User Pool: User registration, login, MFA
+  - Identity Pool: Temporary AWS credentials
+  - OAuth 2.0: Support Google, GitHub login
+  - JWT tokens: Access token (1 hour), Refresh token (30 days)
+  - Password policy: 12+ chars, complexity requirements</li>
+<li><strong>Lambda Functions:</strong>
+  - <strong>CreateWorkflow:</strong> Validates input, stores in DynamoDB
+  - <strong>ExecuteWorkflow:</strong> Triggers workflow execution
+  - <strong>GetWorkflowStatus:</strong> Returns current status
+  - <strong>GetResults:</strong> Retrieves workflow results
+  - All functions: Authorizer validates JWT token</li>
+<li><strong>DynamoDB:</strong>
+  - Workflows table: workflow_id (PK), user_id (GSI)
+  - Results table: result_id (PK), workflow_id (GSI)
+  - TTL: Auto-delete completed workflows after 90 days</li>
+<li><strong>Authorization:</strong>
+  - Lambda Authorizer: Validates JWT token
+  - Custom claims: user_id, role, permissions
+  - Policy generation: Returns IAM policy based on user role</li>
+</ul>
+
+<strong>Azure Serverless API Architecture:</strong>
+<ul><li><strong>Azure API Management (APIM):</strong>
+  - REST API with custom domain
+  - API versioning: /v1/, /v2/
+  - Rate limiting: 1000 req/min per subscription
+  - Throttling: 5000 req/sec globally
+  - Request/response transformation
+  - CORS policies</li>
+<li><strong>Azure AD B2C:</strong>
+  - User registration, login, password reset
+  - Social logins: Google, Microsoft, GitHub
+  - MFA: SMS, Email, Authenticator app
+  - JWT tokens: Access token (1 hour), ID token</li>
+<li><strong>Azure Functions:</strong>
+  - HTTP triggers for API endpoints
+  - Functions: CreateWorkflow, ExecuteWorkflow, GetStatus, GetResults
+  - Authentication: Validate JWT via Azure AD B2C</li>
+<li><strong>Cosmos DB:</strong>
+  - Workflows container: Partition key (user_id)
+  - Results container: Partition key (workflow_id)
+  - TTL: Auto-delete after 90 days</li>
+<li><strong>Authorization:</strong>
+  - APIM validates JWT token
+  - Validate-JWT policy checks token signature
+  - Extract claims for authorization</li>
+</ul>
+
+<strong>Authentication Flow:</strong>
+<pre><code class="language-text">1. User Login:
+   User → Cognito/Azure AD B2C → JWT Token
+
+2. API Request:
+   Client → API Gateway/APIM (with JWT in Authorization header)
+   
+3. Token Validation:
+   API Gateway/APIM → Lambda Authorizer/Validate-JWT Policy
+   - Verifies signature
+   - Checks expiration
+   - Validates issuer
+   
+4. Authorization:
+   - Extract user_id, role from token claims
+   - Generate IAM policy / Check permissions
+   
+5. Request Processing:
+   - Lambda/Function executes with user context
+   - DynamoDB/Cosmos DB query filtered by user_id
+   
+6. Response:
+   - Return data to client
+   - Include rate limit headers
+</code></pre>
+
+<strong>Security Features:</strong>
+<ul><li>HTTPS only: TLS 1.2+ enforced</li>
+<li>Token refresh: Automatic refresh before expiration</li>
+<li>Rate limiting: Per-user and global limits</li>
+<li>Input validation: Schema validation on all inputs</li>
+<li>Output sanitization: Prevent data leakage</li>
+<li>Audit logging: All API calls logged with user_id</li>
+</ul>
+
+<strong>Cost Comparison:</strong>
+<ul><li><strong>AWS:</strong> ~$150-200/month
+  - API Gateway: $50 (3.5M requests)
+  - Cognito: $15 (50K MAU)
+  - Lambda: $30
+  - DynamoDB: $50</li>
+<li><strong>Azure:</strong> ~$200-250/month
+  - APIM: $100 (Developer tier)
+  - Azure AD B2C: $25 (50K MAU)
+  - Functions: $40
+  - Cosmos DB: $50</li>
+</ul>
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of serverless APIs</li>
+<li>Demonstrates knowledge of authentication</li>
+<li>Shows ability to design secure APIs</li>
+</ul>
+</div><hr>
+
+<h2>Summary</h2>
+
+<p>Cloud architecture questions test:</p>
+
+<ul><li><strong>Service Selection:</strong> Choosing right cloud services</li>
+<li><strong>Scalability:</strong> Designing for scale</li>
+<li><strong>Availability:</strong> High availability patterns</li>
+<li><strong>Cost Optimization:</strong> Cost-effective solutions</li>
+<li><strong>Security:</strong> Secure architecture design</li>
+</ul>
+<p>Key principles:</p>
+<ul><li>Use managed services when possible</li>
+<li>Design for failure</li>
+<li>Scale horizontally</li>
+<li>Implement caching</li>
+<li>Use CDN for static content</li>
+<li>Monitor and optimize costs</li>
+</ul>
+
+    </div>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+    </script>
+</body>
+</html>

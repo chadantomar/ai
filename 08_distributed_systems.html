@@ -1,0 +1,2077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distributed Systems Interview Questions - FAANG Interview Questions</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.7;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            border-bottom: 4px solid #3498db;
+            padding-bottom: 15px;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+        }
+        
+        h2 {
+            color: #34495e;
+            margin-top: 50px;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: linear-gradient(90deg, #3498db22, transparent);
+            border-left: 5px solid #2980b9;
+            padding-left: 20px;
+        }
+        
+        h3 {
+            color: #2980b9;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.6em;
+            padding: 15px;
+            background: #ecf0f1;
+            border-radius: 5px;
+        }
+        
+        h4 {
+            color: #555;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        h5 {
+            color: #666;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        p {
+            margin-bottom: 18px;
+            text-align: justify;
+            font-size: 1.05em;
+        }
+        
+        ul, ol {
+            margin-left: 35px;
+            margin-bottom: 20px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #e83e8c;
+            border: 1px solid #e0e0e0;
+        }
+        
+        pre {
+            background: #2d2d2d;
+            padding: 25px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 25px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        pre code {
+            background: transparent;
+            padding: 0;
+            color: #f8f8f2;
+            font-size: 0.95em;
+            border: none;
+        }
+        
+        .pros-cons {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-left: 5px solid #28a745;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .pros {
+            margin-bottom: 25px;
+        }
+        
+        .pros h5 {
+            color: #28a745;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        .pros ul {
+            list-style: none;
+            margin-left: 0;
+        }
+        
+        .pros li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .pros li:before {
+            content: "✓";
+            color: #28a745;
+            font-weight: bold;
+            font-size: 1.2em;
+            position: absolute;
+            left: 0;
+        }
+        
+        .cons {
+            margin-top: 25px;
+        }
+        
+        .cons h5 {
+            color: #dc3545;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        .cons ul {
+            list-style: none;
+            margin-left: 0;
+        }
+        
+        .cons li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .cons li:before {
+            content: "✗";
+            color: #dc3545;
+            font-weight: bold;
+            font-size: 1.2em;
+            position: absolute;
+            left: 0;
+        }
+        
+        .mermaid {
+            background: white;
+            padding: 30px;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        hr {
+            border: none;
+            border-top: 3px solid #ecf0f1;
+            margin: 40px 0;
+        }
+        
+        strong {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        
+        em {
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        table th {
+            background: #3498db;
+            color: white;
+        }
+        
+        table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .section {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .section h4 {
+            color: #2980b9;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .problem-statement {
+            background: #e8f4f8;
+            border-left-color: #3498db;
+        }
+        
+        .example {
+            background: #fff9e6;
+            border-left-color: #f39c12;
+        }
+        
+        .detailed-explanation {
+            background: #f0f8f0;
+            border-left-color: #27ae60;
+        }
+        
+        .approach {
+            background: #f5f0ff;
+            border-left-color: #9b59b6;
+        }
+        
+        .complexity {
+            background: #ffe8e8;
+            border-left-color: #e74c3c;
+        }
+        
+        .code-solution {
+            background: #2d2d2d;
+            border-left-color: #f39c12;
+        }
+        
+        .code-solution h4 {
+            color: #f8f8f2;
+        }
+        
+        .code-solution p {
+            color: #f8f8f2;
+        }
+        
+        .step-section {
+            background: #fafafa;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 3px solid #95a5a6;
+            border-radius: 4px;
+        }
+        
+        .step-section {
+            background: #fafafa;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 3px solid #95a5a6;
+            border-radius: 4px;
+        }
+        
+        .step-section h5 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        
+        .step-section strong {
+            color: #2c3e50;
+        }
+        
+        .why-faang {
+            background: #fff3cd;
+            border-left-color: #ffc107;
+        }
+        
+        .why-faang h4 {
+            color: #856404;
+        }
+        
+        .section ul, .section ol {
+            margin-left: 25px;
+        }
+        
+        .section pre {
+            margin: 15px 0;
+        }
+        
+        .explanation-content, .approach-content {
+            line-height: 1.8;
+        }
+        
+        .explanation-content p, .approach-content p {
+            margin-bottom: 12px;
+        }
+        
+        .explanation-content ul, .approach-content ul {
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .explanation-content li, .approach-content li {
+            margin-bottom: 8px;
+        }
+        
+        .walkthrough {
+            background: #f0f7ff;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+            border-radius: 5px;
+        }
+        
+        .walkthrough h5 {
+            color: #2980b9;
+            margin-top: 0;
+        }
+        
+        .code-explanation {
+            background: #2d2d2d;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .code-explanation h5 {
+            color: #f8f8f2;
+            margin-top: 0;
+        }
+        
+        .code-explanation p {
+            color: #f8f8f2;
+        }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            transition: background 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .back-btn:hover {
+            background: #2980b9;
+        }
+        
+        .back-btn i {
+            font-size: 0.9em;
+        }
+        
+        .mermaid {
+            background: white;
+            padding: 20px;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .code-example {
+            background: #2d2d2d;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        
+        .code-example pre {
+            margin: 0;
+            color: #f8f8f2;
+        }
+        
+        .code-example code {
+            background: transparent;
+            padding: 0;
+            color: #f8f8f2;
+            border: none;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            h2 {
+                font-size: 1.4em;
+            }
+            
+            h3 {
+                font-size: 1.3em;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <a href="interview.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Interview Guide</a>
+        <h1>Distributed Systems Interview Questions</h1>
+
+<h2>Table of Contents</h2>
+<ul><li>[Distributed System Fundamentals](#distributed-system-fundamentals)</li>
+<li>[Consistency Models](#consistency-models)</li>
+<li>[CAP Theorem](#cap-theorem)</li>
+<li>[Distributed Consensus](#distributed-consensus)</li>
+<li>[Replication Strategies](#replication-strategies)</li>
+<li>[Distributed Transactions](#distributed-transactions)</li>
+<li>[Fault Tolerance](#fault-tolerance)</li>
+</ul>
+<hr>
+
+<h2>Distributed System Fundamentals</h2>
+
+<h3>Question 1: Explain the challenges of distributed systems.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Key Challenges:</strong>
+
+<ul><li><strong>Network Partitions:</strong></li>
+</ul>   - Network failures can split system
+<p>- Nodes can't communicate</p>
+<p>- Need to handle gracefully</p>
+
+<ul><li><strong>Partial Failures:</strong></li>
+</ul>   - Some nodes fail, others work
+<p>- Harder to detect than total failure</p>
+<p>- Need fault tolerance</p>
+
+<ul><li><strong>Latency:</strong></li>
+</ul>   - Network communication adds delay
+<p>- Need to minimize round trips</p>
+<p>- Use caching, batching</p>
+
+<ul><li><strong>Clock Synchronization:</strong></li>
+</ul>   - Clocks drift apart
+<p>- Can't rely on absolute time</p>
+<p>- Use logical clocks, vector clocks</p>
+
+<ul><li><strong>Consistency:</strong></li>
+</ul>   - Multiple copies of data
+<p>- Keeping them in sync</p>
+<p>- Trade-off with availability</p>
+
+</div></div>
+
+<div class="mermaid">
+graph TD
+    A["Client"] --> B["Node 1"]
+    A --> C["Node 2"]
+    A --> D["Node 3"]
+    B -.->|Network Partition| C
+    B -.->|Network Partition| D
+    C -.->|Network Partition| D
+    E["Clock Drift"] --> B
+    E --> C
+    E --> D
+    F["Partial Failure"] --> B
+    G["Latency"] --> A
+    style B fill:#ffcccc
+    style C fill:#ffcccc
+    style D fill:#ffcccc
+    style E fill:#ffffcc
+    style F fill:#ffcccc
+    style G fill:#ccffcc
+</div>
+
+<div class="code-example">
+<pre><code>// Example: Handling Network Partitions
+class DistributedSystem {
+    constructor(nodes) {
+        this.nodes = nodes;
+        this.quorum = Math.floor(nodes.length / 2) + 1;
+    }
+    
+    async write(key, value) {
+        // Need quorum to write
+        const responses = await Promise.allSettled(
+            this.nodes.map(node => node.write(key, value))
+        );
+        
+        const successes = responses.filter(r => r.status === 'fulfilled');
+        if (successes.length >= this.quorum) {
+            return { success: true, acknowledged: successes.length };
+        }
+        throw new Error('Quorum not reached - partition detected');
+    }
+    
+    async read(key) {
+        // Read from quorum
+        const responses = await Promise.allSettled(
+            this.nodes.map(node => node.read(key))
+        );
+        
+        const values = responses
+            .filter(r => r.status === 'fulfilled')
+            .map(r => r.value);
+        
+        // Return most recent value (by version/timestamp)
+        return this.getLatestValue(values);
+    }
+}
+
+// Example: Logical Clock Implementation
+class LogicalClock {
+    constructor() {
+        this.counter = 0;
+    }
+    
+    tick() {
+        this.counter++;
+        return this.counter;
+    }
+    
+    update(receivedTime) {
+        this.counter = Math.max(this.counter, receivedTime) + 1;
+        return this.counter;
+    }
+    
+    compare(otherClock) {
+        return this.counter - otherClock.counter;
+    }
+}</code></pre>
+</div>
+
+<div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests fundamental understanding</li>
+<li>Demonstrates awareness of complexities</li>
+<li>Shows knowledge of trade-offs</li>
+</ul>
+</div><hr>
+
+<h2>Consistency Models</h2>
+
+<h3>Question 2: Explain different consistency models.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Strong Consistency:</strong>
+<ul><li>All reads see latest write</li>
+<li>Linearizable</li>
+<li>Slower, but simpler</li>
+<li>Example: Traditional SQL databases</li>
+</ul>
+<strong>Eventual Consistency:</strong>
+<ul><li>Replicas converge over time</li>
+<li>Faster, but complex</li>
+<li>Used in distributed databases</li>
+<li>Example: DynamoDB, Cassandra</li>
+</ul>
+<strong>Weak Consistency:</strong>
+<ul><li>No guarantees on when updates propagate</li>
+<li>Fastest</li>
+<li>Used in caching</li>
+<li>Example: CDN caches</li>
+</ul>
+<strong>Causal Consistency:</strong>
+<ul><li>Preserves causal relationships</li>
+<li>Middle ground</li>
+<li>Used in some distributed systems</li>
+<li>Example: Riak, some NoSQL systems</li>
+</ul>
+</div></div>
+
+<div class="mermaid">
+graph LR
+    A["Write: x=1"] --> B["Replica 1"]
+    A --> C["Replica 2"]
+    A --> D["Replica 3"]
+    
+    E["Read Request"] --> B
+    E --> C
+    E --> D
+    
+    F["Strong Consistency<br/>All see x=1"] --> E
+    G["Eventual Consistency<br/>May see x=0 initially"] --> E
+    H["Weak Consistency<br/>No guarantees"] --> E
+    I["Causal Consistency<br/>Preserves order"] --> E
+    
+    style F fill:#ffcccc
+    style G fill:#ccffcc
+    style H fill:#ffffcc
+    style I fill:#ccccff
+</div>
+
+<div class="code-example">
+<pre><code>// Example: Strong Consistency Implementation
+class StrongConsistentStore {
+    constructor(replicas) {
+        this.replicas = replicas;
+    }
+    
+    async write(key, value) {
+        // Write to all replicas synchronously
+        const results = await Promise.all(
+            this.replicas.map(replica => replica.write(key, value))
+        );
+        
+        // All must succeed
+        if (results.every(r => r.success)) {
+            return { success: true };
+        }
+        throw new Error('Write failed - not all replicas updated');
+    }
+    
+    async read(key) {
+        // Read from any replica (all have same data)
+        return await this.replicas[0].read(key);
+    }
+}
+
+// Example: Eventual Consistency Implementation
+class EventuallyConsistentStore {
+    constructor(replicas) {
+        this.replicas = replicas;
+        this.versionVector = new Map();
+    }
+    
+    async write(key, value, nodeId) {
+        // Write to local replica immediately
+        const version = this.getNextVersion(nodeId);
+        await this.replicas[nodeId].write(key, value, version);
+        
+        // Replicate asynchronously
+        this.replicateAsync(key, value, version);
+        return { success: true, version };
+    }
+    
+    async read(key) {
+        // Read from nearest replica (may be stale)
+        const replica = this.getNearestReplica();
+        return await replica.read(key);
+    }
+    
+    async replicateAsync(key, value, version) {
+        // Background replication
+        for (const replica of this.replicas) {
+            replica.replicate(key, value, version).catch(err => {
+                console.error('Replication failed:', err);
+            });
+        }
+    }
+    
+    getNextVersion(nodeId) {
+        const current = this.versionVector.get(nodeId) || 0;
+        this.versionVector.set(nodeId, current + 1);
+        return { nodeId, counter: current + 1 };
+    }
+}
+
+// Example: Causal Consistency with Vector Clocks
+class CausalConsistentStore {
+    constructor(nodeId, nodes) {
+        this.nodeId = nodeId;
+        this.nodes = nodes;
+        this.vectorClock = new Map();
+        nodes.forEach(node => this.vectorClock.set(node.id, 0));
+    }
+    
+    tick() {
+        this.vectorClock.set(
+            this.nodeId,
+            this.vectorClock.get(this.nodeId) + 1
+        );
+    }
+    
+    update(otherClock) {
+        // Update vector clock: max of each component
+        for (const [nodeId, time] of otherClock.entries()) {
+            const current = this.vectorClock.get(nodeId) || 0;
+            this.vectorClock.set(nodeId, Math.max(current, time));
+        }
+        this.tick();
+    }
+    
+    happensBefore(otherClock) {
+        // Check if this event happened before other
+        let strictlyLess = false;
+        for (const [nodeId, time] of this.vectorClock.entries()) {
+            const otherTime = otherClock.get(nodeId) || 0;
+            if (time > otherTime) return false;
+            if (time < otherTime) strictlyLess = true;
+        }
+        return strictlyLess;
+    }
+}</code></pre>
+</div>
+
+<div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of consistency</li>
+<li>Demonstrates knowledge of trade-offs</li>
+<li>Shows ability to choose appropriate model</li>
+</ul>
+</div><hr>
+
+<h2>CAP Theorem</h2>
+
+<h3>Question 3: Explain CAP theorem and its implications.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>CAP Theorem:</strong>
+<p>In a distributed system, you can have at most 2 of:</p>
+<ul><li><strong>Consistency:</strong> All nodes see same data</li>
+<li><strong>Availability:</strong> System remains operational</li>
+<li><strong>Partition Tolerance:</strong> System continues despite network failures</li>
+</ul>
+<strong>Trade-offs:</strong>
+
+<ul><li><strong>CP (Consistency + Partition Tolerance):</strong></li>
+</ul>   - Strong consistency
+<p>- May sacrifice availability</p>
+<p>- Example: MongoDB, HBase, Redis</p>
+<p>- Blocks writes during partition to maintain consistency</p>
+
+<ul><li><strong>AP (Availability + Partition Tolerance):</strong></li>
+</ul>   - High availability
+<p>- May sacrifice consistency</p>
+<p>- Example: DynamoDB, Cassandra, CouchDB</p>
+<p>- Continues serving requests but may return stale data</p>
+
+<ul><li><strong>CA (Consistency + Availability):</strong></li>
+</ul>   - Not possible in distributed systems
+<p>- Requires no network partitions</p>
+<p>- Only works in single-node systems</p>
+
+</div></div>
+
+<div class="mermaid">
+graph TD
+    A["CAP Theorem"] --> B["Consistency"]
+    A --> C["Availability"]
+    A --> D["Partition Tolerance"]
+    
+    B --> E["CP System<br/>MongoDB, HBase"]
+    C --> F["AP System<br/>Cassandra, DynamoDB"]
+    D --> E
+    D --> F
+    
+    G["Network Partition"] --> H{"Choose"}
+    H -->|Consistency| I["Block Writes<br/>CP"]
+    H -->|Availability| J["Serve Stale Data<br/>AP"]
+    
+    style E fill:#ffcccc
+    style F fill:#ccffcc
+    style I fill:#ffcccc
+    style J fill:#ccffcc
+</div>
+
+<div class="code-example">
+<pre><code>// Example: CP System (Consistency + Partition Tolerance)
+class CPSystem {
+    constructor(replicas) {
+        this.replicas = replicas;
+        this.quorum = Math.floor(replicas.length / 2) + 1;
+    }
+    
+    async write(key, value) {
+        // Need quorum to maintain consistency
+        const responses = await Promise.allSettled(
+            this.replicas.map(r => r.write(key, value))
+        );
+        
+        const successes = responses.filter(r => r.status === 'fulfilled');
+        
+        if (successes.length < this.quorum) {
+            // Partition detected - block write to maintain consistency
+            throw new Error('Partition detected - write blocked for consistency');
+        }
+        
+        return { success: true };
+    }
+    
+    async read(key) {
+        // Read from quorum to ensure consistency
+        const responses = await Promise.allSettled(
+            this.replicas.map(r => r.read(key))
+        );
+        
+        const values = responses
+            .filter(r => r.status === 'fulfilled')
+            .map(r => r.value);
+        
+        if (values.length < this.quorum) {
+            throw new Error('Cannot read - quorum not available');
+        }
+        
+        return this.getConsistentValue(values);
+    }
+}
+
+// Example: AP System (Availability + Partition Tolerance)
+class APSystem {
+    constructor(replicas) {
+        this.replicas = replicas;
+    }
+    
+    async write(key, value) {
+        // Write to any available replica - prioritize availability
+        for (const replica of this.replicas) {
+            try {
+                await replica.write(key, value);
+                // Replicate asynchronously to others
+                this.replicateAsync(key, value);
+                return { success: true };
+            } catch (err) {
+                // Try next replica
+                continue;
+            }
+        }
+        throw new Error('No replicas available');
+    }
+    
+    async read(key) {
+        // Read from any available replica - may return stale data
+        for (const replica of this.replicas) {
+            try {
+                return await replica.read(key);
+            } catch (err) {
+                continue;
+            }
+        }
+        throw new Error('No replicas available');
+    }
+    
+    async replicateAsync(key, value) {
+        // Background replication - eventual consistency
+        this.replicas.forEach(replica => {
+            replica.replicate(key, value).catch(() => {
+                // Ignore replication failures - eventual consistency
+            });
+        });
+    }
+}
+
+// Example: Practical CAP Trade-off Decision
+class SystemDesign {
+    chooseCAPTradeoff(requirements) {
+        if (requirements.criticalConsistency && requirements.canBlockWrites) {
+            return 'CP'; // Financial systems, leader election
+        } else if (requirements.highAvailability && requirements.canAcceptStaleData) {
+            return 'AP'; // Social media, content delivery
+        } else {
+            // Most systems need partition tolerance
+            // Choose between C and A based on use case
+            return requirements.criticalConsistency ? 'CP' : 'AP';
+        }
+    }
+    
+    // Real-world examples
+    examples = {
+        'CP': ['MongoDB', 'HBase', 'Redis', 'Zookeeper'],
+        'AP': ['Cassandra', 'DynamoDB', 'CouchDB', 'Riak'],
+        'CA': ['Single-node databases', 'Not practical in distributed systems']
+    };
+}</code></pre>
+</div>
+
+<div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests fundamental distributed systems knowledge</li>
+<li>Demonstrates understanding of trade-offs</li>
+<li>Shows ability to make design decisions</li>
+<li>Critical for system design interviews</li>
+</ul>
+</div><hr>
+
+<h2>Distributed Consensus</h2>
+
+<h3>Question 4: Explain Raft consensus algorithm.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Raft Overview:</strong>
+<p>Distributed consensus algorithm for managing replicated logs. Designed to be more understandable than Paxos.</p>
+
+<strong>Key Concepts:</strong>
+
+<ul><li><strong>Leader Election:</strong></li>
+</ul>   - One leader, multiple followers
+<p>- Leader handles all client requests</p>
+<p>- If leader fails, new election</p>
+<p>- Uses randomized timeouts to prevent split votes</p>
+
+<ul><li><strong>Log Replication:</strong></li>
+</ul>   - Leader replicates entries to followers
+<p>- Committed when majority acknowledge</p>
+<p>- Ensures consistency across all nodes</p>
+<p>- Followers append entries in order</p>
+
+<ul><li><strong>Safety:</strong></li>
+</ul>   - At most one leader at a time
+<p>- Committed entries never lost</p>
+<p>- Logs match on all servers</p>
+<p>- Leader completeness property</p>
+
+<strong>Raft States:</strong>
+<ul><li><strong>Leader:</strong> Handles all client requests, replicates log</li>
+<li><strong>Follower:</strong> Receives updates from leader, votes in elections</li>
+<li><strong>Candidate:</strong> Requests votes during election</li>
+</ul>
+
+</div></div>
+
+<div class="mermaid">
+stateDiagram-v2
+    [*] --> Follower
+    Follower --> Candidate: Election Timeout
+    Candidate --> Leader: Majority Votes
+    Candidate --> Follower: Another Leader Found
+    Leader --> Follower: Heartbeat Timeout
+    Leader --> [*]: Leader Crash
+    
+    note right of Leader
+        Handles all writes
+        Replicates to followers
+        Commits when majority ACK
+    end note
+    
+    note right of Follower
+        Receives updates
+        Votes in elections
+        Applies committed entries
+    end note
+    
+    note right of Candidate
+        Requests votes
+        Needs majority
+        Randomized timeout
+    end note
+</div>
+
+<div class="mermaid">
+sequenceDiagram
+    participant Client
+    participant Leader
+    participant Follower1
+    participant Follower2
+    
+    Client->>Leader: Write Request
+    Leader->>Leader: Append to Log
+    Leader->>Follower1: AppendEntries
+    Leader->>Follower2: AppendEntries
+    Follower1->>Leader: ACK
+    Follower2->>Leader: ACK
+    Leader->>Leader: Commit (majority)
+    Leader->>Follower1: Commit
+    Leader->>Follower2: Commit
+    Leader->>Client: Success
+</div>
+
+<div class="code-example">
+<pre><code>// Example: Raft Leader Election
+class RaftNode {
+    constructor(nodeId, nodes) {
+        this.nodeId = nodeId;
+        this.nodes = nodes;
+        this.state = 'follower';
+        this.currentTerm = 0;
+        this.votedFor = null;
+        this.log = [];
+        this.commitIndex = 0;
+        this.electionTimeout = this.randomTimeout(150, 300);
+    }
+    
+    async startElection() {
+        this.state = 'candidate';
+        this.currentTerm++;
+        this.votedFor = this.nodeId;
+        
+        const votes = [this.nodeId]; // Vote for self
+        
+        // Request votes from all other nodes
+        const voteRequests = this.nodes
+            .filter(n => n.id !== this.nodeId)
+            .map(node => this.requestVote(node));
+        
+        const responses = await Promise.allSettled(voteRequests);
+        const grantedVotes = responses.filter(r => 
+            r.status === 'fulfilled' && r.value.granted
+        );
+        
+        votes.push(...grantedVotes.map(v => v.value.nodeId));
+        
+        // Become leader if majority
+        if (votes.length > this.nodes.length / 2) {
+            this.state = 'leader';
+            this.startHeartbeat();
+            return { success: true, term: this.currentTerm };
+        }
+        
+        // Otherwise, become follower
+        this.state = 'follower';
+        return { success: false };
+    }
+    
+    async requestVote(node) {
+        return await node.voteRequest({
+            term: this.currentTerm,
+            candidateId: this.nodeId,
+            lastLogIndex: this.log.length - 1,
+            lastLogTerm: this.log[this.log.length - 1]?.term || 0
+        });
+    }
+    
+    async voteRequest(request) {
+        // Grant vote if:
+        // 1. Request term is higher
+        // 2. Haven't voted this term
+        // 3. Candidate's log is at least as up-to-date
+        if (request.term > this.currentTerm) {
+            this.currentTerm = request.term;
+            this.votedFor = null;
+        }
+        
+        const logUpToDate = 
+            request.lastLogTerm > this.getLastLogTerm() ||
+            (request.lastLogTerm === this.getLastLogTerm() &&
+             request.lastLogIndex >= this.log.length - 1);
+        
+        if (request.term === this.currentTerm &&
+            (this.votedFor === null || this.votedFor === request.candidateId) &&
+            logUpToDate) {
+            this.votedFor = request.candidateId;
+            return { granted: true, term: this.currentTerm };
+        }
+        
+        return { granted: false, term: this.currentTerm };
+    }
+    
+    randomTimeout(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+}</code></pre>
+</div>
+
+<div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of consensus algorithms</li>
+<li>Demonstrates knowledge of distributed algorithms</li>
+<li>Shows ability to explain complex concepts</li>
+<li>Used in production systems (etcd, Consul)</li>
+</ul>
+</div><hr>
+
+<h2>Replication Strategies</h2>
+
+<h3>Question 5: Compare synchronous vs asynchronous replication.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Synchronous Replication:</strong>
+<ul><li>Wait for all replicas to acknowledge</li>
+<li>Strong consistency - all replicas have same data</li>
+<li>Higher latency - must wait for all ACKs</li>
+<li>Lower throughput - blocked on slowest replica</li>
+<li>Data loss protection - all replicas updated before commit</li>
+<li>Example: Financial transactions, critical data</li>
+</ul>
+<strong>Asynchronous Replication:</strong>
+<ul><li>Don't wait for acknowledgments</li>
+<li>Eventual consistency - replicas catch up later</li>
+<li>Lower latency - return immediately</li>
+<li>Higher throughput - not blocked on replicas</li>
+<li>Risk of data loss if primary fails before replication</li>
+<li>Example: Social media posts, logs, analytics</li>
+</ul>
+<strong>When to Use:</strong>
+<ul><li>Synchronous: When consistency critical (financial, medical)</li>
+<li>Asynchronous: When performance critical (high-volume writes)</li>
+<li>Hybrid: Synchronous to nearby replicas, async to distant ones</li>
+</ul>
+</div></div>
+
+<div class="mermaid">
+sequenceDiagram
+    participant Client
+    participant Primary
+    participant Replica1
+    participant Replica2
+    
+    Note over Client,Replica2: Synchronous Replication
+    Client->>Primary: Write Request
+    Primary->>Replica1: Replicate (sync)
+    Primary->>Replica2: Replicate (sync)
+    Replica1->>Primary: ACK
+    Replica2->>Primary: ACK
+    Primary->>Client: Success (waited for all)
+    
+    Note over Client,Replica2: Asynchronous Replication
+    Client->>Primary: Write Request
+    Primary->>Client: Success (immediate)
+    Primary->>Replica1: Replicate (async)
+    Primary->>Replica2: Replicate (async)
+    Replica1->>Primary: ACK (later)
+    Replica2->>Primary: ACK (later)
+</div>
+
+<div class="code-example">
+<pre><code>// Example: Synchronous Replication
+class SynchronousReplication {
+    constructor(replicas) {
+        this.replicas = replicas;
+    }
+    
+    async write(key, value) {
+        const startTime = Date.now();
+        
+        // Write to all replicas and wait for all
+        const results = await Promise.all(
+            this.replicas.map(replica => 
+                replica.write(key, value)
+            )
+        );
+        
+        // All must succeed
+        const allSuccess = results.every(r => r.success);
+        if (!allSuccess) {
+            throw new Error('Replication failed - rolling back');
+        }
+        
+        const latency = Date.now() - startTime;
+        return { 
+            success: true, 
+            latency,
+            consistency: 'strong',
+            replicasUpdated: results.length
+        };
+    }
+    
+    async read(key) {
+        // Read from any replica (all have same data)
+        return await this.replicas[0].read(key);
+    }
+}
+
+// Example: Asynchronous Replication
+class AsynchronousReplication {
+    constructor(replicas) {
+        this.replicas = replicas;
+        this.replicationQueue = [];
+    }
+    
+    async write(key, value) {
+        const startTime = Date.now();
+        
+        // Write to primary immediately
+        const primaryResult = await this.replicas[0].write(key, value);
+        
+        // Queue replication to other replicas (don't wait)
+        this.replicateAsync(key, value);
+        
+        const latency = Date.now() - startTime;
+        return { 
+            success: true, 
+            latency, // Low latency - didn't wait for replicas
+            consistency: 'eventual',
+            primaryUpdated: true
+        };
+    }
+    
+    async replicateAsync(key, value) {
+        // Replicate to other replicas in background
+        const replicationPromises = this.replicas
+            .slice(1)
+            .map(replica => 
+                replica.write(key, value).catch(err => {
+                    console.error('Async replication failed:', err);
+                    // Retry logic would go here
+                })
+            );
+        
+        // Don't await - fire and forget
+        Promise.allSettled(replicationPromises);
+    }
+    
+    async read(key) {
+        // Read from primary (may have latest data)
+        // Or read from any replica (may be stale)
+        return await this.replicas[0].read(key);
+    }
+}
+
+// Example: Hybrid Replication (Semi-synchronous)
+class HybridReplication {
+    constructor(replicas) {
+        this.replicas = replicas;
+        this.syncReplicas = replicas.slice(0, 2); // First 2 are sync
+        this.asyncReplicas = replicas.slice(2);    // Rest are async
+    }
+    
+    async write(key, value) {
+        // Write to primary
+        await this.replicas[0].write(key, value);
+        
+        // Wait for sync replicas (nearby, fast)
+        await Promise.all(
+            this.syncReplicas.slice(1).map(r => r.write(key, value))
+        );
+        
+        // Replicate to async replicas (distant, slow)
+        this.asyncReplicas.forEach(replica => {
+            replica.write(key, value).catch(err => {
+                console.error('Async replication failed:', err);
+            });
+        });
+        
+        return { 
+            success: true,
+            consistency: 'strong (sync replicas), eventual (async)'
+        };
+    }
+}
+
+// Performance Comparison
+class ReplicationComparison {
+    async benchmark() {
+        const sync = new SynchronousReplication([...replicas]);
+        const async = new AsynchronousReplication([...replicas]);
+        
+        // Sync: Higher latency, lower throughput
+        const syncResult = await sync.write('key', 'value');
+        // Latency: ~300ms (waits for all replicas)
+        
+        // Async: Lower latency, higher throughput
+        const asyncResult = await async.write('key', 'value');
+        // Latency: ~50ms (returns immediately)
+        
+        return {
+            synchronous: {
+                latency: syncResult.latency,
+                throughput: 'Lower',
+                consistency: 'Strong'
+            },
+            asynchronous: {
+                latency: asyncResult.latency,
+                throughput: 'Higher',
+                consistency: 'Eventual'
+            }
+        };
+    }
+}</code></pre>
+</div>
+
+<div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of replication</li>
+<li>Demonstrates knowledge of trade-offs</li>
+<li>Shows ability to choose appropriate strategy</li>
+<li>Critical for database design decisions</li>
+</ul>
+</div><hr>
+
+<h3>Question 6: Explain Paxos consensus algorithm.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Paxos:</strong>
+<ul><li>Distributed consensus algorithm</li>
+<li>Ensures agreement among nodes</li>
+<li>Handles node failures</li>
+</ul>
+<strong>Roles:</strong>
+<ul><li>Proposers: Propose values</li>
+<li>Acceptors: Accept proposals</li>
+<li>Learners: Learn chosen value</li>
+</ul>
+<strong>Phases:</strong>
+<ul><li><strong>Prepare:</strong> Proposer sends prepare request</li>
+<li><strong>Promise:</strong> Acceptors promise if no higher proposal</li>
+<li><strong>Accept:</strong> Proposer sends accept request</li>
+<li><strong>Accepted:</strong> Acceptors accept if no higher proposal</li>
+</ul>
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of consensus algorithms</li>
+<li>Demonstrates knowledge of distributed algorithms</li>
+<li>Shows ability to explain complex concepts</li>
+</ul>
+</div><hr>
+
+<h3>Question 7: Explain vector clocks and logical clocks.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Logical Clocks:</strong>
+<ul><li>Order events without physical time</li>
+<li>Lamport timestamps</li>
+<li>Increment on events</li>
+</ul>
+<strong>Vector Clocks:</strong>
+<ul><li>Track causal relationships</li>
+<li>Vector of timestamps per process</li>
+<li>Detect concurrent events</li>
+</ul>
+<strong>Use Cases:</strong>
+<ul><li>Event ordering</li>
+<li>Causal consistency</li>
+<li>Distributed debugging</li>
+</ul>
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of time in distributed systems</li>
+<li>Demonstrates knowledge of event ordering</li>
+<li>Shows ability to handle causality</li>
+</ul>
+</div><hr>
+
+<h3>Question 8: Explain two-phase commit (2PC).</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>2PC:</strong>
+<ul><li>Distributed transaction protocol</li>
+<li>Ensures all nodes commit or abort</li>
+<li>Coordinator and participants</li>
+</ul>
+<strong>Phases:</strong>
+<ul><li><strong>Prepare:</strong> Coordinator asks participants to prepare</li>
+<li><strong>Commit/Abort:</strong> If all ready, commit; else abort</li>
+</ul>
+<strong>Problems:</strong>
+<ul><li>Blocking (waits for all)</li>
+<li>Single point of failure</li>
+<li>Not partition tolerant</li>
+</ul>
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of distributed transactions</li>
+<li>Demonstrates knowledge of transaction protocols</li>
+<li>Shows awareness of limitations</li>
+</ul>
+</div><hr>
+
+<h3>Question 9: Explain three-phase commit (3PC).</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>3PC:</strong>
+<ul><li>Improvement over 2PC</li>
+<li>Non-blocking</li>
+<li>Pre-commit phase</li>
+</ul>
+<strong>Phases:</strong>
+<ul><li><strong>CanCommit:</strong> Coordinator asks if can commit</li>
+<li><strong>PreCommit:</strong> If all yes, send pre-commit</li>
+<li><strong>DoCommit:</strong> If all pre-committed, commit</li>
+</ul>
+<strong>Benefits:</strong>
+<ul><li>Non-blocking</li>
+<li>Better fault tolerance</li>
+</ul>
+<strong>Limitations:</strong>
+<ul><li>Still not partition tolerant</li>
+<li>More complex</li>
+</ul>
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of transaction protocols</li>
+<li>Demonstrates knowledge of improvements</li>
+<li>Shows ability to compare approaches</li>
+</ul>
+</div><hr>
+
+<h3>Question 10: Explain quorum-based replication.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Quorum:</strong>
+<ul><li>Minimum number of nodes needed</li>
+<li>Read quorum + Write quorum > Total nodes</li>
+<li>Ensures consistency</li>
+</ul>
+</div></div><div class="section example"><h4>Example</h4>
+<ul><li>5 nodes, read quorum = 3, write quorum = 3</li>
+<li>Read from 3, write to 3</li>
+<li>Overlap ensures consistency</li>
+</ul>
+<strong>Benefits:</strong>
+<ul><li>Fault tolerance</li>
+<li>Consistency guarantees</li>
+</ul>
+<strong>Trade-offs:</strong>
+<ul><li>Read/write quorum sizes</li>
+<li>Latency vs consistency</li>
+</ul>
+</div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of replication</li>
+<li>Demonstrates knowledge of quorum systems</li>
+<li>Shows ability to ensure consistency</li>
+</ul>
+</div><hr>
+
+<h3>Question 11: Explain leader election algorithms.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Leader Election:</strong>
+<ul><li>Select single leader from group</li>
+<li>Handle leader failures</li>
+<li>Ensure single leader</li>
+</ul>
+<strong>Algorithms:</strong>
+<ul><li>Bully algorithm</li>
+<li>Ring algorithm</li>
+<li>Raft leader election</li>
+</ul>
+<h4>Requirements</h4>
+<ul><li>Safety: At most one leader</li>
+<li>Liveness: Eventually have leader</li>
+</ul>
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of distributed coordination</li>
+<li>Demonstrates knowledge of election algorithms</li>
+<li>Shows ability to ensure single leader</li>
+</ul>
+</div><hr>
+
+<h3>Question 12: Explain distributed locking mechanisms.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Distributed Locks:</strong>
+<ul><li>Coordinate access to shared resource</li>
+<li>Prevent concurrent modifications</li>
+<li>Handle failures</li>
+</ul>
+<strong>Approaches:</strong>
+<ul><li>Database-based locks</li>
+<li>Redis-based locks</li>
+<li>ZooKeeper/etcd locks</li>
+</ul>
+<strong>Challenges:</strong>
+<ul><li>Deadlocks</li>
+<li>Lock expiration</li>
+<li>Network partitions</li>
+</ul>
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of coordination</li>
+<li>Demonstrates knowledge of locking mechanisms</li>
+<li>Shows ability to handle concurrency</li>
+</ul>
+</div><hr>
+
+<h3>Question 13: Explain gossip protocols.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Gossip Protocol:</strong>
+<ul><li>Epidemic information dissemination</li>
+<li>Nodes randomly exchange information</li>
+<li>Eventually consistent</li>
+</ul>
+<strong>Use Cases:</strong>
+<ul><li>Membership management</li>
+<li>Failure detection</li>
+<li>Data dissemination</li>
+</ul>
+<strong>Benefits:</strong>
+<ul><li>Fault tolerant</li>
+<li>Scalable</li>
+<li>No central coordinator</li>
+</ul>
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of information dissemination</li>
+<li>Demonstrates knowledge of epidemic protocols</li>
+<li>Shows ability to design scalable systems</li>
+</ul>
+</div><hr>
+
+<h3>Question 14: Explain consistent hashing.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Consistent Hashing:</strong>
+<ul><li>Distribute data across nodes using a hash ring</li>
+<li>Minimize rehashing on node changes (only k/n keys need remapping)</li>
+<li>Hash ring concept - nodes and keys mapped to ring</li>
+<li>Used in distributed caching, load balancing, databases</li>
+</ul>
+<strong>Benefits:</strong>
+<ul><li>Minimal data movement when nodes added/removed</li>
+<li>Load distribution across nodes</li>
+<li>Handles node additions/removals gracefully</li>
+<li>Scalable to thousands of nodes</li>
+</ul>
+<strong>Virtual Nodes:</strong>
+<ul><li>Multiple virtual nodes per physical node</li>
+<li>Better load distribution (reduces variance)</li>
+<li>Handles heterogeneous nodes (different capacities)</li>
+<li>Example: 150 virtual nodes per physical node</li>
+</ul>
+<strong>How It Works:</strong>
+<ul><li>Hash nodes and keys to same ring (0 to 2^32-1)</li>
+<li>Key assigned to first node clockwise from its hash</li>
+<li>When node added: only keys between previous and new node move</li>
+<li>When node removed: keys reassigned to next node</li>
+</ul>
+
+</div></div>
+
+<div class="mermaid">
+graph LR
+    A["Hash Ring<br/>0 to 2^32-1"] --> B["Node A<br/>Hash: 100"]
+    A --> C["Node B<br/>Hash: 500"]
+    A --> D["Node C<br/>Hash: 900"]
+    
+    E["Key 'user1'<br/>Hash: 250"] --> C
+    F["Key 'user2'<br/>Hash: 600"] --> D
+    G["Key 'user3'<br/>Hash: 50"] --> B
+    
+    H["Node D Added<br/>Hash: 400"] --> I["Only keys 250-400<br/>move to Node D"]
+    
+    style B fill:#ccffcc
+    style C fill:#ccffcc
+    style D fill:#ccffcc
+    style H fill:#ffffcc
+    style I fill:#ffcccc
+</div>
+
+<div class="code-example">
+<pre><code>// Example: Consistent Hashing Implementation
+class ConsistentHash {
+    constructor(nodes = [], virtualNodesPerNode = 150) {
+        this.virtualNodesPerNode = virtualNodesPerNode;
+        this.ring = new Map(); // hash -> node
+        this.nodes = new Set();
+        
+        nodes.forEach(node => this.addNode(node));
+    }
+    
+    // Hash function (using MD5 or SHA-1 in practice)
+    hash(key) {
+        // Simplified hash - use crypto hash in production
+        let hash = 0;
+        for (let i = 0; i < key.length; i++) {
+            hash = ((hash << 5) - hash) + key.charCodeAt(i);
+            hash = hash & hash; // Convert to 32-bit integer
+        }
+        return Math.abs(hash);
+    }
+    
+    addNode(node) {
+        this.nodes.add(node);
+        
+        // Add virtual nodes
+        for (let i = 0; i < this.virtualNodesPerNode; i++) {
+            const virtualNodeKey = `${node}:${i}`;
+            const hash = this.hash(virtualNodeKey);
+            this.ring.set(hash, node);
+        }
+        
+        // Sort ring for efficient lookup
+        this.sortedHashes = Array.from(this.ring.keys()).sort((a, b) => a - b);
+    }
+    
+    removeNode(node) {
+        this.nodes.delete(node);
+        
+        // Remove virtual nodes
+        for (let i = 0; i < this.virtualNodesPerNode; i++) {
+            const virtualNodeKey = `${node}:${i}`;
+            const hash = this.hash(virtualNodeKey);
+            this.ring.delete(hash);
+        }
+        
+        this.sortedHashes = Array.from(this.ring.keys()).sort((a, b) => a - b);
+    }
+    
+    getNode(key) {
+        if (this.ring.size === 0) {
+            throw new Error('No nodes in ring');
+        }
+        
+        const keyHash = this.hash(key);
+        
+        // Find first node hash >= key hash (clockwise)
+        for (const nodeHash of this.sortedHashes) {
+            if (nodeHash >= keyHash) {
+                return this.ring.get(nodeHash);
+            }
+        }
+        
+        // Wrap around - return first node
+        return this.ring.get(this.sortedHashes[0]);
+    }
+    
+    // Get all nodes responsible for a key (for replication)
+    getNodes(key, replicationFactor = 3) {
+        const nodes = [];
+        const keyHash = this.hash(key);
+        let startIndex = 0;
+        
+        // Find starting position
+        for (let i = 0; i < this.sortedHashes.length; i++) {
+            if (this.sortedHashes[i] >= keyHash) {
+                startIndex = i;
+                break;
+            }
+        }
+        
+        // Collect unique nodes
+        const seenNodes = new Set();
+        for (let i = 0; i < this.sortedHashes.length && nodes.length < replicationFactor; i++) {
+            const index = (startIndex + i) % this.sortedHashes.length;
+            const node = this.ring.get(this.sortedHashes[index]);
+            if (!seenNodes.has(node)) {
+                nodes.push(node);
+                seenNodes.add(node);
+            }
+        }
+        
+        return nodes;
+    }
+}
+
+// Example: Using Consistent Hashing for Distributed Cache
+class DistributedCache {
+    constructor(nodes) {
+        this.hashRing = new ConsistentHash(nodes, 150);
+        this.cache = new Map(); // node -> cache data
+    }
+    
+    set(key, value) {
+        const node = this.hashRing.getNode(key);
+        
+        if (!this.cache.has(node)) {
+            this.cache.set(node, new Map());
+        }
+        
+        this.cache.get(node).set(key, value);
+        return { node, key };
+    }
+    
+    get(key) {
+        const node = this.hashRing.getNode(key);
+        const nodeCache = this.cache.get(node);
+        
+        if (!nodeCache) {
+            return null;
+        }
+        
+        return nodeCache.get(key) || null;
+    }
+    
+    addNode(node) {
+        this.hashRing.addNode(node);
+        this.cache.set(node, new Map());
+        
+        // Rebalance: Move keys that should be on new node
+        this.rebalance();
+    }
+    
+    removeNode(node) {
+        const nodeCache = this.cache.get(node);
+        const keysToMove = Array.from(nodeCache.keys());
+        
+        this.hashRing.removeNode(node);
+        this.cache.delete(node);
+        
+        // Reassign keys to new nodes
+        keysToMove.forEach(key => {
+            const value = nodeCache.get(key);
+            this.set(key, value);
+        });
+    }
+    
+    rebalance() {
+        // In production, this would be done incrementally
+        // For simplicity, showing the concept
+        const allKeys = [];
+        this.cache.forEach((nodeCache, node) => {
+            nodeCache.forEach((value, key) => {
+                allKeys.push({ key, value });
+            });
+        });
+        
+        // Clear and reassign
+        this.cache.clear();
+        allKeys.forEach(({ key, value }) => {
+            this.set(key, value);
+        });
+    }
+}
+
+// Example: Load Distribution Analysis
+class ConsistentHashAnalysis {
+    analyzeLoadDistribution(hashRing, keys) {
+        const nodeLoad = new Map();
+        
+        keys.forEach(key => {
+            const node = hashRing.getNode(key);
+            nodeLoad.set(node, (nodeLoad.get(node) || 0) + 1);
+        });
+        
+        const loads = Array.from(nodeLoad.values());
+        const avgLoad = loads.reduce((a, b) => a + b, 0) / loads.length;
+        const maxLoad = Math.max(...loads);
+        const minLoad = Math.min(...loads);
+        const variance = loads.reduce((sum, load) => 
+            sum + Math.pow(load - avgLoad, 2), 0
+        ) / loads.length;
+        
+        return {
+            average: avgLoad,
+            max: maxLoad,
+            min: minLoad,
+            variance: variance,
+            standardDeviation: Math.sqrt(variance),
+            distribution: Object.fromEntries(nodeLoad)
+        };
+    }
+}
+
+// Usage Example
+const nodes = ['node1', 'node2', 'node3'];
+const hashRing = new ConsistentHash(nodes, 150);
+
+console.log('Key "user123" ->', hashRing.getNode('user123'));
+console.log('Key "product456" ->', hashRing.getNode('product456'));
+
+// Add node
+hashRing.addNode('node4');
+console.log('After adding node4, "user123" ->', hashRing.getNode('user123'));
+
+// Remove node
+hashRing.removeNode('node2');
+console.log('After removing node2, "user123" ->', hashRing.getNode('user123'));</code></pre>
+</div>
+
+<div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of data distribution</li>
+<li>Demonstrates knowledge of hashing techniques</li>
+<li>Shows ability to design scalable systems</li>
+<li>Used in production systems (DynamoDB, Cassandra, Memcached)</li>
+</ul>
+</div><hr>
+
+<h3>Question 15: Explain Byzantine fault tolerance.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Byzantine Failures:</strong>
+<ul><li>Nodes can behave arbitrarily</li>
+<li>Malicious or faulty nodes</li>
+<li>Send conflicting messages</li>
+</ul>
+<strong>Byzantine Fault Tolerance:</strong>
+<ul><li>System works despite Byzantine failures</li>
+<li>Need 3f+1 nodes to tolerate f failures</li>
+<li>More complex than crash failures</li>
+</ul>
+<strong>Use Cases:</strong>
+<ul><li>Blockchain</li>
+<li>Critical systems</li>
+<li>Security-sensitive applications</li>
+</ul>
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of fault models</li>
+<li>Demonstrates knowledge of advanced fault tolerance</li>
+<li>Shows ability to handle malicious nodes</li>
+</ul>
+</div><hr>
+
+<h3>Question 16: Explain distributed snapshots.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Distributed Snapshots:</strong>
+<ul><li>Capture consistent global state</li>
+<li>Chandy-Lamport algorithm</li>
+<li>Marker-based approach</li>
+</ul>
+<strong>Algorithm:</strong>
+<ul><li>Initiator sends marker</li>
+<li>Nodes record state</li>
+<li>Forward marker to neighbors</li>
+<li>Collect states</li>
+</ul>
+<strong>Use Cases:</strong>
+<ul><li>Checkpointing</li>
+<li>Deadlock detection</li>
+<li>Debugging</li>
+</ul>
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of state capture</li>
+<li>Demonstrates knowledge of snapshot algorithms</li>
+<li>Shows ability to debug distributed systems</li>
+</ul>
+</div><hr>
+
+<h3>Question 17: Explain eventual consistency.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Eventual Consistency:</strong>
+<ul><li>System will become consistent</li>
+<li>No guarantee when</li>
+<li>Common in distributed systems</li>
+</ul>
+<strong>Types:</strong>
+<ul><li>Causal consistency</li>
+<li>Read-your-writes</li>
+<li>Monotonic reads</li>
+</ul>
+<strong>Trade-offs:</strong>
+<ul><li>Performance vs consistency</li>
+<li>Acceptable for many use cases</li>
+</ul>
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of consistency models</li>
+<li>Demonstrates knowledge of trade-offs</li>
+<li>Shows ability to choose appropriate model</li>
+</ul>
+</div><hr>
+
+<h3>Question 18: Explain distributed transactions with Saga pattern.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Saga Pattern:</strong>
+<ul><li>Long-lived transactions</li>
+<li>Sequence of local transactions</li>
+<li>Compensating transactions for rollback</li>
+</ul>
+<strong>Types:</strong>
+<ul><li>Choreography: Services coordinate</li>
+<li>Orchestration: Central coordinator</li>
+</ul>
+<strong>Benefits:</strong>
+<ul><li>No distributed locks</li>
+<li>Better scalability</li>
+<li>Handles long transactions</li>
+</ul>
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Algorithm Explanation</h5>
+                    <p><strong>Tree/Graph Traversal:</strong></p>
+                    <p>Tree and graph problems often require traversal algorithms:</p>
+                    <ul>
+                        <li><strong>DFS (Depth-First Search):</strong> Explore as deep as possible before backtracking</li>
+                        <li><strong>BFS (Breadth-First Search):</strong> Explore level by level</li>
+                        <li><strong>Recursive Approach:</strong> Natural for tree problems, uses call stack</li>
+                        <li><strong>Iterative Approach:</strong> Uses explicit stack/queue, more control</li>
+                    </ul>
+                    
+                    <p><strong>Key Considerations:</strong></p>
+                    <ul>
+                        <li>Base case: Handle null/empty nodes</li>
+                        <li>Recursive case: Process current node and recurse on children</li>
+                        <li>State management: Track visited nodes, path, or other state</li>
+                        <li>Space complexity: Consider recursion stack depth</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of long transactions</li>
+<li>Demonstrates knowledge of compensation</li>
+<li>Shows ability to handle distributed transactions</li>
+</ul>
+</div><hr>
+
+<h3>Question 19: Explain distributed rate limiting.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Distributed Rate Limiting:</strong>
+<ul><li>Limit requests across multiple servers</li>
+<li>Token bucket algorithm</li>
+<li>Sliding window</li>
+</ul>
+<strong>Challenges:</strong>
+<ul><li>Synchronization across nodes</li>
+<li>Accuracy vs performance</li>
+</ul>
+<strong>Approaches:</strong>
+<ul><li>Centralized rate limiter</li>
+<li>Distributed with coordination</li>
+<li>Approximate algorithms</li>
+</ul>
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Step-by-Step Explanation</h5>
+                    <p><strong>Problem Analysis:</strong></p>
+                    <p>We need to find the longest substring with all unique characters. This is a classic sliding window problem.</p>
+                    
+                    <p><strong>Sliding Window Technique:</strong></p>
+                    <p>The sliding window technique uses two pointers to maintain a window of elements that satisfy a condition:</p>
+                    <ul>
+                        <li><strong>Left pointer:</strong> Marks the start of the current window</li>
+                        <li><strong>Right pointer:</strong> Marks the end of the current window</li>
+                        <li><strong>Window:</strong> The substring between left and right pointers</li>
+                    </ul>
+                    
+                    <p><strong>Algorithm Flow:</strong></p>
+                    <ol>
+                        <li>Initialize left = 0, right = 0, and a set to track characters in current window</li>
+                        <li>Expand window by moving right pointer</li>
+                        <li>If we encounter a duplicate character, shrink window from left until duplicate is removed</li>
+                        <li>Track the maximum window size seen so far</li>
+                    </ol>
+                    
+                    <p><strong>Why Two Pointers Work:</strong></p>
+                    <p>Once we find a duplicate, we know that any window starting before the duplicate's first occurrence will also contain the duplicate. So we can safely move the left pointer past it.</p>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of rate limiting</li>
+<li>Demonstrates knowledge of distributed algorithms</li>
+<li>Shows ability to prevent abuse</li>
+</ul>
+</div><hr>
+
+<h3>Question 20: Explain distributed caching strategies.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Distributed Caching:</strong>
+<ul><li>Cache data across multiple nodes</li>
+<li>Consistent hashing for distribution</li>
+<li>Cache invalidation challenges</li>
+</ul>
+<strong>Strategies:</strong>
+<ul><li>Write-through: Write to cache and DB</li>
+<li>Write-back: Write to cache, flush later</li>
+<li>Cache-aside: Application manages cache</li>
+</ul>
+<strong>Challenges:</strong>
+<ul><li>Cache coherence</li>
+<li>Stale data</li>
+<li>Network overhead</li>
+</ul>
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Step-by-Step Explanation</h5>
+                    <p><strong>Problem Analysis:</strong></p>
+                    <p>This problem requires finding two numbers in an array that sum to a target value. The key challenge is doing this efficiently.</p>
+                    
+                    <p><strong>Naive Solution Analysis:</strong></p>
+                    <p>The brute force approach would be to check every possible pair of numbers:</p>
+                    <ul>
+                        <li>For each number at index i, check all numbers at indices j > i</li>
+                        <li>If nums[i] + nums[j] == target, return [i, j]</li>
+                        <li>Time Complexity: O(n²) - nested loops</li>
+                        <li>Space Complexity: O(1) - no extra space</li>
+                    </ul>
+                    
+                    <p><strong>Optimization Strategy:</strong></p>
+                    <p>We can optimize using a hash map (dictionary) to store numbers we've already seen:</p>
+                    <ul>
+                        <li>As we iterate through the array, we store each number and its index</li>
+                        <li>For each new number, we calculate what number we need (complement = target - current)</li>
+                        <li>We check if this complement exists in our hash map</li>
+                        <li>If it does, we've found our pair!</li>
+                    </ul>
+                    
+                    <p><strong>Why This Works:</strong></p>
+                    <p>The key insight is that if we need number X to pair with current number Y to sum to target, and we've already seen X earlier in the array, we can immediately return the answer without checking all remaining numbers.</p>
+                    
+                    <p><strong>Example Walkthrough:</strong></p>
+                    <p>For nums = [2, 7, 11, 15], target = 9:</p>
+                    <ol>
+                        <li>i=0, num=2: complement = 9-2 = 7. Is 7 in map? No. Store {2: 0}</li>
+                        <li>i=1, num=7: complement = 9-7 = 2. Is 2 in map? Yes! Return [0, 1]</li>
+                    </ol>
+                    
+                    <p><strong>Edge Cases to Consider:</strong></p>
+                    <ul>
+                        <li>Empty array: Return empty list</li>
+                        <li>No solution: Problem states there's always exactly one, but in real scenarios, handle gracefully</li>
+                        <li>Negative numbers: Works fine, complement calculation handles it</li>
+                        <li>Duplicate numbers: First occurrence is stored, second occurrence can use it</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of caching</li>
+<li>Demonstrates knowledge of cache strategies</li>
+<li>Shows ability to optimize performance</li>
+</ul>
+</div><hr>
+
+<h2>Summary</h2>
+
+<p>Distributed systems questions test:</p>
+
+<ul><li><strong>Fundamentals:</strong> Understanding of challenges</li>
+<li><strong>Consistency:</strong> Different models and trade-offs</li>
+<li><strong>CAP Theorem:</strong> Fundamental limitations</li>
+<li><strong>Consensus:</strong> Algorithms like Raft, Paxos</li>
+<li><strong>Replication:</strong> Strategies and trade-offs</li>
+</ul>
+<p>Key concepts:</p>
+<ul><li>Understand CAP theorem</li>
+<li>Know consistency models</li>
+<li>Understand consensus algorithms</li>
+<li>Know replication strategies</li>
+<li>Understand fault tolerance</li>
+</ul>
+
+    </div>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            themeVariables: {
+                primaryTextColor: '#000000',
+                primaryColor: '#3498db',
+                mainBkg: '#ffffff',
+                textColor: '#000000',
+                lineColor: '#000000',
+                secondaryTextColor: '#000000',
+                tertiaryColor: '#ecf0f1'
+            },
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            },
+            state: {
+                useMaxWidth: true,
+                htmlLabels: true
+            },
+            sequence: {
+                useMaxWidth: true,
+                htmlLabels: true
+            }
+        });
+        
+        // Ensure diagrams render after page load
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                mermaid.init(undefined, '.mermaid');
+            }, 100);
+        });
+    </script>
+    <style>
+        .mermaid svg {
+            color: #000000;
+        }
+        .mermaid svg text {
+            fill: #000000 !important;
+            color: #000000 !important;
+        }
+        .mermaid svg .nodeLabel,
+        .mermaid svg .edgeLabel,
+        .mermaid svg .cluster-label {
+            fill: #000000 !important;
+            color: #000000 !important;
+        }
+    </style>
+</body>
+</html>

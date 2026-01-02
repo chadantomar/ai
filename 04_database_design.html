@@ -1,0 +1,2669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Design Interview Questions - FAANG Interview Questions</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.7;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            border-bottom: 4px solid #3498db;
+            padding-bottom: 15px;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+        }
+        
+        h2 {
+            color: #34495e;
+            margin-top: 50px;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: linear-gradient(90deg, #3498db22, transparent);
+            border-left: 5px solid #2980b9;
+            padding-left: 20px;
+        }
+        
+        h3 {
+            color: #2980b9;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.6em;
+            padding: 15px;
+            background: #ecf0f1;
+            border-radius: 5px;
+        }
+        
+        h4 {
+            color: #555;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        h5 {
+            color: #666;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        p {
+            margin-bottom: 18px;
+            text-align: justify;
+            font-size: 1.05em;
+        }
+        
+        ul, ol {
+            margin-left: 35px;
+            margin-bottom: 20px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #e83e8c;
+            border: 1px solid #e0e0e0;
+        }
+        
+        pre {
+            background: #2d2d2d;
+            padding: 25px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 25px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        pre code {
+            background: transparent;
+            padding: 0;
+            color: #f8f8f2;
+            font-size: 0.95em;
+            border: none;
+        }
+        
+        .pros-cons {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-left: 5px solid #28a745;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .pros {
+            margin-bottom: 25px;
+        }
+        
+        .pros h5 {
+            color: #28a745;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        .pros ul {
+            list-style: none;
+            margin-left: 0;
+        }
+        
+        .pros li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .pros li:before {
+            content: "✓";
+            color: #28a745;
+            font-weight: bold;
+            font-size: 1.2em;
+            position: absolute;
+            left: 0;
+        }
+        
+        .cons {
+            margin-top: 25px;
+        }
+        
+        .cons h5 {
+            color: #dc3545;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        .cons ul {
+            list-style: none;
+            margin-left: 0;
+        }
+        
+        .cons li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .cons li:before {
+            content: "✗";
+            color: #dc3545;
+            font-weight: bold;
+            font-size: 1.2em;
+            position: absolute;
+            left: 0;
+        }
+        
+        .mermaid {
+            background: white;
+            padding: 30px;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        hr {
+            border: none;
+            border-top: 3px solid #ecf0f1;
+            margin: 40px 0;
+        }
+        
+        strong {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        
+        em {
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        table th {
+            background: #3498db;
+            color: white;
+        }
+        
+        table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .section {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .section h4 {
+            color: #2980b9;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .problem-statement {
+            background: #e8f4f8;
+            border-left-color: #3498db;
+        }
+        
+        .example {
+            background: #fff9e6;
+            border-left-color: #f39c12;
+        }
+        
+        .detailed-explanation {
+            background: #f0f8f0;
+            border-left-color: #27ae60;
+        }
+        
+        .approach {
+            background: #f5f0ff;
+            border-left-color: #9b59b6;
+        }
+        
+        .complexity {
+            background: #ffe8e8;
+            border-left-color: #e74c3c;
+        }
+        
+        .code-solution {
+            background: #2d2d2d;
+            border-left-color: #f39c12;
+        }
+        
+        .code-solution h4 {
+            color: #f8f8f2;
+        }
+        
+        .code-solution p {
+            color: #f8f8f2;
+        }
+        
+        .step-section {
+            background: #fafafa;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 3px solid #95a5a6;
+            border-radius: 4px;
+        }
+        
+        .step-section {
+            background: #fafafa;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 3px solid #95a5a6;
+            border-radius: 4px;
+        }
+        
+        .step-section h5 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        
+        .step-section strong {
+            color: #2c3e50;
+        }
+        
+        .why-faang {
+            background: #fff3cd;
+            border-left-color: #ffc107;
+        }
+        
+        .why-faang h4 {
+            color: #856404;
+        }
+        
+        .section ul, .section ol {
+            margin-left: 25px;
+        }
+        
+        .section pre {
+            margin: 15px 0;
+        }
+        
+        .explanation-content, .approach-content {
+            line-height: 1.8;
+        }
+        
+        .explanation-content p, .approach-content p {
+            margin-bottom: 12px;
+        }
+        
+        .explanation-content ul, .approach-content ul {
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .explanation-content li, .approach-content li {
+            margin-bottom: 8px;
+        }
+        
+        .walkthrough {
+            background: #f0f7ff;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+            border-radius: 5px;
+        }
+        
+        .walkthrough h5 {
+            color: #2980b9;
+            margin-top: 0;
+        }
+        
+        .code-explanation {
+            background: #2d2d2d;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .code-explanation h5 {
+            color: #f8f8f2;
+            margin-top: 0;
+        }
+        
+        .code-explanation p {
+            color: #f8f8f2;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            h2 {
+                font-size: 1.4em;
+            }
+            
+            h3 {
+                font-size: 1.3em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Database Design Interview Questions</h1>
+
+<h2>Table of Contents</h2>
+<ul><li>[Relational Database Design](#relational-database-design)</li>
+<li>[Normalization](#normalization)</li>
+<li>[Indexing Strategies](#indexing-strategies)</li>
+<li>[Query Optimization](#query-optimization)</li>
+<li>[NoSQL Database Design](#nosql-database-design)</li>
+<li>[Transaction Management](#transaction-management)</li>
+<li>[Database Scaling](#database-scaling)</li>
+</ul>
+<hr>
+
+<h2>Relational Database Design</h2>
+
+<h3>Question 1: Design a Social Media Database Schema</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a database schema for a social media platform like Facebook or Twitter.
+
+<h4>Requirements</h4>
+<ul><li>User management</li>
+<li>Posts and comments</li>
+<li>Friends/followers relationships</li>
+<li>Likes and reactions</li>
+<li>Messages</li>
+<li>Notifications</li>
+<li>Support millions of users</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Step 1: Core Entities</strong>
+
+<p><pre><code class="language-sql">-- Users Table
+CREATE TABLE users (
+    user_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    bio TEXT,
+    profile_picture_url VARCHAR(255),
+    date_of_birth DATE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    is_active BOOLEAN DEFAULT TRUE,
+    INDEX idx_username (username),
+    INDEX idx_email (email),
+    INDEX idx_created_at (created_at)
+) ENGINE=InnoDB;
+
+-- Posts Table
+CREATE TABLE posts (
+    post_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    user_id BIGINT NOT NULL,
+    content TEXT NOT NULL,
+    post_type ENUM('text', 'image', 'video', 'link') DEFAULT 'text',
+    media_url VARCHAR(255),
+    privacy_setting ENUM('public', 'friends', 'private') DEFAULT 'public',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    is_deleted BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    INDEX idx_user_created (user_id, created_at DESC),
+    INDEX idx_created_at (created_at DESC),
+    INDEX idx_privacy (privacy_setting)
+) ENGINE=InnoDB;
+
+-- Comments Table
+CREATE TABLE comments (
+    comment_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    post_id BIGINT NOT NULL,
+    user_id BIGINT NOT NULL,
+    parent_comment_id BIGINT NULL,  -- For nested comments
+    content TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    is_deleted BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (post_id) REFERENCES posts(post_id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (parent_comment_id) REFERENCES comments(comment_id) ON DELETE CASCADE,
+    INDEX idx_post_created (post_id, created_at DESC),
+    INDEX idx_user_created (user_id, created_at DESC),
+    INDEX idx_parent (parent_comment_id)
+) ENGINE=InnoDB;
+
+-- Friendships Table (Many-to-Many)
+CREATE TABLE friendships (
+    friendship_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    user1_id BIGINT NOT NULL,
+    user2_id BIGINT NOT NULL,
+    status ENUM('pending', 'accepted', 'blocked') DEFAULT 'pending',
+    requested_by BIGINT NOT NULL,  -- Who sent the request
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user1_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (user2_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (requested_by) REFERENCES users(user_id) ON DELETE CASCADE,
+    UNIQUE KEY unique_friendship (user1_id, user2_id),
+    INDEX idx_user1_status (user1_id, status),
+    INDEX idx_user2_status (user2_id, status),
+    CHECK (user1_id < user2_id)  -- Ensure consistent ordering
+) ENGINE=InnoDB;
+
+-- Follows Table (One-way following like Twitter)
+CREATE TABLE follows (
+    follower_id BIGINT NOT NULL,
+    followee_id BIGINT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (follower_id, followee_id),
+    FOREIGN KEY (follower_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (followee_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    INDEX idx_follower (follower_id),
+    INDEX idx_followee (followee_id),
+    CHECK (follower_id != followee_id)
+) ENGINE=InnoDB;
+
+-- Reactions Table (Likes, etc.)
+CREATE TABLE reactions (
+    reaction_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    user_id BIGINT NOT NULL,
+    post_id BIGINT NULL,
+    comment_id BIGINT NULL,
+    reaction_type ENUM('like', 'love', 'haha', 'wow', 'sad', 'angry') DEFAULT 'like',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (post_id) REFERENCES posts(post_id) ON DELETE CASCADE,
+    FOREIGN KEY (comment_id) REFERENCES comments(comment_id) ON DELETE CASCADE,
+    UNIQUE KEY unique_post_reaction (user_id, post_id),
+    UNIQUE KEY unique_comment_reaction (user_id, comment_id),
+    INDEX idx_post (post_id),
+    INDEX idx_comment (comment_id),
+    CHECK ((post_id IS NOT NULL AND comment_id IS NULL) OR 
+           (post_id IS NULL AND comment_id IS NOT NULL))
+) ENGINE=InnoDB;
+
+-- Messages Table
+CREATE TABLE messages (
+    message_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    sender_id BIGINT NOT NULL,
+    recipient_id BIGINT NOT NULL,
+    conversation_id BIGINT NOT NULL,  -- Group messages by conversation
+    content TEXT NOT NULL,
+    message_type ENUM('text', 'image', 'file') DEFAULT 'text',
+    media_url VARCHAR(255),
+    is_read BOOLEAN DEFAULT FALSE,
+    read_at TIMESTAMP NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (sender_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (recipient_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    INDEX idx_conversation_created (conversation_id, created_at DESC),
+    INDEX idx_recipient_unread (recipient_id, is_read, created_at DESC),
+    INDEX idx_sender_created (sender_id, created_at DESC)
+) ENGINE=InnoDB;
+
+-- Notifications Table
+CREATE TABLE notifications (
+    notification_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    user_id BIGINT NOT NULL,
+    type ENUM('like', 'comment', 'friend_request', 'message', 'mention') NOT NULL,
+    actor_id BIGINT NOT NULL,  -- Who triggered the notification
+    post_id BIGINT NULL,
+    comment_id BIGINT NULL,
+    message_id BIGINT NULL,
+    is_read BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (actor_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (post_id) REFERENCES posts(post_id) ON DELETE CASCADE,
+    INDEX idx_user_unread (user_id, is_read, created_at DESC),
+    INDEX idx_created_at (created_at DESC)
+) ENGINE=InnoDB;
+</code></pre></p>
+
+<strong>Step 2: Key Design Decisions</strong>
+
+<ul><li><strong>Friendships Table:</strong></li>
+</ul>   - Stores bidirectional relationships
+<p>- Status field for pending/accepted/blocked</p>
+<p>- Constraint ensures user1_id < user2_id for consistency</p>
+
+<ul><li><strong>Reactions Table:</strong></li>
+</ul>   - Supports both post and comment reactions
+<p>- Unique constraints prevent duplicate reactions</p>
+<p>- Check constraint ensures only one of post_id or comment_id is set</p>
+
+<ul><li><strong>Indexing Strategy:</strong></li>
+</ul>   - Composite indexes on frequently queried columns
+<p>- Indexes on foreign keys for join performance</p>
+<p>- Descending indexes for recent-first queries</p>
+
+<strong>Step 3: Common Queries</strong>
+
+<p><pre><code class="language-sql">-- Get user's feed (posts from friends)
+SELECT p.*, u.username, u.profile_picture_url
+FROM posts p
+JOIN users u ON p.user_id = u.user_id
+JOIN friendships f ON (
+    (f.user1_id = ? AND f.user2_id = p.user_id) OR
+    (f.user2_id = ? AND f.user1_id = p.user_id)
+)
+WHERE f.status = 'accepted'
+  AND p.privacy_setting IN ('public', 'friends')
+  AND p.is_deleted = FALSE
+ORDER BY p.created_at DESC
+LIMIT 20;
+
+-- Get post with comments and reactions count
+SELECT 
+    p.*,
+    u.username,
+    COUNT(DISTINCT c.comment_id) as comment_count,
+    COUNT(DISTINCT r.reaction_id) as reaction_count
+FROM posts p
+JOIN users u ON p.user_id = u.user_id
+LEFT JOIN comments c ON p.post_id = c.post_id AND c.is_deleted = FALSE
+LEFT JOIN reactions r ON p.post_id = r.post_id
+WHERE p.post_id = ?
+GROUP BY p.post_id;
+
+-- Get unread notifications
+SELECT n.*, u.username as actor_username
+FROM notifications n
+JOIN users u ON n.actor_id = u.user_id
+WHERE n.user_id = ? AND n.is_read = FALSE
+ORDER BY n.created_at DESC;
+</code></pre></p>
+
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of relational database design</li>
+<li>Demonstrates knowledge of normalization</li>
+<li>Shows ability to optimize for common queries</li>
+<li>Evaluates indexing strategies</li>
+</ul>
+</div><hr>
+
+<h2>Normalization</h2>
+
+<h3>Question 2: Normalize a Denormalized Database</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Given a denormalized table, normalize it to 3NF and explain the process.
+
+<strong>Original Denormalized Table:</strong>
+
+<p><pre><code class="language-sql">CREATE TABLE orders_denormalized (
+    order_id INT,
+    customer_id INT,
+    customer_name VARCHAR(100),
+    customer_email VARCHAR(100),
+    customer_address VARCHAR(255),
+    product_id INT,
+    product_name VARCHAR(100),
+    product_category VARCHAR(50),
+    product_price DECIMAL(10,2),
+    quantity INT,
+    order_date DATE,
+    total_amount DECIMAL(10,2)
+);
+</code></pre></p>
+
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Problems with Denormalized Design:</strong>
+<ul><li><strong>Data Redundancy:</strong> Customer info repeated for each order</li>
+<li><strong>Update Anomalies:</strong> Changing customer email requires updating multiple rows</li>
+<li><strong>Insert Anomalies:</strong> Can't add customer without an order</li>
+<li><strong>Delete Anomalies:</strong> Deleting last order loses customer info</li>
+</ul>
+<strong>Normalized Design (3NF):</strong>
+
+<p><pre><code class="language-sql">-- 1NF: Atomic values (already satisfied)
+
+-- 2NF: Remove partial dependencies
+-- Split into orders and order_items
+
+CREATE TABLE customers (
+    customer_id INT PRIMARY KEY AUTO_INCREMENT,
+    customer_name VARCHAR(100) NOT NULL,
+    customer_email VARCHAR(100) UNIQUE NOT NULL,
+    customer_address VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_email (customer_email)
+) ENGINE=InnoDB;
+
+CREATE TABLE products (
+    product_id INT PRIMARY KEY AUTO_INCREMENT,
+    product_name VARCHAR(100) NOT NULL,
+    product_category VARCHAR(50) NOT NULL,
+    product_price DECIMAL(10,2) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_category (product_category)
+) ENGINE=InnoDB;
+
+CREATE TABLE orders (
+    order_id INT PRIMARY KEY AUTO_INCREMENT,
+    customer_id INT NOT NULL,
+    order_date DATE NOT NULL,
+    total_amount DECIMAL(10,2) NOT NULL,
+    status ENUM('pending', 'processing', 'shipped', 'delivered', 'cancelled') DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id) ON DELETE RESTRICT,
+    INDEX idx_customer_date (customer_id, order_date DESC),
+    INDEX idx_date (order_date DESC)
+) ENGINE=InnoDB;
+
+-- 3NF: Remove transitive dependencies
+-- Order items table (no transitive dependencies)
+
+CREATE TABLE order_items (
+    order_item_id INT PRIMARY KEY AUTO_INCREMENT,
+    order_id INT NOT NULL,
+    product_id INT NOT NULL,
+    quantity INT NOT NULL CHECK (quantity > 0),
+    unit_price DECIMAL(10,2) NOT NULL,  -- Snapshot of price at time of order
+    subtotal DECIMAL(10,2) NOT NULL,  -- quantity * unit_price
+    FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE RESTRICT,
+    INDEX idx_order (order_id),
+    INDEX idx_product (product_id)
+) ENGINE=InnoDB;
+</code></pre></p>
+
+<strong>Normalization Steps:</strong>
+
+<ul><li><strong>1NF (First Normal Form):</strong></li>
+</ul>   - Each column contains atomic values
+<p>- No repeating groups</p>
+<p>- Already satisfied</p>
+
+<ul><li><strong>2NF (Second Normal Form):</strong></li>
+</ul>   - Must be in 1NF
+<p>- Remove partial dependencies</p>
+<p>- Split orders and order_items</p>
+<p>- <code>product_name</code> and <code>product_category</code> depend only on <code>product_id</code>, not on <code>order_id</code></p>
+
+<ul><li><strong>3NF (Third Normal Form):</strong></li>
+</ul>   - Must be in 2NF
+<p>- Remove transitive dependencies</p>
+<p>- All non-key attributes depend only on the primary key</p>
+<p>- Customer attributes depend only on <code>customer_id</code></p>
+
+<strong>Benefits of Normalization:</strong>
+<ul><li><strong>Reduced Redundancy:</strong> Customer info stored once</li>
+<li><strong>Data Integrity:</strong> Foreign key constraints ensure consistency</li>
+<li><strong>Easier Updates:</strong> Update customer email in one place</li>
+<li><strong>Flexibility:</strong> Can add customers without orders</li>
+</ul>
+<strong>Trade-offs:</strong>
+<ul><li><strong>Performance:</strong> More joins required for queries</li>
+<li><strong>Complexity:</strong> More tables to manage</li>
+<li><h4>Solution</h4> Use views or denormalize read-heavy tables</li>
+</ul>
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of database normalization</li>
+<li>Demonstrates knowledge of data modeling</li>
+<li>Shows ability to identify and fix design issues</li>
+<li>Evaluates trade-off analysis</li>
+</ul>
+</div><hr>
+
+<h2>Indexing Strategies</h2>
+
+<h3>Question 3: Design Indexes for a High-Traffic E-commerce Database</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design appropriate indexes for an e-commerce database handling millions of transactions.
+
+<h4>Requirements</h4>
+<ul><li>Fast product searches</li>
+<li>Efficient order lookups</li>
+<li>User activity queries</li>
+<li>Inventory management</li>
+<li>Analytics queries</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<p><pre><code class="language-sql">-- Products Table
+CREATE TABLE products (
+    product_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    sku VARCHAR(50) UNIQUE NOT NULL,
+    name VARCHAR(200) NOT NULL,
+    description TEXT,
+    category_id INT NOT NULL,
+    brand_id INT,
+    price DECIMAL(10,2) NOT NULL,
+    stock_quantity INT DEFAULT 0,
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    
+    -- Single column indexes
+    INDEX idx_sku (sku),
+    INDEX idx_category (category_id),
+    INDEX idx_brand (brand_id),
+    INDEX idx_active (is_active),
+    INDEX idx_created_at (created_at),
+    
+    -- Composite indexes for common queries
+    INDEX idx_category_active_price (category_id, is_active, price),
+    INDEX idx_brand_category (brand_id, category_id),
+    
+    -- Full-text index for search
+    FULLTEXT INDEX ft_name_description (name, description)
+) ENGINE=InnoDB;
+
+-- Orders Table
+CREATE TABLE orders (
+    order_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    customer_id BIGINT NOT NULL,
+    order_number VARCHAR(50) UNIQUE NOT NULL,
+    status ENUM('pending', 'paid', 'shipped', 'delivered', 'cancelled') NOT NULL,
+    total_amount DECIMAL(10,2) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    shipped_at TIMESTAMP NULL,
+    delivered_at TIMESTAMP NULL,
+    
+    -- Foreign key indexes
+    INDEX idx_customer (customer_id),
+    
+    -- Composite indexes for common queries
+    INDEX idx_customer_created (customer_id, created_at DESC),
+    INDEX idx_status_created (status, created_at DESC),
+    INDEX idx_customer_status (customer_id, status),
+    
+    -- Covering index (includes all columns needed for query)
+    INDEX idx_customer_status_amount (customer_id, status, total_amount, created_at)
+) ENGINE=InnoDB;
+
+-- Order Items Table
+CREATE TABLE order_items (
+    order_item_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    order_id BIGINT NOT NULL,
+    product_id BIGINT NOT NULL,
+    quantity INT NOT NULL,
+    unit_price DECIMAL(10,2) NOT NULL,
+    subtotal DECIMAL(10,2) NOT NULL,
+    
+    FOREIGN KEY (order_id) REFERENCES orders(order_id),
+    FOREIGN KEY (product_id) REFERENCES products(product_id),
+    
+    INDEX idx_order (order_id),
+    INDEX idx_product (product_id),
+    
+    -- Composite index for product sales analysis
+    INDEX idx_product_order (product_id, order_id)
+) ENGINE=InnoDB;
+
+-- User Activity Table
+CREATE TABLE user_activities (
+    activity_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    user_id BIGINT NOT NULL,
+    activity_type ENUM('view', 'add_to_cart', 'purchase', 'review') NOT NULL,
+    product_id BIGINT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    
+    INDEX idx_user_created (user_id, created_at DESC),
+    INDEX idx_product_created (product_id, created_at DESC),
+    INDEX idx_type_created (activity_type, created_at DESC),
+    
+    -- Composite index for user behavior analysis
+    INDEX idx_user_type_created (user_id, activity_type, created_at DESC)
+) ENGINE=InnoDB;
+</code></pre></p>
+
+<strong>Index Selection Guidelines:</strong>
+
+<ul><li><strong>Primary Key:</strong> Automatically indexed (clustered index in InnoDB)</li>
+</ul>
+<ul><li><strong>Foreign Keys:</strong> Always index foreign keys for join performance</li>
+</ul>
+<ul><li><strong>Frequently Filtered Columns:</strong> Index columns used in WHERE clauses</li>
+</ul>
+<ul><li><strong>Composite Indexes:</strong> </li>
+</ul>   - Order matters: Most selective first
+<p>- Use for multi-column WHERE clauses</p>
+<p>- Can serve as covering index</p>
+
+<ul><li><strong>Covering Indexes:</strong> Include all columns needed for query</li>
+</ul>   - Avoids table lookups
+<p>- Example: <code>idx_customer_status_amount</code> covers customer orders query</p>
+
+<ul><li><strong>Full-Text Indexes:</strong> For text search on name/description</li>
+</ul>
+<strong>Query Examples:</strong>
+
+<p><pre><code class="language-sql">-- Fast: Uses idx_category_active_price
+SELECT * FROM products 
+WHERE category_id = 5 AND is_active = TRUE 
+ORDER BY price LIMIT 20;
+
+-- Fast: Uses idx_customer_created
+SELECT * FROM orders 
+WHERE customer_id = 123 
+ORDER BY created_at DESC LIMIT 10;
+
+-- Fast: Uses idx_customer_status_amount (covering index)
+SELECT customer_id, status, total_amount, created_at 
+FROM orders 
+WHERE customer_id = 123 AND status = 'delivered';
+
+-- Fast: Uses ft_name_description
+SELECT * FROM products 
+WHERE MATCH(name, description) AGAINST('laptop' IN NATURAL LANGUAGE MODE);
+</code></pre></p>
+
+<strong>Index Maintenance:</strong>
+
+<p><pre><code class="language-sql">-- Analyze table to update index statistics
+ANALYZE TABLE products;
+
+-- Check index usage
+SHOW INDEX FROM products;
+
+-- Monitor slow queries
+-- Enable slow query log to identify missing indexes
+</code></pre></p>
+
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of indexing strategies</li>
+<li>Demonstrates knowledge of query optimization</li>
+<li>Shows ability to balance read/write performance</li>
+<li>Evaluates database performance tuning skills</li>
+</ul>
+</div><hr>
+
+<h2>Query Optimization</h2>
+
+<h3>Question 4: Optimize Slow Queries</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Given slow queries, identify issues and optimize them.
+
+<strong>Slow Query 1:</strong>
+
+<p><pre><code class="language-sql">-- Original: Slow (full table scan)
+SELECT u.username, p.content, COUNT(c.comment_id) as comment_count
+FROM users u
+JOIN posts p ON u.user_id = p.user_id
+LEFT JOIN comments c ON p.post_id = c.post_id
+WHERE u.created_at > '2024-01-01'
+GROUP BY u.user_id, p.post_id
+ORDER BY comment_count DESC
+LIMIT 10;
+</code></pre></p>
+
+<strong>Optimized:</strong>
+
+<p><pre><code class="language-sql">-- Optimized: Use indexes and subquery
+SELECT u.username, p.content, 
+       (SELECT COUNT(*) FROM comments c 
+        WHERE c.post_id = p.post_id) as comment_count
+FROM users u
+JOIN posts p ON u.user_id = p.user_id
+WHERE u.created_at > '2024-01-01'
+  AND p.is_deleted = FALSE
+ORDER BY comment_count DESC
+LIMIT 10;
+
+-- Or use materialized view for frequently accessed data
+CREATE TABLE post_comment_counts AS
+SELECT post_id, COUNT(*) as comment_count
+FROM comments
+WHERE is_deleted = FALSE
+GROUP BY post_id;
+
+CREATE INDEX idx_post_count ON post_comment_counts(post_id);
+
+-- Then query becomes:
+SELECT u.username, p.content, COALESCE(pcc.comment_count, 0) as comment_count
+FROM users u
+JOIN posts p ON u.user_id = p.user_id
+LEFT JOIN post_comment_counts pcc ON p.post_id = pcc.post_id
+WHERE u.created_at > '2024-01-01'
+  AND p.is_deleted = FALSE
+ORDER BY comment_count DESC
+LIMIT 10;
+</code></pre></p>
+
+<strong>Slow Query 2:</strong>
+
+<p><pre><code class="language-sql">-- Original: N+1 problem in application code
+-- For each user, query their orders separately
+SELECT * FROM orders WHERE customer_id = ?;
+</code></pre></p>
+
+<strong>Optimized:</strong>
+
+<p><pre><code class="language-sql">-- Use IN clause or JOIN
+SELECT o.*, oi.product_id, oi.quantity
+FROM orders o
+LEFT JOIN order_items oi ON o.order_id = oi.order_id
+WHERE o.customer_id IN (?, ?, ?, ...)
+ORDER BY o.customer_id, o.created_at DESC;
+
+-- Or use window functions for pagination
+SELECT * FROM (
+    SELECT o.*, 
+           ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY created_at DESC) as rn
+    FROM orders o
+    WHERE o.customer_id IN (?, ?, ?, ...)
+) ranked
+WHERE rn <= 10;  -- Top 10 orders per customer
+</code></pre></p>
+
+<strong>Optimization Techniques:</strong>
+
+<ul><li><strong>Use EXPLAIN:</strong> Analyze query execution plan</li>
+<li><strong>Add Indexes:</strong> Based on WHERE, JOIN, ORDER BY clauses</li>
+<li><strong>Avoid SELECT *:</strong> Select only needed columns</li>
+<li><strong>Use LIMIT:</strong> Restrict result set</li>
+<li><strong>Optimize JOINs:</strong> Ensure indexes on join columns</li>
+<li><strong>Use Subqueries vs JOINs:</strong> Choose based on data distribution</li>
+<li><strong>Partition Large Tables:</strong> By date or range</li>
+<li><strong>Use Caching:</strong> Cache frequently accessed data</li>
+</ul>
+</div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of query optimization</li>
+<li>Demonstrates knowledge of execution plans</li>
+<li>Shows ability to identify performance bottlenecks</li>
+<li>Evaluates problem-solving skills</li>
+</ul>
+</div><hr>
+
+<h2>NoSQL Database Design</h2>
+
+<h3>Question 5: Design a Document Database Schema for a Blog Platform</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a MongoDB schema for a blog platform with posts, comments, and tags.
+
+<h4>Requirements</h4>
+<ul><li>Fast reads for blog posts</li>
+<li>Support nested comments</li>
+<li>Tag-based filtering</li>
+<li>Author information</li>
+<li>Analytics data</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Document Structure:</strong>
+
+<p><pre><code class="language-javascript">// Posts Collection
+{
+  _id: ObjectId("..."),
+  title: "Understanding MongoDB",
+  slug: "understanding-mongodb",
+  content: "Full blog post content...",
+  excerpt: "Short excerpt...",
+  author: {
+    _id: ObjectId("..."),
+    username: "johndoe",
+    name: "John Doe",
+    avatar_url: "https://..."
+  },
+  tags: ["mongodb", "database", "nosql"],
+  category: "Technology",
+  status: "published", // draft, published, archived
+  published_at: ISODate("2024-01-15T10:00:00Z"),
+  created_at: ISODate("2024-01-15T09:00:00Z"),
+  updated_at: ISODate("2024-01-15T10:00:00Z"),
+  view_count: 1250,
+  like_count: 45,
+  comment_count: 12,
+  featured_image: "https://...",
+  seo: {
+    meta_title: "...",
+    meta_description: "...",
+    keywords: ["..."]
+  }
+}
+
+// Comments Collection (Embedded or Referenced)
+// Option 1: Embedded (for small number of comments)
+{
+  _id: ObjectId("..."),
+  post_id: ObjectId("..."),
+  comments: [
+    {
+      _id: ObjectId("..."),
+      author: {
+        _id: ObjectId("..."),
+        username: "user1",
+        name: "User One"
+      },
+      content: "Great post!",
+      created_at: ISODate("..."),
+      likes: 5,
+      replies: [
+        {
+          _id: ObjectId("..."),
+          author: {...},
+          content: "Thanks!",
+          created_at: ISODate("...")
+        }
+      ]
+    }
+  ]
+}
+
+// Option 2: Separate Collection (for large number of comments)
+{
+  _id: ObjectId("..."),
+  post_id: ObjectId("..."),
+  parent_comment_id: null, // null for top-level comments
+  author: {
+    _id: ObjectId("..."),
+    username: "user1",
+    name: "User One"
+  },
+  content: "Great post!",
+  created_at: ISODate("..."),
+  likes: 5,
+  is_deleted: false
+}
+
+// Users Collection
+{
+  _id: ObjectId("..."),
+  username: "johndoe",
+  email: "john@example.com",
+  name: "John Doe",
+  bio: "Software engineer...",
+  avatar_url: "https://...",
+  created_at: ISODate("..."),
+  stats: {
+    post_count: 25,
+    follower_count: 150,
+    following_count: 80
+  }
+}
+
+// Tags Collection
+{
+  _id: ObjectId("..."),
+  name: "mongodb",
+  slug: "mongodb",
+  post_count: 45,
+  created_at: ISODate("...")
+}
+</code></pre></p>
+
+<strong>Indexes:</strong>
+
+<p><pre><code class="language-javascript">// Posts collection indexes
+db.posts.createIndex({ slug: 1 }, { unique: true });
+db.posts.createIndex({ "author._id": 1, published_at: -1 });
+db.posts.createIndex({ status: 1, published_at: -1 });
+db.posts.createIndex({ tags: 1 });
+db.posts.createIndex({ category: 1, published_at: -1 });
+db.posts.createIndex({ title: "text", content: "text" }); // Text search
+
+// Comments collection indexes
+db.comments.createIndex({ post_id: 1, created_at: -1 });
+db.comments.createIndex({ "author._id": 1 });
+db.comments.createIndex({ parent_comment_id: 1 });
+
+// Users collection indexes
+db.users.createIndex({ username: 1 }, { unique: true });
+db.users.createIndex({ email: 1 }, { unique: true });
+</code></pre></p>
+
+<strong>Query Examples:</strong>
+
+<p><pre><code class="language-javascript">// Get published posts by author
+db.posts.find({
+  "author._id": ObjectId("..."),
+  status: "published"
+}).sort({ published_at: -1 }).limit(10);
+
+// Get posts by tag
+db.posts.find({
+  tags: "mongodb",
+  status: "published"
+}).sort({ published_at: -1 });
+
+// Full-text search
+db.posts.find({
+  $text: { $search: "database design" },
+  status: "published"
+}).sort({ score: { $meta: "textScore" } });
+
+// Get comments for a post (if separate collection)
+db.comments.find({
+  post_id: ObjectId("..."),
+  parent_comment_id: null
+}).sort({ created_at: -1 });
+</code></pre></p>
+
+<strong>Design Decisions:</strong>
+
+<ul><li><strong>Embedded vs Referenced:</strong></li>
+</ul>   - Embed: Small, frequently accessed together (author info in post)
+<p>- Reference: Large, independent access (comments in separate collection)</p>
+
+<ul><li><strong>Denormalization:</strong></li>
+</ul>   - Store author info in post for fast reads
+<p>- Update author info in posts when author changes (or use application-level consistency)</p>
+
+<ul><li><strong>Array Fields:</strong></li>
+</ul>   - Tags as array for easy filtering
+<p>- Index on array field indexes each element</p>
+
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of NoSQL design</li>
+<li>Demonstrates knowledge of document modeling</li>
+<li>Shows ability to choose appropriate data structures</li>
+<li>Evaluates trade-off analysis</li>
+</ul>
+</div><hr>
+
+<h2>Transaction Management</h2>
+
+<h3>Question 6: Handle Concurrent Transactions</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a system to handle concurrent transactions for an inventory management system.
+
+<h4>Requirements</h4>
+<ul><li>Prevent overselling</li>
+<li>Handle concurrent order placements</li>
+<li>Maintain data consistency</li>
+<li>Support high concurrency</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Problem: Race Condition</strong>
+
+<p><pre><code class="language-sql">-- Transaction 1 and 2 both read stock = 10
+-- Both try to sell 8 items
+-- Result: Stock becomes 2 instead of -6 (overselling)
+
+-- Naive approach (WRONG):
+UPDATE products 
+SET stock_quantity = stock_quantity - 8 
+WHERE product_id = 123;
+</code></pre></p>
+
+<strong>Solution 1: Pessimistic Locking</strong>
+
+<p><pre><code class="language-sql">-- Transaction 1
+START TRANSACTION;
+SELECT stock_quantity 
+FROM products 
+WHERE product_id = 123 
+FOR UPDATE;  -- Exclusive lock
+
+-- Check if sufficient stock
+-- If yes, update
+UPDATE products 
+SET stock_quantity = stock_quantity - 8 
+WHERE product_id = 123;
+
+COMMIT;
+
+-- Transaction 2 waits until Transaction 1 commits
+</code></pre></p>
+
+<strong>Solution 2: Optimistic Locking</strong>
+
+<p><pre><code class="language-sql">-- Add version column
+ALTER TABLE products ADD COLUMN version INT DEFAULT 0;
+
+-- Transaction 1
+START TRANSACTION;
+SELECT stock_quantity, version 
+FROM products 
+WHERE product_id = 123;
+
+-- Application checks stock
+-- If sufficient, update with version check
+UPDATE products 
+SET stock_quantity = stock_quantity - 8,
+    version = version + 1
+WHERE product_id = 123 
+  AND version = ?;  -- Original version
+
+-- If rows_affected == 0, retry transaction
+COMMIT;
+</code></pre></p>
+
+<strong>Solution 3: Atomic Update with Condition</strong>
+
+<p><pre><code class="language-sql">-- Single atomic operation
+UPDATE products 
+SET stock_quantity = stock_quantity - 8
+WHERE product_id = 123 
+  AND stock_quantity >= 8;  -- Only update if sufficient stock
+
+-- Check rows_affected
+-- If 0, insufficient stock
+</code></pre></p>
+
+<strong>Solution 4: Database-Level Constraints</strong>
+
+<p><pre><code class="language-sql">-- Add check constraint
+ALTER TABLE products 
+ADD CONSTRAINT chk_stock_non_negative 
+CHECK (stock_quantity >= 0);
+
+-- Application handles constraint violation
+BEGIN;
+UPDATE products SET stock_quantity = stock_quantity - 8 WHERE product_id = 123;
+-- If constraint violation, rollback and notify user
+COMMIT;
+</code></pre></p>
+
+<strong>Complete Inventory Management:</strong>
+
+<p><pre><code class="language-sql">-- Orders table with status
+CREATE TABLE orders (
+    order_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    customer_id BIGINT NOT NULL,
+    status ENUM('pending', 'confirmed', 'cancelled') DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_status (status)
+);
+
+-- Order items with reserved quantity
+CREATE TABLE order_items (
+    order_item_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    order_id BIGINT NOT NULL,
+    product_id BIGINT NOT NULL,
+    quantity INT NOT NULL,
+    reserved_quantity INT DEFAULT 0,
+    FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(product_id),
+    INDEX idx_order (order_id),
+    INDEX idx_product (product_id)
+);
+
+-- Reserve inventory
+DELIMITER //
+CREATE PROCEDURE reserve_inventory(
+    IN p_order_id BIGINT,
+    IN p_product_id BIGINT,
+    IN p_quantity INT
+)
+BEGIN
+    DECLARE v_available INT;
+    
+    START TRANSACTION;
+    
+    -- Get available stock (excluding reserved)
+    SELECT stock_quantity - COALESCE(SUM(reserved_quantity), 0)
+    INTO v_available
+    FROM products p
+    LEFT JOIN order_items oi ON p.product_id = oi.product_id
+    WHERE p.product_id = p_product_id
+      AND (oi.order_id IS NULL OR oi.order_id != p_order_id);
+    
+    -- Check if sufficient stock
+    IF v_available >= p_quantity THEN
+        -- Insert or update order item
+        INSERT INTO order_items (order_id, product_id, quantity, reserved_quantity)
+        VALUES (p_order_id, p_product_id, p_quantity, p_quantity)
+        ON DUPLICATE KEY UPDATE reserved_quantity = reserved_quantity + p_quantity;
+        
+        COMMIT;
+        SELECT 1 as success;
+    ELSE
+        ROLLBACK;
+        SELECT 0 as success, 'Insufficient stock' as message;
+    END IF;
+END//
+DELIMITER ;
+
+-- Confirm order (convert reserved to sold)
+CREATE PROCEDURE confirm_order(IN p_order_id BIGINT)
+BEGIN
+    START TRANSACTION;
+    
+    -- Update stock
+    UPDATE products p
+    JOIN order_items oi ON p.product_id = oi.product_id
+    SET p.stock_quantity = p.stock_quantity - oi.reserved_quantity
+    WHERE oi.order_id = p_order_id;
+    
+    -- Update order status
+    UPDATE orders SET status = 'confirmed' WHERE order_id = p_order_id;
+    
+    -- Clear reserved quantities
+    UPDATE order_items SET reserved_quantity = 0 WHERE order_id = p_order_id;
+    
+    COMMIT;
+END;
+</code></pre></p>
+
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of transaction isolation</li>
+<li>Demonstrates knowledge of concurrency control</li>
+<li>Shows ability to prevent race conditions</li>
+<li>Evaluates database consistency understanding</li>
+</ul>
+</div><hr>
+
+<h2>Database Scaling</h2>
+
+<h3>Question 7: Scale a Database for Millions of Users</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a scaling strategy for a database handling millions of users and billions of records.
+
+<h4>Requirements</h4>
+<ul><li>Handle 100M+ users</li>
+<li>Support 1M+ queries per second</li>
+<li>Maintain low latency</li>
+<li>Ensure high availability</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Scaling Strategies:</strong>
+
+<ul><li><strong>Vertical Scaling (Scale Up):</strong></li>
+</ul>   - Increase server resources (CPU, RAM, SSD)
+<p>- Simple but limited</p>
+<p>- Expensive at scale</p>
+
+<ul><li><strong>Horizontal Scaling (Scale Out):</strong></li>
+</ul>   - Add more servers
+<p>- More cost-effective</p>
+<p>- Requires sharding/partitioning</p>
+
+<strong>Sharding Strategies:</strong>
+
+<p><div class="mermaid">
+graph LR
+    n0["Shard by User ID (Range"]
+    n1["based)"]
+    n0 --> n1
+    n2["Shard 1: user_id 1"]
+    n1 --> n2
+    n3["10M"]
+    n2 --> n3
+    n4["Shard 2: user_id 10M"]
+    n3 --> n4
+    n5["20M"]
+    n4 --> n5
+    n6["Shard 3: user_id 20M"]
+    n5 --> n6
+    n7["30M"]
+    n6 --> n7
+    n8["Shard by Hash"]
+    n7 --> n8
+    n9["hash(user_id) % num_shards determines shard"]
+    n8 --> n9
+    n10["Shard by Geographic Region"]
+    n9 --> n10
+    n11["US users"]
+    n10 --> n11
+    n12["Shard 1"]
+    n11 --> n12
+    n13["EU users"]
+    n12 --> n13
+    n14["Shard 2"]
+    n13 --> n14
+    n15["Asia users"]
+    n14 --> n15
+    n16["Shard 3"]
+    n15 --> n16
+
+</div></p>
+
+<strong>Read Replicas:</strong>
+
+<p><pre><code class="language-text">Master (Write) ──┬──> Replica 1 (Read)
+                 ├──> Replica 2 (Read)
+                 └──> Replica 3 (Read)
+</code></pre></p>
+
+<strong>Caching Layer:</strong>
+
+<p><pre><code class="language-text">Application ──> Redis Cache ──> Database
+              (Hot Data)
+</code></pre></p>
+
+<strong>Partitioning:</strong>
+
+<p><pre><code class="language-sql">-- Partition orders table by date
+CREATE TABLE orders_2024_01 PARTITION OF orders
+FOR VALUES FROM ('2024-01-01') TO ('2024-02-01');
+
+CREATE TABLE orders_2024_02 PARTITION OF orders
+FOR VALUES FROM ('2024-02-01') TO ('2024-03-01');
+</code></pre></p>
+
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of database scaling</li>
+<li>Demonstrates knowledge of sharding strategies</li>
+<li>Shows ability to design for high scale</li>
+<li>Evaluates trade-off analysis</li>
+</ul>
+</div><hr>
+
+<h3>Question 8: Design a time-series database schema.</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a database schema for storing time-series data like IoT sensor readings, stock prices, or application metrics.
+
+<h4>Requirements</h4>
+<ul><li>Handle millions of data points per day</li>
+<li>Efficient time-range queries</li>
+<li>Support aggregation operations</li>
+<li>Fast inserts</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Schema Design:</strong>
+
+<p><pre><code class="language-sql">CREATE TABLE sensor_readings (
+    sensor_id VARCHAR(50) NOT NULL,
+    timestamp TIMESTAMP NOT NULL,
+    value DOUBLE PRECISION NOT NULL,
+    quality_code INT,
+    PRIMARY KEY (sensor_id, timestamp)
+) PARTITION BY RANGE (timestamp);
+
+-- Partition by month
+CREATE TABLE sensor_readings_2024_01 PARTITION OF sensor_readings
+FOR VALUES FROM ('2024-01-01') TO ('2024-02-01');
+
+CREATE TABLE sensor_readings_2024_02 PARTITION OF sensor_readings
+FOR VALUES FROM ('2024-02-01') TO ('2024-03-01');
+
+-- Indexes
+CREATE INDEX idx_sensor_timestamp ON sensor_readings(sensor_id, timestamp DESC);
+CREATE INDEX idx_timestamp ON sensor_readings(timestamp DESC);
+</code></pre></p>
+
+<strong>Optimization Strategies:</strong>
+<ul><li>Partitioning by time</li>
+<li>Compression for old data</li>
+<li>Materialized views for aggregations</li>
+<li>Time-series databases (InfluxDB, TimescaleDB)</li>
+</ul>
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of time-series data</li>
+<li>Demonstrates knowledge of partitioning</li>
+<li>Shows ability to optimize for time-based queries</li>
+</ul>
+</div><hr>
+
+<h3>Question 9: Design a database for a multi-tenant SaaS application.</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a database schema that supports multiple tenants (customers) with data isolation.
+
+<h4>Requirements</h4>
+<ul><li>Complete data isolation between tenants</li>
+<li>Efficient queries</li>
+<li>Support for tenant-specific customizations</li>
+<li>Scalable to thousands of tenants</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Approach 1: Shared Database, Separate Schemas</strong>
+
+<p><pre><code class="language-sql">-- Each tenant has its own schema
+CREATE SCHEMA tenant_001;
+CREATE SCHEMA tenant_002;
+
+-- Tables in each schema
+CREATE TABLE tenant_001.users (...);
+CREATE TABLE tenant_002.users (...);
+</code></pre></p>
+
+<strong>Approach 2: Shared Database, Tenant ID Column</strong>
+
+<p><pre><code class="language-sql">CREATE TABLE users (
+    tenant_id INT NOT NULL,
+    user_id BIGINT NOT NULL,
+    email VARCHAR(100),
+    PRIMARY KEY (tenant_id, user_id),
+    INDEX idx_tenant_email (tenant_id, email)
+);
+
+-- Always filter by tenant_id
+SELECT * FROM users WHERE tenant_id = ? AND email = ?;
+</code></pre></p>
+
+<strong>Approach 3: Separate Database per Tenant</strong>
+
+<p><pre><code class="language-sql">-- Each tenant has its own database
+CREATE DATABASE tenant_001;
+CREATE DATABASE tenant_002;
+</code></pre></p>
+
+<strong>Trade-offs:</strong>
+<ul><li>Shared DB: Cost-effective, complex isolation</li>
+<li>Separate DB: Better isolation, higher cost</li>
+<li>Hybrid: Balance based on tenant size</li>
+</ul>
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of multi-tenancy</li>
+<li>Demonstrates knowledge of data isolation</li>
+<li>Shows ability to design scalable SaaS systems</li>
+</ul>
+</div><hr>
+
+<h3>Question 10: Design a database for a social network with graph relationships.</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a database schema for a social network with complex relationships (friends, follows, blocks, etc.).
+
+<h4>Requirements</h4>
+<ul><li>Efficient friend/follower queries</li>
+<li>Support for relationship types</li>
+<li>Handle millions of relationships</li>
+<li>Fast graph traversals</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Relational Approach:</strong>
+
+<p><pre><code class="language-sql">CREATE TABLE users (
+    user_id BIGINT PRIMARY KEY,
+    username VARCHAR(50),
+    created_at TIMESTAMP
+);
+
+CREATE TABLE relationships (
+    from_user_id BIGINT NOT NULL,
+    to_user_id BIGINT NOT NULL,
+    relationship_type ENUM('friend', 'follow', 'block') NOT NULL,
+    status ENUM('pending', 'accepted', 'blocked') DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (from_user_id, to_user_id, relationship_type),
+    INDEX idx_from_user (from_user_id, relationship_type),
+    INDEX idx_to_user (to_user_id, relationship_type)
+);
+</code></pre></p>
+
+<strong>Graph Database Approach (Neo4j):</strong>
+<ul><li>Nodes: Users</li>
+<li>Relationships: FRIENDS, FOLLOWS, BLOCKS</li>
+<li>Better for graph traversals</li>
+<li>More natural for social networks</li>
+</ul>
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of graph data</li>
+<li>Demonstrates knowledge of relationship modeling</li>
+<li>Shows ability to choose appropriate database type</li>
+</ul>
+</div><hr>
+
+<h3>Question 11: Design a database for an e-commerce platform with product catalogs.</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a database schema for an e-commerce platform with products, variants, categories, and inventory.
+
+<h4>Requirements</h4>
+<ul><li>Support product variants (size, color, etc.)</li>
+<li>Hierarchical categories</li>
+<li>Inventory management</li>
+<li>Fast product search</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<p><pre><code class="language-sql">CREATE TABLE categories (
+    category_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    parent_category_id INT NULL,
+    level INT NOT NULL,
+    path VARCHAR(255),  -- e.g., "Electronics/Phones/Smartphones"
+    FOREIGN KEY (parent_category_id) REFERENCES categories(category_id),
+    INDEX idx_parent (parent_category_id),
+    INDEX idx_path (path)
+);
+
+CREATE TABLE products (
+    product_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    sku VARCHAR(50) UNIQUE NOT NULL,
+    name VARCHAR(200) NOT NULL,
+    description TEXT,
+    category_id INT NOT NULL,
+    brand_id INT,
+    base_price DECIMAL(10,2) NOT NULL,
+    status ENUM('active', 'inactive', 'discontinued') DEFAULT 'active',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (category_id) REFERENCES categories(category_id),
+    INDEX idx_category_status (category_id, status),
+    FULLTEXT INDEX ft_name_desc (name, description)
+);
+
+CREATE TABLE product_variants (
+    variant_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    product_id BIGINT NOT NULL,
+    variant_type VARCHAR(50) NOT NULL,  -- 'size', 'color', etc.
+    variant_value VARCHAR(100) NOT NULL,
+    price_modifier DECIMAL(10,2) DEFAULT 0,
+    sku_suffix VARCHAR(50),
+    FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE,
+    INDEX idx_product (product_id)
+);
+
+CREATE TABLE inventory (
+    inventory_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    product_id BIGINT NOT NULL,
+    variant_id BIGINT NULL,
+    warehouse_id INT NOT NULL,
+    quantity INT NOT NULL DEFAULT 0,
+    reserved_quantity INT DEFAULT 0,
+    reorder_level INT DEFAULT 10,
+    FOREIGN KEY (product_id) REFERENCES products(product_id),
+    FOREIGN KEY (variant_id) REFERENCES product_variants(variant_id),
+    UNIQUE KEY unique_product_variant_warehouse (product_id, variant_id, warehouse_id),
+    INDEX idx_warehouse (warehouse_id),
+    INDEX idx_low_stock (quantity, reorder_level)
+);
+</code></pre></p>
+
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of e-commerce data modeling</li>
+<li>Demonstrates knowledge of variants and inventory</li>
+<li>Shows ability to design complex product catalogs</li>
+</ul>
+</div><hr>
+
+<h3>Question 12: Design a database for a content management system (CMS).</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a database schema for a CMS supporting multiple content types, versions, and workflows.
+
+<h4>Requirements</h4>
+<ul><li>Support multiple content types (articles, pages, media)</li>
+<li>Version control</li>
+<li>Workflow states (draft, review, published)</li>
+<li>Content relationships</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<p><pre><code class="language-sql">CREATE TABLE content_types (
+    type_id INT PRIMARY KEY AUTO_INCREMENT,
+    type_name VARCHAR(50) UNIQUE NOT NULL,
+    schema JSON  -- Flexible schema definition
+);
+
+CREATE TABLE content (
+    content_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    type_id INT NOT NULL,
+    title VARCHAR(200) NOT NULL,
+    slug VARCHAR(200) UNIQUE NOT NULL,
+    status ENUM('draft', 'review', 'published', 'archived') DEFAULT 'draft',
+    author_id BIGINT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    published_at TIMESTAMP NULL,
+    FOREIGN KEY (type_id) REFERENCES content_types(type_id),
+    INDEX idx_status_created (status, created_at DESC),
+    INDEX idx_slug (slug),
+    INDEX idx_author (author_id)
+);
+
+CREATE TABLE content_versions (
+    version_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    content_id BIGINT NOT NULL,
+    version_number INT NOT NULL,
+    content_data JSON NOT NULL,
+    created_by BIGINT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (content_id) REFERENCES content(content_id) ON DELETE CASCADE,
+    UNIQUE KEY unique_content_version (content_id, version_number),
+    INDEX idx_content (content_id)
+);
+
+CREATE TABLE content_relationships (
+    relationship_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    from_content_id BIGINT NOT NULL,
+    to_content_id BIGINT NOT NULL,
+    relationship_type VARCHAR(50) NOT NULL,  -- 'related', 'parent', 'child'
+    FOREIGN KEY (from_content_id) REFERENCES content(content_id),
+    FOREIGN KEY (to_content_id) REFERENCES content(content_id),
+    INDEX idx_from (from_content_id),
+    INDEX idx_to (to_content_id)
+);
+</code></pre></p>
+
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of CMS requirements</li>
+<li>Demonstrates knowledge of version control</li>
+<li>Shows ability to design flexible content systems</li>
+</ul>
+</div><hr>
+
+<h3>Question 13: Design a database for a financial transaction system.</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a database schema for processing financial transactions with audit trails and compliance.
+
+<h4>Requirements</h4>
+<ul><li>ACID compliance</li>
+<li>Complete audit trail</li>
+<li>Support for different transaction types</li>
+<li>Regulatory compliance</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<p><pre><code class="language-sql">CREATE TABLE accounts (
+    account_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    account_number VARCHAR(50) UNIQUE NOT NULL,
+    account_type ENUM('checking', 'savings', 'credit') NOT NULL,
+    balance DECIMAL(15,2) NOT NULL DEFAULT 0,
+    currency VARCHAR(3) DEFAULT 'USD',
+    status ENUM('active', 'frozen', 'closed') DEFAULT 'active',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_account_number (account_number),
+    INDEX idx_status (status)
+);
+
+CREATE TABLE transactions (
+    transaction_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    transaction_type ENUM('deposit', 'withdrawal', 'transfer', 'payment') NOT NULL,
+    from_account_id BIGINT NULL,
+    to_account_id BIGINT NULL,
+    amount DECIMAL(15,2) NOT NULL,
+    currency VARCHAR(3) DEFAULT 'USD',
+    status ENUM('pending', 'completed', 'failed', 'cancelled') DEFAULT 'pending',
+    reference_number VARCHAR(100),
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    processed_at TIMESTAMP NULL,
+    FOREIGN KEY (from_account_id) REFERENCES accounts(account_id),
+    FOREIGN KEY (to_account_id) REFERENCES accounts(account_id),
+    INDEX idx_from_account (from_account_id, created_at DESC),
+    INDEX idx_to_account (to_account_id, created_at DESC),
+    INDEX idx_status (status),
+    INDEX idx_reference (reference_number)
+);
+
+CREATE TABLE audit_log (
+    audit_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    table_name VARCHAR(50) NOT NULL,
+    record_id BIGINT NOT NULL,
+    action ENUM('INSERT', 'UPDATE', 'DELETE') NOT NULL,
+    old_values JSON NULL,
+    new_values JSON NULL,
+    user_id BIGINT,
+    ip_address VARCHAR(45),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_table_record (table_name, record_id),
+    INDEX idx_created (created_at DESC)
+);
+</code></pre></p>
+
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of financial systems</li>
+<li>Demonstrates knowledge of ACID properties</li>
+<li>Shows ability to design audit trails</li>
+</ul>
+</div><hr>
+
+<h3>Question 14: Design a database for a real-time analytics system.</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a database schema for storing and querying real-time analytics data (page views, clicks, events).
+
+<h4>Requirements</h4>
+<ul><li>Handle high write throughput</li>
+<li>Fast aggregations</li>
+<li>Time-based queries</li>
+<li>Support for different event types</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<p><pre><code class="language-sql">-- Event table (write-optimized)
+CREATE TABLE events (
+    event_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    event_type VARCHAR(50) NOT NULL,
+    user_id BIGINT,
+    session_id VARCHAR(100),
+    properties JSON,
+    timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_type_timestamp (event_type, timestamp DESC),
+    INDEX idx_user_timestamp (user_id, timestamp DESC),
+    INDEX idx_timestamp (timestamp DESC)
+) PARTITION BY RANGE (TO_DAYS(timestamp));
+
+-- Aggregation tables (pre-computed)
+CREATE TABLE daily_stats (
+    stat_date DATE NOT NULL,
+    event_type VARCHAR(50) NOT NULL,
+    metric_name VARCHAR(50) NOT NULL,
+    metric_value BIGINT NOT NULL,
+    PRIMARY KEY (stat_date, event_type, metric_name),
+    INDEX idx_date (stat_date DESC)
+);
+
+-- Materialized view for real-time queries
+CREATE TABLE real_time_metrics (
+    metric_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    metric_name VARCHAR(100) NOT NULL,
+    metric_value BIGINT NOT NULL,
+    window_start TIMESTAMP NOT NULL,
+    window_end TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_metric_window (metric_name, window_start),
+    INDEX idx_window (window_start DESC)
+);
+</code></pre></p>
+
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of analytics systems</li>
+<li>Demonstrates knowledge of write-optimized schemas</li>
+<li>Shows ability to design for real-time queries</li>
+</ul>
+</div><hr>
+
+<h3>Question 15: Design a database for a booking/reservation system.</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a database schema for a booking system (hotels, flights, restaurants) with availability management.
+
+<h4>Requirements</h4>
+<ul><li>Handle concurrent bookings</li>
+<li>Prevent double-booking</li>
+<li>Support different resource types</li>
+<li>Manage availability windows</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<p><pre><code class="language-sql">CREATE TABLE resources (
+    resource_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    resource_type ENUM('hotel_room', 'flight_seat', 'restaurant_table') NOT NULL,
+    name VARCHAR(200) NOT NULL,
+    capacity INT NOT NULL,
+    location_id BIGINT,
+    properties JSON,
+    INDEX idx_type_location (resource_type, location_id)
+);
+
+CREATE TABLE availability (
+    availability_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    resource_id BIGINT NOT NULL,
+    date DATE NOT NULL,
+    time_slot TIME NULL,  -- For time-based resources
+    available_quantity INT NOT NULL,
+    total_quantity INT NOT NULL,
+    FOREIGN KEY (resource_id) REFERENCES resources(resource_id),
+    UNIQUE KEY unique_resource_slot (resource_id, date, time_slot),
+    INDEX idx_date (date),
+    INDEX idx_resource_date (resource_id, date)
+);
+
+CREATE TABLE bookings (
+    booking_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    resource_id BIGINT NOT NULL,
+    user_id BIGINT NOT NULL,
+    booking_date DATE NOT NULL,
+    time_slot TIME NULL,
+    quantity INT NOT NULL,
+    status ENUM('pending', 'confirmed', 'cancelled', 'completed') DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (resource_id) REFERENCES resources(resource_id),
+    INDEX idx_user (user_id),
+    INDEX idx_resource_date (resource_id, booking_date),
+    INDEX idx_status (status)
+);
+
+-- Use transactions and locking to prevent double-booking
+</code></pre></p>
+
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of concurrency control</li>
+<li>Demonstrates knowledge of booking systems</li>
+<li>Shows ability to prevent race conditions</li>
+</ul>
+</div><hr>
+
+<h3>Question 16: Design a database for a learning management system (LMS).</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a database schema for an LMS with courses, students, enrollments, and progress tracking.
+
+<h4>Requirements</h4>
+<ul><li>Support course hierarchies</li>
+<li>Track student progress</li>
+<li>Handle enrollments</li>
+<li>Support assessments</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<p><pre><code class="language-sql">CREATE TABLE courses (
+    course_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(200) NOT NULL,
+    description TEXT,
+    instructor_id BIGINT NOT NULL,
+    category_id INT,
+    level ENUM('beginner', 'intermediate', 'advanced'),
+    status ENUM('draft', 'published', 'archived') DEFAULT 'draft',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_instructor (instructor_id),
+    INDEX idx_category (category_id),
+    INDEX idx_status (status)
+);
+
+CREATE TABLE course_modules (
+    module_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    course_id BIGINT NOT NULL,
+    title VARCHAR(200) NOT NULL,
+    order_index INT NOT NULL,
+    parent_module_id BIGINT NULL,
+    FOREIGN KEY (course_id) REFERENCES courses(course_id) ON DELETE CASCADE,
+    FOREIGN KEY (parent_module_id) REFERENCES course_modules(module_id),
+    INDEX idx_course_order (course_id, order_index)
+);
+
+CREATE TABLE enrollments (
+    enrollment_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    student_id BIGINT NOT NULL,
+    course_id BIGINT NOT NULL,
+    enrolled_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    status ENUM('active', 'completed', 'dropped') DEFAULT 'active',
+    progress_percentage DECIMAL(5,2) DEFAULT 0,
+    UNIQUE KEY unique_student_course (student_id, course_id),
+    INDEX idx_student (student_id),
+    INDEX idx_course (course_id)
+);
+
+CREATE TABLE student_progress (
+    progress_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    enrollment_id BIGINT NOT NULL,
+    module_id BIGINT NOT NULL,
+    status ENUM('not_started', 'in_progress', 'completed') DEFAULT 'not_started',
+    completed_at TIMESTAMP NULL,
+    FOREIGN KEY (enrollment_id) REFERENCES enrollments(enrollment_id),
+    FOREIGN KEY (module_id) REFERENCES course_modules(module_id),
+    UNIQUE KEY unique_enrollment_module (enrollment_id, module_id)
+);
+</code></pre></p>
+
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of educational systems</li>
+<li>Demonstrates knowledge of progress tracking</li>
+<li>Shows ability to design hierarchical data</li>
+</ul>
+</div><hr>
+
+<h3>Question 17: Design a database for a notification system.</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a database schema for a notification system supporting multiple channels and delivery status tracking.
+
+<h4>Requirements</h4>
+<ul><li>Support multiple channels (email, SMS, push)</li>
+<li>Track delivery status</li>
+<li>Handle notification preferences</li>
+<li>Support templates</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<p><pre><code class="language-sql">CREATE TABLE notification_templates (
+    template_id INT PRIMARY KEY AUTO_INCREMENT,
+    template_name VARCHAR(100) UNIQUE NOT NULL,
+    channel ENUM('email', 'sms', 'push') NOT NULL,
+    subject VARCHAR(200),
+    body TEXT NOT NULL,
+    variables JSON,  -- Template variables
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE notification_preferences (
+    preference_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    user_id BIGINT NOT NULL,
+    notification_type VARCHAR(50) NOT NULL,
+    channel ENUM('email', 'sms', 'push') NOT NULL,
+    enabled BOOLEAN DEFAULT TRUE,
+    UNIQUE KEY unique_user_type_channel (user_id, notification_type, channel),
+    INDEX idx_user (user_id)
+);
+
+CREATE TABLE notifications (
+    notification_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    user_id BIGINT NOT NULL,
+    template_id INT,
+    channel ENUM('email', 'sms', 'push') NOT NULL,
+    recipient VARCHAR(200) NOT NULL,
+    subject VARCHAR(200),
+    content TEXT NOT NULL,
+    status ENUM('pending', 'sent', 'delivered', 'failed') DEFAULT 'pending',
+    sent_at TIMESTAMP NULL,
+    delivered_at TIMESTAMP NULL,
+    error_message TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (template_id) REFERENCES notification_templates(template_id),
+    INDEX idx_user_status (user_id, status),
+    INDEX idx_status_created (status, created_at),
+    INDEX idx_pending (status, created_at) WHERE status = 'pending'
+);
+</code></pre></p>
+
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of notification systems</li>
+<li>Demonstrates knowledge of multi-channel systems</li>
+<li>Shows ability to track delivery status</li>
+</ul>
+</div><hr>
+
+<h3>Question 18: Design a database for a rating and review system.</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a database schema for a rating and review system supporting products, services, or content.
+
+<h4>Requirements</h4>
+<ul><li>Support different rating scales</li>
+<li>Handle review moderation</li>
+<li>Prevent spam/abuse</li>
+<li>Support helpfulness votes</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<p><pre><code class="language-sql">CREATE TABLE reviews (
+    review_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    entity_type ENUM('product', 'service', 'content') NOT NULL,
+    entity_id BIGINT NOT NULL,
+    user_id BIGINT NOT NULL,
+    rating INT NOT NULL CHECK (rating >= 1 AND rating <= 5),
+    title VARCHAR(200),
+    review_text TEXT NOT NULL,
+    status ENUM('pending', 'approved', 'rejected', 'flagged') DEFAULT 'pending',
+    helpful_count INT DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_user_entity (user_id, entity_type, entity_id),
+    INDEX idx_entity_rating (entity_type, entity_id, rating),
+    INDEX idx_status_created (status, created_at),
+    FULLTEXT INDEX ft_review (review_text)
+);
+
+CREATE TABLE review_votes (
+    vote_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    review_id BIGINT NOT NULL,
+    user_id BIGINT NOT NULL,
+    vote_type ENUM('helpful', 'not_helpful') NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (review_id) REFERENCES reviews(review_id) ON DELETE CASCADE,
+    UNIQUE KEY unique_user_review (user_id, review_id),
+    INDEX idx_review (review_id)
+);
+
+CREATE TABLE review_metadata (
+    review_id BIGINT PRIMARY KEY,
+    verified_purchase BOOLEAN DEFAULT FALSE,
+    moderation_notes TEXT,
+    FOREIGN KEY (review_id) REFERENCES reviews(review_id) ON DELETE CASCADE
+);
+</code></pre></p>
+
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of review systems</li>
+<li>Demonstrates knowledge of moderation workflows</li>
+<li>Shows ability to prevent abuse</li>
+</ul>
+</div><hr>
+
+<h3>Question 19: Design a database for a search system with full-text search.</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a database schema optimized for full-text search across documents, articles, or products.
+
+<h4>Requirements</h4>
+<ul><li>Fast full-text search</li>
+<li>Support for multiple languages</li>
+<li>Ranking and relevance</li>
+<li>Handle large document collections</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<p><pre><code class="language-sql">CREATE TABLE documents (
+    document_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(500) NOT NULL,
+    content TEXT NOT NULL,
+    document_type VARCHAR(50),
+    author_id BIGINT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FULLTEXT INDEX ft_title_content (title, content),
+    INDEX idx_type_created (document_type, created_at DESC)
+);
+
+-- Search index table (denormalized for performance)
+CREATE TABLE search_index (
+    index_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    document_id BIGINT NOT NULL,
+    term VARCHAR(100) NOT NULL,
+    term_frequency INT NOT NULL,
+    position_data JSON,  -- Positions of term in document
+    FOREIGN KEY (document_id) REFERENCES documents(document_id) ON DELETE CASCADE,
+    INDEX idx_term_doc (term, document_id),
+    INDEX idx_doc (document_id)
+);
+
+-- For better performance, consider using specialized search engines:
+-- Elasticsearch, Solr, or database-specific full-text search features
+</code></pre></p>
+
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of search systems</li>
+<li>Demonstrates knowledge of full-text search</li>
+<li>Shows ability to optimize for search queries</li>
+</ul>
+</div><hr>
+
+<h3>Question 20: Design a database for a workflow/process management system.</h3>
+<div class="section problem-statement"><h4>Problem Statement</h4> Design a database schema for managing workflows, processes, and task assignments.
+
+<h4>Requirements</h4>
+<ul><li>Support workflow definitions</li>
+<li>Track process instances</li>
+<li>Handle task assignments</li>
+<li>Support approvals and routing</li>
+</ul>
+</div><div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<p><pre><code class="language-sql">CREATE TABLE workflows (
+    workflow_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    description TEXT,
+    definition JSON NOT NULL,  -- Workflow definition (steps, conditions)
+    version INT DEFAULT 1,
+    status ENUM('active', 'inactive') DEFAULT 'active',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE process_instances (
+    instance_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    workflow_id INT NOT NULL,
+    entity_type VARCHAR(50) NOT NULL,
+    entity_id BIGINT NOT NULL,
+    status ENUM('running', 'completed', 'cancelled', 'failed') DEFAULT 'running',
+    started_by BIGINT NOT NULL,
+    started_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    completed_at TIMESTAMP NULL,
+    current_step VARCHAR(100),
+    FOREIGN KEY (workflow_id) REFERENCES workflows(workflow_id),
+    INDEX idx_status_created (status, started_at),
+    INDEX idx_entity (entity_type, entity_id)
+);
+
+CREATE TABLE tasks (
+    task_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    instance_id BIGINT NOT NULL,
+    task_name VARCHAR(100) NOT NULL,
+    assigned_to BIGINT,
+    status ENUM('pending', 'in_progress', 'completed', 'rejected') DEFAULT 'pending',
+    due_date TIMESTAMP NULL,
+    completed_at TIMESTAMP NULL,
+    notes TEXT,
+    FOREIGN KEY (instance_id) REFERENCES process_instances(instance_id),
+    INDEX idx_assigned_status (assigned_to, status),
+    INDEX idx_due_date (due_date)
+);
+</code></pre></p>
+
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of workflow systems</li>
+<li>Demonstrates knowledge of process management</li>
+<li>Shows ability to design state machines</li>
+</ul>
+</div><hr>
+
+<h2>Summary</h2>
+
+<p>Database design questions test your ability to:</p>
+
+<ul><li><strong>Model Data:</strong> Design schemas that represent real-world entities</li>
+<li><strong>Optimize Performance:</strong> Use indexes, partitioning, and caching</li>
+<li><strong>Ensure Consistency:</strong> Handle transactions and concurrency</li>
+<li><strong>Scale Systems:</strong> Design for millions of users and records</li>
+</ul>
+<p>Key takeaways:</p>
+<ul><li>Normalize for write-heavy, denormalize for read-heavy</li>
+<li>Index frequently queried columns</li>
+<li>Use appropriate isolation levels</li>
+<li>Consider sharding and replication for scale</li>
+<li>Balance consistency and availability</li>
+</ul>
+<p>Practice designing schemas for various domains: e-commerce, social media, content management, etc.</p>
+
+
+    </div>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+    </script>
+</body>
+</html>

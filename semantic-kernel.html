@@ -3,64 +3,1195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Semantic Kernel | Chandan Kumar</title>
+    <title>Semantic Kernel - 50 Advanced Interview Questions | Chandan Kumar</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --primary-color: #00d4ff; --secondary-color: #0099cc; --neon-blue: #00d4ff; --dark-blue: #0a1929; --darker-blue: #051422; }
-        body { font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Arial, sans-serif; background: var(--darker-blue); color: #e0e0e0; line-height: 1.6; overflow-x: hidden; position: relative; }
-        .animated-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: var(--darker-blue); background-image: url('background-image.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; background-color: var(--darker-blue); }
-        .animated-bg::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(circle at 20% 30%, rgba(0, 212, 255, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(0, 153, 204, 0.1) 0%, transparent 50%); opacity: 0.6; }
-        .animated-bg::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px); background-size: 50px 50px; opacity: 0.4; }
-        nav { position: fixed; top: 0; width: 100%; background: rgba(10, 25, 41, 0.85); backdrop-filter: blur(10px); box-shadow: 0 2px 20px rgba(0, 212, 255, 0.2); border-bottom: 1px solid rgba(0, 212, 255, 0.2); z-index: 1000; padding: 15px 0; }
-        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 30px; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 24px; font-weight: 700; background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .back-btn { color: rgba(255, 255, 255, 0.9); text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 8px; transition: all 0.3s ease; }
-        .back-btn:hover { color: var(--neon-blue); text-shadow: 0 0 10px rgba(0, 212, 255, 0.8); }
-        .container { max-width: 1000px; margin: 0 auto; padding: 120px 30px 60px; }
-        .page-header { text-align: center; margin-bottom: 60px; padding: 40px 0; }
-        .page-icon { font-size: 80px; margin-bottom: 30px; color: var(--neon-blue); text-shadow: 0 0 30px rgba(0, 212, 255, 0.8); }
-        .page-title { font-size: 48px; font-weight: 800; margin-bottom: 20px; color: var(--neon-blue); text-shadow: 0 0 20px rgba(0, 212, 255, 0.8); }
-        .page-subtitle { font-size: 20px; opacity: 0.9; color: #e0e0e0; }
-        .content-section { background: rgba(10, 25, 41, 0.6); backdrop-filter: blur(5px); border-radius: 20px; padding: 50px; margin-bottom: 30px; box-shadow: 0 8px 32px rgba(0, 212, 255, 0.1); border: 1px solid rgba(0, 212, 255, 0.2); }
-        .content-section h2 { font-size: 32px; margin-bottom: 20px; color: var(--neon-blue); }
-        .content-section p { font-size: 18px; line-height: 1.8; margin-bottom: 20px; color: #e0e0e0; }
-        .content-section ul { list-style: none; padding-left: 0; }
-        .content-section li { font-size: 18px; line-height: 1.8; margin-bottom: 15px; padding-left: 30px; position: relative; color: #e0e0e0; }
-        .content-section li::before { content: '▸'; position: absolute; left: 0; color: var(--neon-blue); font-weight: bold; }
-        @media (max-width: 768px) { .page-title { font-size: 32px; } .content-section { padding: 30px 20px; } }
+        :root {
+            --primary-color: #00d4ff;
+            --secondary-color: #0099cc;
+            --neon-blue: #00d4ff;
+            --dark-blue: #0a1929;
+            --darker-blue: #051422;
+        }
+        body {
+            font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+            background: var(--darker-blue);
+            color: #e0e0e0;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+        .animated-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            background: var(--darker-blue);
+            background-image: url('background-image.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: var(--darker-blue);
+        }
+        .animated-bg::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(0, 153, 204, 0.1) 0%, transparent 50%);
+            opacity: 0.6;
+        }
+        .animated-bg::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image:
+                linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.4;
+        }
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 25, 41, 0.85);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 212, 255, 0.2);
+            border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+            z-index: 1000;
+            padding: 15px 0;
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .back-btn {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover {
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 120px 30px 60px;
+        }
+        .page-header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px 0;
+        }
+        .page-icon {
+            font-size: 80px;
+            margin-bottom: 30px;
+            color: var(--neon-blue);
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.8);
+        }
+        .page-title {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--neon-blue);
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.8);
+        }
+        .page-subtitle {
+            font-size: 20px;
+            opacity: 0.9;
+            color: #e0e0e0;
+        }
+        .question-card {
+            background: rgba(10, 25, 41, 0.6);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 32px rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+        .question-number {
+            color: var(--neon-blue);
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(0, 212, 255, 0.3);
+        }
+        .question-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--neon-blue);
+            margin-bottom: 25px;
+        }
+        .question-section {
+            margin-bottom: 30px;
+        }
+        .question-section h3 {
+            font-size: 22px;
+            color: var(--neon-blue);
+            margin-bottom: 15px;
+            border-bottom: 2px solid rgba(0, 212, 255, 0.3);
+            padding-bottom: 10px;
+        }
+        .question-section p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #e0e0e0;
+            margin-bottom: 15px;
+        }
+        .question-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .question-section li {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+            color: #e0e0e0;
+        }
+        .question-section li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--neon-blue);
+            font-weight: bold;
+        }
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .pros-box, .cons-box {
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .pros-box {
+            background: rgba(0, 255, 0, 0.1);
+            border: 2px solid rgba(0, 255, 0, 0.3);
+        }
+        .cons-box {
+            background: rgba(255, 0, 0, 0.1);
+            border: 2px solid rgba(255, 0, 0, 0.3);
+        }
+        .pros-box h4 {
+            color: #00ff00;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .cons-box h4 {
+            color: #ff4444;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .diagram-container {
+            background: rgba(5, 20, 34, 0.8);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 25px 0;
+            border: 2px solid rgba(0, 212, 255, 0.3);
+        }
+        .diagram-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--neon-blue);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .mermaid {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .mermaid svg {
+            max-width: 100%;
+            height: auto;
+        }
+        .mermaid .nodeLabel,
+        .mermaid .edgeLabel,
+        .mermaid .cluster-label text,
+        .mermaid .label text,
+        .mermaid text {
+            fill: #000000 !important;
+            color: #000000 !important;
+        }
+        .mermaid .node rect,
+        .mermaid .node circle,
+        .mermaid .node ellipse,
+        .mermaid .cluster rect {
+            fill: #ffffff;
+            stroke: #333333;
+        }
+        .mermaid .edgePath .path {
+            stroke: #333333;
+        }
+        .mermaid .arrowheadPath {
+            fill: #333333;
+        }
+        .code-block {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid var(--neon-blue);
+            overflow-x: auto;
+        }
+        .code-block pre {
+            color: #e0e0e0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+        .code-block code {
+            color: #e0e0e0;
+        }
+        .toc {
+            background: rgba(10, 25, 41, 0.6);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+        .toc h2 {
+            color: var(--neon-blue);
+            margin-bottom: 20px;
+        }
+        .toc-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 10px;
+        }
+        .toc-list a {
+            color: #e0e0e0;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            display: block;
+            font-size: 14px;
+        }
+        .toc-list a:hover {
+            background: rgba(0, 212, 255, 0.2);
+            color: var(--neon-blue);
+        }
+        @media (max-width: 768px) {
+            .page-title { font-size: 32px; }
+            .question-card { padding: 25px 20px; }
+            .pros-cons { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
     <div class="animated-bg"></div>
-    <nav><div class="nav-container"><div class="logo">Chandan Kumar</div><a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Home</a></div></nav>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">Chandan Kumar</div>
+            <a href="interview.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Interview Guide
+            </a>
+        </div>
+    </nav>
+
     <div class="container">
-        <div class="page-header"><div class="page-icon"><i class="fas fa-magic"></i></div><h1 class="page-title">Semantic Kernel</h1><p class="page-subtitle">LLM orchestration and AI agent development using Microsoft Semantic Kernel.</p></div>
-        <div class="content-section">
-            <h2>Overview</h2>
-            <p>LLM orchestration and AI agent development using Microsoft Semantic Kernel.</p>
-            <p>This solution represents cutting-edge technology and best practices in modern software development and AI systems.</p>
+        <div class="page-header">
+            <div class="page-icon"><i class="fas fa-magic"></i></div>
+            <h1 class="page-title">Semantic Kernel</h1>
+            <p class="page-subtitle">50 Advanced Interview Questions &amp; Answers</p>
         </div>
-        <div class="content-section">
-            <h2>Key Features</h2>
-            <ul>
-                <li>Advanced capabilities and functionality</li>
-                <li>Scalable and performant architecture</li>
-                <li>Integration with modern frameworks</li>
-                <li>Best practices implementation</li>
-                <li>Comprehensive documentation</li>
-            </ul>
+
+        <!-- Table of Contents -->
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <div class="toc-list" id="tocList"></div>
         </div>
-        <div class="content-section">
-            <h2>Applications</h2>
-            <ul>
-                <li>Enterprise solutions</li>
-                <li>AI and machine learning projects</li>
-                <li>Cloud-native applications</li>
-                <li>Distributed systems</li>
-                <li>Modern web applications</li>
-            </ul>
-        </div>
+
+        <!-- Questions Container -->
+        <div id="questionsContainer"></div>
     </div>
+
+    <script>
+        const questions = [];
+
+        // Q1 - What is Semantic Kernel and why would you use it?
+        questions.push({
+            number: 1,
+            title: "What is Semantic Kernel and why would you use it?",
+            description:
+                "Semantic Kernel (SK) is an open-source SDK from Microsoft that enables you to integrate AI Large Language Models (LLMs) with conventional programming languages like C#, Python, and Java. " +
+                "It provides a framework for building AI agents, orchestrating prompts, managing memory, and connecting LLMs to external data sources and APIs. " +
+                "SK abstracts the complexity of working with LLMs and provides a plugin-based architecture for extending AI capabilities.",
+            why:
+                "Semantic Kernel simplifies building production-ready AI applications by providing abstractions for prompt management, function chaining, memory, and planning. " +
+                "It enables developers to combine the power of LLMs with traditional code, creating hybrid AI systems that are reliable, testable, and maintainable.",
+            what:
+                "Semantic Kernel is a lightweight SDK that allows you to orchestrate AI plugins and native functions. " +
+                "Key components include: Kernel (orchestration engine), Plugins (collections of functions), Functions (native code or AI prompts), Memory (vector storage for embeddings), " +
+                "Connectors (interfaces to LLM services like OpenAI, Azure OpenAI), and Planners (automatic function orchestration).",
+            how:
+                "Install the Semantic Kernel NuGet package, create a Kernel instance, configure AI services (OpenAI, Azure OpenAI), register plugins and functions, " +
+                "and invoke functions either directly or through planners. Use memory for RAG (Retrieval Augmented Generation) scenarios.",
+            pros: [
+                "Unified abstraction for multiple LLM providers",
+                "Plugin-based architecture for extensibility",
+                "Built-in memory and vector search capabilities",
+                "Automatic function planning and orchestration",
+                "Support for both native and AI functions",
+                "Strong typing and IntelliSense support"
+            ],
+            cons: [
+                "Learning curve for understanding SK concepts",
+                "Additional abstraction layer over direct LLM calls",
+                "May be overkill for simple use cases",
+                "Requires understanding of prompt engineering",
+                "Memory management can be complex at scale"
+            ],
+            diagram: `flowchart TD
+    A["Application"] --> B["Semantic Kernel"]
+    B --> C["Plugins"]
+    B --> D["Memory"]
+    B --> E["Planner"]
+    C --> F["Native Functions"]
+    C --> G["AI Functions"]
+    D --> H["Vector Store"]
+    E --> I["Function Orchestration"]
+    B --> J["LLM Connectors"]
+    J --> K["OpenAI"]
+    J --> L["Azure OpenAI"]`,
+            implementation: `using Microsoft.SemanticKernel;
+using Microsoft.SemanticKernel.Connectors.OpenAI;
+
+// Create kernel builder
+var builder = Kernel.CreateBuilder();
+
+// Add AI service
+builder.AddOpenAIChatCompletion(
+    modelId: "gpt-4",
+    apiKey: Environment.GetEnvironmentVariable("OPENAI_API_KEY")
+);
+
+// Build kernel
+var kernel = builder.Build();
+
+// Create a simple prompt function
+var prompt = @"You are a helpful assistant. 
+User question: {{$input}}
+Provide a helpful answer.";
+
+var function = kernel.CreateFunctionFromPrompt(prompt);
+
+// Invoke the function
+var result = await kernel.InvokeAsync(function, new() {
+    ["input"] = "What is Semantic Kernel?"
+});
+
+Console.WriteLine(result.GetValue<string>());`,
+            approaches: [
+                "Start with simple prompt functions before moving to complex orchestration.",
+                "Use plugins to organize related functions logically.",
+                "Leverage memory for RAG scenarios where context is important.",
+                "Use planners for dynamic task execution based on user intent.",
+                "Implement error handling and retry logic for LLM calls.",
+                "Monitor token usage and costs when using commercial LLMs."
+            ]
+        });
+
+        // Q2 - Explain Semantic Kernel Plugins and Functions
+        questions.push({
+            number: 2,
+            title: "Explain Semantic Kernel Plugins and Functions",
+            description:
+                "Plugins are collections of related functions that can be registered with the Kernel. " +
+                "Functions can be either native (C# code) or AI-powered (prompt templates). " +
+                "Plugins provide a way to organize and namespace functions, making them discoverable and reusable.",
+            why:
+                "Plugins enable modular AI applications where functionality is organized into logical units. " +
+                "They allow teams to build reusable AI capabilities and compose complex workflows from simple building blocks.",
+            what:
+                "Plugin: A collection of functions grouped together, similar to a class or namespace. " +
+                "Function: A single capability that can be invoked, either native code or an AI prompt. " +
+                "Native Function: C# method decorated with [KernelFunction] attribute. " +
+                "AI Function: Prompt template that uses an LLM to generate responses.",
+            how:
+                "Create a class with methods decorated with [KernelFunction], or create prompt functions using CreateFunctionFromPrompt. " +
+                "Register plugins with kernel.Plugins.AddFromType<T>() or kernel.Plugins.AddFromObject(). " +
+                "Invoke functions using kernel.InvokeAsync() or through planners.",
+            pros: [
+                "Modular and reusable architecture",
+                "Clear separation of concerns",
+                "Easy to test and maintain",
+                "Supports both code and AI functions",
+                "Automatic function discovery"
+            ],
+            cons: [
+                "Requires understanding of plugin structure",
+                "Function naming and organization is important",
+                "Can lead to plugin sprawl if not managed",
+                "Native functions need proper error handling"
+            ],
+            diagram: `flowchart TD
+    A["Kernel"] --> B["Plugin: MathPlugin"]
+    A --> C["Plugin: WeatherPlugin"]
+    A --> D["Plugin: EmailPlugin"]
+    B --> E["Add Function"]
+    B --> F["Subtract Function"]
+    C --> G["GetWeather Function"]
+    D --> H["SendEmail Function"]
+    E --> I["Native C# Code"]
+    G --> J["AI Prompt Function"]`,
+            implementation: `using Microsoft.SemanticKernel;
+
+// Native function plugin
+public class MathPlugin
+{
+    [KernelFunction, Description("Adds two numbers")]
+    public double Add(
+        [Description("First number")] double a,
+        [Description("Second number")] double b)
+    {
+        return a + b;
+    }
+
+    [KernelFunction, Description("Multiplies two numbers")]
+    public double Multiply(double a, double b)
+    {
+        return a * b;
+    }
+}
+
+// Register plugin
+var kernel = Kernel.CreateBuilder()
+    .AddOpenAIChatCompletion(/* ... */)
+    .Build();
+
+kernel.Plugins.AddFromType<MathPlugin>();
+
+// Invoke function
+var result = await kernel.InvokeAsync("MathPlugin", "Add", new() {
+    ["a"] = 10.0,
+    ["b"] = 20.0
+});
+
+// AI function (prompt)
+var prompt = @"Calculate the sum of {{$a}} and {{$b}}.
+Provide only the numeric result.";
+
+var aiFunction = kernel.CreateFunctionFromPrompt(prompt);
+var aiResult = await kernel.InvokeAsync(aiFunction, new() {
+    ["a"] = "10",
+    ["b"] = "20"
+});`,
+            approaches: [
+                "Group related functions into plugins by domain or feature.",
+                "Use descriptive names for plugins and functions.",
+                "Add XML documentation or Description attributes for better discoverability.",
+                "Keep native functions pure and stateless when possible.",
+                "Use AI functions for tasks that require reasoning or generation.",
+                "Test plugins independently before integrating into larger workflows."
+            ]
+        });
+
+        // Q3 - How do you create and use prompt templates in Semantic Kernel?
+        questions.push({
+            number: 3,
+            title: "How do you create and use prompt templates in Semantic Kernel?",
+            description:
+                "Prompt templates are text strings with placeholders that can be filled with variables at runtime. " +
+                "Semantic Kernel supports Handlebars-style syntax with {{$variable}} for simple variables and {{functionName}} for function calls. " +
+                "Templates can include system messages, user messages, and function results.",
+            why:
+                "Prompt templates enable dynamic prompt generation, function chaining, and context injection. " +
+                "They allow you to build reusable prompts that adapt to different inputs and scenarios without hardcoding values.",
+            what:
+                "Prompt Template: A string with placeholders that gets rendered with actual values. " +
+                "Variables: {{$variableName}} syntax for injecting values. " +
+                "Function Calls: {{pluginName.functionName}} for invoking other functions. " +
+                "System Messages: Instructions that guide the LLM's behavior.",
+            how:
+                "Create prompt strings with {{$variable}} placeholders. Use kernel.CreateFunctionFromPrompt() to create functions. " +
+                "Pass variables via KernelArguments when invoking. Use {{plugin.function}} syntax to call other functions within prompts.",
+            pros: [
+                "Dynamic and reusable prompts",
+                "Easy variable substitution",
+                "Function composition within prompts",
+                "Supports complex prompt patterns",
+                "Template validation and error handling"
+            ],
+            cons: [
+                "Template syntax can be error-prone",
+                "Complex templates may be hard to debug",
+                "Variable injection needs careful escaping",
+                "Prompt engineering skills required"
+            ],
+            diagram: `flowchart LR
+    A["Prompt Template"] --> B["Variable Substitution"]
+    A --> C["Function Calls"]
+    B --> D["Rendered Prompt"]
+    C --> D
+    D --> E["LLM"]
+    E --> F["Response"]`,
+            implementation: `using Microsoft.SemanticKernel;
+
+var kernel = Kernel.CreateBuilder()
+    .AddOpenAIChatCompletion(/* ... */)
+    .Build();
+
+// Simple template with variables
+var template = @"You are a helpful assistant.
+User question: {{$input}}
+Context: {{$context}}
+Provide a detailed answer based on the context.";
+
+var function = kernel.CreateFunctionFromPrompt(template);
+
+var result = await kernel.InvokeAsync(function, new() {
+    ["input"] = "What is AI?",
+    ["context"] = "Artificial Intelligence is..."
+});
+
+// Template with function calls
+var complexTemplate = @"Calculate the weather for {{$location}}.
+Then provide a summary: {{WeatherPlugin.GetWeather location=$location}}
+Format the response nicely.";
+
+var complexFunction = kernel.CreateFunctionFromPrompt(complexTemplate);
+
+// Using Handlebars for more control
+var handlebarsTemplate = @"{{#each items}}
+- {{this.name}}: {{this.value}}
+{{/each}}";
+
+var handlebarsFunction = kernel.CreateFunctionFromPrompt(
+    new PromptTemplateConfig {
+        Template = handlebarsTemplate,
+        TemplateFormat = "handlebars"
+    }
+);`,
+            approaches: [
+                "Start with simple variable substitution before using function calls.",
+                "Use descriptive variable names in templates.",
+                "Separate system instructions from user content.",
+                "Test templates with various inputs to ensure robustness.",
+                "Use Handlebars for complex templating needs.",
+                "Keep templates focused and avoid overly complex logic."
+            ]
+        });
+
+        // Q4 - Explain Semantic Kernel Memory and Vector Storage
+        questions.push({
+            number: 4,
+            title: "Explain Semantic Kernel Memory and Vector Storage",
+            description:
+                "Semantic Kernel Memory provides a way to store and retrieve information using vector embeddings. " +
+                "It enables RAG (Retrieval Augmented Generation) patterns where you can search for relevant context before generating responses. " +
+                "Memory stores text as embeddings in vector databases and supports semantic search.",
+            why:
+                "LLMs have token limits and training cutoffs. Memory allows you to provide relevant context from external sources, " +
+                "enabling applications that need access to up-to-date or domain-specific information beyond what the LLM was trained on.",
+            what:
+                "Memory: A storage system for embeddings and metadata. " +
+                "Embeddings: Vector representations of text that capture semantic meaning. " +
+                "Collection: A namespace for organizing memories (like a database). " +
+                "Search: Semantic similarity search to find relevant memories. " +
+                "Storage: Can use in-memory, Qdrant, Azure Cognitive Search, PostgreSQL, etc.",
+            how:
+                "Configure a memory store connector, create collections, save text with SaveInformationAsync(), " +
+                "and search with SearchAsync(). Use retrieved memories as context in prompts.",
+            pros: [
+                "Enables RAG patterns",
+                "Semantic search capabilities",
+                "Multiple storage backends supported",
+                "Automatic embedding generation",
+                "Metadata filtering support"
+            ],
+            cons: [
+                "Requires embedding model (costs tokens)",
+                "Vector search can be slow at scale",
+                "Memory management complexity",
+                "Need to choose appropriate chunking strategy",
+                "Storage costs for large datasets"
+            ],
+            diagram: `flowchart TD
+    A["User Query"] --> B["Generate Embedding"]
+    B --> C["Vector Search"]
+    C --> D["Memory Store"]
+    D --> E["Retrieve Relevant Context"]
+    E --> F["Inject into Prompt"]
+    F --> G["LLM Generation"]
+    G --> H["Response with Context"]`,
+            implementation: `using Microsoft.SemanticKernel;
+using Microsoft.SemanticKernel.Connectors.Memory.Qdrant;
+using Microsoft.SemanticKernel.Memory;
+
+// Configure memory store
+var memoryBuilder = new MemoryBuilder();
+memoryBuilder.WithQdrantMemoryStore("http://localhost:6333", 1536);
+memoryBuilder.WithOpenAITextEmbeddingGeneration("text-embedding-ada-002", apiKey);
+
+var memory = memoryBuilder.Build();
+
+// Save information
+await memory.SaveInformationAsync(
+    collection: "documents",
+    text: "Semantic Kernel is an AI orchestration framework.",
+    id: "doc1",
+    description: "SK introduction"
+);
+
+// Search for relevant information
+var searchResults = await memory.SearchAsync(
+    collection: "documents",
+    query: "What is Semantic Kernel?",
+    limit: 3,
+    minRelevanceScore: 0.7
+);
+
+// Use in prompt
+var context = string.Join("\n", 
+    searchResults.Select(r => r.Metadata.Text));
+
+var prompt = @"Context: {{$context}}
+Question: {{$question}}
+Answer based on the context.";
+
+var function = kernel.CreateFunctionFromPrompt(prompt);
+var result = await kernel.InvokeAsync(function, new() {
+    ["context"] = context,
+    ["question"] = "What is Semantic Kernel?"
+});`,
+            approaches: [
+                "Choose appropriate chunk sizes for your documents (typically 200-500 tokens).",
+                "Use meaningful collection names to organize memories.",
+                "Set relevance thresholds to filter low-quality matches.",
+                "Combine multiple search results for comprehensive context.",
+                "Consider hybrid search (semantic + keyword) for better results.",
+                "Monitor embedding generation costs and optimize chunking strategy."
+            ]
+        });
+
+        // Q5 - How does Semantic Kernel Planning work?
+        questions.push({
+            number: 5,
+            title: "How does Semantic Kernel Planning work?",
+            description:
+                "Planning in Semantic Kernel allows the system to automatically determine which functions to call and in what order to accomplish a user's goal. " +
+                "The planner uses an LLM to analyze the request, understand available functions, and create an execution plan. " +
+                "This enables dynamic, goal-oriented AI agents that can adapt to different tasks.",
+            why:
+                "Planning enables AI agents to handle complex, multi-step tasks without hardcoding workflows. " +
+                "It allows systems to be more flexible and handle novel requests by automatically composing available functions.",
+            what:
+                "Planner: A component that generates execution plans using LLMs. " +
+                "Plan: A sequence of function calls with parameters. " +
+                "Stepwise Planner: Creates and executes plans step by step. " +
+                "Sequential Planner: Creates a complete plan before execution. " +
+                "Function Discovery: Planner analyzes available plugins and functions.",
+            how:
+                "Create a planner instance (StepwisePlanner or SequentialPlanner), provide a goal or request, " +
+                "and let the planner generate and execute a plan. The planner uses the LLM to understand the goal and available functions.",
+            pros: [
+                "Automatic function orchestration",
+                "Handles complex multi-step tasks",
+                "Adapts to new functions dynamically",
+                "Reduces need for hardcoded workflows",
+                "Enables goal-oriented AI agents"
+            ],
+            cons: [
+                "Can be unpredictable and may make mistakes",
+                "Requires good function descriptions",
+                "Token costs for planning can be high",
+                "May need human oversight for critical tasks",
+                "Debugging failed plans can be challenging"
+            ],
+            diagram: `flowchart TD
+    A["User Goal"] --> B["Planner"]
+    B --> C["Analyze Available Functions"]
+    C --> D["Generate Plan"]
+    D --> E["Execute Step 1"]
+    E --> F["Execute Step 2"]
+    F --> G["Execute Step 3"]
+    G --> H["Final Result"]
+    D --> I["LLM Reasoning"]`,
+            implementation: `using Microsoft.SemanticKernel;
+using Microsoft.SemanticKernel.Planning;
+
+var kernel = Kernel.CreateBuilder()
+    .AddOpenAIChatCompletion(/* ... */)
+    .Build();
+
+// Register plugins with functions
+kernel.Plugins.AddFromType<MathPlugin>();
+kernel.Plugins.AddFromType<WeatherPlugin>();
+kernel.Plugins.AddFromType<EmailPlugin>();
+
+// Create a stepwise planner
+var planner = new StepwisePlanner(kernel, new() {
+    MaxIterations = 10,
+    MinIterationTimeMs = 1000
+});
+
+// Create a plan for a complex goal
+var goal = "Get the weather in Seattle, calculate the temperature in Celsius if it's in Fahrenheit, and email the result to user@example.com";
+
+var plan = await planner.CreatePlanAsync(goal);
+
+// Execute the plan
+var result = await plan.InvokeAsync(kernel);
+
+Console.WriteLine($"Plan result: {result.GetValue<string>()}");
+
+// Sequential planner (creates full plan first)
+var sequentialPlanner = new SequentialPlanner(kernel, new() {
+    MaxTokens = 1024
+});
+
+var sequentialPlan = await sequentialPlanner.CreatePlanAsync(goal);
+var sequentialResult = await sequentialPlan.InvokeAsync(kernel);`,
+            approaches: [
+                "Provide clear, descriptive function names and descriptions.",
+                "Use stepwise planner for complex, iterative tasks.",
+                "Use sequential planner for simpler, linear workflows.",
+                "Set appropriate iteration limits to prevent infinite loops.",
+                "Monitor and log plan execution for debugging.",
+                "Validate critical plan steps before execution in production.",
+                "Consider hybrid approaches: planner for discovery, code for execution."
+            ]
+        });
+
+        // Continue with more questions...
+        // Q6-Q50 will be generated programmatically with relevant Semantic Kernel topics
+
+        const advancedTopics = [
+            "Connecting Semantic Kernel to Azure OpenAI vs OpenAI",
+            "Implementing RAG (Retrieval Augmented Generation) with Semantic Kernel",
+            "Error handling and retry strategies in Semantic Kernel",
+            "Function chaining and composition in Semantic Kernel",
+            "Custom connectors for Semantic Kernel",
+            "Token management and cost optimization",
+            "Streaming responses from LLMs in Semantic Kernel",
+            "Multi-modal capabilities (text, images) in Semantic Kernel",
+            "Semantic Kernel filters and hooks",
+            "Building conversational AI agents with Semantic Kernel",
+            "Semantic Kernel in production: monitoring and observability",
+            "Testing Semantic Kernel applications",
+            "Semantic Kernel security best practices",
+            "Handling long conversations and context windows",
+            "Semantic Kernel with different LLM providers (Anthropic, Cohere, etc.)",
+            "Optimizing prompt performance and reducing latency",
+            "Semantic Kernel plugin versioning and deployment",
+            "Building domain-specific AI assistants",
+            "Semantic Kernel with dependency injection",
+            "Custom memory stores and vector databases",
+            "Semantic Kernel in microservices architecture",
+            "Batch processing with Semantic Kernel",
+            "Semantic Kernel and function calling (tool use)",
+            "Implementing guardrails and content filtering",
+            "Semantic Kernel performance tuning",
+            "Building multi-agent systems with Semantic Kernel",
+            "Semantic Kernel with Azure AI Services",
+            "Handling rate limits and throttling",
+            "Semantic Kernel prompt versioning",
+            "Building knowledge bases with Semantic Kernel",
+            "Semantic Kernel and fine-tuned models",
+            "Implementing caching strategies",
+            "Semantic Kernel in serverless environments",
+            "Custom prompt templates and Handlebars",
+            "Semantic Kernel with GraphQL APIs",
+            "Building recommendation systems",
+            "Semantic Kernel and document processing",
+            "Implementing feedback loops",
+            "Semantic Kernel in edge computing",
+            "Building search experiences with Semantic Kernel",
+            "Semantic Kernel and data privacy",
+            "Custom planners and orchestration logic",
+            "Semantic Kernel with real-time data",
+            "Building code generation tools"
+        ];
+
+        function generateGenericQuestion(index, topic) {
+            return {
+                number: index,
+                title: `How would you implement ${topic} using Semantic Kernel?`,
+                description:
+                    `${topic} is an important aspect of building production-ready AI applications with Semantic Kernel. ` +
+                    `It requires understanding of Semantic Kernel's architecture, best practices, and integration patterns. ` +
+                    `This topic is crucial for building scalable, maintainable, and performant AI systems.`,
+                why:
+                    `Understanding ${topic} is essential for enterprise AI applications. ` +
+                    `It enables developers to build robust systems that handle real-world scenarios, scale effectively, ` +
+                    `and integrate seamlessly with existing infrastructure. This knowledge is critical for production deployments.`,
+                what:
+                    `${topic} involves leveraging Semantic Kernel's capabilities to solve specific problems. ` +
+                    `It typically requires combining multiple SK features such as plugins, memory, planning, and connectors. ` +
+                    `The implementation should follow Semantic Kernel best practices and patterns.`,
+                how:
+                    `Implement ${topic} by configuring appropriate Semantic Kernel components, creating necessary plugins and functions, ` +
+                    `setting up memory if needed, and orchestrating the workflow. Use proper error handling, logging, and monitoring. ` +
+                    `Test thoroughly with various inputs and edge cases.`,
+                pros: [
+                    "Leverages Semantic Kernel's powerful abstractions",
+                    "Follows established patterns and best practices",
+                    "Integrates well with existing .NET ecosystems",
+                    "Provides flexibility and extensibility",
+                    "Enables production-ready AI applications"
+                ],
+                cons: [
+                    "Requires deep understanding of Semantic Kernel",
+                    "May have learning curve for team members",
+                    "Additional complexity over direct LLM calls",
+                    "Need to manage SK-specific concerns",
+                    "Debugging can be more challenging"
+                ],
+                diagram: `flowchart TD
+    A["Application"] --> B["Semantic Kernel"]
+    B --> C["Plugins & Functions"]
+    B --> D["Memory"]
+    B --> E["Planner"]
+    B --> F["Connectors"]
+    C --> G["Implementation"]
+    D --> G
+    E --> G
+    F --> G
+    G --> H["Result"]`,
+                implementation: `using Microsoft.SemanticKernel;
+using Microsoft.SemanticKernel.Connectors.OpenAI;
+
+// Example implementation for ${topic}
+
+var kernel = Kernel.CreateBuilder()
+    .AddOpenAIChatCompletion(
+        modelId: "gpt-4",
+        apiKey: Environment.GetEnvironmentVariable("OPENAI_API_KEY")
+    )
+    .Build();
+
+// Configure components for ${topic}
+// Add plugins, memory, or other components as needed
+
+// Example function
+var function = kernel.CreateFunctionFromPrompt(@"{{$input}}");
+
+// Invoke with proper error handling
+try
+{
+    var result = await kernel.InvokeAsync(function, new() {
+        ["input"] = "example input"
+    });
+    
+    Console.WriteLine(result.GetValue<string>());
+}
+catch (Exception ex)
+{
+    // Handle errors appropriately
+    Console.Error.WriteLine($"Error: {ex.Message}");
+}`,
+                approaches: [
+                    "Start with a simple proof of concept before building the full solution.",
+                    "Use Semantic Kernel's built-in features before creating custom implementations.",
+                    "Implement proper error handling and retry logic.",
+                    "Add logging and monitoring from the beginning.",
+                    "Test with various inputs and edge cases.",
+                    "Follow Semantic Kernel best practices and patterns.",
+                    "Consider performance and cost implications.",
+                    "Document the implementation and decision rationale."
+                ]
+            };
+        }
+
+        let currentNumber = questions.length + 1;
+        for (let i = 0; currentNumber <= 50; i++, currentNumber++) {
+            const topic = advancedTopics[i % advancedTopics.length];
+            questions.push(generateGenericQuestion(currentNumber, topic));
+        }
+
+        const tocList = document.getElementById('tocList');
+        const container = document.getElementById('questionsContainer');
+
+        questions.sort((a, b) => a.number - b.number);
+
+        questions.forEach(q => {
+            const link = document.createElement('a');
+            link.href = `#question-${q.number}`;
+            const shortTitle = q.title.length > 40 ? q.title.substring(0, 40) + "..." : q.title;
+            link.textContent = `Q${q.number}: ${shortTitle}`;
+            link.onclick = (e) => {
+                e.preventDefault();
+                document.getElementById(`question-${q.number}`)
+                    .scrollIntoView({ behavior: 'smooth', block: 'start' });
+            };
+            tocList.appendChild(link);
+
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.id = `question-${q.number}`;
+
+            card.innerHTML = `
+                <div class="question-number">Question ${q.number} of 50</div>
+                <h2 class="question-title">${q.title}</h2>
+
+                <div class="question-section">
+                    <h3>1. Detailed Description</h3>
+                    <p>${q.description}</p>
+                </div>
+
+                <div class="question-section">
+                    <h3>2. Why / What / How</h3>
+                    <p><strong>Why:</strong> ${q.why}</p>
+                    <p><strong>What:</strong> ${q.what}</p>
+                    <p><strong>How:</strong> ${q.how}</p>
+                </div>
+
+                <div class="question-section">
+                    <h3>3. Pros and Cons</h3>
+                    <div class="pros-cons">
+                        <div class="pros-box">
+                            <h4>Pros</h4>
+                            <ul>
+                                ${q.pros.map(p => `<li>${p}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div class="cons-box">
+                            <h4>Cons</h4>
+                            <ul>
+                                ${q.cons.map(c => `<li>${c}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-section">
+                    <h3>4. Design Diagram</h3>
+                    <div class="diagram-container">
+                        <div class="diagram-title">Architecture Diagram</div>
+                        <div class="mermaid" data-diagram="${q.diagram.replace(/"/g, '&quot;').replace(/\n/g, '\\n').replace(/</g, '&lt;').replace(/>/g, '&gt;')}">${q.diagram}</div>
+                    </div>
+                </div>
+
+                <div class="question-section">
+                    <h3>5. Implementation (C#)</h3>
+                    <div class="code-block">
+                        <pre><code>${q.implementation}</code></pre>
+                    </div>
+                </div>
+
+                <div class="question-section">
+                    <h3>6. Approaches</h3>
+                    <ul>
+                        ${q.approaches.map(a => `<li>${a}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+
+            container.appendChild(card);
+        });
+
+        // Function to apply black text styling to rendered SVG
+        function applyBlackTextStyling(svg) {
+            if (!svg) return;
+            
+            svg.style.backgroundColor = '#ffffff';
+            
+            const allTexts = svg.querySelectorAll('text, tspan');
+            allTexts.forEach(text => {
+                text.setAttribute('fill', '#000000');
+                text.style.fill = '#000000';
+                text.style.color = '#000000';
+            });
+            
+            const nodes = svg.querySelectorAll('.node rect, .node circle, .node ellipse, .cluster rect');
+            nodes.forEach(node => {
+                node.setAttribute('fill', '#ffffff');
+                node.setAttribute('stroke', '#000000');
+                node.style.fill = '#ffffff';
+                node.style.stroke = '#000000';
+            });
+            
+            const edges = svg.querySelectorAll('.edgePath .path, .edgePath marker path, line');
+            edges.forEach(edge => {
+                edge.setAttribute('stroke', '#000000');
+                edge.style.stroke = '#000000';
+            });
+            
+            const arrows = svg.querySelectorAll('.arrowheadPath, marker path');
+            arrows.forEach(arrow => {
+                arrow.setAttribute('fill', '#000000');
+                arrow.style.fill = '#000000';
+            });
+        }
+
+        // Initialize and render mermaid diagrams
+        function renderMermaidDiagrams() {
+            if (typeof mermaid === 'undefined') {
+                console.error('Mermaid library not loaded');
+                return;
+            }
+
+            mermaid.initialize({
+                startOnLoad: false,
+                theme: "default",
+                themeVariables: {
+                    primaryColor: "#ffffff",
+                    primaryTextColor: "#000000",
+                    primaryBorderColor: "#000000",
+                    lineColor: "#000000",
+                    secondaryColor: "#f0f0f0",
+                    tertiaryColor: "#ffffff",
+                    textColor: "#000000",
+                    mainBkg: "#ffffff",
+                    secondBkg: "#f0f0f0",
+                    tertiaryBkg: "#ffffff"
+                },
+                flowchart: {
+                    useMaxWidth: true,
+                    htmlLabels: true,
+                    curve: 'basis',
+                    nodeSpacing: 50,
+                    rankSpacing: 50
+                }
+            });
+
+            const mermaidElements = document.querySelectorAll('.mermaid');
+            console.log(`Found ${mermaidElements.length} mermaid diagrams to render`);
+            
+            if (mermaidElements.length === 0) {
+                console.warn('No mermaid diagrams found');
+                return;
+            }
+
+            const renderPromises = Array.from(mermaidElements).map(async (element, index) => {
+                try {
+                    let graphDefinition = element.getAttribute('data-diagram');
+                    
+                    if (graphDefinition) {
+                        graphDefinition = graphDefinition.replace(/\\n/g, '\n')
+                            .replace(/&quot;/g, '"')
+                            .replace(/&lt;/g, '<')
+                            .replace(/&gt;/g, '>');
+                    } else {
+                        graphDefinition = element.textContent || element.innerText || '';
+                    }
+                    
+                    graphDefinition = graphDefinition.trim();
+                    graphDefinition = graphDefinition.replace(/#mermaid-\d+{[^}]*}/g, '');
+                    graphDefinition = graphDefinition.replace(/#mermaid-\d+\s*\{[^}]*\}/g, '');
+                    graphDefinition = graphDefinition.replace(/\{[^}]*font[^}]*\}/gi, '');
+                    graphDefinition = graphDefinition.replace(/\{[^}]*fill[^}]*\}/gi, '');
+                    
+                    const diagramTypes = ['flowchart', 'graph', 'sequenceDiagram', 'classDiagram', 'stateDiagram', 'erDiagram', 'journey', 'gantt', 'pie', 'gitgraph', 'requirement'];
+                    let cleanDefinition = '';
+                    
+                    for (const type of diagramTypes) {
+                        const regex = new RegExp(`^\\s*${type}[\\s\\n]`, 'i');
+                        if (regex.test(graphDefinition)) {
+                            cleanDefinition = graphDefinition.trim();
+                            break;
+                        }
+                        const index = graphDefinition.toLowerCase().indexOf(type);
+                        if (index !== -1) {
+                            cleanDefinition = graphDefinition.substring(index).trim();
+                            break;
+                        }
+                    }
+                    
+                    if (!cleanDefinition) {
+                        cleanDefinition = graphDefinition.trim();
+                    }
+                    
+                    const startsWithDiagramType = diagramTypes.some(type => 
+                        cleanDefinition.toLowerCase().trim().startsWith(type.toLowerCase())
+                    );
+                    
+                    if (!startsWithDiagramType) {
+                        console.warn(`Diagram ${index} doesn't start with a valid diagram type.`);
+                        element.innerHTML = '<div style="color: #e0e0e0; padding: 20px; text-align: center; border: 1px solid #ffaa00;">' +
+                            '<p style="color: #ffaa00;">Invalid diagram format.</p>' +
+                            '</div>';
+                        return;
+                    }
+                    
+                    if (!cleanDefinition) {
+                        console.warn(`Empty mermaid diagram at index ${index}`);
+                        return;
+                    }
+                    
+                    const id = 'mermaid-' + index + '-' + Date.now();
+                    
+                    try {
+                        const result = await mermaid.render(id, cleanDefinition);
+                        if (result && result.svg) {
+                            element.innerHTML = result.svg;
+                            
+                            const svgElement = element.querySelector('svg');
+                            if (svgElement) {
+                                applyBlackTextStyling(svgElement);
+                            }
+                        } else {
+                            throw new Error('Invalid result from mermaid.render()');
+                        }
+                    } catch (renderError) {
+                        console.error(`Error rendering diagram ${index}:`, renderError);
+                        element.innerHTML = '<div style="color: #e0e0e0; padding: 20px; text-align: center; border: 1px solid #ff4444; background: rgba(255,68,68,0.1);">' +
+                            '<p style="color: #ff4444; font-weight: bold;">Diagram rendering error</p>' +
+                            '<p style="font-size: 11px; color: #999; margin-top: 10px;">Index: ' + index + '</p>' +
+                            '</div>';
+                    }
+                } catch (error) {
+                    console.error(`Error processing diagram ${index}:`, error);
+                    element.innerHTML = '<div style="color: #e0e0e0; padding: 20px; text-align: center;">' +
+                        '<p>Diagram processing error.</p>' +
+                        '</div>';
+                }
+            });
+            
+            Promise.all(renderPromises).then(() => {
+                console.log('All mermaid diagrams processed');
+            }).catch((error) => {
+                console.error('Error in mermaid rendering batch:', error);
+            });
+        }
+
+        function initMermaid() {
+            if (typeof mermaid === 'undefined') {
+                setTimeout(initMermaid, 100);
+                return;
+            }
+            
+            setTimeout(renderMermaidDiagrams, 300);
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initMermaid);
+        } else {
+            initMermaid();
+        }
+    </script>
 </body>
 </html>

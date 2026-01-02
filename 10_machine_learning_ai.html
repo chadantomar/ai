@@ -1,0 +1,2595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine Learning & AI Interview Questions - FAANG Interview Questions</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.7;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            border-bottom: 4px solid #3498db;
+            padding-bottom: 15px;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+        }
+        
+        h2 {
+            color: #34495e;
+            margin-top: 50px;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: linear-gradient(90deg, #3498db22, transparent);
+            border-left: 5px solid #2980b9;
+            padding-left: 20px;
+        }
+        
+        h3 {
+            color: #2980b9;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.6em;
+            padding: 15px;
+            background: #ecf0f1;
+            border-radius: 5px;
+        }
+        
+        h4 {
+            color: #555;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        h5 {
+            color: #666;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        p {
+            margin-bottom: 18px;
+            text-align: justify;
+            font-size: 1.05em;
+        }
+        
+        ul, ol {
+            margin-left: 35px;
+            margin-bottom: 20px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #e83e8c;
+            border: 1px solid #e0e0e0;
+        }
+        
+        pre {
+            background: #2d2d2d;
+            padding: 25px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 25px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        pre code {
+            background: transparent;
+            padding: 0;
+            color: #f8f8f2;
+            font-size: 0.95em;
+            border: none;
+        }
+        
+        .pros-cons {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-left: 5px solid #28a745;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .pros {
+            margin-bottom: 25px;
+        }
+        
+        .pros h5 {
+            color: #28a745;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        .pros ul {
+            list-style: none;
+            margin-left: 0;
+        }
+        
+        .pros li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .pros li:before {
+            content: "✓";
+            color: #28a745;
+            font-weight: bold;
+            font-size: 1.2em;
+            position: absolute;
+            left: 0;
+        }
+        
+        .cons {
+            margin-top: 25px;
+        }
+        
+        .cons h5 {
+            color: #dc3545;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        .cons ul {
+            list-style: none;
+            margin-left: 0;
+        }
+        
+        .cons li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .cons li:before {
+            content: "✗";
+            color: #dc3545;
+            font-weight: bold;
+            font-size: 1.2em;
+            position: absolute;
+            left: 0;
+        }
+        
+        .mermaid {
+            background: white;
+            padding: 30px;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        hr {
+            border: none;
+            border-top: 3px solid #ecf0f1;
+            margin: 40px 0;
+        }
+        
+        strong {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        
+        em {
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        table th {
+            background: #3498db;
+            color: white;
+        }
+        
+        table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .section {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .section h4 {
+            color: #2980b9;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .problem-statement {
+            background: #e8f4f8;
+            border-left-color: #3498db;
+        }
+        
+        .example {
+            background: #fff9e6;
+            border-left-color: #f39c12;
+        }
+        
+        .detailed-explanation {
+            background: #f0f8f0;
+            border-left-color: #27ae60;
+        }
+        
+        .approach {
+            background: #f5f0ff;
+            border-left-color: #9b59b6;
+        }
+        
+        .complexity {
+            background: #ffe8e8;
+            border-left-color: #e74c3c;
+        }
+        
+        .code-solution {
+            background: #2d2d2d;
+            border-left-color: #f39c12;
+        }
+        
+        .code-solution h4 {
+            color: #f8f8f2;
+        }
+        
+        .code-solution p {
+            color: #f8f8f2;
+        }
+        
+        .step-section {
+            background: #fafafa;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 3px solid #95a5a6;
+            border-radius: 4px;
+        }
+        
+        .step-section {
+            background: #fafafa;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 3px solid #95a5a6;
+            border-radius: 4px;
+        }
+        
+        .step-section h5 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        
+        .step-section strong {
+            color: #2c3e50;
+        }
+        
+        .why-faang {
+            background: #fff3cd;
+            border-left-color: #ffc107;
+        }
+        
+        .why-faang h4 {
+            color: #856404;
+        }
+        
+        .section ul, .section ol {
+            margin-left: 25px;
+        }
+        
+        .section pre {
+            margin: 15px 0;
+        }
+        
+        .explanation-content, .approach-content {
+            line-height: 1.8;
+        }
+        
+        .explanation-content p, .approach-content p {
+            margin-bottom: 12px;
+        }
+        
+        .explanation-content ul, .approach-content ul {
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .explanation-content li, .approach-content li {
+            margin-bottom: 8px;
+        }
+        
+        .walkthrough {
+            background: #f0f7ff;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+            border-radius: 5px;
+        }
+        
+        .walkthrough h5 {
+            color: #2980b9;
+            margin-top: 0;
+        }
+        
+        .code-explanation {
+            background: #2d2d2d;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .code-explanation h5 {
+            color: #f8f8f2;
+            margin-top: 0;
+        }
+        
+        .code-explanation p {
+            color: #f8f8f2;
+        }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            transition: background 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .back-btn:hover {
+            background: #2980b9;
+        }
+        
+        .back-btn i {
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            h2 {
+                font-size: 1.4em;
+            }
+            
+            h3 {
+                font-size: 1.3em;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <a href="interview.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Interview Guide</a>
+        <h1>Machine Learning & AI Interview Questions</h1>
+
+<h2>Table of Contents</h2>
+<ul><li>[Machine Learning Fundamentals](#machine-learning-fundamentals)</li>
+<li>[Supervised Learning](#supervised-learning)</li>
+<li>[Unsupervised Learning](#unsupervised-learning)</li>
+<li>[Deep Learning](#deep-learning)</li>
+<li>[Natural Language Processing](#natural-language-processing)</li>
+<li>[Computer Vision](#computer-vision)</li>
+<li>[ML System Design](#ml-system-design)</li>
+<li>[Model Evaluation](#model-evaluation)</li>
+</ul>
+<hr>
+
+<h2>Machine Learning Fundamentals</h2>
+
+<h3>Question 1: Explain the difference between supervised, unsupervised, and reinforcement learning.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Supervised Learning:</strong>
+<ul><li>Learn from labeled data (input-output pairs)</li>
+<li>Predict output for new inputs</li>
+<li>Examples: Classification (spam detection), regression (price prediction)</li>
+<li>Algorithms: Linear regression, SVM, neural networks, decision trees</li>
+<li>Training: Minimize error between predictions and true labels</li>
+</ul>
+
+<strong>Unsupervised Learning:</strong>
+<ul><li>Learn from unlabeled data (only inputs)</li>
+<li>Find hidden patterns, structure, or relationships</li>
+<li>Examples: Clustering (customer segmentation), dimensionality reduction (feature extraction)</li>
+<li>Algorithms: K-means, PCA, autoencoders, DBSCAN</li>
+<li>Training: Discover inherent structure in data</li>
+</ul>
+
+<strong>Reinforcement Learning:</strong>
+<ul><li>Learn through interaction with environment</li>
+<li>Reward/punishment feedback (delayed rewards)</li>
+<li>Examples: Game playing (AlphaGo), robotics (navigation), recommendation systems</li>
+<li>Algorithms: Q-learning, policy gradients, actor-critic methods</li>
+<li>Training: Maximize cumulative reward over time</li>
+</ul>
+
+<h4>Comparison Diagram</h4>
+<div class="mermaid">
+graph TD
+    A[Machine Learning] --> B[Supervised Learning]
+    A --> C[Unsupervised Learning]
+    A --> D[Reinforcement Learning]
+    
+    B --> B1[Labeled Data<br/>Input + Output]
+    B --> B2[Goal: Predict Output]
+    B --> B3[Examples:<br/>Classification, Regression]
+    
+    C --> C1[Unlabeled Data<br/>Input Only]
+    C --> C2[Goal: Find Patterns]
+    C --> C3[Examples:<br/>Clustering, Dimensionality Reduction]
+    
+    D --> D1[Agent + Environment]
+    D --> D2[Goal: Maximize Reward]
+    D --> D3[Examples:<br/>Game Playing, Robotics]
+    
+    style B fill:#e8f4f8
+    style C fill:#fff9e6
+    style D fill:#f0f8f0
+</div>
+
+<h4>Code Example: Supervised Learning</h4>
+<pre><code class="language-python">from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+import numpy as np
+
+# Supervised Learning: Regression
+# Labeled data: (features, target)
+X = np.array([[1], [2], [3], [4], [5]])  # Features
+y = np.array([2, 4, 6, 8, 10])  # Labels (target)
+
+# Split into train/test
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+
+# Train model
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Predict on new data
+predictions = model.predict(X_test)
+print(f"Predictions: {predictions}")
+</code></pre>
+
+<h4>Code Example: Unsupervised Learning</h4>
+<pre><code class="language-python">from sklearn.cluster import KMeans
+import numpy as np
+
+# Unsupervised Learning: Clustering
+# Unlabeled data: only features
+X = np.array([[1, 2], [1.5, 1.8], [5, 8], [8, 8], [1, 0.6], [9, 11]])
+
+# No labels needed!
+kmeans = KMeans(n_clusters=2)
+kmeans.fit(X)
+
+# Get cluster assignments
+labels = kmeans.labels_
+centroids = kmeans.cluster_centers_
+print(f"Cluster labels: {labels}")
+print(f"Centroids: {centroids}")
+</code></pre>
+
+<h4>Code Example: Reinforcement Learning</h4>
+<pre><code class="language-python">import numpy as np
+
+# Simplified Q-Learning example
+class QLearning:
+    def __init__(self, states, actions, learning_rate=0.1, discount=0.9):
+        self.q_table = np.zeros((states, actions))
+        self.lr = learning_rate
+        self.gamma = discount
+    
+    def update(self, state, action, reward, next_state):
+        # Q-learning update rule
+        current_q = self.q_table[state, action]
+        max_next_q = np.max(self.q_table[next_state])
+        new_q = current_q + self.lr * (reward + self.gamma * max_next_q - current_q)
+        self.q_table[state, action] = new_q
+    
+    def get_action(self, state, epsilon=0.1):
+        # Epsilon-greedy policy
+        if np.random.random() < epsilon:
+            return np.random.randint(self.q_table.shape[1])
+        return np.argmax(self.q_table[state])
+
+# Usage
+q_learner = QLearning(states=10, actions=4)
+# Agent interacts with environment, receives rewards, updates Q-table
+</code></pre>
+
+</div></div>
+<div class="section pros-cons">
+    <div class="pros">
+        <h5>Pros</h5>
+        <ul>
+            <li>Supervised: High accuracy when labeled data is available</li>
+            <li>Unsupervised: No need for expensive labeling</li>
+            <li>Reinforcement: Can learn optimal strategies through trial and error</li>
+            <li>Each paradigm suited for different problem types</li>
+        </ul>
+    </div>
+    <div class="cons">
+        <h5>Cons</h5>
+        <ul>
+            <li>Supervised: Requires large labeled datasets</li>
+            <li>Unsupervised: Harder to evaluate performance</li>
+            <li>Reinforcement: Slow convergence, requires many interactions</li>
+            <li>May need to combine multiple paradigms for complex problems</li>
+        </ul>
+    </div>
+</div>
+<div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests fundamental ML knowledge</li>
+<li>Demonstrates understanding of learning paradigms</li>
+<li>Shows ability to choose appropriate approach</li>
+<li>Critical for selecting right ML technique for a problem</li>
+</ul>
+</div><hr>
+
+<h2>Supervised Learning</h2>
+
+<h3>Question 2: Explain bias-variance trade-off.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Bias:</strong>
+<ul><li>Error from oversimplifying assumptions</li>
+<li>High bias = underfitting (model too simple)</li>
+<li>Model cannot capture underlying patterns</li>
+<li>Example: Linear model for non-linear data</li>
+</ul>
+
+<strong>Variance:</strong>
+<ul><li>Error from sensitivity to small fluctuations in training data</li>
+<li>High variance = overfitting (model too complex)</li>
+<li>Model memorizes training data, fails on test data</li>
+<li>Example: Deep tree with many nodes</li>
+</ul>
+
+<strong>Trade-off:</strong>
+<ul><li>Reduce bias → increase variance (more complex model)</li>
+<li>Reduce variance → increase bias (simpler model)</li>
+<li>Optimal balance minimizes total error</li>
+<li>Total Error = Bias² + Variance + Irreducible Error</li>
+</ul>
+
+<h4>Bias-Variance Trade-off Diagram</h4>
+<div class="mermaid">
+graph LR
+    A[Model Complexity] --> B[Low Complexity]
+    A --> C[Medium Complexity]
+    A --> D[High Complexity]
+    
+    B --> B1[High Bias<br/>Low Variance<br/>Underfitting]
+    C --> C1[Balanced<br/>Optimal<br/>Best Generalization]
+    D --> D1[Low Bias<br/>High Variance<br/>Overfitting]
+    
+    E[Error] --> E1[Bias²]
+    E --> E2[Variance]
+    E --> E3[Total Error]
+    
+    E1 -.->|Decreases| C
+    E2 -.->|Increases| C
+    
+    style B1 fill:#ffe8e8
+    style C1 fill:#e8f4f8
+    style D1 fill:#fff9e6
+</div>
+
+<h4>Visual Representation</h4>
+<div class="mermaid">
+graph TD
+    A[Training Data] --> B[Simple Model<br/>High Bias]
+    A --> C[Complex Model<br/>High Variance]
+    A --> D[Optimal Model<br/>Balanced]
+    
+    B --> B1[Underfitting<br/>High Training Error<br/>High Test Error]
+    C --> C1[Overfitting<br/>Low Training Error<br/>High Test Error]
+    D --> D1[Good Fit<br/>Low Training Error<br/>Low Test Error]
+    
+    style B1 fill:#ffcccc
+    style C1 fill:#ffffcc
+    style D1 fill:#ccffcc
+</div>
+
+<h4>Code Example: Demonstrating Bias-Variance</h4>
+<pre><code class="language-python">from sklearn.linear_model import LinearRegression, Ridge
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.model_selection import cross_val_score
+import numpy as np
+
+# Generate synthetic data
+np.random.seed(42)
+X = np.linspace(0, 10, 100).reshape(-1, 1)
+y = np.sin(X.ravel()) + np.random.normal(0, 0.1, 100)
+
+# High Bias Model (Linear Regression)
+linear_model = LinearRegression()
+linear_scores = cross_val_score(linear_model, X, y, cv=5)
+print(f"Linear Model (High Bias) - CV Score: {linear_scores.mean():.3f}")
+
+# High Variance Model (Deep Decision Tree)
+tree_model = DecisionTreeRegressor(max_depth=20)
+tree_scores = cross_val_score(tree_model, X, y, cv=5)
+print(f"Deep Tree (High Variance) - CV Score: {tree_scores.mean():.3f}")
+
+# Balanced Model (Regularized)
+ridge_model = Ridge(alpha=1.0)
+ridge_scores = cross_val_score(ridge_model, X, y, cv=5)
+print(f"Ridge Regression (Balanced) - CV Score: {ridge_scores.mean():.3f}")
+</code></pre>
+
+<strong>Solutions:</strong>
+<ul><li><strong>Regularization:</strong> L1/L2 regularization reduces variance</li>
+<li><strong>More features:</strong> Additional features can reduce bias</li>
+<li><strong>Ensemble methods:</strong> Bagging (reduce variance), Boosting (reduce bias)</li>
+<li><strong>Cross-validation:</strong> Helps find optimal complexity</li>
+<li><strong>Early stopping:</strong> Prevents overfitting in neural networks</li>
+<li><strong>Dropout:</strong> Reduces variance in deep learning</li>
+</ul>
+
+</div></div>
+<div class="section pros-cons">
+    <div class="pros">
+        <h5>Pros</h5>
+        <ul>
+            <li>Understanding helps diagnose model performance issues</li>
+            <li>Guides model selection and hyperparameter tuning</li>
+            <li>Essential for building production ML systems</li>
+            <li>Helps balance model complexity</li>
+        </ul>
+    </div>
+    <div class="cons">
+        <h5>Cons</h5>
+        <ul>
+            <li>Finding optimal balance requires experimentation</li>
+            <li>Trade-off may vary with dataset size</li>
+            <li>Some irreducible error cannot be reduced</li>
+            <li>Requires domain knowledge to interpret</li>
+        </ul>
+    </div>
+</div>
+<div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of model complexity</li>
+<li>Demonstrates knowledge of overfitting/underfitting</li>
+<li>Shows ability to diagnose model issues</li>
+<li>Critical for model optimization and debugging</li>
+</ul>
+</div><hr>
+
+<h2>Deep Learning</h2>
+
+<h3>Question 3: Explain how neural networks learn (backpropagation).</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Forward Pass:</strong>
+<ul><li>Input → Hidden layers → Output</li>
+<li>Calculate predictions using current weights</li>
+<li>Apply activation functions (ReLU, sigmoid, tanh)</li>
+<li>Compute loss (MSE, cross-entropy, etc.)</li>
+</ul>
+
+<strong>Backward Pass (Backpropagation):</strong>
+<ul><li>Compute gradients of loss w.r.t. weights</li>
+<li>Use chain rule to propagate errors backward</li>
+<li>Calculate gradient for each layer</li>
+<li>Update weights using gradient descent</li>
+</ul>
+
+<strong>Gradient Descent:</strong>
+<ul><li>Update weights: w = w - learning_rate × gradient</li>
+<li>Learning rate controls step size</li>
+<li>Iterate until convergence or max epochs</li>
+<li>Variants: SGD, Adam, RMSprop</li>
+</ul>
+
+<h4>Neural Network Architecture Diagram</h4>
+<div class="mermaid">
+graph LR
+    subgraph Input Layer
+        I1[Input 1]
+        I2[Input 2]
+        I3[Input 3]
+    end
+    
+    subgraph Hidden Layer 1
+        H1[Neuron 1]
+        H2[Neuron 2]
+        H3[Neuron 3]
+    end
+    
+    subgraph Hidden Layer 2
+        H4[Neuron 4]
+        H5[Neuron 5]
+    end
+    
+    subgraph Output Layer
+        O1[Output]
+    end
+    
+    I1 --> H1
+    I1 --> H2
+    I1 --> H3
+    I2 --> H1
+    I2 --> H2
+    I2 --> H3
+    I3 --> H1
+    I3 --> H2
+    I3 --> H3
+    
+    H1 --> H4
+    H1 --> H5
+    H2 --> H4
+    H2 --> H5
+    H3 --> H4
+    H3 --> H5
+    
+    H4 --> O1
+    H5 --> O1
+    
+    style I1 fill:#e8f4f8
+    style I2 fill:#e8f4f8
+    style I3 fill:#e8f4f8
+    style H1 fill:#fff9e6
+    style H2 fill:#fff9e6
+    style H3 fill:#fff9e6
+    style H4 fill:#fff9e6
+    style H5 fill:#fff9e6
+    style O1 fill:#f0f8f0
+</div>
+
+<h4>Backpropagation Flow Diagram</h4>
+<div class="mermaid">
+sequenceDiagram
+    participant Input
+    participant Hidden1
+    participant Hidden2
+    participant Output
+    participant Loss
+    participant Gradients
+    
+    Note over Input,Output: Forward Pass
+    Input->>Hidden1: Compute activations
+    Hidden1->>Hidden2: Compute activations
+    Hidden2->>Output: Compute predictions
+    Output->>Loss: Calculate loss
+    
+    Note over Loss,Gradients: Backward Pass
+    Loss->>Output: ∂L/∂output
+    Output->>Hidden2: Backpropagate gradients
+    Hidden2->>Hidden1: Backpropagate gradients
+    Hidden1->>Input: Backpropagate gradients
+    
+    Note over Gradients: Update Weights
+    Gradients->>Hidden1: Update weights
+    Gradients->>Hidden2: Update weights
+    Gradients->>Output: Update weights
+</div>
+
+<h4>Code Example: Simple Neural Network with Backpropagation</h4>
+<pre><code class="language-python">import numpy as np
+
+class SimpleNeuralNetwork:
+    def __init__(self, input_size, hidden_size, output_size, lr=0.01):
+        self.lr = lr
+        # Initialize weights randomly
+        self.W1 = np.random.randn(input_size, hidden_size) * 0.1
+        self.b1 = np.zeros((1, hidden_size))
+        self.W2 = np.random.randn(hidden_size, output_size) * 0.1
+        self.b2 = np.zeros((1, output_size))
+    
+    def sigmoid(self, x):
+        return 1 / (1 + np.exp(-np.clip(x, -250, 250)))
+    
+    def sigmoid_derivative(self, x):
+        s = self.sigmoid(x)
+        return s * (1 - s)
+    
+    def forward(self, X):
+        # Forward pass
+        self.z1 = np.dot(X, self.W1) + self.b1
+        self.a1 = self.sigmoid(self.z1)
+        self.z2 = np.dot(self.a1, self.W2) + self.b2
+        self.a2 = self.sigmoid(self.z2)
+        return self.a2
+    
+    def backward(self, X, y, output):
+        m = X.shape[0]  # Number of samples
+        
+        # Calculate loss derivative
+        dz2 = output - y
+        dW2 = (1/m) * np.dot(self.a1.T, dz2)
+        db2 = (1/m) * np.sum(dz2, axis=0, keepdims=True)
+        
+        # Backpropagate to hidden layer
+        da1 = np.dot(dz2, self.W2.T)
+        dz1 = da1 * self.sigmoid_derivative(self.z1)
+        dW1 = (1/m) * np.dot(X.T, dz1)
+        db1 = (1/m) * np.sum(dz1, axis=0, keepdims=True)
+        
+        # Update weights (Gradient Descent)
+        self.W2 -= self.lr * dW2
+        self.b2 -= self.lr * db2
+        self.W1 -= self.lr * dW1
+        self.b1 -= self.lr * db1
+    
+    def train(self, X, y, epochs=1000):
+        for epoch in range(epochs):
+            output = self.forward(X)
+            self.backward(X, y, output)
+            if epoch % 100 == 0:
+                loss = np.mean((output - y) ** 2)
+                print(f"Epoch {epoch}, Loss: {loss:.4f}")
+
+# Example usage
+X = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
+y = np.array([[0], [1], [1], [0]])  # XOR problem
+
+nn = SimpleNeuralNetwork(input_size=2, hidden_size=4, output_size=1)
+nn.train(X, y, epochs=1000)
+</code></pre>
+
+<strong>Key Concepts:</strong>
+<ul><li><strong>Chain Rule:</strong> ∂L/∂w = (∂L/∂output) × (∂output/∂hidden) × (∂hidden/∂w)</li>
+<li><strong>Activation Functions:</strong> ReLU (most common), sigmoid, tanh</li>
+<li><strong>Loss Functions:</strong> MSE (regression), Cross-entropy (classification)</li>
+<li><strong>Optimizers:</strong> SGD, Adam (adaptive learning rate), RMSprop</li>
+<li><strong>Vanishing Gradient:</strong> Problem with deep networks, solved by ReLU, batch normalization</li>
+</ul>
+
+</div></div>
+<div class="section pros-cons">
+    <div class="pros">
+        <h5>Pros</h5>
+        <ul>
+            <li>Enables training of deep neural networks</li>
+            <li>Efficient gradient computation</li>
+            <li>Can learn complex non-linear patterns</li>
+            <li>Foundation for modern deep learning</li>
+        </ul>
+    </div>
+    <div class="cons">
+        <h5>Cons</h5>
+        <ul>
+            <li>Can suffer from vanishing/exploding gradients</li>
+            <li>Requires careful initialization</li>
+            <li>Computationally expensive for large networks</li>
+            <li>May get stuck in local minima</li>
+        </ul>
+    </div>
+</div>
+<div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of neural network training</li>
+<li>Demonstrates knowledge of optimization</li>
+<li>Shows ability to explain complex concepts</li>
+<li>Essential for debugging neural network issues</li>
+</ul>
+</div><hr>
+
+<h2>Natural Language Processing</h2>
+
+<h3>Question 4: Explain transformer architecture and attention mechanism.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Transformer Architecture:</strong>
+<ul><li>Architecture for sequence-to-sequence tasks without RNNs</li>
+<li>Self-attention mechanism enables parallel processing</li>
+<li>Encoder-decoder structure (or encoder-only like BERT, decoder-only like GPT)</li>
+<li>Basis for BERT, GPT, T5, and modern LLMs</li>
+<li>Revolutionized NLP and enabled large language models</li>
+</ul>
+
+<strong>Key Components:</strong>
+<ul><li><strong>Multi-Head Attention:</strong> Multiple attention mechanisms in parallel</li>
+<li><strong>Position Encoding:</strong> Adds positional information to embeddings</li>
+<li><strong>Feed-Forward Networks:</strong> Point-wise fully connected layers</li>
+<li><strong>Layer Normalization:</strong> Stabilizes training</li>
+<li><strong>Residual Connections:</strong> Helps with gradient flow</li>
+</ul>
+
+<strong>Attention Mechanism:</strong>
+<ul><li>Focus on relevant parts of input sequence</li>
+<li>Weighted combination: Attention(Q, K, V) = softmax(QK^T/√d_k)V</li>
+<li>Query (Q): What am I looking for?</li>
+<li>Key (K): What do I contain?</li>
+<li>Value (V): What information do I provide?</li>
+<li>Captures long-range dependencies efficiently</li>
+</ul>
+
+<h4>Transformer Architecture Diagram</h4>
+<div class="mermaid">
+graph TD
+    subgraph Encoder
+        E1[Input Embeddings]
+        E2[Position Encoding]
+        E3[Multi-Head Attention]
+        E4[Add & Norm]
+        E5[Feed Forward]
+        E6[Add & Norm]
+        E7[Encoder Output]
+        
+        E1 --> E2
+        E2 --> E3
+        E3 --> E4
+        E4 --> E5
+        E5 --> E6
+        E6 --> E7
+    end
+    
+    subgraph Decoder
+        D1[Output Embeddings]
+        D2[Position Encoding]
+        D3[Masked Multi-Head Attention]
+        D4[Add & Norm]
+        D5[Encoder-Decoder Attention]
+        D6[Add & Norm]
+        D7[Feed Forward]
+        D8[Add & Norm]
+        D9[Output]
+        
+        D1 --> D2
+        D2 --> D3
+        D3 --> D4
+        D4 --> D5
+        E7 --> D5
+        D5 --> D6
+        D6 --> D7
+        D7 --> D8
+        D8 --> D9
+    end
+    
+    style E3 fill:#e8f4f8
+    style D3 fill:#fff9e6
+    style D5 fill:#f0f8f0
+</div>
+
+<h4>Attention Mechanism Diagram</h4>
+<div class="mermaid">
+graph LR
+    subgraph Input Sequence
+        I1["The"]
+        I2["cat"]
+        I3["sat"]
+        I4["on"]
+        I5["mat"]
+    end
+    
+    subgraph Attention Weights
+        A1[Query: 'cat']
+        A2[Keys: All words]
+        A3[Attention Scores]
+        A4[Weighted Sum]
+    end
+    
+    I1 --> A2
+    I2 --> A2
+    I3 --> A2
+    I4 --> A2
+    I5 --> A2
+    
+    A1 --> A3
+    A2 --> A3
+    A3 --> A4
+    
+    A4 --> O[Output: Context-aware representation]
+    
+    style A3 fill:#e8f4f8
+    style A4 fill:#fff9e6
+</div>
+
+<h4>Code Example: Simplified Attention Mechanism</h4>
+<pre><code class="language-python">import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import math
+
+class MultiHeadAttention(nn.Module):
+    def __init__(self, d_model, num_heads):
+        super().__init__()
+        self.d_model = d_model
+        self.num_heads = num_heads
+        self.d_k = d_model // num_heads
+        
+        self.W_q = nn.Linear(d_model, d_model)
+        self.W_k = nn.Linear(d_model, d_model)
+        self.W_v = nn.Linear(d_model, d_model)
+        self.W_o = nn.Linear(d_model, d_model)
+    
+    def scaled_dot_product_attention(self, Q, K, V, mask=None):
+        # Compute attention scores
+        scores = torch.matmul(Q, K.transpose(-2, -1)) / math.sqrt(self.d_k)
+        
+        # Apply mask if provided (for decoder)
+        if mask is not None:
+            scores = scores.masked_fill(mask == 0, -1e9)
+        
+        # Apply softmax
+        attention_weights = F.softmax(scores, dim=-1)
+        
+        # Apply attention to values
+        output = torch.matmul(attention_weights, V)
+        return output, attention_weights
+    
+    def forward(self, query, key, value, mask=None):
+        batch_size = query.size(0)
+        
+        # Linear transformations and split into heads
+        Q = self.W_q(query).view(batch_size, -1, self.num_heads, self.d_k).transpose(1, 2)
+        K = self.W_k(key).view(batch_size, -1, self.num_heads, self.d_k).transpose(1, 2)
+        V = self.W_v(value).view(batch_size, -1, self.num_heads, self.d_k).transpose(1, 2)
+        
+        # Apply attention
+        attention_output, attention_weights = self.scaled_dot_product_attention(Q, K, V, mask)
+        
+        # Concatenate heads
+        attention_output = attention_output.transpose(1, 2).contiguous().view(
+            batch_size, -1, self.d_model
+        )
+        
+        # Final linear layer
+        output = self.W_o(attention_output)
+        return output, attention_weights
+
+# Example usage
+d_model = 512
+num_heads = 8
+seq_len = 10
+
+attention = MultiHeadAttention(d_model, num_heads)
+x = torch.randn(1, seq_len, d_model)  # Batch, Sequence, Features
+
+output, weights = attention(x, x, x)
+print(f"Input shape: {x.shape}")
+print(f"Output shape: {output.shape}")
+print(f"Attention weights shape: {weights.shape}")
+</code></pre>
+
+<strong>Why Transformers Work:</strong>
+<ul><li><strong>Parallel Processing:</strong> Unlike RNNs, process entire sequence at once</li>
+<li><strong>Long-Range Dependencies:</strong> Attention can directly connect distant tokens</li>
+<li><strong>Scalability:</strong> Can be scaled to billions of parameters</li>
+<li><strong>Transfer Learning:</strong> Pre-trained models can be fine-tuned for tasks</li>
+</ul>
+
+</div></div>
+<div class="section pros-cons">
+    <div class="pros">
+        <h5>Pros</h5>
+        <ul>
+            <li>Parallel processing (faster than RNNs)</li>
+            <li>Captures long-range dependencies effectively</li>
+            <li>Highly scalable architecture</li>
+            <li>Foundation for modern LLMs (GPT, BERT)</li>
+        </ul>
+    </div>
+    <div class="cons">
+        <h5>Cons</h5>
+        <ul>
+            <li>Quadratic complexity with sequence length (O(n²))</li>
+            <li>Requires large amounts of data and compute</li>
+            <li>Memory intensive for long sequences</li>
+            <li>Less interpretable than simpler models</li>
+        </ul>
+    </div>
+</div>
+<div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of modern NLP</li>
+<li>Demonstrates knowledge of transformer models</li>
+<li>Shows awareness of recent advances</li>
+<li>Critical for working with LLMs and modern AI systems</li>
+</ul>
+</div><hr>
+
+<h2>ML System Design</h2>
+
+<h3>Question 5: Design a recommendation system.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Components:</strong>
+<ul><li><strong>Data Collection:</strong></li>
+</ul>   - User interactions
+<p>- Item features</p>
+<p>- Contextual data</p>
+
+<ul><li><strong>Feature Engineering:</strong></li>
+</ul>   - User features
+<p>- Item features</p>
+<p>- Interaction features</p>
+
+<ul><li><strong>Model:</strong></li>
+</ul>   - Collaborative filtering
+<p>- Content-based</p>
+<p>- Hybrid approach</p>
+
+<ul><li><strong>Serving:</strong></li>
+</ul>   - Real-time predictions
+<p>- Caching</p>
+<p>- A/B testing</p>
+
+<h4>Recommendation System Architecture</h4>
+<div class="mermaid">
+graph TD
+    A[User Request] --> B[API Gateway]
+    B --> C[Recommendation Service]
+    
+    C --> D{Recommendation Type}
+    D -->|Collaborative Filtering| E1[User-Item Matrix]
+    D -->|Content-Based| E2[Item Features]
+    D -->|Hybrid| E3[Combined Approach]
+    
+    E1 --> F[Model Engine]
+    E2 --> F
+    E3 --> F
+    
+    F --> G[Ranking Algorithm]
+    G --> H[Filtering & Diversity]
+    H --> I[Top-K Recommendations]
+    
+    J[Feature Store] --> F
+    K[User Profile DB] --> F
+    L[Item Catalog DB] --> F
+    M[Interaction History] --> F
+    
+    I --> N[Cache Layer]
+    N --> O[Response to User]
+    
+    style F fill:#e8f4f8
+    style G fill:#fff9e6
+    style H fill:#f0f8f0
+</div>
+
+<h4>Collaborative Filtering Approaches</h4>
+<div class="mermaid">
+graph LR
+    subgraph User-Based CF
+        U1[User A] --> U2[Similar Users]
+        U2 --> U3[Items liked by<br/>similar users]
+    end
+    
+    subgraph Item-Based CF
+        I1[Item X] --> I2[Similar Items]
+        I2 --> I3[Users who liked<br/>similar items]
+    end
+    
+    subgraph Matrix Factorization
+        M1[User-Item Matrix] --> M2[Decompose into<br/>User & Item Factors]
+        M2 --> M3[Predict Ratings]
+    end
+    
+    style U3 fill:#e8f4f8
+    style I3 fill:#fff9e6
+    style M3 fill:#f0f8f0
+</div>
+
+<h4>Code Example: Collaborative Filtering</h4>
+<pre><code class="language-python">import numpy as np
+from sklearn.metrics.pairwise import cosine_similarity
+
+class CollaborativeFiltering:
+    def __init__(self):
+        self.user_item_matrix = None
+        self.user_similarity = None
+    
+    def fit(self, user_item_matrix):
+        """Fit the model with user-item interaction matrix"""
+        self.user_item_matrix = user_item_matrix
+        # Compute user-user similarity
+        self.user_similarity = cosine_similarity(user_item_matrix)
+    
+    def predict(self, user_id, item_id, k=5):
+        """Predict rating for user-item pair"""
+        # Get similar users
+        user_ratings = self.user_item_matrix[user_id]
+        similar_users = np.argsort(self.user_similarity[user_id])[-k-1:-1][::-1]
+        
+        # Weighted average of similar users' ratings
+        numerator = 0
+        denominator = 0
+        
+        for similar_user in similar_users:
+            similarity = self.user_similarity[user_id, similar_user]
+            rating = self.user_item_matrix[similar_user, item_id]
+            
+            if rating > 0:  # User has rated this item
+                numerator += similarity * rating
+                denominator += abs(similarity)
+        
+        if denominator == 0:
+            return 0
+        
+        return numerator / denominator
+    
+    def recommend(self, user_id, n_recommendations=10):
+        """Get top N recommendations for a user"""
+        user_ratings = self.user_item_matrix[user_id]
+        unrated_items = np.where(user_ratings == 0)[0]
+        
+        predictions = []
+        for item_id in unrated_items:
+            pred_rating = self.predict(user_id, item_id)
+            predictions.append((item_id, pred_rating))
+        
+        # Sort by predicted rating
+        predictions.sort(key=lambda x: x[1], reverse=True)
+        return predictions[:n_recommendations]
+
+# Example usage
+# User-Item matrix (rows=users, cols=items, values=ratings 1-5)
+matrix = np.array([
+    [5, 4, 0, 0, 3],
+    [4, 0, 5, 0, 4],
+    [0, 3, 4, 5, 0],
+    [5, 0, 0, 4, 5]
+])
+
+cf = CollaborativeFiltering()
+cf.fit(matrix)
+recommendations = cf.recommend(user_id=0, n_recommendations=3)
+print(f"Top recommendations: {recommendations}")
+</code></pre>
+
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests ML system design skills</li>
+<li>Demonstrates end-to-end thinking</li>
+<li>Shows ability to design production ML systems</li>
+</ul>
+</div><hr>
+
+<h2>Model Evaluation</h2>
+
+<h3>Question 6: Explain evaluation metrics for classification and regression.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Classification Metrics:</strong>
+<ul><li>Accuracy: Correct predictions / Total</li>
+<li>Precision: TP / (TP + FP) - Of predicted positives, how many are actually positive?</li>
+<li>Recall: TP / (TP + FN) - Of actual positives, how many did we find?</li>
+<li>F1-Score: Harmonic mean of precision and recall (2 × Precision × Recall / (Precision + Recall))</li>
+<li>ROC-AUC: Area under ROC curve - Measures model's ability to distinguish classes</li>
+<li>Confusion Matrix: Visual representation of predictions vs actuals</li>
+</ul>
+
+<strong>Regression Metrics:</strong>
+<ul><li>MSE: Mean Squared Error - Average of squared differences</li>
+<li>RMSE: Root Mean Squared Error - Square root of MSE (same units as target)</li>
+<li>MAE: Mean Absolute Error - Average of absolute differences</li>
+<li>R²: Coefficient of determination - Proportion of variance explained (0 to 1)</li>
+<li>MAPE: Mean Absolute Percentage Error - Percentage-based error</li>
+</ul>
+
+<h4>End-to-End Code Example: Classification Evaluation</h4>
+<pre><code class="language-python">import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import (
+    accuracy_score, precision_score, recall_score, f1_score,
+    roc_auc_score, confusion_matrix, classification_report,
+    roc_curve, precision_recall_curve
+)
+import matplotlib.pyplot as plt
+
+# Step 1: Load and prepare data
+print("=" * 60)
+print("END-TO-END CLASSIFICATION EVALUATION EXAMPLE")
+print("=" * 60)
+
+# Generate synthetic classification dataset
+from sklearn.datasets import make_classification
+X, y = make_classification(
+    n_samples=1000,
+    n_features=20,
+    n_informative=15,
+    n_redundant=5,
+    n_classes=2,
+    random_state=42
+)
+
+# Step 2: Split data
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+print(f"\n1. Data Split:")
+print(f"   Training samples: {X_train.shape[0]}")
+print(f"   Test samples: {X_test.shape[0]}")
+
+# Step 3: Train model
+print(f"\n2. Training Model...")
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+
+# Step 4: Make predictions
+y_pred = model.predict(X_test)
+y_pred_proba = model.predict_proba(X_test)[:, 1]
+
+# Step 5: Calculate all classification metrics
+print(f"\n3. Evaluation Metrics:")
+print("-" * 60)
+
+# Basic metrics
+accuracy = accuracy_score(y_test, y_pred)
+precision = precision_score(y_test, y_pred)
+recall = recall_score(y_test, y_pred)
+f1 = f1_score(y_test, y_pred)
+roc_auc = roc_auc_score(y_test, y_pred_proba)
+
+print(f"Accuracy:  {accuracy:.4f}  (Correct predictions / Total)")
+print(f"Precision: {precision:.4f}  (TP / (TP + FP))")
+print(f"Recall:    {recall:.4f}  (TP / (TP + FN))")
+print(f"F1-Score:  {f1:.4f}  (Harmonic mean of Precision and Recall)")
+print(f"ROC-AUC:   {roc_auc:.4f}  (Area under ROC curve)")
+
+# Confusion Matrix
+cm = confusion_matrix(y_test, y_pred)
+print(f"\n4. Confusion Matrix:")
+print("   " + " " * 15 + "Predicted")
+print("   " + " " * 15 + "  Neg  Pos")
+print(f"   Actual Neg    {cm[0][0]:4d}  {cm[0][1]:4d}")
+print(f"   Actual Pos    {cm[1][0]:4d}  {cm[1][1]:4d}")
+print(f"\n   True Negatives:  {cm[0][0]}")
+print(f"   False Positives: {cm[0][1]}")
+print(f"   False Negatives: {cm[1][0]}")
+print(f"   True Positives:  {cm[1][1]}")
+
+# Detailed classification report
+print(f"\n5. Detailed Classification Report:")
+print(classification_report(y_test, y_pred, target_names=['Class 0', 'Class 1']))
+
+# ROC Curve and Precision-Recall Curve
+fpr, tpr, _ = roc_curve(y_test, y_pred_proba)
+precision_curve, recall_curve, _ = precision_recall_curve(y_test, y_pred_proba)
+
+print(f"\n6. ROC Curve Points (sample):")
+print(f"   FPR: {fpr[:5]}...")
+print(f"   TPR: {tpr[:5]}...")
+
+print(f"\n7. Precision-Recall Curve Points (sample):")
+print(f"   Precision: {precision_curve[:5]}...")
+print(f"   Recall:    {recall_curve[:5]}...")
+
+print("\n" + "=" * 60)
+print("EVALUATION COMPLETE")
+print("=" * 60)
+</code></pre>
+
+<h4>End-to-End Code Example: Regression Evaluation</h4>
+<pre><code class="language-python">import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import (
+    mean_squared_error, mean_absolute_error, r2_score,
+    mean_absolute_percentage_error
+)
+import matplotlib.pyplot as plt
+
+# Step 1: Load and prepare data
+print("=" * 60)
+print("END-TO-END REGRESSION EVALUATION EXAMPLE")
+print("=" * 60)
+
+# Generate synthetic regression dataset
+from sklearn.datasets import make_regression
+X, y = make_regression(
+    n_samples=1000,
+    n_features=20,
+    n_informative=15,
+    noise=10,
+    random_state=42
+)
+
+# Step 2: Split data
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+print(f"\n1. Data Split:")
+print(f"   Training samples: {X_train.shape[0]}")
+print(f"   Test samples: {X_test.shape[0]}")
+
+# Step 3: Train model
+print(f"\n2. Training Model...")
+model = RandomForestRegressor(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+
+# Step 4: Make predictions
+y_pred = model.predict(X_test)
+
+# Step 5: Calculate all regression metrics
+print(f"\n3. Evaluation Metrics:")
+print("-" * 60)
+
+# Calculate metrics
+mse = mean_squared_error(y_test, y_pred)
+rmse = np.sqrt(mse)
+mae = mean_absolute_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+mape = mean_absolute_percentage_error(y_test, y_pred)
+
+print(f"MSE:  {mse:.4f}  (Mean Squared Error)")
+print(f"RMSE: {rmse:.4f}  (Root Mean Squared Error - same units as target)")
+print(f"MAE:  {mae:.4f}  (Mean Absolute Error)")
+print(f"R²:   {r2:.4f}  (Coefficient of Determination - 1.0 is perfect)")
+print(f"MAPE: {mape:.4f}% (Mean Absolute Percentage Error)")
+
+# Additional statistics
+residuals = y_test - y_pred
+print(f"\n4. Residual Analysis:")
+print(f"   Mean Residual:     {np.mean(residuals):.4f} (should be ~0)")
+print(f"   Std Residual:      {np.std(residuals):.4f}")
+print(f"   Min Residual:      {np.min(residuals):.4f}")
+print(f"   Max Residual:      {np.max(residuals):.4f}")
+
+# Prediction vs Actual comparison
+print(f"\n5. Prediction Quality:")
+print(f"   Actual Mean:        {np.mean(y_test):.4f}")
+print(f"   Predicted Mean:    {np.mean(y_pred):.4f}")
+print(f"   Actual Std:        {np.std(y_test):.4f}")
+print(f"   Predicted Std:     {np.std(y_pred):.4f}")
+
+# Sample predictions
+print(f"\n6. Sample Predictions (first 10):")
+print("   Actual    Predicted    Error")
+print("   " + "-" * 35)
+for i in range(min(10, len(y_test))):
+    error = y_test[i] - y_pred[i]
+    print(f"   {y_test[i]:8.2f}  {y_pred[i]:8.2f}  {error:8.2f}")
+
+print("\n" + "=" * 60)
+print("EVALUATION COMPLETE")
+print("=" * 60)
+</code></pre>
+
+</div></div>
+<div class="section pros-cons">
+    <div class="pros">
+        <h5>Pros</h5>
+        <ul>
+            <li>Comprehensive evaluation provides complete picture</li>
+            <li>Different metrics highlight different aspects</li>
+            <li>Helps identify model weaknesses</li>
+            <li>Essential for model comparison and selection</li>
+        </ul>
+    </div>
+    <div class="cons">
+        <h5>Cons</h5>
+        <ul>
+            <li>Can be overwhelming with too many metrics</li>
+            <li>Some metrics may conflict (precision vs recall)</li>
+            <li>Requires domain knowledge to interpret</li>
+            <li>May need different metrics for different use cases</li>
+        </ul>
+    </div>
+</div>
+<div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of evaluation</li>
+<li>Demonstrates knowledge of metrics</li>
+<li>Shows ability to choose appropriate metrics</li>
+<li>Critical for model validation and production deployment</li>
+</ul>
+</div><hr>
+
+<h3>Question 7: Explain gradient descent and its variants.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Gradient Descent:</strong>
+<ul><li>Optimization algorithm to minimize loss function</li>
+<li>Iteratively updates parameters in direction of negative gradient</li>
+<li>Learning rate controls step size</li>
+</ul>
+<strong>Variants:</strong>
+
+<ul><li><strong>Batch Gradient Descent:</strong></li>
+</ul>   - Uses entire dataset for each update
+<p>- Stable convergence</p>
+<p>- Slow for large datasets</p>
+
+<ul><li><strong>Stochastic Gradient Descent (SGD):</strong></li>
+</ul>   - Uses one sample at a time
+<p>- Faster, but noisy updates</p>
+<p>- May not converge to global minimum</p>
+
+<ul><li><strong>Mini-batch Gradient Descent:</strong></li>
+</ul>   - Uses small batches
+<p>- Balance between batch and SGD</p>
+<p>- Most commonly used</p>
+
+<ul><li><strong>Adam (Adaptive Moment Estimation):</strong></li>
+</ul>   - Adaptive learning rate
+<p>- Combines momentum and RMSprop</p>
+<p>- Good default choice</p>
+
+<h4>End-to-End Code Example: Gradient Descent Variants</h4>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import make_regression
+from sklearn.preprocessing import StandardScaler
+
+print("=" * 60)
+print("END-TO-END GRADIENT DESCENT VARIANTS EXAMPLE")
+print("=" * 60)
+
+# Generate data
+X, y = make_regression(n_samples=1000, n_features=1, noise=10, random_state=42)
+X = StandardScaler().fit_transform(X)
+y = y.reshape(-1, 1)
+
+# Add bias term
+X = np.hstack([np.ones((X.shape[0], 1)), X])
+
+# Initialize weights
+np.random.seed(42)
+theta = np.random.randn(2, 1)
+
+def compute_cost(X, y, theta):
+    """Compute MSE cost"""
+    m = len(y)
+    predictions = X.dot(theta)
+    cost = (1/(2*m)) * np.sum((predictions - y)**2)
+    return cost
+
+def gradient_descent(X, y, theta, learning_rate=0.01, iterations=1000, variant='batch'):
+    """Gradient descent with different variants"""
+    m = len(y)
+    cost_history = []
+    
+    # For Adam
+    beta1, beta2 = 0.9, 0.999
+    epsilon = 1e-8
+    m_t = np.zeros_like(theta)
+    v_t = np.zeros_like(theta)
+    t = 0
+    
+    for i in range(iterations):
+        if variant == 'batch':
+            # Batch Gradient Descent: Use entire dataset
+            predictions = X.dot(theta)
+            error = predictions - y
+            gradient = (1/m) * X.T.dot(error)
+            theta = theta - learning_rate * gradient
+            
+        elif variant == 'stochastic':
+            # Stochastic Gradient Descent: Use one sample
+            for j in range(m):
+                random_index = np.random.randint(m)
+                xi = X[random_index:random_index+1]
+                yi = y[random_index:random_index+1]
+                prediction = xi.dot(theta)
+                error = prediction - yi
+                gradient = xi.T.dot(error)
+                theta = theta - learning_rate * gradient
+        
+        elif variant == 'minibatch':
+            # Mini-batch Gradient Descent: Use small batches
+            batch_size = 32
+            for j in range(0, m, batch_size):
+                batch_end = min(j + batch_size, m)
+                X_batch = X[j:batch_end]
+                y_batch = y[j:batch_end]
+                predictions = X_batch.dot(theta)
+                error = predictions - y_batch
+                gradient = (1/len(y_batch)) * X_batch.T.dot(error)
+                theta = theta - learning_rate * gradient
+        
+        elif variant == 'adam':
+            # Adam optimizer
+            t += 1
+            predictions = X.dot(theta)
+            error = predictions - y
+            gradient = (1/m) * X.T.dot(error)
+            
+            # Update biased first moment estimate
+            m_t = beta1 * m_t + (1 - beta1) * gradient
+            # Update biased second raw moment estimate
+            v_t = beta2 * v_t + (1 - beta2) * (gradient ** 2)
+            
+            # Compute bias-corrected first moment estimate
+            m_t_hat = m_t / (1 - beta1**t)
+            # Compute bias-corrected second raw moment estimate
+            v_t_hat = v_t / (1 - beta2**t)
+            
+            # Update parameters
+            theta = theta - learning_rate * m_t_hat / (np.sqrt(v_t_hat) + epsilon)
+        
+        # Record cost
+        cost = compute_cost(X, y, theta)
+        cost_history.append(cost)
+        
+        if i % 100 == 0:
+            print(f"  Iteration {i}: Cost = {cost:.4f}")
+    
+    return theta, cost_history
+
+# Test different variants
+print("\n1. Batch Gradient Descent:")
+theta_batch, costs_batch = gradient_descent(
+    X.copy(), y.copy(), theta.copy(), 
+    learning_rate=0.01, iterations=1000, variant='batch'
+)
+
+print("\n2. Stochastic Gradient Descent:")
+theta_sgd, costs_sgd = gradient_descent(
+    X.copy(), y.copy(), theta.copy(), 
+    learning_rate=0.01, iterations=1000, variant='stochastic'
+)
+
+print("\n3. Mini-batch Gradient Descent:")
+theta_minibatch, costs_minibatch = gradient_descent(
+    X.copy(), y.copy(), theta.copy(), 
+    learning_rate=0.01, iterations=1000, variant='minibatch'
+)
+
+print("\n4. Adam Optimizer:")
+theta_adam, costs_adam = gradient_descent(
+    X.copy(), y.copy(), theta.copy(), 
+    learning_rate=0.01, iterations=1000, variant='adam'
+)
+
+# Compare final costs
+print("\n5. Final Cost Comparison:")
+print(f"   Batch GD:      {costs_batch[-1]:.4f}")
+print(f"   SGD:            {costs_sgd[-1]:.4f}")
+print(f"   Mini-batch GD: {costs_minibatch[-1]:.4f}")
+print(f"   Adam:           {costs_adam[-1]:.4f}")
+
+# Compare convergence
+print("\n6. Convergence Analysis:")
+print(f"   Batch GD iterations to converge:      {len(costs_batch)}")
+print(f"   SGD iterations to converge:            {len(costs_sgd)}")
+print(f"   Mini-batch GD iterations to converge: {len(costs_minibatch)}")
+print(f"   Adam iterations to converge:          {len(costs_adam)}")
+
+print("\n" + "=" * 60)
+print("GRADIENT DESCENT COMPARISON COMPLETE")
+print("=" * 60)
+</code></pre>
+
+</div></div>
+<div class="section pros-cons">
+    <div class="pros">
+        <h5>Pros</h5>
+        <ul>
+            <li>Batch GD: Stable convergence, deterministic</li>
+            <li>SGD: Fast updates, good for large datasets</li>
+            <li>Mini-batch: Balance between stability and speed</li>
+            <li>Adam: Adaptive learning rate, fast convergence</li>
+        </ul>
+    </div>
+    <div class="cons">
+        <h5>Cons</h5>
+        <ul>
+            <li>Batch GD: Slow for large datasets</li>
+            <li>SGD: Noisy updates, may not converge</li>
+            <li>Mini-batch: Requires tuning batch size</li>
+            <li>Adam: More hyperparameters to tune</li>
+        </ul>
+    </div>
+</div>
+<div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of optimization algorithms</li>
+<li>Demonstrates knowledge of training techniques</li>
+<li>Shows ability to choose appropriate optimizer</li>
+<li>Critical for efficient model training</li>
+</ul>
+</div><hr>
+
+<h3>Question 8: Explain overfitting and how to prevent it.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Overfitting:</strong>
+<ul><li>Model performs well on training data but poorly on test data</li>
+<li>Model learns noise instead of patterns</li>
+<li>High variance, low bias</li>
+</ul>
+<strong>Prevention Techniques:</strong>
+
+<ul><li><strong>Regularization:</strong></li>
+</ul>   - L1 (Lasso): Adds absolute value of weights
+<p>- L2 (Ridge): Adds squared value of weights</p>
+<p>- Dropout: Randomly disable neurons during training</p>
+
+<ul><li><strong>Cross-Validation:</strong></li>
+</ul>   - K-fold cross-validation
+<p>- Hold-out validation set</p>
+<p>- Early stopping</p>
+
+<ul><li><strong>Data Augmentation:</strong></li>
+</ul>   - Increase training data diversity
+<p>- Reduce reliance on specific patterns</p>
+
+<ul><li><strong>Ensemble Methods:</strong></li>
+</ul>   - Combine multiple models
+<p>- Bagging, boosting, stacking</p>
+
+<ul><li><strong>Simpler Models:</strong></li>
+</ul>   - Reduce model complexity
+<p>- Feature selection</p>
+<p>- Reduce number of parameters</p>
+
+<h4>End-to-End Code Example: Complete ML Pipeline with Overfitting Prevention</h4>
+<pre><code class="language-python">import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import classification_report, confusion_matrix, roc_auc_score
+from sklearn.pipeline import Pipeline
+import warnings
+warnings.filterwarnings('ignore')
+
+print("=" * 70)
+print("END-TO-END ML PIPELINE: DATA TO DEPLOYMENT")
+print("=" * 70)
+
+# ============================================================================
+# STEP 1: DATA LOADING AND EXPLORATION
+# ============================================================================
+print("\n" + "=" * 70)
+print("STEP 1: DATA LOADING AND EXPLORATION")
+print("=" * 70)
+
+# Generate synthetic dataset (simulating real-world scenario)
+from sklearn.datasets import make_classification
+X, y = make_classification(
+    n_samples=2000,
+    n_features=20,
+    n_informative=15,
+    n_redundant=5,
+    n_classes=2,
+    class_sep=0.8,
+    random_state=42
+)
+
+# Convert to DataFrame for better visualization
+df = pd.DataFrame(X, columns=[f'feature_{i}' for i in range(X.shape[1])])
+df['target'] = y
+
+print(f"\n1. Dataset Overview:")
+print(f"   Shape: {df.shape}")
+print(f"   Features: {df.shape[1] - 1}")
+print(f"   Samples: {df.shape[0]}")
+print(f"   Target distribution:")
+print(f"     Class 0: {(y == 0).sum()} ({(y == 0).mean()*100:.1f}%)")
+print(f"     Class 1: {(y == 1).sum()} ({(y == 1).mean()*100:.1f}%)")
+
+# ============================================================================
+# STEP 2: DATA PREPROCESSING
+# ============================================================================
+print("\n" + "=" * 70)
+print("STEP 2: DATA PREPROCESSING")
+print("=" * 70)
+
+# Split features and target
+X = df.drop('target', axis=1).values
+y = df['target'].values
+
+# Split into train, validation, and test sets
+X_temp, X_test, y_temp, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+X_train, X_val, y_train, y_val = train_test_split(
+    X_temp, y_temp, test_size=0.2, random_state=42, stratify=y_temp
+)
+
+print(f"\n2. Data Splitting:")
+print(f"   Training set:   {X_train.shape[0]} samples ({X_train.shape[0]/len(X)*100:.1f}%)")
+print(f"   Validation set: {X_val.shape[0]} samples ({X_val.shape[0]/len(X)*100:.1f}%)")
+print(f"   Test set:       {X_test.shape[0]} samples ({X_test.shape[0]/len(X)*100:.1f}%)")
+
+# Feature scaling
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_val_scaled = scaler.transform(X_val)
+X_test_scaled = scaler.transform(X_test)
+
+print(f"\n3. Feature Scaling:")
+print(f"   Mean (before): {X_train.mean(axis=0)[:5]}")
+print(f"   Mean (after):  {X_train_scaled.mean(axis=0)[:5]}")
+print(f"   Std (before):  {X_train.std(axis=0)[:5]}")
+print(f"   Std (after):   {X_train_scaled.std(axis=0)[:5]}")
+
+# ============================================================================
+# STEP 3: MODEL TRAINING WITH REGULARIZATION
+# ============================================================================
+print("\n" + "=" * 70)
+print("STEP 3: MODEL TRAINING WITH REGULARIZATION")
+print("=" * 70)
+
+# Model 1: Logistic Regression with L2 Regularization
+print("\n4. Training Logistic Regression (L2 Regularization)...")
+lr_model = LogisticRegression(
+    C=1.0,  # Inverse of regularization strength (smaller = more regularization)
+    penalty='l2',
+    max_iter=1000,
+    random_state=42
+)
+lr_model.fit(X_train_scaled, y_train)
+
+# Model 2: Random Forest (with max_depth to prevent overfitting)
+print("5. Training Random Forest (with depth limit)...")
+rf_model = RandomForestClassifier(
+    n_estimators=100,
+    max_depth=10,  # Limit depth to prevent overfitting
+    min_samples_split=5,  # Minimum samples to split
+    min_samples_leaf=2,  # Minimum samples in leaf
+    random_state=42
+)
+rf_model.fit(X_train_scaled, y_train)
+
+# ============================================================================
+# STEP 4: MODEL EVALUATION AND OVERFITTING DETECTION
+# ============================================================================
+print("\n" + "=" * 70)
+print("STEP 4: MODEL EVALUATION AND OVERFITTING DETECTION")
+print("=" * 70)
+
+def evaluate_model(model, X_train, y_train, X_val, y_val, model_name):
+    """Evaluate model and check for overfitting"""
+    # Training predictions
+    train_pred = model.predict(X_train)
+    train_proba = model.predict_proba(X_train)[:, 1] if hasattr(model, 'predict_proba') else None
+    
+    # Validation predictions
+    val_pred = model.predict(X_val)
+    val_proba = model.predict_proba(X_val)[:, 1] if hasattr(model, 'predict_proba') else None
+    
+    # Calculate metrics
+    from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+    
+    train_acc = accuracy_score(y_train, train_pred)
+    val_acc = accuracy_score(y_val, val_pred)
+    
+    train_prec = precision_score(y_train, train_pred)
+    val_prec = precision_score(y_val, val_pred)
+    
+    train_rec = recall_score(y_train, train_pred)
+    val_rec = recall_score(y_val, val_pred)
+    
+    train_f1 = f1_score(y_train, train_pred)
+    val_f1 = f1_score(y_val, val_pred)
+    
+    # Check for overfitting
+    acc_gap = train_acc - val_acc
+    f1_gap = train_f1 - val_f1
+    
+    print(f"\n{model_name} Results:")
+    print("  " + "-" * 60)
+    print(f"  Metric          Training    Validation   Gap")
+    print(f"  " + "-" * 60)
+    print(f"  Accuracy        {train_acc:.4f}     {val_acc:.4f}     {acc_gap:.4f}")
+    print(f"  Precision       {train_prec:.4f}     {val_prec:.4f}     {train_prec-val_prec:.4f}")
+    print(f"  Recall          {train_rec:.4f}     {val_rec:.4f}     {train_rec-val_rec:.4f}")
+    print(f"  F1-Score        {train_f1:.4f}     {val_f1:.4f}     {f1_gap:.4f}")
+    
+    if val_proba is not None:
+        val_auc = roc_auc_score(y_val, val_proba)
+        print(f"  ROC-AUC         -           {val_auc:.4f}     -")
+    
+    # Overfitting detection
+    if acc_gap > 0.1:
+        print(f"\n  ⚠️  WARNING: Potential overfitting detected!")
+        print(f"     Accuracy gap ({acc_gap:.4f}) > 0.1")
+    else:
+        print(f"\n  ✅ Model generalization looks good!")
+        print(f"     Accuracy gap ({acc_gap:.4f}) is acceptable")
+    
+    return {
+        'train_acc': train_acc, 'val_acc': val_acc,
+        'train_f1': train_f1, 'val_f1': val_f1,
+        'acc_gap': acc_gap, 'f1_gap': f1_gap
+    }
+
+# Evaluate both models
+lr_results = evaluate_model(lr_model, X_train_scaled, y_train, 
+                            X_val_scaled, y_val, "Logistic Regression")
+rf_results = evaluate_model(rf_model, X_train_scaled, y_train, 
+                            X_val_scaled, y_val, "Random Forest")
+
+# ============================================================================
+# STEP 5: CROSS-VALIDATION FOR ROBUST EVALUATION
+# ============================================================================
+print("\n" + "=" * 70)
+print("STEP 5: CROSS-VALIDATION FOR ROBUST EVALUATION")
+print("=" * 70)
+
+print("\n6. Performing 5-Fold Cross-Validation...")
+
+# Combine train and validation for cross-validation
+X_train_val = np.vstack([X_train_scaled, X_val_scaled])
+y_train_val = np.hstack([y_train, y_val])
+
+lr_cv_scores = cross_val_score(lr_model, X_train_val, y_train_val, cv=5, scoring='accuracy')
+rf_cv_scores = cross_val_score(rf_model, X_train_val, y_train_val, cv=5, scoring='accuracy')
+
+print(f"\n  Logistic Regression CV Scores: {lr_cv_scores}")
+print(f"  Mean: {lr_cv_scores.mean():.4f}, Std: {lr_cv_scores.std():.4f}")
+
+print(f"\n  Random Forest CV Scores: {rf_cv_scores}")
+print(f"  Mean: {rf_cv_scores.mean():.4f}, Std: {rf_cv_scores.std():.4f}")
+
+# ============================================================================
+# STEP 6: HYPERPARAMETER TUNING
+# ============================================================================
+print("\n" + "=" * 70)
+print("STEP 6: HYPERPARAMETER TUNING")
+print("=" * 70)
+
+print("\n7. Tuning Logistic Regression hyperparameters...")
+lr_param_grid = {
+    'C': [0.001, 0.01, 0.1, 1.0, 10.0],
+    'penalty': ['l1', 'l2']
+}
+
+lr_grid = GridSearchCV(
+    LogisticRegression(max_iter=1000, random_state=42, solver='liblinear'),
+    lr_param_grid,
+    cv=5,
+    scoring='accuracy',
+    n_jobs=-1
+)
+lr_grid.fit(X_train_val, y_train_val)
+
+print(f"  Best parameters: {lr_grid.best_params_}")
+print(f"  Best CV score: {lr_grid.best_score_:.4f}")
+
+# ============================================================================
+# STEP 7: FINAL MODEL EVALUATION ON TEST SET
+# ============================================================================
+print("\n" + "=" * 70)
+print("STEP 7: FINAL MODEL EVALUATION ON TEST SET")
+print("=" * 70)
+
+# Use best model from grid search
+best_model = lr_grid.best_estimator_
+test_pred = best_model.predict(X_test_scaled)
+test_proba = best_model.predict_proba(X_test_scaled)[:, 1]
+
+from sklearn.metrics import accuracy_score, classification_report, roc_auc_score
+
+test_acc = accuracy_score(y_test, test_pred)
+test_auc = roc_auc_score(y_test, test_proba)
+
+print(f"\n8. Final Test Set Performance:")
+print(f"   Accuracy: {test_acc:.4f}")
+print(f"   ROC-AUC:  {test_auc:.4f}")
+print(f"\n   Classification Report:")
+print(classification_report(y_test, test_pred, target_names=['Class 0', 'Class 1']))
+
+# ============================================================================
+# STEP 8: MODEL DEPLOYMENT PREPARATION
+# ============================================================================
+print("\n" + "=" * 70)
+print("STEP 8: MODEL DEPLOYMENT PREPARATION")
+print("=" * 70)
+
+print("\n9. Creating deployment pipeline...")
+
+# Create a pipeline that includes preprocessing and model
+deployment_pipeline = Pipeline([
+    ('scaler', StandardScaler()),
+    ('classifier', best_model)
+])
+
+# Fit on all available data
+X_all = np.vstack([X_train_scaled, X_val_scaled, X_test_scaled])
+y_all = np.hstack([y_train, y_val, y_test])
+
+# Note: In practice, you'd refit scaler on all data
+final_scaler = StandardScaler().fit(np.vstack([X_train, X_val, X_test]))
+deployment_pipeline.named_steps['scaler'] = final_scaler
+deployment_pipeline.named_steps['classifier'] = best_model
+
+print("   ✅ Pipeline created successfully!")
+print("   Pipeline steps:")
+for i, (name, step) in enumerate(deployment_pipeline.steps, 1):
+    print(f"     {i}. {name}: {type(step).__name__}")
+
+# Example prediction
+sample_prediction = deployment_pipeline.predict(X_test[:5])
+print(f"\n10. Sample Predictions (first 5 test samples):")
+print(f"    Predictions: {sample_prediction}")
+print(f"    Actual:      {y_test[:5]}")
+
+print("\n" + "=" * 70)
+print("END-TO-END ML PIPELINE COMPLETE")
+print("=" * 70)
+print("\nSummary:")
+print(f"  • Data preprocessing: ✅")
+print(f"  • Model training: ✅")
+print(f"  • Overfitting prevention: ✅")
+print(f"  • Cross-validation: ✅")
+print(f"  • Hyperparameter tuning: ✅")
+print(f"  • Test evaluation: ✅")
+print(f"  • Deployment pipeline: ✅")
+print("=" * 70)
+</code></pre>
+
+</div></div>
+<div class="section pros-cons">
+    <div class="pros">
+        <h5>Pros</h5>
+        <ul>
+            <li>Regularization reduces overfitting effectively</li>
+            <li>Cross-validation provides robust evaluation</li>
+            <li>Early stopping prevents unnecessary training</li>
+            <li>Ensemble methods improve generalization</li>
+        </ul>
+    </div>
+    <div class="cons">
+        <h5>Cons</h5>
+        <ul>
+            <li>Requires careful hyperparameter tuning</li>
+            <li>May need more data for complex models</li>
+            <li>Some techniques add computational overhead</li>
+            <li>Trade-off between model complexity and performance</li>
+        </ul>
+    </div>
+</div>
+<div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of model generalization</li>
+<li>Demonstrates knowledge of regularization techniques</li>
+<li>Shows ability to diagnose and fix overfitting</li>
+<li>Critical for production ML systems</li>
+</ul>
+</div><hr>
+
+<h3>Question 9: Explain decision trees and random forests.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Decision Trees:</strong>
+<ul><li>Tree-like model for decisions</li>
+<li>Nodes represent features</li>
+<li>Leaves represent outcomes</li>
+<li>Splits based on information gain or Gini impurity</li>
+</ul>
+<strong>Advantages:</strong>
+<ul><li>Easy to interpret</li>
+<li>Handle non-linear relationships</li>
+<li>No feature scaling needed</li>
+</ul>
+<strong>Disadvantages:</strong>
+<ul><li>Prone to overfitting</li>
+<li>Unstable (small data changes cause large tree changes)</li>
+</ul>
+<strong>Random Forests:</strong>
+<ul><li>Ensemble of decision trees</li>
+<li>Each tree trained on random subset of data</li>
+<li>Final prediction is average/majority vote</li>
+<li>Reduces overfitting and variance</li>
+</ul>
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Algorithm Explanation</h5>
+                    <p><strong>Tree/Graph Traversal:</strong></p>
+                    <p>Tree and graph problems often require traversal algorithms:</p>
+                    <ul>
+                        <li><strong>DFS (Depth-First Search):</strong> Explore as deep as possible before backtracking</li>
+                        <li><strong>BFS (Breadth-First Search):</strong> Explore level by level</li>
+                        <li><strong>Recursive Approach:</strong> Natural for tree problems, uses call stack</li>
+                        <li><strong>Iterative Approach:</strong> Uses explicit stack/queue, more control</li>
+                    </ul>
+                    
+                    <p><strong>Key Considerations:</strong></p>
+                    <ul>
+                        <li>Base case: Handle null/empty nodes</li>
+                        <li>Recursive case: Process current node and recurse on children</li>
+                        <li>State management: Track visited nodes, path, or other state</li>
+                        <li>Space complexity: Consider recursion stack depth</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of tree-based algorithms</li>
+<li>Demonstrates knowledge of ensemble methods</li>
+<li>Shows ability to explain model interpretability</li>
+</ul>
+</div><hr>
+
+<h3>Question 10: Explain support vector machines (SVM).</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>SVM:</strong>
+<ul><li>Finds optimal hyperplane to separate classes</li>
+<li>Maximizes margin between classes</li>
+<li>Uses support vectors (closest points to hyperplane)</li>
+</ul>
+<strong>Kernel Trick:</strong>
+<ul><li>Maps data to higher dimensions</li>
+<li>Allows non-linear separation</li>
+<li>Common kernels: linear, polynomial, RBF</li>
+</ul>
+<strong>Advantages:</strong>
+<ul><li>Effective in high dimensions</li>
+<li>Memory efficient</li>
+<li>Versatile (different kernels)</li>
+</ul>
+<strong>Disadvantages:</strong>
+<ul><li>Doesn't perform well on large datasets</li>
+<li>Sensitive to feature scaling</li>
+<li>Black box model</li>
+</ul>
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of classification algorithms</li>
+<li>Demonstrates knowledge of kernel methods</li>
+<li>Shows ability to choose appropriate algorithm</li>
+</ul>
+</div><hr>
+
+<h3>Question 11: Explain k-means clustering algorithm.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>K-Means:</strong>
+<ul><li>Unsupervised clustering algorithm</li>
+<li>Partitions data into k clusters</li>
+<li>Minimizes within-cluster sum of squares</li>
+</ul>
+<strong>Algorithm:</strong>
+<ul><li>Initialize k centroids randomly</li>
+<li>Assign each point to nearest centroid</li>
+<li>Update centroids to mean of assigned points</li>
+<li>Repeat until convergence</li>
+</ul>
+<strong>Challenges:</strong>
+<ul><li>Choosing k (number of clusters)</li>
+<li>Sensitive to initialization</li>
+<li>Assumes spherical clusters</li>
+</ul>
+<strong>Solutions:</strong>
+<ul><li>Elbow method for k</li>
+<li>K-means++ initialization</li>
+<li>Use other algorithms for non-spherical clusters</li>
+</ul>
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of unsupervised learning</li>
+<li>Demonstrates knowledge of clustering algorithms</li>
+<li>Shows ability to explain algorithm steps</li>
+</ul>
+</div><hr>
+
+<h3>Question 12: Explain principal component analysis (PCA).</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>PCA:</strong>
+<ul><li>Dimensionality reduction technique</li>
+<li>Finds principal components (directions of maximum variance)</li>
+<li>Projects data onto lower-dimensional space</li>
+</ul>
+<strong>Steps:</strong>
+<ul><li>Standardize data</li>
+<li>Compute covariance matrix</li>
+<li>Find eigenvectors and eigenvalues</li>
+<li>Select top k eigenvectors</li>
+<li>Transform data</li>
+</ul>
+<strong>Applications:</strong>
+<ul><li>Feature reduction</li>
+<li>Visualization</li>
+<li>Noise reduction</li>
+<li>Speeding up ML algorithms</li>
+</ul>
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of dimensionality reduction</li>
+<li>Demonstrates knowledge of linear algebra applications</li>
+<li>Shows ability to reduce data complexity</li>
+</ul>
+</div><hr>
+
+<h3>Question 13: Explain convolutional neural networks (CNN).</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>CNN Architecture:</strong>
+<ul><li>Convolutional layers: Extract features using filters</li>
+<li>Pooling layers: Reduce spatial dimensions</li>
+<li>Fully connected layers: Final classification</li>
+</ul>
+<strong>Key Concepts:</strong>
+<ul><li><strong>Convolution:</strong> Apply filters to detect patterns</li>
+<li><strong>Pooling:</strong> Downsample to reduce parameters</li>
+<li><strong>Stride:</strong> Step size of filter movement</li>
+<li><strong>Padding:</strong> Add zeros to maintain size</li>
+</ul>
+<strong>Why CNNs Work:</strong>
+<ul><li>Parameter sharing (same filter across image)</li>
+<li>Local connectivity (focus on local patterns)</li>
+<li>Translation invariance</li>
+</ul>
+<strong>Applications:</strong>
+<ul><li>Image classification</li>
+<li>Object detection</li>
+<li>Image segmentation</li>
+</ul>
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of deep learning architectures</li>
+<li>Demonstrates knowledge of computer vision</li>
+<li>Shows ability to explain complex models</li>
+</ul>
+</div><hr>
+
+<h3>Question 14: Explain recurrent neural networks (RNN) and LSTM.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>RNN:</strong>
+<ul><li>Designed for sequential data</li>
+<li>Has memory of previous inputs</li>
+<li>Shares parameters across time steps</li>
+</ul>
+<strong>Problems with RNN:</strong>
+<ul><li>Vanishing gradients (can't learn long dependencies)</li>
+<li>Exploding gradients</li>
+<li>Difficulty retaining long-term memory</li>
+</ul>
+<strong>LSTM (Long Short-Term Memory):</strong>
+<ul><li>Special type of RNN</li>
+<li>Cell state and hidden state</li>
+<li>Gates: forget, input, output</li>
+</ul>
+<strong>LSTM Gates:</strong>
+<ul><li><strong>Forget Gate:</strong> Decides what to forget</li>
+<li><strong>Input Gate:</strong> Decides what new information to store</li>
+<li><strong>Output Gate:</strong> Decides what to output</li>
+</ul>
+<strong>Applications:</strong>
+<ul><li>Language modeling</li>
+<li>Machine translation</li>
+<li>Speech recognition</li>
+<li>Time series prediction</li>
+</ul>
+
+                <div class="walkthrough">
+                    <h5>Comprehensive Design Explanation</h5>
+                    <p><strong>Design Process:</strong></p>
+                    <p>System design questions require a structured approach:</p>
+                    <ol>
+                        <li><strong>Requirements Clarification:</strong> Understand functional and non-functional requirements</li>
+                        <li><strong>Capacity Estimation:</strong> Calculate storage, bandwidth, and compute needs</li>
+                        <li><strong>API Design:</strong> Define clear interfaces for system interaction</li>
+                        <li><strong>Database Design:</strong> Choose appropriate data models and storage</li>
+                        <li><strong>High-Level Design:</strong> Create architecture diagram showing major components</li>
+                        <li><strong>Detailed Design:</strong> Deep dive into specific components</li>
+                        <li><strong>Scaling & Optimization:</strong> Discuss how to handle growth</li>
+                    </ol>
+                    
+                    <p><strong>Key Design Principles:</strong></p>
+                    <ul>
+                        <li><strong>Scalability:</strong> System should handle growth in users and data</li>
+                        <li><strong>Reliability:</strong> System should be fault-tolerant and available</li>
+                        <li><strong>Performance:</strong> Low latency and high throughput</li>
+                        <li><strong>Consistency:</strong> Choose appropriate consistency model (strong vs eventual)</li>
+                    </ul>
+                </div>
+                </div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of sequential models</li>
+<li>Demonstrates knowledge of RNN variants</li>
+<li>Shows ability to explain memory mechanisms</li>
+</ul>
+</div><hr>
+
+<h3>Question 15: Explain word embeddings (Word2Vec, GloVe).</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Word Embeddings:</strong>
+<ul><li>Dense vector representations of words</li>
+<li>Capture semantic relationships</li>
+<li>Words with similar meanings have similar vectors</li>
+</ul>
+<strong>Word2Vec:</strong>
+<ul><li>Two architectures: Skip-gram and CBOW</li>
+<li>Skip-gram: Predict context from word</li>
+<li>CBOW: Predict word from context</li>
+<li>Uses neural network to learn embeddings</li>
+</ul>
+<strong>GloVe (Global Vectors):</strong>
+<ul><li>Combines global and local statistics</li>
+<li>Uses co-occurrence matrix</li>
+<li>Often performs better than Word2Vec</li>
+</ul>
+<strong>Applications:</strong>
+<ul><li>Text classification</li>
+<li>Machine translation</li>
+<li>Sentiment analysis</li>
+<li>Search engines</li>
+</ul>
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of NLP fundamentals</li>
+<li>Demonstrates knowledge of representation learning</li>
+<li>Shows ability to explain embedding techniques</li>
+</ul>
+</div><hr>
+
+<h3>Question 16: Explain BERT and its applications.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>BERT (Bidirectional Encoder Representations from Transformers):</strong>
+<ul><li>Pre-trained transformer model</li>
+<li>Bidirectional context (reads left and right)</li>
+<li>Masked language modeling pre-training</li>
+</ul>
+<strong>Key Features:</strong>
+<ul><li>Contextualized embeddings (same word, different contexts = different vectors)</li>
+<li>Transfer learning (fine-tune for specific tasks)</li>
+<li>Bidirectional attention</li>
+</ul>
+<strong>Applications:</strong>
+<ul><li>Question answering</li>
+<li>Named entity recognition</li>
+<li>Sentiment analysis</li>
+<li>Text classification</li>
+</ul>
+<strong>Fine-tuning:</strong>
+<ul><li>Add task-specific layer</li>
+<li>Train on labeled data</li>
+<li>Much faster than training from scratch</li>
+</ul>
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of modern NLP</li>
+<li>Demonstrates knowledge of transformer models</li>
+<li>Shows awareness of pre-trained models</li>
+</ul>
+</div><hr>
+
+<h3>Question 17: Explain GANs (Generative Adversarial Networks).</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>GAN Architecture:</strong>
+<ul><li>Two networks: Generator and Discriminator</li>
+<li>Generator: Creates fake data</li>
+<li>Discriminator: Distinguishes real from fake</li>
+<li>Adversarial training</li>
+</ul>
+<strong>Training Process:</strong>
+<ul><li>Generator creates fake data</li>
+<li>Discriminator evaluates real vs fake</li>
+<li>Generator tries to fool discriminator</li>
+<li>Discriminator tries to detect fakes</li>
+<li>Both improve iteratively</li>
+</ul>
+<strong>Applications:</strong>
+<ul><li>Image generation</li>
+<li>Data augmentation</li>
+<li>Super-resolution</li>
+<li>Style transfer</li>
+</ul>
+<strong>Challenges:</strong>
+<ul><li>Training instability</li>
+<li>Mode collapse</li>
+<li>Difficult to evaluate</li>
+</ul>
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of generative models</li>
+<li>Demonstrates knowledge of adversarial training</li>
+<li>Shows ability to explain complex architectures</li>
+</ul>
+</div><hr>
+
+<h3>Question 18: Explain transfer learning and fine-tuning.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Transfer Learning:</strong>
+<ul><li>Use knowledge from one task for another</li>
+<li>Pre-trained models on large datasets</li>
+<li>Fine-tune for specific task</li>
+</ul>
+<strong>Benefits:</strong>
+<ul><li>Requires less data</li>
+<li>Faster training</li>
+<li>Better performance</li>
+<li>Saves computational resources</li>
+</ul>
+<strong>Approaches:</strong>
+<ul><li><strong>Feature Extraction:</strong> Use pre-trained model as feature extractor</li>
+<li><strong>Fine-tuning:</strong> Update some/all layers on new data</li>
+<li><strong>Freezing:</strong> Keep early layers frozen, train later layers</li>
+</ul>
+<strong>When to Use:</strong>
+<ul><li>Limited labeled data</li>
+<li>Similar tasks</li>
+<li>Pre-trained models available</li>
+<li>Computational constraints</li>
+</ul>
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of transfer learning</li>
+<li>Demonstrates knowledge of efficient training</li>
+<li>Shows ability to leverage pre-trained models</li>
+</ul>
+</div><hr>
+
+<h3>Question 19: Explain model deployment and MLOps.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Model Deployment:</strong>
+<ul><li>Process of making model available for production use</li>
+<li>Considerations: latency, throughput, scalability</li>
+</ul>
+<strong>Deployment Options:</strong>
+<ul><li>Batch processing</li>
+<li>Real-time API</li>
+<li>Edge deployment</li>
+<li>Streaming</li>
+</ul>
+<strong>MLOps:</strong>
+<ul><li>DevOps for ML</li>
+<li>Continuous integration/deployment</li>
+<li>Model versioning</li>
+<li>Monitoring and retraining</li>
+</ul>
+<h4>Key Components</h4>
+<ul><li>Model registry</li>
+<li>Feature stores</li>
+<li>Monitoring (data drift, model drift)</li>
+<li>A/B testing</li>
+<li>Automated retraining</li>
+</ul>
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of production ML</li>
+<li>Demonstrates knowledge of MLOps practices</li>
+<li>Shows ability to design ML systems</li>
+</ul>
+</div><hr>
+
+<h3>Question 20: Explain feature engineering and selection.</h3>
+<div class="section detailed-explanation"><h4>Detailed Explanation</h4><div class="explanation-content">
+
+<strong>Feature Engineering:</strong>
+<ul><li>Creating new features from existing data</li>
+<li>Domain knowledge important</li>
+<li>Can significantly improve model performance</li>
+</ul>
+<strong>Techniques:</strong>
+<ul><li>Encoding categorical variables</li>
+<li>Creating interaction features</li>
+<li>Handling missing values</li>
+<li>Scaling/normalization</li>
+<li>Time-based features</li>
+</ul>
+<strong>Feature Selection:</strong>
+<ul><li>Choosing most relevant features</li>
+<li>Reduces overfitting</li>
+<li>Improves interpretability</li>
+<li>Faster training</li>
+</ul>
+<strong>Methods:</strong>
+<ul><li>Filter methods (correlation, mutual information)</li>
+<li>Wrapper methods (forward/backward selection)</li>
+<li>Embedded methods (L1 regularization)</li>
+</ul>
+</div></div><div class="section why-faang"><h4>Why FAANG Companies Ask This</h4>
+<ul><li>Tests understanding of data preprocessing</li>
+<li>Demonstrates knowledge of feature importance</li>
+<li>Shows ability to improve model performance</li>
+</ul>
+</div><hr>
+
+<h2>Summary</h2>
+
+<p>ML/AI questions test:</p>
+
+<ul><li><strong>Fundamentals:</strong> Understanding of ML concepts</li>
+<li><strong>Algorithms:</strong> Knowledge of different algorithms</li>
+<li><strong>Deep Learning:</strong> Understanding of neural networks</li>
+<li><strong>NLP/CV:</strong> Domain-specific knowledge</li>
+<li><strong>System Design:</strong> End-to-end ML systems</li>
+</ul>
+<p>Key concepts:</p>
+<ul><li>Understand different learning paradigms</li>
+<li>Know evaluation metrics</li>
+<li>Understand model training</li>
+<li>Know ML system design patterns</li>
+<li>Understand recent advances (transformers, etc.)</li>
+</ul>
+
+    </div>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            themeVariables: {
+                primaryTextColor: '#000000',
+                primaryColor: '#3498db',
+                textColor: '#000000',
+                mainBkg: '#ffffff',
+                secondaryTextColor: '#000000',
+                tertiaryTextColor: '#000000',
+                lineColor: '#000000',
+                secondaryColor: '#ecf0f1',
+                tertiaryColor: '#ffffff'
+            },
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+        
+        // Ensure diagrams render with black text
+        document.addEventListener('DOMContentLoaded', function() {
+            const style = document.createElement('style');
+            style.textContent = `
+                .mermaid svg text { fill: #000000 !important; }
+                .mermaid svg .label text { fill: #000000 !important; }
+                .mermaid svg .nodeLabel { fill: #000000 !important; }
+                .mermaid svg .edgeLabel { fill: #000000 !important; }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+</html>
